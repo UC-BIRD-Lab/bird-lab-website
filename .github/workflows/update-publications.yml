@@ -34,7 +34,7 @@ jobs:
         run: python scripts/update_publications.py
 
       - name: Open a pull request if anything changed
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v8
         with:
           commit-message: "Update publications from OpenAlex"
           branch: bot/update-publications
