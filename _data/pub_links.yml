@@ -1,0 +1,35 @@
+# ─────────────────────────────────────────────────────────────
+#  PUBLICATION EXTRAS — the hand-curated "rich info" for a paper.
+#
+#  WHY THIS FILE EXISTS: journal articles in `_data/publications.yml` are synced
+#  automatically from ORCID (the monthly bot only ADDS new DOIs and never
+#  rewrites entries). Things the bot can't know — a data link, a code repo, a
+#  figure — live HERE instead, so the automation is never blocked and your
+#  extras are never overwritten.
+#
+#  HOW IT WORKS: each entry is matched to a paper by its DOI. Use the BARE doi
+#  (no "https://doi.org/"). All fields are optional:
+#     doi:    the paper's DOI, e.g. "10.1098/rsif.2025.0868"   (required to match)
+#     data:   link to the dataset (FigShare, Dryad, Zenodo…)
+#     code:   link to the code (a GitHub repo)
+#     image:  a SMALL figure — add only for MAJOR papers, or the list gets busy
+#
+#  Nothing shows until the paper itself appears on the Publications page, so you
+#  can add an entry here the moment a paper is accepted.
+#
+#  NOTE ON PRESS: you do NOT list news coverage here. Press lives in
+#  `_data/press.yml`; tag a story with the paper's `doi:` there and it is counted
+#  automatically as the "In the news · N" badge next to that paper (and shown on
+#  the News page). One source, no duplication.
+# ─────────────────────────────────────────────────────────────
+
+- doi: "10.1098/rsif.2025.0868"        # hawk mid-flight perching aerodynamics
+  image: /assets/img/research/perchaero.jpg
+  # data: "https://figshare.com/…"
+  # code: "https://github.com/UC-BIRD-Lab/…"
+
+# Copy the block above for each paper you want to enrich, e.g.:
+# - doi: "10.1111/geb.70033"
+#   image: /assets/img/research/airfoil.jpg
+#   data: "https://figshare.com/…"
+#   code: "https://github.com/UC-BIRD-Lab/…"

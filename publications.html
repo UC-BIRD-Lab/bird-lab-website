@@ -33,19 +33,31 @@ subtitle: "Peer-reviewed journal articles are kept in sync automatically from th
   {%- assign items = items | sort: "type" | reverse -%}
   {%- for pub in items -%}
   {%- capture search %}{{ pub.title }} {{ pub.authors }} {{ pub.venue }}{% endcapture -%}
-  <div class="pub" data-type="{{ pub.type }}" data-search="{{ search | downcase | strip }}">
-    <p class="pub__title">
-      {%- if pub.doi -%}<a href="{{ pub.doi }}">{{ pub.title }}</a>{%- else -%}{{ pub.title }}{%- endif -%}
-      {%- if pub.type == "journal" %} <span class="badge badge--paper">Journal</span>
-      {%- elsif pub.type == "conference" %} <span class="badge">{{ pub.note | default: "Conference" }}</span>{% endif -%}
-    </p>
-    <p class="pub__meta">{{ pub.authors }} · <span class="pub__venue">{{ pub.venue }}</span> · {{ pub.year }}
-      {%- if pub.doi %} · <a href="{{ pub.doi }}">DOI</a>{% endif -%}
-      {%- if pub.doi -%}
-        {%- assign press_hits = all_press | where_exp: "x", "x.doi and pub.doi contains x.doi" -%}
-        {%- if press_hits.size > 0 -%} · <a class="pub-press" href="{{ '/news/#in-the-news' | relative_url }}"><span aria-hidden="true">📰</span> In the news · {{ press_hits.size }}</a>{%- endif -%}
+  {%- comment -%} Hand-curated extras (data / code / figure) matched by DOI. {%- endcomment -%}
+  {%- assign rich = "" -%}
+  {%- if pub.doi -%}{%- assign rich = site.data.pub_links | where_exp: "x", "x.doi and pub.doi contains x.doi" | first -%}{%- endif -%}
+  <div class="pub{% if rich.image %} pub--rich{% endif %}" data-type="{{ pub.type }}" data-search="{{ search | downcase | strip }}">
+    {%- if rich.image %}<img class="pub__thumb" src="{{ rich.image | relative_url }}" alt="Figure from “{{ pub.title }}”" loading="lazy">{% endif -%}
+    <div class="pub__main">
+      <p class="pub__title">
+        {%- if pub.doi -%}<a href="{{ pub.doi }}">{{ pub.title }}</a>{%- else -%}{{ pub.title }}{%- endif -%}
+        {%- if pub.type == "journal" %} <span class="badge badge--paper">Journal</span>
+        {%- elsif pub.type == "conference" %} <span class="badge">{{ pub.note | default: "Conference" }}</span>{% endif -%}
+      </p>
+      <p class="pub__meta">{{ pub.authors }} · <span class="pub__venue">{{ pub.venue }}</span> · {{ pub.year }}
+        {%- if pub.doi %} · <a href="{{ pub.doi }}">DOI</a>{% endif -%}
+        {%- if pub.doi -%}
+          {%- assign press_hits = all_press | where_exp: "x", "x.doi and pub.doi contains x.doi" -%}
+          {%- if press_hits.size > 0 -%} · <a class="pub-press" href="{{ '/news/#in-the-news' | relative_url }}"><span aria-hidden="true">📰</span> In the news · {{ press_hits.size }}</a>{%- endif -%}
+        {%- endif -%}
+      </p>
+      {%- if rich.data or rich.code -%}
+      <p class="pub__extras">
+        {%- if rich.data %}<a class="pub-resource" href="{{ rich.data }}" rel="noopener"><span aria-hidden="true">📊</span> Data</a>{% endif -%}
+        {%- if rich.code %}<a class="pub-resource" href="{{ rich.code }}" rel="noopener"><span aria-hidden="true">💻</span> Code</a>{% endif -%}
+      </p>
       {%- endif -%}
-    </p>
+    </div>
   </div>
   {%- endfor -%}
 {%- endfor -%}

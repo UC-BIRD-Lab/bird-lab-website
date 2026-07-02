@@ -92,6 +92,27 @@ at the **top** of `_data/publications.yml`:
 
 ---
 
+## Add data / code / a figure to a paper — `_data/pub_links.yml`
+
+Journal articles sync automatically, so the "extras" a bot can't know — a dataset
+link, a code repo, a figure — go in this separate file, matched to the paper by
+its **bare DOI**. The auto-sync never touches it, so your extras are safe.
+
+```yaml
+- doi: "10.1098/rsif.2025.0868"   # bare DOI, no "https://doi.org/"
+  data: "https://figshare.com/…"  # optional — dataset link
+  code: "https://github.com/UC-BIRD-Lab/…"  # optional — code repo
+  image: /assets/img/research/perchaero.jpg # optional — only for major papers
+```
+
+- Add `image:` **sparingly** — just standout papers, or the list gets busy.
+- Nothing appears until the paper is on the Publications page, so you can add this
+  as soon as a paper is accepted.
+- **Press/news is not listed here** — tag a story with the paper's `doi:` in
+  `_data/press.yml` and it's counted automatically as the "In the news" badge.
+
+---
+
 ## Add a news milestone — `_data/updates.yml`
 
 Add an item to the top of the current year's `events:` list. `type` picks the
@@ -217,6 +238,14 @@ Title, tagline, the **member portal URL**, contact email, ORCID, the
 undergraduate interest-form link, the PI **LinkedIn** and **GitHub org**, the
 **FigShare** data URL, and the **social-share image** all live here. After
 editing `_config.yml`, the change appears on the next build.
+
+**Turn on analytics (optional).** The site ships with privacy-friendly,
+cookieless analytics ([GoatCounter](https://www.goatcounter.com/)) that stay
+**off** until you add a code. Make a free GoatCounter site, then set
+`analytics: { goatcounter: "yourcode" }` in `_config.yml`. It collects only
+anonymous page counts — no cookies, no personal data — so no consent banner is
+needed (the [Privacy]({{ '/privacy/' | relative_url }}) page explains this to
+visitors). Leave it blank to collect nothing.
 
 ---
 

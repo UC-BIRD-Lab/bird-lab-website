@@ -1,0 +1,9 @@
+{%- comment -%}
+  Privacy-friendly, cookieless analytics via GoatCounter. Renders nothing unless
+  `analytics.goatcounter` is set in _config.yml, so the site collects no data by
+  default. GoatCounter stores no cookies and no personal data — see /privacy/.
+{%- endcomment -%}
+{%- if site.analytics.goatcounter and site.analytics.goatcounter != "" -%}
+<script data-goatcounter="https://{{ site.analytics.goatcounter }}.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+{%- endif -%}

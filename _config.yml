@@ -12,8 +12,8 @@ description: >-
 
 # Public URL. Update `url` to your final domain before launch.
 # If hosting at a project path (e.g. https://USER.github.io/REPO), set baseurl: "/REPO".
-url: "https://birdlab.ucdavis.edu"
-baseurl: ""
+url: "https://uc-bird-lab.github.io/bird-lab-website/"
+baseurl: "/REPO"
 
 lab:
   full_name: "Bio-Informed Research & Design Lab"
@@ -42,11 +42,16 @@ assets:
   # Playful wind-tunnel candid shown as the "lab culture" moment on the Join page.
   culture_photo: "/assets/img/lab/labphoto-silly-2024.jpg"
 
-# Private member workspace (Notion). Replace with the real URL at launch.
+# Private member workspace (Notion - Internal Pages).
 member_portal_url: "https://app.notion.com/p/birdlab/Internal-Lab-Pages-6d6f4c7465a44de5a518a5a6786593f1?source=copy_link"
 
 # Undergraduate interest form
 undergrad_form_url: "https://forms.gle/TsddkYBtYMH5zkt78"
+
+# Privacy-friendly, cookieless analytics (GoatCounter). 
+analytics:
+  goatcounter: "birdlab"   
+
 
 # ── Build settings ───────────────────────────────────────────
 markdown: kramdown
@@ -92,3 +97,4 @@ exclude:
   - Gemfile.lock
   - vendor/
   - .github/
+  - pa11yci.json

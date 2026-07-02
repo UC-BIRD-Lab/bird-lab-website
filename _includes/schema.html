@@ -1,0 +1,41 @@
+{%- comment -%}
+  Structured data (schema.org JSON-LD). Invisible to readers; it tells search
+  engines exactly what the lab and the PI are, so they can show rich results and
+  correctly link Christina, the BIRD Lab, and her ORCID/Scholar profiles.
+  Generated from _config.yml, so it stays accurate on its own.
+{%- endcomment -%}
+{%- assign base = site.url | append: site.baseurl -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ResearchOrganization",
+      "@id": "{{ base }}/#lab",
+      "name": {{ site.lab.full_name | jsonify }},
+      "alternateName": {{ site.title | jsonify }},
+      "url": "{{ base }}/",
+      "description": {{ site.description | strip_newlines | jsonify }},
+      "logo": "{{ base }}/assets/img/logo-mark.png",
+      "parentOrganization": { "@type": "CollegeOrUniversity", "name": {{ site.lab.institution | jsonify }} }
+    },
+    {
+      "@type": "Person",
+      "@id": "{{ base }}/#pi",
+      "name": {{ site.lab.pi | remove: "Dr. " | jsonify }},
+      "honorificPrefix": "Dr.",
+      "jobTitle": "Assistant Professor",
+      "email": "mailto:{{ site.lab.pi_email }}",
+      "affiliation": { "@type": "CollegeOrUniversity", "name": {{ site.lab.institution | jsonify }} },
+      "worksFor": { "@id": "{{ base }}/#lab" },
+      "url": "{{ base }}/people/",
+      "sameAs": [
+        "https://orcid.org/{{ site.lab.orcid }}",
+        {{ site.lab.scholar | jsonify }},
+        {{ site.lab.linkedin | jsonify }},
+        {{ site.lab.github_org | jsonify }}
+      ]
+    }
+  ]
+}
+</script>

@@ -45,6 +45,7 @@ On recent macOS this can fail on the `eventmachine` gem — see the fix in
 │   ├── people.yml          team members, grouped by role
 │   ├── publications.yml    journal articles (auto-updated)
 │   ├── publications_manual.yml  conference papers, posters, talks, blogs
+│   ├── pub_links.yml        data/code/figure per paper, matched by DOI
 │   ├── research.yml        research themes + active projects
 │   ├── updates.yml         news/milestones timeline
 │   ├── press.yml           "In the news" external coverage
@@ -90,8 +91,9 @@ runtime services, three GitHub Actions + Dependabot. Rationale and trade-offs in
 Journal articles sync automatically from **OpenAlex** (by the PI's **ORCID**) via
 a monthly GitHub Action that opens a **pull request** for human review. The
 committed file is always the source of truth, so the site never breaks if the API
-is down. Conference work is curated by hand. Full details in
-[MAINTENANCE.md → Publications](MAINTENANCE.md#keeping-publications-current).
+is down. Conference work is curated by hand, and per-paper data/code/figures live
+in `_data/pub_links.yml`. Full details in
+[MAINTENANCE.md → Publications](MAINTENANCE.md#publications-how-the-automation-works).
 
 ---
 
