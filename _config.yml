@@ -10,10 +10,13 @@ description: >-
   aircraft. We identify fundamental biological principles of flight and refine
   them to improve engineered systems through bio-informed research.
 
-# Public URL. Update `url` to your final domain before launch.
-# If hosting at a project path (e.g. https://USER.github.io/REPO), set baseurl: "/REPO".
+# Site address. `url` is the ORIGIN only (no path, no trailing slash).
+# Leave `baseurl` EMPTY — the deploy workflow fills in the project path
+# ("/bird-lab-website") automatically at build time, and an empty baseurl keeps
+# the Site-checks link test passing. When you move to the custom domain, just
+# change `url` to "https://birdlab.ucdavis.edu".
 url: "https://uc-bird-lab.github.io"
-baseurl: "/bird-lab-website"
+baseurl: ""
 
 lab:
   full_name: "Bio-Informed Research & Design Lab"
