@@ -24,6 +24,10 @@
   --header-h:   74px;
 }
 
+/* Accessible placeholder text: pin the colour (browsers default to a low-contrast
+   grey, and Firefox halves the opacity) so search fields meet WCAG AA (5.9:1). */
+::placeholder { color: var(--c-muted); opacity: 1; }
+
 /* Hero + dark sections retuned to the logo navy→slate ramp */
 .hero { background: linear-gradient(158deg, #11203f 0%, #2c4a72 62%, #4f7094 128%); }
 .section--navy { background: var(--c-navy); }

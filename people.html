@@ -10,7 +10,7 @@ subtitle: "Engineers and biologists, each leading their own research project —
 {%- assign pi = pi_group.members | first -%}
 <section class="people-group">
   <h2>{{ pi_group.title }}</h2>
-  <div class="pi-feature">
+  <div class="pi-feature" id="{{ pi.name | slugify }}">
     {%- if pi.photo -%}
       <img class="pi-feature__photo" src="{{ pi.photo | relative_url }}" alt="{{ pi.name }}" width="220" height="220">
     {%- else -%}

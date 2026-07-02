@@ -7,6 +7,8 @@ vendor/
 Gemfile.lock
 .DS_Store
 *.log
+# Backup files left by image tools / editors (e.g. photo.jpg~)
+*~
 node_modules/
 .venv/
 __pycache__/
