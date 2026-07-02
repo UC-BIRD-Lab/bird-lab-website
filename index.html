@@ -8,8 +8,8 @@ description: "The BIRD Lab at UC Davis uncovers fundamental principles of avian 
 <section class="hero">
   <!-- Adding Video -->
     <video class="section-bg" autoplay muted loop playsinline
-         poster="/assets/img/facilities/cali.jpg" aria-hidden="true">
-    <source src="/assets/video/bird-glide.mp4" type="video/mp4">
+         poster="{{ '/assets/img/facilities/cali.jpg' | relative_url }}" aria-hidden="true">
+    <source src="{{ '/assets/video/bird-glide.mp4' | relative_url }}" type="video/mp4">
   </video>
   <button type="button" class="video-toggle" aria-pressed="false" aria-label="Pause background video">
     <img class="icon-pause" src="{{ '/assets/img/icons/video-pause.svg' | relative_url }}" alt="" aria-hidden="true">
