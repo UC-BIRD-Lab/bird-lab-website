@@ -1,0 +1,77 @@
+---
+layout: page
+title: Publications
+eyebrow: What we do
+subtitle: "Peer-reviewed journal articles are kept in sync automatically from the lab's ORCID record; conference papers, posters, and talks are curated by hand."
+---
+
+{%- assign journals = site.data.publications -%}
+{%- assign conf = site.data.publications_manual.conference -%}
+{%- assign all = journals | concat: conf -%}
+{%- assign years = all | map: "year" | uniq | sort | reverse -%}
+
+{%- comment -%} Flatten all press items once, so each paper can show how many
+   news stories reference its DOI (see the "In the news" badge below). {%- endcomment -%}
+{%- assign all_press = "" | split: "" -%}
+{%- for yr in site.data.press -%}{%- assign all_press = all_press | concat: yr.items -%}{%- endfor -%}
+
+<div class="pub-controls">
+  <label class="visually-hidden" for="pub-search">Search publications</label>
+  <input type="search" id="pub-search" placeholder="Search by title, author, or venue…" autocomplete="off">
+  <label class="visually-hidden" for="pub-type">Filter by type</label>
+  <select id="pub-type">
+    <option value="all">All types</option>
+    <option value="journal">Journal articles</option>
+    <option value="conference">Conference &amp; posters</option>
+  </select>
+  <a class="btn btn--ghost" href="{{ site.lab.scholar }}">Google Scholar</a>
+</div>
+
+{%- for y in years -%}
+  <h2 class="pub-year">{{ y }}</h2>
+  {%- assign items = all | where: "year", y -%}
+  {%- assign items = items | sort: "type" | reverse -%}
+  {%- for pub in items -%}
+  {%- capture search %}{{ pub.title }} {{ pub.authors }} {{ pub.venue }}{% endcapture -%}
+  <div class="pub" data-type="{{ pub.type }}" data-search="{{ search | downcase | strip }}">
+    <p class="pub__title">
+      {%- if pub.doi -%}<a href="{{ pub.doi }}">{{ pub.title }}</a>{%- else -%}{{ pub.title }}{%- endif -%}
+      {%- if pub.type == "journal" %} <span class="badge badge--paper">Journal</span>
+      {%- elsif pub.type == "conference" %} <span class="badge">{{ pub.note | default: "Conference" }}</span>{% endif -%}
+    </p>
+    <p class="pub__meta">{{ pub.authors }} · <span class="pub__venue">{{ pub.venue }}</span> · {{ pub.year }}
+      {%- if pub.doi %} · <a href="{{ pub.doi }}">DOI</a>{% endif -%}
+      {%- if pub.doi -%}
+        {%- assign press_hits = all_press | where_exp: "x", "x.doi and pub.doi contains x.doi" -%}
+        {%- if press_hits.size > 0 -%} · <a class="pub-press" href="{{ '/news/#in-the-news' | relative_url }}"><span aria-hidden="true">📰</span> In the news · {{ press_hits.size }}</a>{%- endif -%}
+      {%- endif -%}
+    </p>
+  </div>
+  {%- endfor -%}
+{%- endfor -%}
+
+<p id="pub-noresults" hidden class="muted" style="margin-top:1.5rem">No publications match your search.</p>
+
+{%- if site.data.publications_manual.blog -%}
+<hr class="divider" style="margin:3rem 0">
+<h2 id="blog">Blog posts &amp; plain-language summaries</h2>
+<div class="press-list" style="margin-top:1rem">
+  {%- for b in site.data.publications_manual.blog -%}
+  <a href="{{ b.url }}">{{ b.title }}
+    <span class="src">{% if b.authors %}{{ b.authors }} · {% endif %}{{ b.venue }} · {{ b.year }}</span>
+  </a>
+  {%- endfor -%}
+</div>
+{%- endif -%}
+
+<hr class="divider" style="margin:3rem 0">
+<h2 id="data-code">Data &amp; code</h2>
+<p class="prose">We practice open science: the data and code behind our papers are released
+publicly on publication, so results can be checked, reused, and built upon.</p>
+<p class="hero__cta" style="margin-top:1rem">
+  {%- if site.lab.github_org %}<a class="btn btn--primary" href="{{ site.lab.github_org }}" rel="noopener">UC-BIRD-Lab on GitHub</a>{% endif -%}
+  {%- if site.lab.figshare_url and site.lab.figshare_url != "" %}<a class="btn btn--ghost" href="{{ site.lab.figshare_url }}" rel="noopener">Datasets on FigShare</a>{% endif -%}
+</p>
+{%- if site.lab.figshare_url == "" -%}
+<p class="muted" style="font-size:var(--step--1)">A dedicated data repository (FigShare) is being set up; add its URL as <code>figshare_url</code> in <code>_config.yml</code> to surface it here.</p>
+{%- endif -%}

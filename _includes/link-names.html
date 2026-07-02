@@ -1,0 +1,24 @@
+{%- comment -%}
+  Auto-links lab-member names in a string to their People-page cards.
+  Current members + affiliates → their card anchor; alumni → the alumni table.
+  Pass:  {% include link-names.html text=e.text %}
+  Add an `aliases:` list to a person in people.yml for nicknames / short forms
+  (e.g. "Dr. Harvey", "Adam Zhu").
+{%- endcomment -%}
+{%- assign txt = include.text -%}
+{%- assign people_base = '/people/' | relative_url -%}
+{%- for g in site.data.people.groups -%}{%- for m in g.members -%}
+  {%- capture lk -%}<a href="{{ people_base }}#{{ m.name | slugify }}">{{ m.name }}</a>{%- endcapture -%}
+  {%- assign txt = txt | replace: m.name, lk -%}
+  {%- if m.aliases -%}{%- for al in m.aliases -%}{%- capture lka -%}<a href="{{ people_base }}#{{ m.name | slugify }}">{{ al }}</a>{%- endcapture -%}{%- assign txt = txt | replace: al, lka -%}{%- endfor -%}{%- endif -%}
+{%- endfor -%}{%- endfor -%}
+{%- for m in site.data.people.affiliates.members -%}
+  {%- capture lk -%}<a href="{{ people_base }}#{{ m.name | slugify }}">{{ m.name }}</a>{%- endcapture -%}
+  {%- assign txt = txt | replace: m.name, lk -%}
+  {%- if m.aliases -%}{%- for al in m.aliases -%}{%- capture lka -%}<a href="{{ people_base }}#{{ m.name | slugify }}">{{ al }}</a>{%- endcapture -%}{%- assign txt = txt | replace: al, lka -%}{%- endfor -%}{%- endif -%}
+{%- endfor -%}
+{%- for a in site.data.people.alumni.members -%}
+  {%- capture lka -%}<a href="{{ people_base }}#alumni">{{ a.name }}</a>{%- endcapture -%}
+  {%- assign txt = txt | replace: a.name, lka -%}
+{%- endfor -%}
+{{- txt -}}

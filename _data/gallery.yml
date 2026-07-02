@@ -1,0 +1,23 @@
+# ─────────────────────────────────────────────────────────────
+#  SCENES FROM THE LAB — candid/storytelling photos.
+#  Each scene renders ONLY when ready: true, so the build never points at a
+#  missing image. Workflow:
+#    1. Put the original in  assets/img/lab/_raw/  (name it raptor-hall / outreach
+#       / wind-tunnel) and run  bash scripts/apply-images.sh
+#    2. Flip ready: true here.
+#  Captions are in the lab's voice — edit freely; keep them short.
+# ─────────────────────────────────────────────────────────────
+
+scenes:
+  - file: /assets/img/lab/labphoto-silly-2024.jpg
+    alt: "The BIRD Lab group being playful in front of a large wind tunnel"
+    caption: "Our first attempt at a lab photo, 2024 era."
+    ready: true
+  - file: /assets/img/lab/students-CALIopening-2026.jpg
+    alt: "BIRD Lab students in lab polos presenting their research poster at a public outreach event"
+    caption: "Sharing our research at the CALI Grand Opening."
+    ready: true
+  - file: /assets/img/lab/hiking-2025.jpg
+    alt: "The BIRD Lab group standing in an open field with Christina taking a selfie"
+    caption: "Sometimes we even leave the lab to touch grass."
+    ready: true

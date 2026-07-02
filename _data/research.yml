@@ -1,0 +1,110 @@
+# ─────────────────────────────────────────────────────────────
+#  RESEARCH — themes (the narrative threads) + a simple project directory.
+#
+#  Each project is a small card: a one-sentence blurb, its theme, the lead
+#  (linked to their People entry), and an "ask the lead" email button.
+#  `lead` must match the person's name in _data/people.yml for the link to work.
+#  `papers` is a list of DOIs that belong to THIS project. The card looks each
+#  one up in the publications data and shows its title + year + link. To feature
+#  a new paper, paste its DOI here (one line). `image` and `contact` are optional.
+# ─────────────────────────────────────────────────────────────
+
+themes:
+  - id: morphology-kinematics
+    title: Morphology & Kinematics
+    blurb: >-
+      We study and quantify how wings, tails, feathers, and joints move during flight to discover biological principles that affect aerial locomotion.
+    why: >-
+      Before a principle can be transferred to an aircraft, you have to measure
+      what birds actually do within quantified uncertainty.
+  - id: mechanics-dynamics
+    title: Mechanics & Dynamics
+    blurb: >-
+      We investigate how birds adjust aerodynamic and inertial forces and moments to achieve maneuvers across the full spectrum of flight.
+    why: >-
+      Understanding functional associations allows design engineers to intentionally and carefully negotiate quantified trade-offs.
+  - id: sensing-control
+    title: Sensing & Control
+    blurb: >-
+      We study how animals sense and control flight, asking if an engineered sensory world can encapsulate biological capabilities.
+    why: >-
+      The same principles that allow birds to adapt to natural conditions may allow future aircraft to autonomously adapt in flight.
+
+
+# Member-led projects. Keep blurbs to one sentence.
+projects:
+  - title: Bird-informed morphing tail flight dynamics & control
+    lead: Kaleb Bordner
+    papers:
+      - "10.2514/6.2026-4380"
+    contact: kkbordner@ucdavis.edu
+    theme: mechanics-dynamics
+    image: /assets/img/research/morphtail.jpg
+    blurb: >-
+      How an actively morphing tail reshapes the flight dynamics and control
+      authority of a bird-inspired aircraft.
+  - title: Aerodynamics of bird perching
+    lead: Francisco Jackson
+    papers:
+      - "10.2514/6.2026-4555"
+    contact: fajackson@ucdavis.edu
+    theme: mechanics-dynamics
+    image: /assets/img/research/perchaero.jpg
+    blurb: >-
+      Experimental study of the unsteady aerodynamics and dynamic stall a wing
+      experiences during a perching maneuver.
+  - title: Nares-inspired pressure sensing for formation flight
+    lead: Huanglun (Adam) Zhu
+    papers:
+      - "10.2514/6.2025-1460"
+    contact: lszhu@ucdavis.edu
+    theme: sensing-control
+    link: https://arc.aiaa.org/doi/10.2514/6.2025-1460
+    image: /assets/img/research/formation.jpg
+    blurb: >-
+      Distributed pressure sensing that lets an aircraft perceive the
+      aerodynamic benefit of flying in another's wake, the way birds do in a
+      formation.
+  - title: Raptor perching behavior
+    lead: Dr. Alfonso Martínez-Carmena
+    papers:
+      - "10.1098/rsif.2025.1082"
+    contact: alfmartinez@ucdavis.edu
+    theme: morphology-kinematics
+    image: /assets/img/research/perching.jpg
+    blurb: >-
+      Quantifying how raptors orchestrate wing and tail motion through the final
+      moments of a perch, with the California Raptor Center.
+  - title: Avian airfoil geometry
+    lead: Faiza Alvi
+    contact: falvi@ucdavis.edu
+    theme: morphology-kinematics
+    image: /assets/img/research/airfoil.jpg
+    blurb: >-
+      Characterizing the cross-sectional shapes of real bird wings and what they
+      mean for lift, drag, and stability.
+  - title: Range-of-motion quantification
+    lead: Alex Fillman
+    contact: alfillman@ucdavis.edu
+    theme: morphology-kinematics
+    image: /assets/img/research/rom.jpg
+    blurb: >-
+      Measuring the joint range of motion available to birds and bird-inspired
+      wings, defining the envelope within which morphing control can act.
+  - title: Morphing aerodynamics
+    lead: Cooper Cook
+    papers:
+      - "10.2514/6.2026-4380"
+    contact: ctcook@ucdavis.edu
+    theme: mechanics-dynamics
+    image: /assets/img/research/morphaero.jpg
+    blurb: >-
+      How continuous wing reconfiguration changes aerodynamic performance across
+      flight conditions.
+  - title: Maneuverability & agility in morphing-wing dynamics
+    lead: Joshua Booth
+    contact: jmbooth@ucdavis.edu
+    theme: mechanics-dynamics
+    blurb: >-
+      Connecting morphing-wing dynamics to the maneuverability and agility
+      metrics that matter for real flight.

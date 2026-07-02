@@ -1,0 +1,27 @@
+# ─────────────────────────────────────────────────────────────
+#  RECOGNITION & MEDIA
+#  awards : selected honors (shown as the "Recognition" strip on Home)
+#  media  : major outlets that have covered the lab's work, each linking
+#           to a representative article ("Featured in" strip on Home)
+#  Add an entry by copying a block. Keep claims accurate.
+# ─────────────────────────────────────────────────────────────
+
+awards:
+  - name: "Packard Fellowship for Science and Engineering"
+    who: "Dr. Christina Harvey"
+    org: "The David & Lucile Packard Foundation"
+    year: 2023
+  - name: "Rising Star in Aerospace"
+    who: "Ava Lewis"
+    org: "AIAA"
+    year: 2026
+  - name: "Jefferson Goblet Student Paper Award"
+    who: "Rowan Glenn"
+    org: "AIAA SciTech Forum"
+    year: 2024
+
+media:
+  - { name: "Nature", url: "https://www.nature.com/articles/d41586-022-00638-x" }
+  - { name: "The Atlantic", url: "https://www.theatlantic.com/science/archive/2022/08/bird-flight-evolution-airplanes/671132/" }
+  - { name: "Quanta Magazine", url: "https://www.quantamagazine.org/geometric-analysis-reveals-how-birds-mastered-flight-20220803/" }
+  - { name: "Aerospace America", url: "https://aerospaceamerica.aiaa.org/year-in-review/birds-wings-and-sonic-booms-researchers-adapt-shapes-to-advance-flight/" }

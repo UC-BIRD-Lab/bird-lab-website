@@ -1,0 +1,106 @@
+---
+layout: page
+title: Research
+eyebrow: What we do
+subtitle: "Every member of the BIRD Lab owns a project end to end — leading it from question to publication, with guidance from Christina and the wider group."
+---
+
+<!-- Mission as a bold statement -->
+<section class="mission-statement">
+  <p class="eyebrow" id="mission">Our mission</p>
+  <p class="mission-statement__text">To identify fundamental biological principles
+  of flight that can be optimized and refined to improve engineered systems —
+  within the framework of <em>bio-informed</em> research.</p>
+</section>
+
+<div class="note prose" style="margin:0 0 2.6rem;max-width:62rem">
+  <p class="card__tag">Why “bio-informed”?</p>
+  <p>Bio-informed design embeds scientifically supported biological principles into the
+  engineering design process. Rather than copying biological systems, it abstracts the
+  underlying principles, tests them through a hypothesis-driven approach, and applies them
+  where they improve engineering while simultaneously advancing biological understanding.</p>
+  <p style="margin-top:.7rem">We hold these claims to a transparent standard: every
+  bio-inspired idea should state its <strong>source of inspiration</strong>, its
+  <strong>level of mimicry</strong>, and the <strong>strength of the biological evidence</strong>
+  behind it (<a href="https://doi.org/10.1038/s44172-026-00641-4">Harvey 2026, <em>Communications Engineering</em></a>).</p>
+</div>
+
+<!-- Values as scannable cards -->
+<h2 id="values">What we value</h2>
+<div class="grid grid-3" style="margin-top:1.2rem">
+  <div class="card value-card">
+    <div class="card-head">
+      <span class="value-icon" aria-hidden="true"><img src="{{ '/assets/img/icons/value-multidisciplinary.svg' | relative_url }}" alt=""></span>
+      <h3>Multidisciplinary by design</h3>
+    </div>
+    <p>Integrating multiple backgrounds and perspectives gives a more holistic picture of
+    science. We collaborate across disciplines and bring varied tools and approaches into our work.</p>
+  </div>
+  <div class="card value-card">
+    <div class="card-head">
+      <span class="value-icon" aria-hidden="true"><img src="{{ '/assets/img/icons/value-bias.svg' | relative_url }}" alt=""></span>
+      <h3>Honest about bias</h3>
+    </div>
+    <p>Science and engineering are not purely objective. We work to recognize our own biases
+    so that we advance and communicate science accurately, transparently, and ethically.</p>
+  </div>
+  <div class="card value-card">
+    <div class="card-head">
+      <span class="value-icon" aria-hidden="true"><img src="{{ '/assets/img/icons/value-uncertainty.svg' | relative_url }}" alt=""></span>
+      <h3>Rigorous about uncertainty</h3>
+    </div>
+    <p>Life and science are uncertain. We quantify or estimate the uncertainty on every
+    experimental, numerical, and analytical method we use.</p>
+  </div>
+</div>
+
+<hr class="divider" style="margin:3rem 0">
+
+<h2 id="projects">Active projects</h2>
+<p class="lead prose">A snapshot of current member-led projects, grouped by the three
+themes above. Each is led end to end by a lab member — follow the link to meet them, or
+email them with questions. Recent papers appear automatically.</p>
+
+<div class="grid grid-2 projects-grid" style="margin-top:1.5rem">
+  {%- for p in site.data.research.projects -%}
+  <div class="card proj-card" id="project-{{ p.lead | slugify }}">
+    {%- if p.image -%}
+    <img class="proj-fig" src="{{ p.image | relative_url }}" alt="Figure from the project: {{ p.title }}" loading="lazy">
+    {%- endif -%}
+    <div class="proj-body">
+      {%- assign theme = site.data.research.themes | where: "id", p.theme | first -%}
+      {%- if theme %}<span class="card__tag">{{ theme.title }}</span>{% endif -%}
+      <h3>{{ p.title }}</h3>
+      <p>{{ p.blurb }}</p>
+
+      {%- comment -%} Papers explicitly linked to this project, looked up by DOI in the
+         publications data so the title/year stay in one place. {%- endcomment -%}
+      {%- if p.papers and p.papers.size > 0 -%}
+        {%- assign allpubs = site.data.publications | concat: site.data.publications_manual.conference -%}
+        <p class="proj-paper"><span class="proj-paper__label">Paper</span>
+        {%- for key in p.papers -%}
+          {%- assign match = allpubs | where_exp: "x", "x.doi contains key" | first -%}
+          {%- if match -%}<a href="{{ match.doi }}">{{ match.title }}</a> ({{ match.year }})
+          {%- else -%}<a href="https://doi.org/{{ key }}">{{ key }}</a>{%- endif -%}
+          {%- unless forloop.last %}; {% endunless -%}
+        {%- endfor -%}
+        </p>
+      {%- endif -%}
+
+      <p class="muted" style="font-size:var(--step--1);margin-top:.6rem">
+        {%- assign lead_anchor = p.lead | slugify -%}
+        Led by <a href="{{ '/people/' | relative_url }}#{{ lead_anchor }}">{{ p.lead }}</a>
+      </p>
+      {%- if p.contact -%}
+      <p style="margin-top:.9rem;margin-bottom:0">
+        <a class="btn btn--ghost" style="padding:.4rem .9rem;font-size:var(--step--1)"
+           href="mailto:{{ p.contact }}?subject={{ p.title | uri_escape }}">Ask the lead &rarr;</a>
+      </p>
+      {%- endif -%}
+    </div>
+  </div>
+  {%- endfor -%}
+</div>
+
+<p class="muted" style="font-size:var(--step--1);margin-top:1.5rem">Project figures
+are from lab members' own work or presentations; attribution should be given appropriately.</p>

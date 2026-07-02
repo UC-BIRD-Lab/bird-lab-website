@@ -1,0 +1,52 @@
+---
+layout: default
+---
+{%- assign theme = site.data.research.themes | where: "id", page.theme | first -%}
+<div class="page-head">
+  <div class="container">
+    <p class="breadcrumbs"><a href="{{ '/research/#projects' | relative_url }}">&larr; All projects</a></p>
+    <p class="eyebrow">{% if theme %}{{ theme.title }}{% else %}Research project{% endif %}</p>
+    <h1>{{ page.title }}</h1>
+    <p class="project-meta">
+      <span class="status status--{{ page.status | default: 'active' }}">{{ page.status | default: 'active' | replace: '-', ' ' }}</span>
+      {%- if page.lead %} · Lead: {{ page.lead }}{% if page.contact %} (<a href="mailto:{{ page.contact }}">email</a>){% endif %}{% endif -%}
+    </p>
+  </div>
+</div>
+
+<div class="section">
+  <div class="container project-page">
+    {%- if page.summary %}<p class="lead prose">{{ page.summary }}</p>{% endif -%}
+
+    {%- if page.image -%}
+    <figure class="figure" style="margin:1.6rem 0">
+      <img src="{{ page.image | relative_url }}" alt="Figure from the project: {{ page.title }}" loading="lazy">
+      {%- if page.figure_caption %}<figcaption>{{ page.figure_caption }}</figcaption>{% endif -%}
+    </figure>
+    {%- endif -%}
+
+    {%- comment -%} The story: each block renders only when the lead has filled it in. {%- endcomment -%}
+    {%- if page.question or page.approach or page.finding -%}
+    <div class="story prose">
+      {%- if page.question %}<div class="story-step"><h2>The question</h2><p>{{ page.question }}</p></div>{% endif -%}
+      {%- if page.approach %}<div class="story-step"><h2>Our approach</h2><p>{{ page.approach }}</p></div>{% endif -%}
+      {%- if page.finding %}<div class="story-step"><h2>What we're finding</h2><p>{{ page.finding }}</p></div>{% endif -%}
+    </div>
+    {%- endif -%}
+
+    {%- comment -%} Optional free-form body below the structured story. {%- endcomment -%}
+    {%- assign body = content | strip -%}
+    {%- if body != "" -%}<div class="prose" style="margin-top:1.4rem">{{ content }}</div>{% endif -%}
+
+    {%- if page.paper -%}
+    <p style="margin-top:1.6rem"><a class="btn btn--primary" href="{{ page.paper }}">Read the related paper &rarr;</a></p>
+    {%- endif -%}
+
+    <hr class="divider" style="margin:2.4rem 0 1.2rem">
+    <p class="muted" style="font-size:var(--step--1)">
+      {%- if page.status == "completed" %}Completed{% if page.updated %} {{ page.updated }}{% endif %}.{% else %}Active project.{% endif %}
+      {%- if page.updated %} Last updated {{ page.updated }}.{% endif %}
+      {%- if page.contact %} Questions? <a href="mailto:{{ page.contact }}">Contact {{ page.lead }}</a>.{% endif -%}
+    </p>
+  </div>
+</div>

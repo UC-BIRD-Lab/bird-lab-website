@@ -1,0 +1,13 @@
+{%- comment -%} Cute badge for a news/update type. Pass type=. Used on News + Home. {%- endcomment -%}
+{%- case include.type -%}
+{%- when "award" -%}<span class="ev-icon" role="img" aria-label="Award">🏆</span>
+{%- when "paper" -%}<span class="ev-icon" role="img" aria-label="Paper">📄</span>
+{%- when "talk" -%}<span class="ev-icon" role="img" aria-label="Talk">🎤</span>
+{%- when "funding" -%}<span class="ev-icon" role="img" aria-label="Funding">💰</span>
+{%- when "build" -%}<span class="ev-icon" role="img" aria-label="Build">🏗️</span>
+{%- when "service" -%}<span class="ev-icon" role="img" aria-label="Service">🤝</span>
+{%- when "people" -%}<span class="ev-icon" role="img" aria-label="People">👋</span>
+{%- when "travel" -%}<span class="ev-icon" role="img" aria-label="Travel">✈️</span>
+{%- when "graduation" -%}<span class="ev-icon" role="img" aria-label="Graduation">🎓</span>
+{%- else -%}<span class="ev-icon" role="img" aria-label="Update">🐦</span>
+{%- endcase -%}

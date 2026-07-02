@@ -1,0 +1,65 @@
+{%- comment -%} Renders one person card. Pass: include.p (member), include.badge (show the bird). {%- endcomment -%}
+{%- assign p = include.p -%}
+{%- assign parts = p.name | remove: "Dr. " | split: " " -%}
+{%- assign initials = "" -%}
+{%- for w in parts -%}
+  {%- if forloop.first or forloop.last -%}
+    {%- assign ch = w | slice: 0 -%}
+    {%- assign initials = initials | append: ch -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- comment -%} Normalize the role into one key (matches the People legend chips), then
+   pick its bird. Order matters: "Visiting Undergraduate…" resolves to visiting, not undergrad. {%- endcomment -%}
+{%- assign rl = p.role | downcase -%}
+{%- assign role_key = "" -%}
+{%- if rl contains "postdoc" -%}{%- assign role_key = "postdoc" -%}
+{%- elsif rl contains "visiting" -%}{%- assign role_key = "visiting" -%}
+{%- elsif rl contains "undergrad" -%}{%- assign role_key = "undergrad" -%}
+{%- elsif rl contains "phd" or rl contains "ph.d" or rl contains "doctoral" -%}{%- assign role_key = "phd" -%}
+{%- elsif rl contains "msc" or rl contains "m.s" or rl contains "master" -%}{%- assign role_key = "msc" -%}
+{%- elsif rl contains "professor" or rl contains "director" -%}{%- assign role_key = "pi" -%}
+{%- endif -%}
+{%- assign role_icon = "" -%}
+{%- if include.badge -%}
+  {%- assign role_icon = p.role_icon -%}
+  {%- unless role_icon -%}
+    {%- case role_key -%}
+      {%- when "postdoc" -%}{%- assign role_icon = "🦉" -%}
+      {%- when "visiting" -%}{%- assign role_icon = "🕊️" -%}
+      {%- when "undergrad" -%}{%- assign role_icon = "🐥" -%}
+      {%- when "phd" -%}{%- assign role_icon = "🦢" -%}
+      {%- when "msc" -%}{%- assign role_icon = "🦜" -%}
+      {%- when "pi" -%}{%- assign role_icon = "🦅" -%}
+    {%- endcase -%}
+  {%- endunless -%}
+{%- endif -%}
+<div class="person" id="{{ p.name | slugify }}" data-role="{{ role_key }}">
+  <div class="avatar-wrap">
+    {%- if p.photo -%}
+      <img class="avatar" src="{{ p.photo | relative_url }}" alt="{{ p.name }}" loading="lazy" width="110" height="110">
+    {%- else -%}
+      <div class="avatar" role="img" aria-label="{{ p.name }}">{{ initials | upcase }}</div>
+    {%- endif -%}
+    {%- if role_icon and role_icon != "" -%}<span class="role-pip" data-role="{{ role_key }}" aria-hidden="true">{{ role_icon }}</span>{%- endif -%}
+  </div>
+  <h3>{{ p.name }}</h3>
+  <p class="role">{{ p.role }}{% if p.pronouns %} · {{ p.pronouns }}{% endif %}</p>
+  {%- if p.field %}<p class="field-tags">{%- assign fields = p.field | split: "," -%}{%- for fld in fields -%}<span class="field-tag">{{ fld | strip }}</span>{%- endfor -%}</p>{% endif -%}
+  {%- if p.awards -%}
+  <div class="person-awards">
+    <span class="award__icon" aria-hidden="true">🏆</span>
+    <span class="award__list">{%- for aw in p.awards -%}<span class="award">{{ aw }}</span>{%- endfor -%}</span>
+  </div>
+  {%- endif -%}
+  {%- if p.note %}<p class="muted" style="font-size:var(--step--1)">{{ p.note }}</p>{% endif -%}
+  {%- assign my_project = site.data.research.projects | where: "lead", p.name | first -%}
+  {%- if my_project %}<p class="person-project"><a href="{{ '/research/' | relative_url }}#project-{{ p.name | slugify }}">View research project &rarr;</a></p>{% endif -%}
+  <p class="links">
+    {%- if p.email %}<a href="mailto:{{ p.email }}" aria-label="Email {{ p.name }}"><img src="{{ '/assets/img/icons/link-email.svg' | relative_url }}" alt=""></a>{% endif -%}
+    {%- if p.website %}<a href="{{ p.website }}" rel="noopener" aria-label="{{ p.name }} — website"><img src="{{ '/assets/img/icons/link-website.svg' | relative_url }}" alt=""></a>{% endif -%}
+    {%- if p.scholar %}<a href="{{ p.scholar }}" rel="noopener" aria-label="{{ p.name }} — Google Scholar"><img src="{{ '/assets/img/icons/link-scholar.svg' | relative_url }}" alt=""></a>{% endif -%}
+    {%- if p.orcid %}<a href="https://orcid.org/{{ p.orcid }}" rel="noopener" aria-label="{{ p.name }} — ORCID"><img src="{{ '/assets/img/icons/link-orcid.svg' | relative_url }}" alt=""></a>{% endif -%}
+    {%- if p.linkedin %}<a href="{{ p.linkedin }}" rel="noopener" aria-label="{{ p.name }} — LinkedIn"><img src="{{ '/assets/img/icons/link-linkedin.svg' | relative_url }}" alt=""></a>{% endif -%}
+    {%- if p.github %}<a href="{{ p.github }}" rel="noopener" aria-label="{{ p.name }} — GitHub"><img src="{{ '/assets/img/icons/link-github.svg' | relative_url }}" alt=""></a>{% endif -%}
+  </p>
+</div>

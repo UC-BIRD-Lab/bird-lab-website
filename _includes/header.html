@@ -1,0 +1,26 @@
+<header class="site-header">
+  <nav class="container nav" aria-label="Primary">
+    <a class="nav__brand" href="{{ '/' | relative_url }}" aria-label="BIRD Lab — home">
+      <img class="nav__logo" src="{{ '/assets/img/logo-wordmark.svg' | relative_url }}" alt="BIRD Lab">
+    </a>
+
+    <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-links">
+      <span class="visually-hidden">Toggle menu</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+
+    <div class="nav__links" id="nav-links">
+      {%- assign cur = page.url -%}
+      {%- for item in site.data.navigation -%}
+        {%- assign active = false -%}
+        {%- if item.url == "/" and cur == "/" -%}{%- assign active = true -%}{%- endif -%}
+        {%- if item.url != "/" and cur contains item.url -%}{%- assign active = true -%}{%- endif -%}
+        <a href="{{ item.url | relative_url }}"
+           class="{% if item.cta %}nav__cta{% endif %}"
+           {% if active %}aria-current="page"{% endif %}>{{ item.title }}</a>
+      {%- endfor -%}
+    </div>
+  </nav>
+</header>

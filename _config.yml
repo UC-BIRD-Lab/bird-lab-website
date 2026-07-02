@@ -1,0 +1,94 @@
+# ─────────────────────────────────────────────────────────────
+#  BIRD Lab — Jekyll configuration
+#  Bio-Informed Research & Design Lab · UC Davis
+# ─────────────────────────────────────────────────────────────
+
+title: "BIRD Lab"
+tagline: "Bio-Informed Research & Design"
+description: >-
+  The BIRD Lab at UC Davis studies how birds fly in order to build better
+  aircraft. We identify fundamental biological principles of flight and refine
+  them to improve engineered systems through bio-informed research.
+
+# Public URL. Update `url` to your final domain before launch.
+# If hosting at a project path (e.g. https://USER.github.io/REPO), set baseurl: "/REPO".
+url: "https://birdlab.ucdavis.edu"
+baseurl: ""
+
+lab:
+  full_name: "Bio-Informed Research & Design Lab"
+  institution: "University of California, Davis"
+  pi: "Dr. Christina Harvey"
+  pi_email: "harvey@ucdavis.edu"
+  orcid: "0000-0002-2830-0844"
+  scholar: "https://scholar.google.com/citations?hl=en&user=_uRCRPgAAAAJ"
+  location: "Department of Mechanical & Aerospace Engineering, UC Davis, Davis, CA"
+  # PI / lab links surfaced in the footer and Data & Code section.
+  linkedin: "https://www.linkedin.com/in/Christina-A-Harvey"
+  github_org: "https://github.com/UC-BIRD-Lab"
+  # FigShare (or other data repository) for published data/code.
+  figshare_url: "https://figshare.com/authors/Christina_Harvey/4766004"
+
+# Default social-share (Open Graph) image used by jekyll-seo-tag.
+# Generate assets/img/og-image.jpg with apply.sh (see CONTENT-GUIDE.md) before launch.
+image: /assets/img/og-image.jpg
+
+# Optional image assets. 
+# Pages only render the image when its path is set, so the build never references a missing file.
+assets:
+  # Lab group photo. Powers BOTH the People-page group photo
+  # and the Home "In the field" cinematic band.
+  lab_photo: "/assets/img/lab/CALIopening-photo-edited-2026.jpg"
+  # Playful wind-tunnel candid shown as the "lab culture" moment on the Join page.
+  culture_photo: "/assets/img/lab/labphoto-silly-2024.jpg"
+
+# Private member workspace (Notion). Replace with the real URL at launch.
+member_portal_url: "https://app.notion.com/p/birdlab/Internal-Lab-Pages-6d6f4c7465a44de5a518a5a6786593f1?source=copy_link"
+
+# Undergraduate interest form
+undergrad_form_url: "https://forms.gle/TsddkYBtYMH5zkt78"
+
+# ── Build settings ───────────────────────────────────────────
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+  syntax_highlighter: rouge
+permalink: pretty
+sass:
+  style: compressed
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# ── Collections ──────────────────────────────────────────────
+collections:
+  guide:
+    output: true
+    permalink: /lab-guide/:name/
+  updates:
+    output: true
+    permalink: /news/:name/
+
+defaults:
+  - scope: { path: "", type: "guide" }
+    values: { layout: "wiki" }
+  - scope: { path: "", type: "updates" }
+    values: { layout: "update" }
+  - scope: { path: "" }
+    values: { layout: "page" }
+
+exclude:
+  - README.md
+  - DEPLOYMENT.md
+  - MAINTENANCE.md
+  - ARCHITECTURE.md
+  - CONTENT-GUIDE.md
+  - CONTRIBUTING.md
+  - scripts/
+  - Gemfile
+  - Gemfile.lock
+  - vendor/
+  - .github/

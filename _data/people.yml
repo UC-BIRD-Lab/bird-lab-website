@@ -1,0 +1,273 @@
+# ─────────────────────────────────────────────────────────────
+#  PEOPLE
+#
+#  PHOTO (optional). Two ways, both end with a file in assets/img/people/:
+#    • Easiest: drop an already-small square JPG straight into
+#      assets/img/people/  (e.g. assets/img/people/jane-doe.jpg).
+#    • Or: drop a large original in assets/img/people/_raw/ and run
+#      `bash scripts/apply-images.sh` to auto-crop/optimize it into the folder.
+#    Then add:  photo: /assets/img/people/jane-doe.jpg
+#    No photo = a clean initials avatar.
+#
+#  ROLE BADGE (the bird) is inferred automatically from each person's `role`
+#  text: Postdoc 🦉 · PhD 🦢 · MSc 🦜 · Undergrad 🐥 · Visiting 🕊️ · PI 🦅.
+#  Override one with  role_icon: "🦅"  if needed.
+#
+#  FIELD (optional) — shows small discipline tag(s) so the lab's engineering/
+#  biology mix is visible. Comma-separate for more than one, e.g.
+#    field: "Aerospace, Animal Behavior"
+# ─────────────────────────────────────────────────────────────
+
+groups:
+  - id: pi
+    title: Principal Investigator
+    members:
+      - name: Dr. Christina Harvey
+        aliases: ["Dr. Harvey"]
+        role: Assistant Professor · Lab Director
+        pronouns: she/her
+        field: "Mechanical Engineering, Zoology, Aerospace Engineering"
+        start: 2022
+        photo: /assets/img/people/christina-harvey.jpg
+        email: harvey@ucdavis.edu
+        website: https://mae.ucdavis.edu/people/christina-harvey
+        scholar: https://scholar.google.com/citations?hl=en&user=_uRCRPgAAAAJ
+        orcid: 0000-0002-2830-0844
+        linkedin: https://www.linkedin.com/in/Christina-A-Harvey
+        note: >-
+          Mechanical & Aerospace Engineering and Animal Behavior. 2023 Packard
+          Fellow. PhD Aerospace Engineering (Michigan), MSc Zoology (UBC),
+          BEng Mechanical Engineering (McGill).
+
+  - id: postdoc
+    title: Postdoctoral Scholars
+    members:
+      - name: Dr. Alfonso Martínez-Carmena
+        aliases: ["Dr. Alfonso Martínez"]
+        role: Postdoctoral Scholar
+        pronouns: he/him
+        field: "Aerospace Engineering"
+        start: 2023
+        photo: /assets/img/people/alfonso-martinez.jpg
+        email: alfmartinez@ucdavis.edu
+        orcid: 0000-0002-5593-9002
+        website: https://www.ardmoth.org/
+        linkedin: https://uk.linkedin.com/in/amartinezc
+        note: Photogrammetry · Raptor perching behavior.
+
+  - id: phd
+    title: PhD Researchers
+    members:
+      - name: Kaleb Bordner
+        role: PhD Candidate
+        pronouns: he/him
+        field: "Aerospace Engineering"
+        start: 2023
+        photo: /assets/img/people/kaleb-bordner.jpg
+        email: kkbordner@ucdavis.edu
+        note: Bird-informed morphing tail flight dynamics & control.
+        awards:
+          - "ORAU Fellowship"
+      - name: Francisco Jackson
+        role: PhD Candidate
+        pronouns: he/him
+        field: "Physics"
+        start: 2023
+        photo: /assets/img/people/francisco-jackson.jpg
+        email: fajackson@ucdavis.edu
+        linkedin: http://www.linkedin.com/in/francisco-agustus-jackson-ucd-undergrad-b90ba7194
+        note: Aerodynamics of bird perching.
+        awards:
+          - "ORAU Fellowship"
+      - name: Huanglun (Adam) Zhu
+        aliases: ["Adam Zhu"]
+        role: PhD Researcher
+        pronouns: he/him
+        field: "Mech + Aero Engineering"
+        start: 2023
+        photo: /assets/img/people/huanglun-zhu.jpg
+        email: lszhu@ucdavis.edu
+        orcid: 0009-0003-8318-3657
+        linkedin: https://www.linkedin.com/in/adam-zhu-huanglun/
+        note: Nares-inspired pressure sensing for formation flight.
+      - name: Alex Fillman
+        role: PhD Researcher
+        pronouns: she/her
+        field: "Mech + Aero Engineering"
+        start: 2024
+        photo: /assets/img/people/alex-fillman.jpg
+        email: alfillman@ucdavis.edu
+        linkedin: http://linkedin.com/in/alex-fillman
+        note: Range-of-motion quantification.
+        awards:
+          - "Maury Hull Fellowship"
+          - "N&M Sarigul-Klijn Award"
+      - name: Faiza Alvi
+        role: PhD Researcher
+        pronouns: she/her
+        field: "Mech + Aero Engineering"
+        start: 2024
+        photo: /assets/img/people/faiza-alvi.jpg
+        email: falvi@ucdavis.edu
+        linkedin: https://www.linkedin.com/in/faizaalvi/
+        note: Avian airfoil geometry.
+        awards:
+          - "Cota-Robles Fellowship"
+      - name: Cooper Cook
+        role: PhD Researcher
+        pronouns: he/him
+        field: "Mech + Aero Engineering"
+        start: 2024
+        photo: /assets/img/people/cooper-cook.jpg
+        email: ctcook@ucdavis.edu
+        note: Morphing aerodynamics.
+      - name: Joshua Booth
+        role: PhD Researcher
+        pronouns: he/him
+        field: "Mech + Aero Engineering"
+        start: 2024
+        photo: /assets/img/people/joshua-booth.jpg
+        email: jmbooth@ucdavis.edu
+        note: Maneuverability & agility in morphing-wing dynamics.
+#  - id: msc
+#    title: Masters students  
+#    members:
+  - id: undergrad
+    title: Undergraduate Researchers
+    members:
+      - name: Ava Lewis
+        role: Undergraduate Researcher
+        start: 2023
+        pronouns: she/her
+        field: "Mech + Aero Engineering"
+        photo: /assets/img/people/ava-lewis.jpg
+        email: alulewis@ucdavis.edu
+        awards:
+          - "AIAA Rising Star in Aerospace"
+      - name: Narihide Fujita
+        role: Undergraduate Researcher
+        start: 2025
+        pronouns: he/him
+        field: "Mech + Aero Engineering"
+        photo: /assets/img/people/narihide-fujita.jpg
+        email: ntfujita@ucdavis.edu
+        linkedin: https://www.linkedin.com/in/narihidefujita
+      - name: Haotian Zhang
+        role: Undergraduate Researcher
+        start: 2026
+        pronouns: he/him
+        field: "Computer Science"
+        photo: /assets/img/people/haotian-zhang.jpg
+        email: dhtzhang@ucdavis.edu
+        linkedin: https://www.linkedin.com/in/haotian-zhang-32b153350
+      - name: Ryuya Iwase
+        role: Undergraduate Researcher
+        start: 2026
+        field: "Mech + Aero Engineering"
+        photo: /assets/img/people/ryuya-iwase.jpg
+      - name: Wyatt Liu
+        role: Undergraduate Researcher
+        start: 2026
+        field: "Mech + Aero Engineering"
+      - name: Prabhat Karthikeyan
+        role: Undergraduate Researcher
+        start: 2026
+        pronouns: he/him
+        field: "Mech + Aero Engineering"
+        photo: /assets/img/people/prabhat-karthikeyan.jpg
+        email: pkarthikeyan@ucdavis.edu
+      - name: Haelie Tweet
+        role: Undergraduate Researcher
+        start: 2026
+        field: "Mech + Aero Engineering"
+      - name: Zak Conte
+        role: Undergraduate Researcher
+        start: 2026
+        field: "Mech + Aero Engineering"
+      - name: Ananya Bansal
+        role: Undergraduate Researcher
+        start: 2026
+        field: "Mech + Aero Engineering"
+      - name: Elliot Crowder
+        role: Visiting Undergraduate Researcher · Sacramento City College
+        start: 2026
+        pronouns: he/him
+        field: "Computer Science"
+        photo: /assets/img/people/elliot-crowder.jpg
+      - name: Emiliano Godinez
+        role: Visiting Undergraduate Researcher · Folsom Lake College
+        start: 2026
+        pronouns: he/him
+        field: "Mechanical Engineering"
+        photo: /assets/img/people/emiliano-godinez.jpg
+      - name: Adam Halford
+        role: Visiting Undergraduate Researcher · West Point Academy
+        start: 2026
+        pronouns: he/him
+        field: "Mechanical Engineering"
+        photo: /assets/img/people/adam-halford.jpg
+
+# Collaborators and affiliated researchers outside the core group.
+affiliates:
+  title: Collaborators & Partners
+  members:
+    - name: Dr. Michelle Hawkins
+      role: Emeritus Professor · UC Davis
+      pronouns: she/her
+      field: "Veterinary Medicine"
+      photo: /assets/img/people/michelle-hawkins.jpg
+      orcid: 0000-0003-2561-4079
+      website: https://ohi.vetmed.ucdavis.edu/people/michelle-hawkins
+      note: Co-director, Center for Animal Locomotion and Innovation (CALI).
+    - name: Dr. Kevin Haughn
+      role: Assistant Professor · Rose-Hulman Institute of Technology
+      pronouns: he/him
+      field: "Aerospace Engineering"
+      photo: /assets/img/people/kevin-haughn.jpg
+      orcid: 0000-0002-8219-8983
+      website: https://sites.google.com/umich.edu/kevin-haughn/home
+      linkedin: https://www.linkedin.com/in/kevin-haughn-20abb491/
+    - name: Dr. Lydia France
+      role: Schmidt AI in Science Fellow · University of Oxford
+      pronouns: she/her
+      field: "Zoology"
+      photo: /assets/img/people/lydia-france.jpg
+      orcid: 0000-0003-4392-568X
+      website: https://lydiafrance.github.io/LydiaFrance/
+      linkedin: https://www.linkedin.com/in/lydia-france-139864a3
+    - name: California Raptor Center
+      role: Rehabilitation, Education, and Research 
+      photo: /assets/img/partners/crc.jpg
+      website: https://crc.vetmed.ucdavis.edu
+    - name: California Hawking Club
+      role: Falconers
+      photo: /assets/img/partners/chc.jpg
+      website: https://www.calhawkingclub.org
+    - name: Museum of Wildlife and Fish Biology
+      role: Biologists, Ecologists, Museum Curators
+      photo: /assets/img/partners/mwfb.jpg
+      website: https://mwfb.ucdavis.edu/#about
+
+# Past members. `role` = position held in the lab; `now` = current
+# position / destination (fill in as you learn where folks land).
+alumni:
+  title: Alumni
+  members:
+    - { name: Benjamin Tai-Brownlee, role: "Undergraduate Researcher (first in lab)", joined: 2022, now: "Boeing" }
+    - { name: Rowan Glenn, role: "Undergraduate Researcher", joined: 2022, now: "Northwood" }
+    - { name: Tejas Lotay, role: "Undergraduate Researcher", joined: 2023, now: "NASA Ames" }
+    - { name: Lucas Dahlke, role: "Undergraduate Researcher", joined: 2023, now: "UCLA" }
+    - { name: Bryan Tiang, role: "Undergraduate Researcher", joined: 2023, now: "Stanford University" }
+    - { name: Jackie The, role: "Undergraduate Researcher", joined: 2023, now: "Industry" }
+    - { name: Alex Kerlee, role: "Undergraduate Researcher", joined: 2023, now: "Wish" }
+    - { name: Ellie Hintzman, role: "Undergraduate Researcher", joined: 2024, now: "Industry" }
+    - { name: Logan Reuter, role: "Undergraduate Researcher", joined: 2024, now: "Ultima Genomics" }
+    - { name: Stevi Dunn, role: "Undergraduate Researcher", joined: 2024, now: "Lucid" }
+    - { name: Gaurav Dhirar, role: "Undergraduate Researcher", joined: 2024, now: "Academia" }
+    - { name: Isa Khalak, role: "Undergraduate Researcher", joined: 2024, now: "UC Davis" }
+    - { name: Susie Benner, role: "Undergraduate Researcher", joined: 2024, now: "UC Davis" }
+    - { name: Meghna Tirumalai, role: "Undergraduate Researcher", joined: 2026, now: "" }
+    - { name: Adrian Chan, role: "Undergraduate Researcher", now: "Stanford University" }
+    - { name: Kiran Weston, role: "Visiting Student · University of Oxford", joined: 2023, now: "Newton Consulting" }
+    - { name: Francesca Ciocca, role: "Visiting Student · UBC", joined: 2023, now: "Industry" }
+    - { name: Mija Jovchevska, role: "Visiting Researcher (JEB ECR Fellow)", joined: 2024, now: "CU Boulder" }

@@ -1,0 +1,18 @@
+---
+layout: default
+---
+{% unless page.hide_header %}
+<div class="page-head">
+  <div class="container">
+    {% if page.eyebrow %}<p class="eyebrow">{{ page.eyebrow }}</p>{% endif %}
+    <h1>{{ page.title }}</h1>
+    {% if page.subtitle %}<p class="lead prose">{{ page.subtitle }}</p>{% endif %}
+  </div>
+</div>
+{% endunless %}
+
+<div class="section">
+  <div class="container {% if page.prose %}prose{% endif %}">
+    {{ content }}
+  </div>
+</div>

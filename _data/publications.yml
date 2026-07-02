@@ -1,0 +1,179 @@
+# ────────────────────────────────────────────────────────────
+#  PUBLICATIONS — peer-reviewed journal articles
+#
+#  ⚙️  THIS FILE IS AUTO-MANAGED by scripts/update_publications.py.
+#  The "Update publications" GitHub Action opens a pull request when new works
+#  appear on OpenAlex for the lab's ORCID. Review and merge it. You may also
+#  hand-edit any entry to fix a detail; future runs preserve existing DOIs.
+#  Conference papers/posters/talks live in publications_manual.yml.
+#
+#  Fields: title, authors, venue, year, type (journal), doi (URL)
+#  Keep newest first.
+# ────────────────────────────────────────────────────────────
+
+- title: "Stability shifts in gliding flight: hawks morph from an unstable to stable state when navigating a gap"
+  authors: "K. Weston, H. Zhu, G. K. Taylor, C. Harvey"
+  venue: "Journal of the Royal Society Interface"
+  year: 2026
+  type: journal
+  doi: "https://doi.org/10.1098/rsif.2025.0868"
+
+- title: "How bio-inspired is your design? A transparent reporting framework"
+  authors: "C. Harvey"
+  venue: "Communications Engineering"
+  year: 2026
+  type: journal
+  doi: "https://doi.org/10.1038/s44172-026-00641-4"
+
+- title: "Dynamic Morphospaces for Animal Locomotion: A Case Study in Bird Flight"
+  authors: "L. A. France, C. Harvey, G. K. Taylor"
+  venue: "Integrative and Comparative Biology"
+  year: 2026
+  type: journal
+  doi: "https://doi.org/10.1093/icb/icag058"
+
+- title: "Tuning for feather loss: wing–tail kinematic adjustments of a moulting red-tailed hawk during perching flight"
+  authors: "A. Martinez, M. G. Hawkins, C. Harvey"
+  venue: "Journal of The Royal Society Interface"
+  year: 2026
+  type: journal
+  doi: "https://doi.org/10.1098/rsif.2025.1082"
+
+- title: "Experimental Study of Dynamic Stall of Porous Avian-Inspired Airfoils"
+  authors: "F. A. Jackson, J. Hrynuk, C. Harvey"
+  venue: "AIAA AVIATION"
+  year: 2026
+  type: conference
+  doi: "https://doi.org/10.2514/6.2026-4555"
+
+- title: "Longitudinal Linear Parameter Varying System Modeling and Analysis of an Avian-Inspired Tail Morphing UAV"
+  authors: "K. Bordner, C. Cook, T. C. Henry, K. P. Haughn, C. Harvey"
+  venue: "AIAA AVIATION"
+  year: 2026
+  type: conference
+  doi: "https://doi.org/10.2514/6.2026-4380"
+
+- title: "Longer wing bones in warmer climates suggest a role of thermoregulation in bird wing evolution"
+  authors: "B. C. Weeks, C. Harvey, J. A. Tobias, C. Sheard, Z. Zhou, D. F. Fouhey"
+  venue: "Global Ecology and Biogeography"
+  year: 2025
+  type: journal
+  doi: "https://doi.org/10.1111/geb.70033"
+
+- title: "Distributed Pressure Sensing for Analyzing Aerodynamic Characteristics in Avian-Like Formation Flight"
+  authors: "H. Zhu, K. Bordner, R. J. Bomphrey, J. R. Usherwood, K. Haughn, C. Harvey"
+  venue: "AIAA SciTech Forum"
+  year: 2025
+  type: conference
+  doi: "https://doi.org/10.2514/6.2025-1460"
+
+- title: "Experimental Study of Dynamic Stall of Avian Inspired Airfoils"
+  authors: "F. A. Jackson, S. Rovani, J. T. Hrynuk, C. Harvey"
+  venue: "AIAA SciTech Forum"
+  year: 2025
+  type: conference
+  doi: "https://doi.org/10.2514/6.2025-1074"
+
+- title: "Deep learning reduces sensor requirements for gust rejection on a small uncrewed aerial vehicle morphing wing"
+  authors: "K. P. T. Haughn, C. Harvey, D. J. Inman"
+  venue: "Communications Engineering"
+  year: 2024
+  type: journal
+  doi: "https://doi.org/10.1038/s44172-024-00201-8"
+
+- title: "Joint extension speed dictates bio-inspired morphing trajectories for optimal longitudinal flight dynamics"
+  authors: "C. Harvey"
+  venue: "Journal of the Royal Society Interface"
+  year: 2024
+  type: journal
+  doi: "https://doi.org/10.1098/rsif.2023.0734"
+
+- title: "Analysis of bird wing airfoil aerodynamic efficiency"
+  authors: "R. K. Glenn, L. B. Dahlke, A. Engilis, C. Harvey"
+  venue: "AIAA SciTech Forum"
+  year: 2024
+  type: conference
+  doi: "https://doi.org/10.2514/6.2024-1127"
+
+- title: "Lessons from natural flight for aviation: then, now and tomorrow"
+  authors: "C. Harvey, G. de Croon, G. K. Taylor, R. J. Bomphrey"
+  venue: "Journal of Experimental Biology"
+  year: 2023
+  type: journal
+  doi: "https://doi.org/10.1242/jeb.245409"
+
+- title: "A longitudinal linear parameter-varying model of a gliding gull during wing morphing"
+  authors: "C. Harvey"
+  venue: "AIAA SCITECH 2023 Forum"
+  year: 2023
+  type: journal
+  doi: "https://doi.org/10.2514/6.2023-0827"
+
+- title: "Nature, smart structures, and morphing UAVs"
+  authors: "D. J. Inman, K. Haughn, C. Harvey"
+  venue: ""
+  year: 2023
+  type: journal
+  doi: "https://doi.org/10.1117/12.2666179"
+
+- title: "Birds can transition between stable and unstable states via wing morphing"
+  authors: "C. Harvey, V. B. Baliga, J. C. M. Wong, D. L. Altshuler, D. J. Inman"
+  venue: "Nature"
+  year: 2022
+  type: journal
+  doi: "https://doi.org/10.1038/s41586-022-04477-8"
+
+- title: "A review of avian-inspired morphing for UAV flight control"
+  authors: "C. Harvey, L. L. Gamble, C. R. Bolander, D. F. Hunsaker, J. J. Joo, D. J. Inman"
+  venue: "Progress in Aerospace Sciences"
+  year: 2022
+  type: journal
+  doi: "https://doi.org/10.1016/j.paerosci.2022.100825"
+
+- title: "Gull dynamic pitch stability is controlled by wing morphing"
+  authors: "C. Harvey, D. J. Inman"
+  venue: "Proceedings of the National Academy of Sciences"
+  year: 2022
+  type: journal
+  doi: "https://doi.org/10.1073/pnas.2204847119"
+
+- title: "Gull-inspired joint-driven wing morphing allows adaptive longitudinal flight control"
+  authors: "C. Harvey, V. B. Baliga, C. D. Goates, D. F. Hunsaker, D. J. Inman"
+  venue: "Journal of the Royal Society Interface"
+  year: 2021
+  type: journal
+  doi: "https://doi.org/10.1098/rsif.2021.0132"
+
+- title: "Aerodynamic efficiency of gliding birds vs. comparable UAVs: a review"
+  authors: "C. Harvey, D. J. Inman"
+  venue: "Bioinspiration & Biomimetics"
+  year: 2021
+  type: journal
+  doi: "https://doi.org/10.1088/1748-3190/abc86a"
+
+- title: "Load alleviation of feather-inspired compliant airfoils for instantaneous flow control"
+  authors: "L. L. Gamble, C. Harvey, D. J. Inman"
+  venue: "Bioinspiration & Biomimetics"
+  year: 2020
+  type: journal
+  doi: "https://doi.org/10.1088/1748-3190/ab9b6f"
+
+- title: "Control force required to morph the elbow and wrist in gulls"
+  authors: "C. Harvey, V. B. Baliga, D. J. Inman"
+  venue: "AIAA Scitech 2020 Forum"
+  year: 2020
+  type: journal
+  doi: "https://doi.org/10.2514/6.2020-1037"
+
+- title: "Wing morphing allows gulls to modulate static pitch stability during gliding"
+  authors: "C. Harvey, V. B. Baliga, P. Lavoie, D. L. Altshuler"
+  venue: "Journal of the Royal Society Interface"
+  year: 2019
+  type: journal
+  doi: "https://doi.org/10.1098/rsif.2018.0641"
+
+- title: "Pitch Control Effectiveness of the Avian Elbow and Wrist via a Numerical Lifting Line Analysis"
+  authors: "C. Harvey, V. B. Baliga, D. L. Altshuler, D. J. Inman"
+  venue: "AIAA Scitech 2019 Forum"
+  year: 2019
+  type: conference

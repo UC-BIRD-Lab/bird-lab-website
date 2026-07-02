@@ -1,0 +1,33 @@
+# ─────────────────────────────────────────────────────────────
+#  FUNDERS — shown in the "Supported by" band on the home page.
+#
+#  To show a logo: drop the image in assets/img/partners/ and set `logo:`
+#  to its path (uncomment the line). Without a logo, a clean wordmark is
+#  shown instead, so the band always looks finished.
+#  `short` is the acronym shown under the name. Keep names official.
+# ─────────────────────────────────────────────────────────────
+
+- name: "The David & Lucile Packard Foundation"
+  short: "The David & Lucile Packard Foundation"
+  url: "https://www.packard.org/"
+  logo: /assets/img/partners/packard.jpg
+
+- name: "DEVCOM Army Research Office"
+  short: "DEVCOM Army Research Office"
+  url: "https://www.arl.army.mil/"
+  logo: /assets/img/partners/arl.png
+
+- name: "Air Force Office of Scientific Research"
+  short: "Air Force Office of Scientific Research (AFOSR)"
+  url: "https://www.afrl.af.mil/AFOSR/"
+  logo: /assets/img/partners/afosr.jpg
+
+- name: "National Science Foundation"
+  short: "National Science Foundation (NSF)"
+  url: "https://www.nsf.gov/"
+  logo: /assets/img/partners/nsf.png
+
+- name: "CITRIS and the Banatao Institute"
+  short: "CITRIS and the Banatao Institute"
+  url: "https://citris-uc.org/"
+  logo: /assets/img/partners/citris.png

@@ -1,0 +1,74 @@
+---
+layout: page
+title: News & Updates
+eyebrow: Latest
+subtitle: "Milestones, papers, talks, funding, and build progress from the BIRD Lab — plus selected press coverage."
+---
+
+<!-- Lab milestones: a dot per month, that month's events listed below -->
+<section aria-labelledby="milestones-h">
+  <h2 id="milestones-h">Lab milestones</h2>
+  <div class="news-timeline">
+    {%- for yr in site.data.updates -%}
+    <h3 class="news-year">{{ yr.year }}</h3>
+    {%- assign months = yr.events | group_by: "date" -%}
+    <ul class="news-months">
+      {%- for m in months -%}
+      <li class="news-month">
+        <span class="news-month__label">{{ m.name }}</span>
+        <ul class="news-events">
+          {%- for e in m.items -%}
+          <li>{% include update-icon.html type=e.type %}<span class="ev-text">{% include link-names.html text=e.text %}</span></li>
+          {%- endfor -%}
+        </ul>
+      </li>
+      {%- endfor -%}
+    </ul>
+    {%- endfor -%}
+  </div>
+</section>
+
+<hr class="divider" style="margin:3.2rem 0">
+
+<!-- In the news: one cohesive press section — reach, highlights, then full archive -->
+<section id="in-the-news" aria-labelledby="press-h">
+  <p class="eyebrow">In the news</p>
+  <h2 id="press-h">Where our work has landed</h2>
+  {%- assign press_total = 0 -%}
+  {%- for yr in site.data.press -%}{%- assign press_total = press_total | plus: yr.items.size -%}{%- endfor -%}
+  <p class="lead prose">Our research has been covered in <strong>{{ press_total }}+ stories</strong> — from
+  <em>Nature</em> and <em>The Atlantic</em> to <em>Quanta</em> and <em>Aerospace&nbsp;America</em>. A few highlights:</p>
+
+  {%- comment -%} Featured cards come from _data/press.yml items marked `featured: true`. {%- endcomment -%}
+  {%- assign all_stories = "" | split: "" -%}
+  {%- for yr in site.data.press -%}{%- assign all_stories = all_stories | concat: yr.items -%}{%- endfor -%}
+  {%- assign featured = all_stories | where: "featured", true -%}
+  <div class="featured-grid" style="margin-top:1.6rem">
+    {%- for item in featured -%}
+    <a class="feature" href="{{ item.url }}" rel="noopener">
+      {%- if item.image -%}
+        {%- if item.image contains '://' -%}<img src="{{ item.image }}" alt="" loading="lazy">
+        {%- else -%}<img src="{{ item.image | relative_url }}" alt="" loading="lazy">{%- endif -%}
+      {%- endif -%}
+      <div class="feature-body">
+        <span class="src">{{ item.source }}</span>
+        <h3>{{ item.title }}</h3>
+      </div>
+    </a>
+    {%- endfor -%}
+  </div>
+
+  <details class="press-details" style="margin-top:1.8rem">
+    <summary>Browse all coverage by year</summary>
+    {%- for yr in site.data.press -%}
+    <h3 class="pub-year" style="font-size:var(--step-1)">{{ yr.year }}</h3>
+    <div class="press-list">
+      {%- for item in yr.items -%}
+      <a href="{{ item.url }}">{{ item.title }}<span class="src">{{ item.source }}</span></a>
+      {%- endfor -%}
+    </div>
+    {%- endfor -%}
+  </details>
+
+  <p class="muted" style="font-size:var(--step--1);margin-top:1rem">Card images are from lab research and facilities; headlines link to the original articles.</p>
+</section>

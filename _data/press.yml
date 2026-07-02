@@ -1,0 +1,173 @@
+# ─────────────────────────────────────────────────────────────
+#  IN THE NEWS — external press coverage. Newest year first.
+#  Add an item: title, url, source, year.
+#  Optional `doi:` — the DOI of the paper the story is about. When set, that
+#  paper on the Publications page shows a "In the news · N" badge counting its
+#  stories. Use the bare DOI, e.g.  doi: "10.1098/rsif.2025.0868"
+#
+#  Optional `featured: true` + `image:` — promotes a story to the big cards at
+#  the top of the News page. `image:` can be a local file (/assets/img/…) OR a
+#  direct URL to the article's own image, e.g.
+#    image: "https://example.com/story-hero.jpg"
+# ─────────────────────────────────────────────────────────────
+
+- year: 2026
+  items:
+    - title: "Center for Animal Locomotion and Innovation opens"
+      source: "UC Davis Engineering"
+      url: "https://engineering.ucdavis.edu/news/center-animal-locomotion-and-innovation-opens"
+      featured: true
+      image: /assets/img/facilities/cali.jpg
+    - title: "College of Engineering celebrates outstanding faculty for teaching, research"
+      source: "UC Davis Engineering"
+      url: "https://engineering.ucdavis.edu/news/college-engineering-celebrates-outstanding-faculty-teaching-research"
+    - title: "Why planes flying like geese could cut back on aviation emissions"
+      source: "Condé Nast Traveler"
+      url: "https://www.cntraveler.com/story/why-planes-flying-like-geese-could-cut-back-on-aviation-emissions"
+      doi: "10.2514/6.2025-1460"
+      featured: true
+      image: /assets/img/research/formation.jpg
+    - title: "Engineers, biologists capture the aerodynamic secret behind a hawk's mid-flight transformation"
+      source: "UC Davis Engineering"
+      url: "https://engineering.ucdavis.edu/news/engineers-biologists-capture-aerodynamic-secret-behind-hawks-mid-flight-transformation"
+      doi: "10.1098/rsif.2025.0868"
+      featured: true
+      image: /assets/img/research/perchaero.jpg
+    - title: "Jets, drones could become highly maneuverable using design, flight lessons from hawks"
+      source: "Interesting Engineering"
+      url: "https://interestingengineering.com/transportation/jets-drones-could-become-highly-maneuverable"
+      doi: "10.1098/rsif.2025.0868"
+    - title: "Hawk study shows potential lessons of bird flight"
+      source: "UC Davis"
+      url: "https://www.ucdavis.edu/news/hawk-study-shows-potential-lessons-bird-flight"
+      doi: "10.1098/rsif.2025.0868"
+    - title: "With U.S. Army funding, UC Davis flight center uses birds and new tech for aerospace research"
+      source: "Abridged"
+      url: "https://www.abridged.org/news/uc-davis-flight-research/"
+    - title: "UC Davis studies birds to build better drones"
+      source: "Davis Enterprise"
+      url: "https://www.davisenterprise.com/news/ucd-studies-birds-to-build-better-drones/article_2cc3a6f2-e87c-452b-93d2-2c22828bd4f7.html"
+    - title: "Bird flight research advances drone technology and wild raptor care"
+      source: "UC Davis"
+      url: "https://www.ucdavis.edu/curiosity/news/bird-flight-research-advances-technology-care"
+    - title: "Constellations of possibilities as an AIAA Rising Star"
+      source: "UC Davis MAE"
+      url: "https://mae.ucdavis.edu/news/constellations-possibilities-aiaa-rising-star"
+    - title: "Birds, wings and sonic booms: researchers adapt shapes to advance flight"
+      source: "Aerospace America"
+      url: "https://aerospaceamerica.aiaa.org/year-in-review/birds-wings-and-sonic-booms-researchers-adapt-shapes-to-advance-flight/"
+
+- year: 2025
+  items:
+    - title: "AI vision system reveals bird wings evolved for heat regulation, not just flight"
+      source: "Michigan News"
+      url: "https://news.umich.edu/ai-vision-system-reveals-bird-wings-evolved-for-heat-regulation-not-just-flight/"
+      doi: "10.1111/geb.70033"
+      featured: true
+      image: /assets/img/research/airfoil.jpg
+    - title: "AI vision system reveals bird wings evolved for heat regulation, not just flight"
+      source: "Phys.org"
+      url: "https://phys.org/news/2025-05-ai-vision-reveals-bird-wings.amp"
+      doi: "10.1111/geb.70033"
+    - title: "5 exciting projects coming to UC Davis"
+      source: "UC Davis Magazine"
+      url: "https://www.ucdavis.edu/magazine/5-exciting-projects-coming-uc-davis"
+
+- year: 2024
+  items:
+    - title: "Aeronautics-centered structural adaptivity shares the stage"
+      source: "Walsworth / SMASIS"
+      url: "https://digitaleditions.walsworth.com/article/Aeronautics-Centered+Structural+Adaptivity+Shares+the+Stage+with+Extraterrestrial+and+Transitional+Solutions/4895679/836684/article.html"
+    - title: "Bird Flight Research Center breaks ground at UC Davis"
+      source: "UC Davis Engineering"
+      url: "https://engineering.ucdavis.edu/news/bird-flight-research-center-breaks-ground-uc-davis"
+    - title: "UC Davis exceeds $1 billion in research awards for third consecutive year"
+      source: "UC Davis"
+      url: "https://www.ucdavis.edu/news/uc-davis-exceeds-1-billion-research-awards-third-consecutive-year"
+    - title: "Bio-informed flight with Christina Harvey and Michelle Hawkins"
+      source: "Comstock's Magazine"
+      url: "https://www.comstocksmag.com/podcast/bio-informed-flight-christina-harvey-and-michelle-hawkins"
+    - title: "Rowan Glenn takes flight with undergraduate research"
+      source: "UC Davis MAE"
+      url: "https://mae.ucdavis.edu/news/rowan-glenn-takes-flight-undergraduate-research"
+    - title: "Fly like an eagle"
+      source: "Comstock's Magazine"
+      url: "https://comstocksmag.com/article/fly-eagle"
+    - title: "New UC Davis research center combines biology, engineering to study bird flight"
+      source: "The Aggie"
+      url: "https://theaggie.org/2024/03/07/new-uc-davis-research-center-combines-biology-engineering-to-study-bird-flight/"
+    - title: "Engineering animation: hawk wing research fuses science with movie magic"
+      source: "UC Davis Engineering"
+      url: "https://engineering.ucdavis.edu/news/engineering-animation-hawk-wing-research-fuses-science-movie-magic"
+    - title: "DOD funding will help build new bird flight research center at UC Davis"
+      source: "CBS News Sacramento"
+      url: "https://www.cbsnews.com/sacramento/essentials/dod-funding-will-help-build-new-bird-flight-research-center-at-uc-davis/"
+    - title: "UC Davis establishes Bird Flight Research Center"
+      source: "UC Davis"
+      url: "https://www.ucdavis.edu/curiosity/news/uc-davis-establishes-bird-flight-research-center"
+
+- year: 2023
+  items:
+    - title: "Packard Fellowship winner is changing the way we think about flight"
+      source: "Michigan Aerospace"
+      url: "https://aero.engin.umich.edu/2023/12/21/packard-fellowship-winner-is-changing-the-way-we-think-about-flight/"
+    - title: "A second wind"
+      source: "UC Davis Engineering"
+      url: "https://engineering.ucdavis.edu/news/second-wind"
+    - title: "Engineer studying bird flight awarded Packard Fellowship"
+      source: "UC Davis"
+      url: "https://www.ucdavis.edu/curiosity/news/engineer-studying-bird-flight-awarded-packard-fellowship"
+    - title: "Studying bird flight can enhance flight maneuverability of aerial vehicles"
+      source: "The Aggie"
+      url: "https://theaggie.org/2023/07/03/studying-bird-flight-can-enhance-flight-maneuverability-of-aerial-vehicles/"
+    - title: "ECR Spotlight – Christina Harvey"
+      source: "Journal of Experimental Biology"
+      url: "https://journals.biologists.com/jeb/article/226/Suppl_1/jeb245923/307085/ECR-Spotlight-Christina-Harvey"
+    - title: "Like a bird: how biology is influencing the future of flight"
+      source: "Rackham, University of Michigan"
+      url: "https://rackham.umich.edu/discover-rackham/like-a-bird-how-biology-is-influencing-the-future-of-flight/"
+    - title: "Christina Harvey: aerodynamics from birds to aircraft"
+      source: "UC Davis Engineering"
+      url: "https://engineering.ucdavis.edu/news/christina-harvey-aerodynamics-birds-aircraft"
+
+- year: 2022
+  items:
+    - title: "Geometric analysis reveals how birds mastered flight"
+      source: "Quanta Magazine"
+      url: "https://www.quantamagazine.org/geometric-analysis-reveals-how-birds-mastered-flight-20220803/"
+      doi: "10.1038/s41586-022-04477-8"
+    - title: "Engineers study bird flight to understand response to air disturbances"
+      source: "U.S. National Science Foundation"
+      url: "https://beta.nsf.gov/news/engineers-study-bird-flight-understand-response"
+    - title: "Planes have nothing on birds"
+      source: "The Atlantic"
+      url: "https://www.theatlantic.com/science/archive/2022/08/bird-flight-evolution-airplanes/671132/"
+      doi: "10.1038/s41586-022-04477-8"
+    - title: "Bird flight inspires the design of future aircraft"
+      source: "Earth.com"
+      url: "https://www.earth.com/news/bird-flight-inspires-the-design-of-future-aircraft/"
+    - title: "How gulls reshape wings to fly through wind gusts"
+      source: "Futurity"
+      url: "https://www.futurity.org/gulls-flight-wing-shape-2794752-2/"
+    - title: "Trade-offs between stability and manoeuvrability in bird flight"
+      source: "Nature"
+      url: "https://www.nature.com/articles/d41586-022-00638-x"
+      doi: "10.1038/s41586-022-04477-8"
+
+- year: 2021
+  items:
+    - title: "Bird-like wings could help drones keep stable in gusts"
+      source: "Michigan Engineering"
+      url: "https://news.engin.umich.edu/2021/06/bird-like-wings-could-help-drones-keep-stable-in-gusts/"
+    - title: "New wing design could help aircraft be more stable in windy conditions"
+      source: "SlashGear"
+      url: "https://www.slashgear.com/new-wing-design-could-help-aircraft-be-more-stable-in-windy-conditions-11677580"
+
+- year: 2019
+  items:
+    - title: "Gull wing morphing research aims to enhance flight design"
+      source: "Engineering.com"
+      url: "https://www.engineering.com/story/gull-wing-morphing-research-aims-to-enhance-flight-design"
+    - title: "Gulls' bendy wings point way ahead for smarter drones"
+      source: "The Times"
+      url: "https://www.thetimes.co.uk/article/gulls-bendy-wings-point-way-ahead-for-smarter-drones-38gz9r2bh"

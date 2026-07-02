@@ -1,0 +1,29 @@
+# ─────────────────────────────────────────────────────────────
+#  PARTNERS, COLLABORATORS & SUPPORTERS
+#  To show an official logo for any entry, drop the file in
+#  assets/img/partners/ and add `logo: /assets/img/partners/NAME.png`.
+#  Entries without a logo render as a clean styled wordmark.
+# ─────────────────────────────────────────────────────────────
+
+title: Partners, collaborators & supporters
+intro: "We work alongside outstanding institutions and are grateful to the agencies and foundations that fund our research."
+
+groups:
+  - heading: Home & host institutions
+    items:
+      - { name: "UC Davis College of Engineering", url: "https://engineering.ucdavis.edu/" }
+      - { name: "California Raptor Center", sub: "UC Davis Veterinary Medicine", url: "https://crc.vetmed.ucdavis.edu/" }
+      - { name: "Center for Animal Locomotion & Innovation (CALI)", url: "https://sites.google.com/ucdavis.edu/cali/home" }
+
+  - heading: Funders
+    items:
+      - { name: "The David & Lucile Packard Foundation", logo: "/assets/img/partners/packard.jpg", url: "https://www.packard.org/" }
+      - { name: "Air Force Office of Scientific Research", sub: "AFOSR", url: "https://www.afrl.af.mil/AFOSR/" }
+      - { name: "U.S. Army Research Laboratory", sub: "ARL / DEVCOM", url: "https://www.arl.army.mil/" }
+      - { name: "CITRIS and the Banatao Institute", url: "https://citris-uc.org/" }
+
+  - heading: Affiliate institutions
+    items:
+      - { name: "Rose-Hulman Institute of Technology", sub: "Dr. Kevin Haughn", url: "https://www.rose-hulman.edu/" }
+      - { name: "The Alan Turing Institute", sub: "Dr. Lydia France", url: "https://www.turing.ac.uk/" }
+      - { name: "University of Oxford — Flight Group", url: "https://flight.zoo.ox.ac.uk/" }

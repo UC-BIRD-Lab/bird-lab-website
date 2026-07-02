@@ -1,0 +1,20 @@
+# Primary navigation. Order = display order. `cta: true` styles the pill button.
+- title: Research
+  url: /research/
+- title: People
+  url: /people/
+- title: Publications
+  url: /publications/
+- title: Facilities
+  url: /facilities/
+- title: Lab Guide
+  url: /lab-guide/
+- title: News
+  url: /news/
+- title: Join
+  url: /join/
+- title: Contact
+  url: /contact/
+- title: Member Portal
+  url: /portal/
+  cta: true

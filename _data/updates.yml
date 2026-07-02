@@ -1,0 +1,76 @@
+# ─────────────────────────────────────────────────────────────
+#  NEWS & UPDATES — lab milestones timeline. Newest first.
+#  type controls the icon: award, paper, talk, funding, build,
+#  service, people, travel, graduation.
+#
+#  MEMBER NAMES LINK AUTOMATICALLY. Just write a name as it appears on the People
+#  page (e.g. "Kaleb Bordner") and it becomes a link to that person's card;
+#  alumni names link to the alumni table. Do NOT wrap names in <a> yourself — that
+#  would double-link. For nicknames/short forms ("Dr. Harvey", "Adam Zhu"), add an
+#  `aliases:` line to that person in people.yml.
+#
+#  For OTHER links (papers, events, external sites) you may add plain HTML — use
+#  single quotes inside so the YAML stays valid:
+#      <a href='https://example.com'>the workshop</a>
+# ─────────────────────────────────────────────────────────────
+
+- year: 2026
+  events:
+    - { date: "July 2026", type: funding, text: "The lab received a CITRIS Seed Funding Program award in collaboration with Dr. Grace Gu (UC Berkeley) and Dr. Zhaodan Kong (UC Davis)." }
+    - { date: "June 2026", type: funding, text: "The lab received an NSF CAREER Award to investigate lateral maneuvering in raptors." }
+    - { date: "June 2026", type: talk, text: "Alex Fillman and Kaleb Bordner presented posters at BISCCITs in Wageningen, The Netherlands." }
+    - { date: "June 2026", type: talk, text: "Kaleb Bordner and Francisco Jackson presented papers at the AIAA AVIATION Forum." }
+    - { date: "June 2026", type: paper, text: "Paper led by Dr. Alfonso Martínez in the Journal of the Royal Society Interface on raptor perching behavior." }
+    - { date: "June 2026", type: people, text: "Adrian Chan graduated and joined Stanford University. We also welcomed undergraduate researchers Prabhat Karthikeyan, Elliot Crowder, Emiliano Godinez, Zak Conte, Ananya Bansal, and Haelie Tweet to the lab." }
+    - { date: "June 2026", type: talk, text: "Dr. Harvey gave an invited talk at the XXV US–Poland Science & Technology Symposium." }
+    - { date: "May 2026", type: build, text: "The Center for Animal Locomotion & Innovation (CALI) celebrated its official grand opening." }
+    - { date: "April 2026", type: award, text: "Alex Fillman received the 2026 Maury L. Hull Endowed Fellowship for Musculoskeletal Biomechanics Research." }
+    - { date: "April 2026", type: talk, text: "Dr. Harvey gave an invited talk at the Janelia Simulated Bodies Symposium." }
+    - { date: "March 2026", type: award, text: "Kaleb Bordner and Francisco Jackson passed the QE exam advancing to PhD candidacy." }
+    - { date: "March 2026", type: talk, text: "Kaleb Bordner and Adam Zhu presented at the Gordon Research Conference on Multifunctional Materials & Structures (Ventura, CA)." }
+    - { date: "March 2026", type: paper, text: "Paper by Kiran Weston and Adam Zhu, in collaboration with Dr. Graham Taylor (University of Oxford), was published in the Journal of the Royal Society Interface." }
+    - { date: "February 2026", type: talk, text: "Dr. Harvey gave an invited seminar at Stanford University." }
+    - { date: "January 2026", type: award, text: "Alex Fillman passed the FE exam." }
+    - { date: "January 2026", type: people, text: "Narihide Fujita, Meghna Tirumalai, and Wyatt Liu joined the lab as undergraduate researchers." }
+    - { date: "January 2026", type: award, text: "Ava Lewis was selected as an AIAA Rising Star in Aerospace and attended the AIAA SciTech Forum (Orlando, FL)." }
+    - { date: "January 2026", type: talk, text: "Faiza Alvi and Alex Fillman presented research on avian airfoil aerodynamics and tail range of motion at the SICB Annual Meeting (Portland, OR)." }
+    - { date: "January 2026", type: talk, text: "Dr. Harvey and Dr. Jasmin Wong organized the SICB symposium 'Dinosaurs to Drones: Comparative Approaches to Flight'." }
+
+- year: 2025
+  events:
+    - { date: "December 2025", type: service, text: "Dr. Harvey joined the Editorial Board of Communications Engineering." }
+    - { date: "December 2025", type: build, text: "The Bird Flight Research Center was completed on schedule and within budget, with the imaging system commissioned ahead of the March 2026 grand opening." }
+    - { date: "September 2025", type: funding, text: "The lab received new AFOSR support to investigate co-design of morphing and control systems with Dr. Sean Humbert (CU Boulder)." }
+    - { date: "September 2025", type: talk, text: "Dr. Harvey gave an invited seminar at UC Berkeley." }
+    - { date: "September 2025", type: people, text: "Joshua Booth and Cooper Cook transitioned from undergraduate researchers to PhD students." }
+    - { date: "June 2025", type: graduation, text: "Stevi Dunn and Gaurav Dhirar graduated and began industry positions." }
+    - { date: "June 2025", type: travel, text: "Kaleb Bordner and Francisco Jackson returned to the U.S. Army Research Laboratory for summer experiments with Dr. Kevin Haughn." }
+    - { date: "May 2025", type: talk, text: "Dr. Harvey gave an invited seminar at UC San Diego on bio-informed morphing and flight stability and control." }
+    - { date: "April 2025", type: paper, text: "Paper in Global Ecology and Biogeography linked climate and avian morphology, providing evidence for a role of thermoregulation in bird wing evolution." }
+    - { date: "March 2025", type: funding, text: "The lab received a CCAH award, led by Dr. Alfonso Martínez with Dr. Michelle Hawkins, to build an avian flight database for raptor rehabilitation." }
+    - { date: "February 2025", type: talk, text: "The lab hosted the Northern California Aerospace Symposium (NCAS) at UC Davis." }
+    - { date: "January 2025", type: talk, text: "Adam Zhu and Francisco Jackson presented research on formation-flight sensing and avian airfoil dynamic stall at the AIAA SciTech Forum (Orlando, FL)." }
+
+- year: 2024
+  events:
+    - { date: "November 2024", type: build, text: "Groundbreaking began for the Bird Flight Research Center at the California Raptor Center." }
+    - { date: "November 2024", type: talk, text: "Dr. Harvey gave an invited seminar at EPFL (Lausanne, Switzerland)." }
+    - { date: "September 2024", type: people, text: "Faiza Alvi (PhD), Alex Fillman, and Evan Wandrocke (MS) joined the lab, and Adam Zhu transitioned to the PhD program." }
+    - { date: "April 2024", type: paper, text: "Paper in the Journal of the Royal Society Interface demonstrated optimized elbow and wrist morphing trajectories using an LPV flight-dynamics model." }
+    - { date: "March 2024", type: paper, text: "Paper in Communications Engineering (led by Dr. Kevin Haughn) showed that deep reinforcement learning controllers can reject gusts using as few as three pressure taps." }
+    - { date: "February 2024", type: funding, text: "The lab received a $2.9M DURIP award from U.S. Army Combat Compatibility Development Command Army Research Office, with Dr. Michelle Hawkins." }
+    - { date: "January 2024", type: award, text: "Rowan Glenn received the AIAA Jefferson Goblet Student Paper Award at the AIAA SciTech Forum (Orlando, FL)." }
+    - { date: "January 2024", type: service, text: "Dr. Harvey was elected Secretary of the AIAA Adaptive Structures Technical Committee." }
+
+- year: 2023
+  events:
+    - { date: "November 2023", type: people, text: "Dr. Alfonso Martínez joined the lab as its first postdoctoral scholar." }
+    - { date: "October 2023", type: award, text: "Dr. Harvey was named a 2023 Packard Fellow." }
+    - { date: "August 2023", type: people, text: "Kaleb Bordner (the lab's first PhD student) and Francisco Jackson (the lab's first MS student) joined the lab." }
+    - { date: "April 2023", type: paper, text: "Review in the Journal of Experimental Biology examined how biological insight has shaped—and can continue to advance—aircraft design." }
+
+- year: 2022
+  events:
+    - { date: "October 2022", type: people, text: "Benjamin Tai-Brownlee joined as the lab's first undergraduate researcher." }
+    - { date: "September 2022", type: paper, text: "Paper in PNAS demonstrated that gulls regulate longitudinal dynamic stability through wing morphing." }
+    - { date: "July 2022", type: people, text: "The BIRD Lab officially opened as Dr. Harvey joined the faculty at UC Davis." }

@@ -1,0 +1,39 @@
+---
+layout: default
+---
+<div class="page-head">
+  <div class="container">
+    <p class="breadcrumbs"><a href="{{ '/lab-guide/' | relative_url }}">Lab Guide</a> &rsaquo; {{ page.category }}</p>
+    <h1>{{ page.title }}</h1>
+    {% if page.summary %}<p class="lead prose">{{ page.summary }}</p>{% endif %}
+  </div>
+</div>
+
+<div class="section">
+  <div class="container wiki-layout">
+    <aside class="wiki-side" aria-label="Lab guide navigation">
+      <label class="visually-hidden" for="wiki-search">Search the lab guide</label>
+      <input type="search" id="wiki-search" placeholder="Search the guide…" autocomplete="off">
+
+      {%- assign cats = site.guide | map: "category" | uniq -%}
+      {%- assign order = "Getting Started,Working in the Lab,Research Workflow,Writing & Dissemination,Communication & Culture,Professional Development" | split: "," -%}
+      {%- for cat in order -%}
+        {%- assign pages = site.guide | where: "category", cat | sort: "order" -%}
+        {%- if pages.size > 0 -%}
+        <h4>{{ cat }}</h4>
+        <ul>
+          {%- for p in pages -%}
+          <li><a href="{{ p.url | relative_url }}" {% if p.url == page.url %}aria-current="page"{% endif %}>{{ p.title }}</a></li>
+          {%- endfor -%}
+        </ul>
+        {%- endif -%}
+      {%- endfor -%}
+    </aside>
+
+    <article class="wiki-content">
+      {{ content }}
+      <hr class="divider">
+      <p class="muted"><a href="{{ '/lab-guide/' | relative_url }}">&larr; Back to Lab Guide overview</a></p>
+    </article>
+  </div>
+</div>

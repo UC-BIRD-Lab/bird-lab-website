@@ -1,0 +1,45 @@
+---
+layout: page
+title: Facilities
+eyebrow: What we do
+subtitle: "Purpose-built spaces for studying real animal flight and translating those insights into bird-informed aircraft."
+---
+
+{%- for f in site.data.facilities -%}
+{%- assign flip = forloop.index | modulo: 2 -%}
+<section class="people-group facility{% if flip == 0 %} facility--flip{% endif %}">
+  <h2>{{ f.name }}</h2>
+  {%- if f.partner or f.location -%}
+  <p class="muted">
+    {%- if f.partner %}{{ f.partner }}{% endif %}{% if f.partner and f.location %} · {% endif %}{% if f.location %}{{ f.location }}{% endif %}
+  </p>
+  {%- endif -%}
+  <div class="facility-grid">
+    {%- if f.photo -%}
+    <figure class="facility-photo">
+      <img src="{{ f.photo | relative_url }}" alt="{{ f.name }}" loading="lazy">
+    </figure>
+    {%- endif -%}
+    <div class="facility-body">
+      <div class="prose">
+        <p>{{ f.blurb }}</p>
+        {%- if f.url -%}
+        <p><a class="btn btn--primary" href="{{ f.url }}">{{ f.url_label | default: "Learn more" }} &rarr;</a></p>
+        {%- endif -%}
+      </div>
+      {%- if f.capabilities -%}
+      <div class="note" style="margin-top:1.2rem">
+        <p class="card__tag">Capabilities</p>
+        <ul style="margin:0">
+          {%- for c in f.capabilities -%}<li>{{ c }}</li>{%- endfor -%}
+        </ul>
+      </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+{%- endfor -%}
+
+<div class="note" style="margin-top:2rem">
+  <p style="margin:0">Interested in collaborating or visiting? <a href="{{ '/contact/' | relative_url }}">Get in touch</a>.</p>
+</div>
