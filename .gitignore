@@ -1,4 +1,12 @@
-.Rproj.user
-.Rhistory
-.RData
-.Ruserdata
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+vendor/
+.bundle/
+Gemfile.lock
+.DS_Store
+*.log
+node_modules/
+.venv/
+__pycache__/

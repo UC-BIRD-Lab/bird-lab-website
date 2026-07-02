@@ -1,0 +1,50 @@
+name: Update publications
+
+# Checks OpenAlex (by the lab ORCID) for new journal articles and, if any are
+# found, opens a pull request that edits _data/publications.yml. A human reviews
+# and merges. Nothing is published without that review.
+on:
+  schedule:
+    - cron: "0 13 1 * *"   # 13:00 UTC on the 1st of each month
+  workflow_dispatch:        # ...or run it manually from the Actions tab
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r scripts/requirements.txt
+
+      - name: Sync from OpenAlex
+        id: sync
+        env:
+          LAB_ORCID: "0000-0002-2830-0844"
+          OPENALEX_MAILTO: "harvey@ucdavis.edu"
+        run: python scripts/update_publications.py
+
+      - name: Open a pull request if anything changed
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "Update publications from OpenAlex"
+          branch: bot/update-publications
+          delete-branch: true
+          title: "📚 New publication(s) from OpenAlex"
+          body: |
+            This automated pull request adds journal article(s) found on
+            **OpenAlex** for ORCID `0000-0002-2830-0844`.
+
+            Please check each new entry — title, author list, venue, and DOI —
+            then merge. Edit anything that needs fixing before merging; future
+            runs preserve existing DOIs.
+          labels: publications, automated

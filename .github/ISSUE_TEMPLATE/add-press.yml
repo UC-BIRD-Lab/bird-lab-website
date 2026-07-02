@@ -1,0 +1,33 @@
+name: "📰 Add press coverage"
+description: External media coverage of the lab's work, for the "In the news" list.
+title: "[Press] "
+labels: ["website-update", "press"]
+body:
+  - type: input
+    id: headline
+    attributes:
+      label: Article headline
+      placeholder: Why planes flying like geese could cut back on aviation emissions
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Outlet / source
+      placeholder: Condé Nast Traveler
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: Link to the article
+      placeholder: https://www.cntraveler.com/story/...
+    validations:
+      required: true
+  - type: input
+    id: year
+    attributes:
+      label: Year
+      placeholder: "2026"
+    validations:
+      required: true

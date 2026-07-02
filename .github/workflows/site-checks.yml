@@ -1,0 +1,66 @@
+name: Site checks
+
+# Quality gate: builds the site, then checks for broken internal links and
+# missing images (HTMLProofer) and runs an accessibility scan (pa11y-ci).
+# Runs on pull requests and pushes to main, separately from deployment.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build-and-check-links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+      - name: Build site
+        run: bundle exec jekyll build
+        env:
+          JEKYLL_ENV: production
+      - name: Check links & images (HTMLProofer)
+        run: |
+          gem install html-proofer
+          # External links are skipped (they change/flake); we verify internal
+          # links and that every referenced image actually exists.
+          htmlproofer ./_site \
+            --disable-external \
+            --no-enforce-https \
+            --allow-missing-href
+
+  accessibility:
+    runs-on: ubuntu-latest
+    continue-on-error: true   # informational: surfaces issues without blocking
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+      - name: Build site
+        run: bundle exec jekyll build
+        env:
+          JEKYLL_ENV: production
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Run pa11y-ci (WCAG2AA)
+        run: |
+          npm install -g pa11y-ci http-server
+          http-server ./_site -p 4000 &
+          sleep 4
+          pa11y-ci --threshold 0 \
+            http://localhost:4000/ \
+            http://localhost:4000/research/ \
+            http://localhost:4000/people/ \
+            http://localhost:4000/publications/ \
+            http://localhost:4000/join/ \
+            http://localhost:4000/lab-guide/ \
+            || echo "::warning::pa11y found accessibility issues — review the log above."

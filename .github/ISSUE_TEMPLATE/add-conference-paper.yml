@@ -1,0 +1,54 @@
+name: "📄 Add a conference paper, talk, or poster"
+description: Submit a conference paper, talk, or poster for the Publications page.
+title: "[Conference] "
+labels: ["website-update", "publications"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Journal articles update **automatically** from OpenAlex — you only need this
+        form for conference papers, talks, and posters.
+  - type: input
+    id: title
+    attributes:
+      label: Title
+      placeholder: Wing–tail interaction effects in a morphing-tail aircraft during perch
+    validations:
+      required: true
+  - type: input
+    id: authors
+    attributes:
+      label: Authors
+      description: As they should appear, initials + last name.
+      placeholder: K. Bordner, C. Cook, C. Harvey
+    validations:
+      required: true
+  - type: input
+    id: venue
+    attributes:
+      label: Venue
+      placeholder: AIAA SciTech Forum, Orlando, FL
+    validations:
+      required: true
+  - type: input
+    id: year
+    attributes:
+      label: Year
+      placeholder: "2026"
+    validations:
+      required: true
+  - type: dropdown
+    id: type
+    attributes:
+      label: Type
+      options:
+        - Paper
+        - Talk
+        - Poster
+    validations:
+      required: true
+  - type: input
+    id: doi
+    attributes:
+      label: DOI or link (optional)
+      placeholder: https://doi.org/10.2514/6.2025-1460

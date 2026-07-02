@@ -1,0 +1,7 @@
+# Issue template chooser. The forms below let lab members submit website
+# updates without touching code. Blank issues stay on for bug reports.
+blank_issues_enabled: true
+contact_links:
+  - name: Prefer to edit the files yourself?
+    url: https://github.com/UC-BIRD-Lab
+    about: "If you're comfortable with GitHub, edit the _data/*.yml files and open a pull request — see CONTENT-GUIDE.md."

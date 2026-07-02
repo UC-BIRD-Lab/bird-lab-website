@@ -1,0 +1,37 @@
+name: "📣 Add a news milestone"
+description: A lab milestone for the News timeline — an award, talk, paper, funding, defense, new member, travel, etc.
+title: "[News] "
+labels: ["website-update", "news"]
+body:
+  - type: input
+    id: date
+    attributes:
+      label: Month and year
+      placeholder: June 2026
+    validations:
+      required: true
+  - type: dropdown
+    id: type
+    attributes:
+      label: Type
+      description: Sets the timeline icon.
+      options:
+        - award
+        - paper
+        - talk
+        - funding
+        - build
+        - service
+        - people
+        - travel
+        - graduation
+    validations:
+      required: true
+  - type: textarea
+    id: text
+    attributes:
+      label: What happened
+      description: One or two sentences, written like the existing timeline entries.
+      placeholder: Ada won a best-paper award at AIAA Aviation.
+    validations:
+      required: true

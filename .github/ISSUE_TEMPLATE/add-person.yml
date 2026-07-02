@@ -1,0 +1,79 @@
+name: "➕ Add or update a lab member"
+description: Submit a new person (or an update to your own entry) for the People page.
+title: "[Person] Add/update: "
+labels: ["website-update", "people"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Fill in what you can — only **name** and **role** are required. A maintainer
+        will add this to the site. To include a **photo**, drag an image file into
+        this box (or email it to the PI); square headshots look best.
+  - type: input
+    id: name
+    attributes:
+      label: Full name
+      placeholder: Jordan Rivera
+    validations:
+      required: true
+  - type: dropdown
+    id: role
+    attributes:
+      label: Role
+      description: Sets the bird badge automatically.
+      options:
+        - Postdoctoral Scholar
+        - PhD Candidate
+        - PhD Researcher
+        - MSc Student
+        - Undergraduate Researcher
+        - Visiting Undergraduate Researcher
+        - Visiting Researcher
+    validations:
+      required: true
+  - type: input
+    id: start
+    attributes:
+      label: Year you joined the lab
+      placeholder: "2026"
+    validations:
+      required: true
+  - type: input
+    id: field
+    attributes:
+      label: Field / discipline you trained in
+      description: Shown as a tag (helps us show the lab's range). Comma-separate if more than one.
+      placeholder: Mechanical & Aerospace Engineering
+  - type: input
+    id: pronouns
+    attributes:
+      label: Pronouns
+      placeholder: they/them
+  - type: input
+    id: email
+    attributes:
+      label: Email
+      placeholder: jrivera@ucdavis.edu
+  - type: input
+    id: note
+    attributes:
+      label: One-line research note
+      placeholder: Bird-informed morphing tail flight dynamics.
+  - type: input
+    id: links
+    attributes:
+      label: Links (optional)
+      description: LinkedIn, ORCID, personal website — paste any you want shown.
+      placeholder: linkedin.com/in/jordan-rivera · orcid.org/0000-0000-0000-0000
+  - type: input
+    id: home_institution
+    attributes:
+      label: Home institution (visiting members only)
+      placeholder: Sacramento City College
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirm
+      options:
+        - label: The details above are correct and OK to publish on the public site.
+          required: true
