@@ -12,8 +12,8 @@ description: >-
 
 # Public URL. Update `url` to your final domain before launch.
 # If hosting at a project path (e.g. https://USER.github.io/REPO), set baseurl: "/REPO".
-url: "https://uc-bird-lab.github.io/bird-lab-website/"
-baseurl: "/REPO"
+url: "https://uc-bird-lab.github.io"
+baseurl: "/bird-lab-website"
 
 lab:
   full_name: "Bio-Informed Research & Design Lab"
