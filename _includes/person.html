@@ -55,11 +55,11 @@
   {%- assign my_project = site.data.research.projects | where: "lead", p.name | first -%}
   {%- if my_project %}<p class="person-project"><a href="{{ '/research/' | relative_url }}#project-{{ p.name | slugify }}">View research project &rarr;</a></p>{% endif -%}
   <p class="links">
-    {%- if p.email %}<a href="mailto:{{ p.email }}" aria-label="Email {{ p.name }}"><img src="{{ '/assets/img/icons/link-email.svg' | relative_url }}" alt=""></a>{% endif -%}
-    {%- if p.website %}<a href="{{ p.website }}" rel="noopener" aria-label="{{ p.name }} — website"><img src="{{ '/assets/img/icons/link-website.svg' | relative_url }}" alt=""></a>{% endif -%}
-    {%- if p.scholar %}<a href="{{ p.scholar }}" rel="noopener" aria-label="{{ p.name }} — Google Scholar"><img src="{{ '/assets/img/icons/link-scholar.svg' | relative_url }}" alt=""></a>{% endif -%}
-    {%- if p.orcid %}<a href="https://orcid.org/{{ p.orcid }}" rel="noopener" aria-label="{{ p.name }} — ORCID"><img src="{{ '/assets/img/icons/link-orcid.svg' | relative_url }}" alt=""></a>{% endif -%}
-    {%- if p.linkedin %}<a href="{{ p.linkedin }}" rel="noopener" aria-label="{{ p.name }} — LinkedIn"><img src="{{ '/assets/img/icons/link-linkedin.svg' | relative_url }}" alt=""></a>{% endif -%}
-    {%- if p.github %}<a href="{{ p.github }}" rel="noopener" aria-label="{{ p.name }} — GitHub"><img src="{{ '/assets/img/icons/link-github.svg' | relative_url }}" alt=""></a>{% endif -%}
+    {%- if p.email %}<a href="mailto:{{ p.email }}"><img src="{{ '/assets/img/icons/link-email.svg' | relative_url }}" alt="Email {{ p.name }}"></a>{% endif -%}
+    {%- if p.website %}<a href="{{ p.website }}" rel="noopener"><img src="{{ '/assets/img/icons/link-website.svg' | relative_url }}" alt="{{ p.name }} website"></a>{% endif -%}
+    {%- if p.scholar %}<a href="{{ p.scholar }}" rel="noopener"><img src="{{ '/assets/img/icons/link-scholar.svg' | relative_url }}" alt="{{ p.name }} on Google Scholar"></a>{% endif -%}
+    {%- if p.orcid %}<a href="https://orcid.org/{{ p.orcid }}" rel="noopener"><img src="{{ '/assets/img/icons/link-orcid.svg' | relative_url }}" alt="{{ p.name }} ORCID profile"></a>{% endif -%}
+    {%- if p.linkedin %}<a href="{{ p.linkedin }}" rel="noopener"><img src="{{ '/assets/img/icons/link-linkedin.svg' | relative_url }}" alt="{{ p.name }} on LinkedIn"></a>{% endif -%}
+    {%- if p.github %}<a href="{{ p.github }}" rel="noopener"><img src="{{ '/assets/img/icons/link-github.svg' | relative_url }}" alt="{{ p.name }} on GitHub"></a>{% endif -%}
   </p>
 </div>

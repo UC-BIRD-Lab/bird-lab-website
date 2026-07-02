@@ -38,11 +38,11 @@ subtitle: "Engineers and biologists, each leading their own research project —
         open, collaborative research environment where curiosity comes first.</p>
       </div>
       <p class="links links--left">
-        {%- if pi.email %}<a href="mailto:{{ pi.email }}" aria-label="Email {{ pi.name }}"><img src="{{ '/assets/img/icons/link-email.svg' | relative_url }}" alt=""></a>{% endif -%}
-        {%- if pi.website %}<a href="{{ pi.website }}" aria-label="{{ pi.name }} website"><img src="{{ '/assets/img/icons/link-website.svg' | relative_url }}" alt=""></a>{% endif -%}
-        {%- if pi.scholar %}<a href="{{ pi.scholar }}" aria-label="{{ pi.name }} on Google Scholar"><img src="{{ '/assets/img/icons/link-scholar.svg' | relative_url }}" alt=""></a>{% endif -%}
-        {%- if pi.orcid %}<a href="https://orcid.org/{{ pi.orcid }}" aria-label="{{ pi.name }} ORCID"><img src="{{ '/assets/img/icons/link-orcid.svg' | relative_url }}" alt=""></a>{% endif -%}
-        {%- if pi.linkedin %}<a href="{{ pi.linkedin }}" aria-label="{{ pi.name }} on LinkedIn"><img src="{{ '/assets/img/icons/link-linkedin.svg' | relative_url }}" alt=""></a>{% endif -%}
+        {%- if pi.email %}<a href="mailto:{{ pi.email }}"><img src="{{ '/assets/img/icons/link-email.svg' | relative_url }}" alt="Email {{ pi.name }}"></a>{% endif -%}
+        {%- if pi.website %}<a href="{{ pi.website }}"><img src="{{ '/assets/img/icons/link-website.svg' | relative_url }}" alt="{{ pi.name }} website"></a>{% endif -%}
+        {%- if pi.scholar %}<a href="{{ pi.scholar }}"><img src="{{ '/assets/img/icons/link-scholar.svg' | relative_url }}" alt="{{ pi.name }} on Google Scholar"></a>{% endif -%}
+        {%- if pi.orcid %}<a href="https://orcid.org/{{ pi.orcid }}"><img src="{{ '/assets/img/icons/link-orcid.svg' | relative_url }}" alt="{{ pi.name }} ORCID profile"></a>{% endif -%}
+        {%- if pi.linkedin %}<a href="{{ pi.linkedin }}"><img src="{{ '/assets/img/icons/link-linkedin.svg' | relative_url }}" alt="{{ pi.name }} on LinkedIn"></a>{% endif -%}
       </p>
     </div>
   </div>
