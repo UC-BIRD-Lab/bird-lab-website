@@ -22,14 +22,21 @@ Do these once a month. None of them require the command line.
    review the new entry (title, authors, venue, DOI), fix anything, and **Merge**.
    No PR that month just means no new papers — that's normal.
 2. **Add any new press.** For each new article about the lab, add a block to
-   `_data/press.yml`. If the story is about a specific paper, include that paper's
-   `doi:` — it then shows up automatically as the "In the news" badge on the
-   Publications page. (Template in CONTENT-GUIDE → *Add press coverage*.)
+   `_data/press.yml` — or let the helper do it: run
+   `python scripts/add_press.py "<url>" --doi <doi> --featured`. It reads the outlet,
+   headline, and author from the page, downloads the lead image (only with `--featured`),
+   and prints a ready-to-paste entry (add `--append` to insert it for you). If the story
+   is about a specific paper, include that paper's `doi:` — it then shows up automatically
+   as the "In the news" badge on the Publications page. (Template + script in
+   CONTENT-GUIDE → *Add press coverage*.)
 3. **Add notable milestones.** Awards, talks, funding, new members, graduations →
    add a one-line entry to the top of the current year in `_data/updates.yml`.
    Member names link themselves automatically.
-4. **Update People.** Add new members, move departures to `alumni:`, and change
-   anyone's `role:` if they've been promoted (the bird badge updates itself).
+4. **Update People.** Add new members, and change anyone's `role:` if they've been
+   promoted (the bird badge updates itself). To retire someone, **cut their whole block
+   from `groups:` and paste it under `alumni:`, then add a `now:` line** — their `start:`
+   (year joined) and any `linkedin:` carry over automatically, and a LinkedIn icon appears
+   beside their name in the alumni table.
 5. **Confirm the Join page** hiring status still reads correctly (`join.md`).
 6. **Glance at the Actions tab.** Every run should have a green ✓. A red ✗ means a
    build failed — see *If something breaks* below.
@@ -69,7 +76,9 @@ Each is a small edit to one file; full templates are in
 | Data / code / a figure for a paper | `_data/pub_links.yml` |
 | A conference paper, talk, or poster | `_data/publications_manual.yml` |
 | A research project | `_data/research.yml` |
+| A facility (tagline, specs, funding) | `_data/facilities.yml` |
 | Funders shown on the home page | `_data/funders.yml` |
+| Partner organizations (home "in partnership with") | `_data/collaborators.yml` |
 | Honors & "featured in" media | `_data/recognition.yml` |
 | A Lab Guide page | the matching file in `_guide/` |
 | The top menu | `_data/navigation.yml` |
@@ -94,8 +103,12 @@ on the **1st of each month** (and on demand from **Actions → Run workflow**). 
 reads the PI's ORCID (`0000-0002-2830-0844`) from OpenAlex and opens a pull
 request adding any new articles to `_data/publications.yml`. You review and merge.
 
-- **It's safe:** the bot only *adds* articles with a new DOI; it never rewrites an
-  existing entry, so your manual corrections are never lost.
+- **It's safe:** the bot only *adds* articles with a new DOI (and fills in a missing
+  publication `date`); it never overwrites text you've edited, so your corrections are safe.
+- **Ordering by month:** each entry stores a `date:` (`YYYY-MM-DD`) so the list sorts
+  correctly *within* a year, not just by year. The sync backfills this onto older entries
+  the next time it runs — to update them right now, run
+  `python scripts/update_publications.py` locally and commit the result.
 - **Fix a wrong author/venue:** edit the entry in `_data/publications.yml`
   directly. Future syncs keep your version (they match on DOI).
 - **Conference papers, posters, talks, blogs:** OpenAlex doesn't index these —
@@ -177,6 +190,9 @@ matching `_data/*.yml` file using the cheat-sheet in
 - **It's data-driven.** New students maintain it by editing text files — point
   them at [CONTENT-GUIDE.md](CONTENT-GUIDE.md) and this page. Nothing here needs a
   web developer.
+- **Some numbers count themselves.** The home-page "Researchers" and "Publications"
+  stats come straight from `people.yml` and `publications.yml`, so they're never out
+  of date and there's no funding figure to keep updating.
 - **It never shows broken images.** Photos, figures, and the group/culture shots
   only appear once their file is set, so a missing image is simply absent, never a
   broken icon.

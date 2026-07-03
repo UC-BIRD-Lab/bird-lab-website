@@ -5,8 +5,35 @@ order: 2
 summary: How to approach fellowships and grants — what reviewers want and how to write a strong proposal.
 ---
 
-If you come across internal or external funding opportunities, please let
-Christina know.
+
+
+## Fellowships & scholarships to explore
+
+A running list of funding you can bring to — or pursue for — a spot in the lab. It
+spans undergraduate through postdoc, so check the **level** and **eligibility**
+columns, and always confirm the current deadline on each program's own page.
+
+<div class="fund-table-wrap">
+<table class="fund-table" id="fund-table">
+<caption class="visually-hidden">Curated fellowships and scholarships</caption>
+<thead>
+<tr><th scope="col">Fellowship / scholarship</th><th scope="col">Level</th><th scope="col">Eligibility</th></tr>
+</thead>
+<tbody>
+{%- for f in site.data.funding -%}
+<tr class="fund-row">
+<td class="fund-name" data-label="Fellowship">{% if f.url %}<a href="{{ f.url }}" rel="noopener">{{ f.name }}<span class="fund-ext" aria-hidden="true"> ↗</span></a>{% else %}{{ f.name }}{% endif %}</td>
+<td class="fund-level" data-label="Level">{% if f.level %}{% assign levels = f.level | split: "," %}{% for lv in levels %}<span class="fund-pill">{{ lv | strip }}</span>{% endfor %}{% else %}<span class="fund-any">Any</span>{% endif %}</td>
+<td class="fund-elig" data-label="Eligibility">{{ f.eligibility | default: "Open to all" }}</td>
+</tr>
+{%- endfor -%}
+</tbody>
+</table>
+</div>
+<button type="button" class="btn btn--ghost fund-toggle" data-target="fund-table" data-preview="6" aria-expanded="false" hidden>Show all {{ site.data.funding | size }} fellowships &darr;</button>
+
+If you come across other internal or external funding opportunities, or if any links are stale, please let
+Christina know. 
 
 ## The goal
 

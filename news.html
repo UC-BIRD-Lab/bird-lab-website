@@ -2,29 +2,33 @@
 layout: page
 title: News & Updates
 eyebrow: Latest
-subtitle: "Milestones, papers, talks, funding, and build progress from the BIRD Lab — plus selected press coverage."
 ---
 
 <!-- Lab milestones: a dot per month, that month's events listed below -->
 <section aria-labelledby="milestones-h">
-  <h2 id="milestones-h">Lab milestones</h2>
-  <div class="news-timeline">
-    {%- for yr in site.data.updates -%}
-    <h3 class="news-year">{{ yr.year }}</h3>
-    {%- assign months = yr.events | group_by: "date" -%}
-    <ul class="news-months">
-      {%- for m in months -%}
-      <li class="news-month">
-        <span class="news-month__label">{{ m.name }}</span>
-        <ul class="news-events">
-          {%- for e in m.items -%}
-          <li>{% include update-icon.html type=e.type %}<span class="ev-text">{% include link-names.html text=e.text %}</span></li>
-          {%- endfor -%}
-        </ul>
-      </li>
+  <div class="section-head">
+    <div><h2 id="milestones-h">Lab milestones</h2></div>
+    <a class="btn btn--ghost" href="#in-the-news">Jump to press &darr;</a>
+  </div>
+  <div class="mini-scroll news-scroll" tabindex="0" role="region" aria-label="Lab milestones timeline, scrollable">
+    <div class="news-timeline">
+      {%- for yr in site.data.updates -%}
+      <h3 class="news-year">{{ yr.year }}</h3>
+      {%- assign months = yr.events | group_by: "date" -%}
+      <ul class="news-months">
+        {%- for m in months -%}
+        <li class="news-month">
+          <span class="news-month__label">{{ m.name }}</span>
+          <ul class="news-events">
+            {%- for e in m.items -%}
+            <li>{% include update-icon.html type=e.type %}<span class="ev-text">{% include link-names.html text=e.text %}</span></li>
+            {%- endfor -%}
+          </ul>
+        </li>
+        {%- endfor -%}
+      </ul>
       {%- endfor -%}
-    </ul>
-    {%- endfor -%}
+    </div>
   </div>
 </section>
 
@@ -62,9 +66,15 @@ subtitle: "Milestones, papers, talks, funding, and build progress from the BIRD 
     <summary>Browse all coverage by year</summary>
     {%- for yr in site.data.press -%}
     <h3 class="pub-year" style="font-size:var(--step-1)">{{ yr.year }}</h3>
-    <div class="press-list">
+    <div class="news-press">
       {%- for item in yr.items -%}
-      <a href="{{ item.url }}">{{ item.title }}<span class="src">{{ item.source }}</span></a>
+      <div class="news-press__row">
+        <a class="news-press__link" href="{{ item.url }}" rel="noopener">
+          <span class="news-press__title">{{ item.title }}</span>
+          <span class="news-press__src">{{ item.source }}</span>
+        </a>
+        {%- if item.doi -%}<a class="news-press__doi" href="https://doi.org/{{ item.doi }}" rel="noopener" title="Read the paper this story covers"><span aria-hidden="true">📄</span> Paper</a>{% endif -%}
+      </div>
       {%- endfor -%}
     </div>
     {%- endfor -%}
@@ -72,3 +82,32 @@ subtitle: "Milestones, papers, talks, funding, and build progress from the BIRD 
 
   <p class="muted" style="font-size:var(--step--1);margin-top:1rem">Card images are from lab research and facilities; headlines link to the original articles.</p>
 </section>
+
+{%- if site.data.media and site.data.media.size > 0 -%}
+<hr class="divider" style="margin:3.2rem 0">
+
+<section aria-labelledby="media-h">
+  <p class="eyebrow">Watch &amp; listen</p>
+  <h2 id="media-h">Videos, podcasts &amp; interactive media</h2>
+  <div class="media-grid">
+    {%- for m in site.data.media -%}
+    <a class="media-item" href="{{ m.url }}" rel="noopener">
+      <span class="media-item__thumb">
+        {%- if m.url contains "youtube.com" or m.url contains "youtu.be" -%}
+          {%- assign yid = m.url | split: "v=" | last | split: "&" | first -%}
+          <img src="https://img.youtube.com/vi/{{ yid }}/hqdefault.jpg" alt="" loading="lazy">
+          <span class="media-item__play" aria-hidden="true">▶</span>
+        {%- else -%}
+          <span class="media-item__icon" aria-hidden="true">{% if m.kind == "podcast" %}🎧{% elsif m.kind == "model" %}🧊{% else %}▶{% endif %}</span>
+        {%- endif -%}
+      </span>
+      <span class="media-item__body">
+        <span class="media-item__kind">{% if m.kind == "podcast" %}Podcast{% elsif m.kind == "model" %}3D model{% else %}Video{% endif %}</span>
+        <span class="media-item__title">{{ m.title }}</span>
+        {%- if m.source or m.year %}<span class="media-item__meta">{{ m.source }}{% if m.source and m.year %} · {% endif %}{{ m.year }}</span>{% endif -%}
+      </span>
+    </a>
+    {%- endfor -%}
+  </div>
+</section>
+{%- endif -%}

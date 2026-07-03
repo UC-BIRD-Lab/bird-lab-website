@@ -1,0 +1,34 @@
+# ─────────────────────────────────────────────────────────────
+#  WATCH & LISTEN — videos, podcasts, and interactive media about the lab.
+#  Shown as a card strip on the News page, separate from written press coverage.
+#  These are LINKS OUT (no embeds), so the page stays fast and cookie-free.
+#
+#    kind : video | podcast | model
+#    For a YouTube link the thumbnail is generated automatically; podcasts and
+#    3D models show an icon tile instead.
+# ─────────────────────────────────────────────────────────────
+
+- title: "Try the hard things and see what happens"
+  kind: podcast
+  source: "The Engineer Whisperer · S2 E3"
+  year: 2024
+  url: "https://podcasters.spotify.com/pod/show/andrea-clough/episodes/S2--Episode-3--Christina-Harvey--Try-The-Hard-Things-And-See-What-Happens-e2fmtva"
+
+- title: "Bird-inspired drone wings, digital twins & tracking microplastics from space"
+  kind: podcast
+  source: "The Next Byte · Ep. 23"
+  year: 2021
+  url: "https://the-next-byte-wevolver.simplecast.com/episodes/23-bird-inspired-drone-wings-scaling-digital-twins-microplastic-tracking-from-space"
+
+- title: "Wing-morphing drone — interactive 3D model"
+  kind: model
+  source: "Sketchfab"
+  year: 2021
+  url: "https://sketchfab.com/3d-models/3d-wing-morphing-drone-373a7bc4544e4b26b2f24388d855f8c5"
+
+# To add a video, paste the YouTube link and its title — the thumbnail is automatic:
+# - title: "Video title (copy it from YouTube)"
+#   kind: video
+#   source: "Channel or outlet"
+#   year: 2022
+#   url: "https://www.youtube.com/watch?v=fz4SfRr6xvA"

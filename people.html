@@ -2,7 +2,6 @@
 layout: page
 title: People
 eyebrow: Who we are
-subtitle: "Engineers and biologists, each leading their own research project — chosen for curiosity and rigor more than any single background."
 ---
 
 {%- comment -%} Featured PI block (Christina) — richer than a standard card. {%- endcomment -%}
@@ -11,32 +10,14 @@ subtitle: "Engineers and biologists, each leading their own research project —
 <section class="people-group">
   <h2>{{ pi_group.title }}</h2>
   <div class="pi-feature" id="{{ pi.name | slugify }}">
-    {%- if pi.photo -%}
-      <img class="pi-feature__photo" src="{{ pi.photo | relative_url }}" alt="{{ pi.name }}" width="220" height="220">
-    {%- else -%}
-      <div class="pi-feature__placeholder" role="img" aria-label="{{ pi.name }} — photo to be added">
-        Photo coming soon — drop <code>christina-harvey.jpg</code> in <code>assets/img/people/</code> and add a <code>photo:</code> line.
-      </div>
-    {%- endif -%}
-    <div>
-      <h3 style="margin:0;font-size:var(--step-2)">{{ pi.name }}</h3>
-      <p class="role">{{ pi.role }}{% if pi.pronouns %} · {{ pi.pronouns }}{% endif %}</p>
-      {%- if pi.field %}<p class="field-tags" style="justify-content:flex-start">{%- assign pifields = pi.field | split: "," -%}{%- for fld in pifields -%}<span class="field-tag">{{ fld | strip }}</span>{%- endfor -%}</p>{% endif -%}
-      <div class="prose" style="margin-top:.6rem">
-        <p>Christina Harvey is an engineer and zoologist who seeks to understand the fundamental principles supporting 
-        how birds fly. Her research combines biomechanics, aerodynamics, flight dynamics, and animal behavior to 
-        uncover biological flight principles and determine which of those principles can benefit in engineering designs.</p>
-        
-        <p>Her work bridges engineering and biology, with a BEng in Mechanical Engineering (McGill University), an MSc in Zoology 
-        (University of British Columbia), and a PhD in Aerospace Engineering (University of Michigan). 
-        That perspective shapes the BIRD Lab, where engineers and biologists 
-        work together to answer questions neither discipline could solve alone.</p>
-        
-        <p>Christina is a 2021 Amelia Earhart Fellow, a 2023 Packard Fellow and 
-        leads the Center for Animal Locomotion & Innovation (CALI). She is 
-        passionate about rigorous science, thoughtful mentoring, and building an 
-        open, collaborative research environment where curiosity comes first.</p>
-      </div>
+    <div class="pi-feature__aside">
+      {%- if pi.photo -%}
+        <img class="pi-feature__photo" src="{{ pi.photo | relative_url }}" alt="{{ pi.name }}" width="220" height="220">
+      {%- else -%}
+        <div class="pi-feature__placeholder" role="img" aria-label="{{ pi.name }} — photo to be added">
+          Photo coming soon — drop <code>christina-harvey.jpg</code> in <code>assets/img/people/</code> and add a <code>photo:</code> line.
+        </div>
+      {%- endif -%}
       <p class="links links--left">
         {%- if pi.email %}<a href="mailto:{{ pi.email }}"><img src="{{ '/assets/img/icons/link-email.svg' | relative_url }}" alt="Email {{ pi.name }}"></a>{% endif -%}
         {%- if pi.website %}<a href="{{ pi.website }}"><img src="{{ '/assets/img/icons/link-website.svg' | relative_url }}" alt="{{ pi.name }} website"></a>{% endif -%}
@@ -45,18 +26,23 @@ subtitle: "Engineers and biologists, each leading their own research project —
         {%- if pi.linkedin %}<a href="{{ pi.linkedin }}"><img src="{{ '/assets/img/icons/link-linkedin.svg' | relative_url }}" alt="{{ pi.name }} on LinkedIn"></a>{% endif -%}
       </p>
     </div>
+    <div>
+      <h3 style="margin:0;font-size:var(--step-2)">{{ pi.name }}</h3>
+      <p class="role">{{ pi.role }}{% if pi.pronouns %} · {{ pi.pronouns }}{% endif %}</p>
+      {%- if pi.field %}<p class="field-tags" style="justify-content:flex-start">{%- assign pifields = pi.field | split: "," -%}{%- for fld in pifields -%}<span class="field-tag">{{ fld | strip }}</span>{%- endfor -%}</p>{% endif -%}
+      <div class="prose" style="margin-top:.6rem">
+        <p>Christina Harvey is an engineer and zoologist who seeks to understand the fundamental principles of biological flight. Her research combines biomechanics, aerodynamics, flight dynamics, and animal behavior to 
+        uncover biological principles and determine which of those principles may benefit in engineering designs.</p>
+        
+        <p>Her background bridges engineering and biology, with a BEng in Mechanical Engineering (McGill University), an MSc in Zoology 
+        (University of British Columbia), and a PhD in Aerospace Engineering (University of Michigan). 
+        That perspective shapes the BIRD Lab and the Center for Animal Locomotion & Innovation (CALI), where engineers, biologists, veterinarians, and computer scientists work together to answer questions no single discipline could solve alone.</p>
+        
+        <p>Christina is an Amelia Earhart Fellow and a Packard Fellow. She is passionate about rigorous science, continually refining her mentoring and teaching through evidence and reflection, and building an open, collaborative research environment where curiosity comes first.</p>
+      </div>
+    </div>
   </div>
 </section>
-
-{%- comment -%} Lab group photo — rendered only when the asset flag is set, so the build never references a missing file. {%- endcomment -%}
-{%- if site.assets.lab_photo and site.assets.lab_photo != "" -%}
-<section class="people-group">
-  <figure class="figure">
-    <img class="lab-photo" src="{{ site.assets.lab_photo | relative_url }}" alt="The BIRD Lab team at UC Davis" loading="lazy">
-    <figcaption>The BIRD Lab — UC Davis.</figcaption>
-  </figure>
-</section>
-{%- endif -%}
 
 {%- comment -%} One combined team grid (PI featured above). Each card carries its own
    role text + bird badge, so we no longer split into separate role sections. The
@@ -108,11 +94,17 @@ subtitle: "Engineers and biologists, each leading their own research project —
     </div>
 
     <div id="team-grid" class="grid grid-4" style="margin-top:1.4rem">
+      {% comment %} Within each role group: sort by year joined (oldest first),
+         then alphabetically by name. Year-bucketing guarantees the alphabetical
+         tie-break regardless of sort stability. {% endcomment %}
       {% for group in site.data.people.groups %}
         {% unless group.id == "pi" %}
-          {% assign sorted_members = group.members | sort: "start" %}
-          {% for p in sorted_members %}
-            {% include person.html p=p badge=true role=group.id %}
+          {% assign group_years = group.members | map: "start" | uniq | sort %}
+          {% for yr in group_years %}
+            {% assign yr_members = group.members | where: "start", yr | sort_natural: "name" %}
+            {% for p in yr_members %}
+              {% include person.html p=p badge=true role=group.id %}
+            {% endfor %}
           {% endfor %}
         {% endunless %}
       {% endfor %}
@@ -165,13 +157,18 @@ subtitle: "Engineers and biologists, each leading their own research project —
         </tr>
       </thead>
       <tbody>
-        {%- for a in site.data.people.alumni.members -%}
+        {%- comment -%} Sort newest-joined first, then alphabetically within a year. {%- endcomment -%}
+        {%- assign alum_years = site.data.people.alumni.members | map: "start" | uniq | sort | reverse -%}
+        {%- for yr in alum_years -%}
+        {%- assign yr_alumni = site.data.people.alumni.members | where: "start", yr | sort_natural: "name" -%}
+        {%- for a in yr_alumni -%}
         <tr>
-          <td class="nm" data-label="Name">{{ a.name }}</td>
+          <td class="nm" data-label="Name">{{ a.name }}{% if a.linkedin %} <a class="alum-linkedin" href="{{ a.linkedin }}" rel="noopener"><img src="{{ '/assets/img/icons/link-linkedin.svg' | relative_url }}" alt="{{ a.name }} on LinkedIn"></a>{% endif %}</td>
           <td data-label="Role">{{ a.role }}</td>
-          <td data-label="Joined">{{ a.joined | default: "—" }}</td>
+          <td data-label="Joined">{{ a.start | default: "—" }}</td>
           <td data-label="Now">{% if a.now and a.now != "" %}{{ a.now }}{% else %}<span class="now-unknown">—</span>{% endif %}</td>
         </tr>
+        {%- endfor -%}
         {%- endfor -%}
       </tbody>
     </table>

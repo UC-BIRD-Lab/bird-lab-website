@@ -35,10 +35,14 @@ description: "The BIRD Lab at UC Davis uncovers fundamental principles of avian 
         <a class="btn btn--light" href="{{ '/research/' | relative_url }}">Explore the research</a>
         <a class="btn btn--ghost" style="color:#fff;border-color:rgba(255,255,255,.6)" href="{{ '/join/' | relative_url }}">Join the lab</a>
       </div>
+      {%- assign member_count = 0 -%}
+      {%- for g in site.data.people.groups -%}
+        {%- assign member_count = member_count | plus: g.members.size -%}
+      {%- endfor -%}
       <div class="hero__stats">
         <div><span class="num">2022</span><span class="lbl">Founded at UC&nbsp;Davis</span></div>
         <div><span class="num">{{ site.data.publications | size }}</span><span class="lbl">Publications</span></div>
-        <div><span class="num"> >$4.9M</span><span class="lbl">Research funding</span></div>
+        <div><span class="num">{{ member_count }}</span><span class="lbl">Researchers</span></div>
       </div>
     </div>
 
@@ -65,12 +69,11 @@ description: "The BIRD Lab at UC Davis uncovers fundamental principles of avian 
   <div class="container">
     <div class="section-head">
       <div>
-        <p class="eyebrow">What we do</p>
-        <h2>Research areas</h2>
+        <h2 class="eyebrow">What we do</h2>
       </div>
       <a class="btn btn--primary" href="{{ '/research/' | relative_url }}">See all projects &rarr;</a>
     </div>
-    <p class="lead prose" style="margin-top:1rem">Three connected research themes link biology, aerospace, and robotics.</p>
+    <p class="lead prose" style="margin-top:1rem">Three connected research areas bridge biology, aerospace, and robotics.</p>
     <div class="grid grid-3" style="margin-top:2rem">
       {%- for t in site.data.research.themes -%}
       <div class="card">
@@ -92,7 +95,7 @@ description: "The BIRD Lab at UC Davis uncovers fundamental principles of avian 
   <div class="field-band__overlay"></div>
   <div class="container field-band__caption">
     <p class="eyebrow" style="color:#bfe0f4">Unique Facilities</p>
-    <p class="field-band__line">The Center for Animal Locomotion & Innovation (CALI)</p>
+    <h2 class="field-band__line">The Center for Animal Locomotion & Innovation (CALI)</h2>
     <p > World-class high-speed, high-resolution photogrammetry and motion capture capabilties to study animal or engineered locomotion.</p>
           <div class="hero__cta">
         <a class="btn btn--light" href="{{ '/facilities/' | relative_url }}">Tour the facilities</a>
@@ -102,59 +105,11 @@ description: "The BIRD Lab at UC Davis uncovers fundamental principles of avian 
 </section>
 {%- endif -%}
 
-<!-- Signature idea: transparent bio-inspired reporting framework -->
-<section class="section">
-  <div class="container framework-section">
-    <div class="framework-intro">
-      <p class="eyebrow">A signature idea</p>
-      <h2>How bio-inspired is your design?</h2>
-      <p class="lead">Inspiration can be nebulous. We identified three key components for transparent bio-inspired research reporting and hold our own work to the same standard.</p>
-      <p class="muted" style="margin-top:1.2rem;font-size:var(--step--1)">
-        Harvey, C. (2026). “How bio-inspired is your design? A transparent reporting framework.”
-        <em>Communications Engineering.</em>
-        <a href="https://doi.org/10.1038/s44172-026-00641-4">doi:10.1038/s44172-026-00641-4</a>
-      </p>
-    </div>
-    <div class="framework-flow">
-      <div class="framework-card">
-        <div class="framework-card__body">
-          <div class="framework-card__head">
-            <span class="framework-card__num">1</span>
-            <h3>Source of inspiration</h3>
-          </div>
-          <p>Explicit identification of the species or family from which the idea originates.</p>
-        </div>
-        <span class="fw-icon" aria-hidden="true"><img src="{{ '/assets/img/icons/fw-source.svg' | relative_url }}" alt=""></span>
-      </div>
-      <div class="framework-card">
-        <div class="framework-card__body">
-          <div class="framework-card__head">
-            <span class="framework-card__num">2</span>
-            <h3>Level of mimicry</h3>
-          </div>
-          <p>How closely the design mimics biology versus abstracting a principle from it.</p>
-        </div>
-        <span class="fw-icon" aria-hidden="true"><img src="{{ '/assets/img/icons/fw-mimicry.svg' | relative_url }}" alt=""></span>
-      </div>
-      <div class="framework-card">
-        <div class="framework-card__body">
-          <div class="framework-card__head">
-            <span class="framework-card__num">3</span>
-            <h3>Strength of evidence</h3>
-          </div>
-          <p>How well the implemented method is supported by scientific evidence.</p>
-        </div>
-        <span class="fw-icon" aria-hidden="true"><img src="{{ '/assets/img/icons/fw-evidence.svg' | relative_url }}" alt=""></span>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- Open by default: public lab guide, data & code, plain-language writing -->
 <section class="section section--tint">
   <div class="container">
-    <p class="eyebrow">Open science</p>
-    <h2>We run our lab in the open</h2>
+    <h2 class="eyebrow">Open science</h2>
     <p class="lead prose">Transparency is part of the science. Our day-to-day handbook is
     public, our data and code go public on publication, and we write plain-language
     summaries so anyone can follow the work.</p>
@@ -184,51 +139,53 @@ description: "The BIRD Lab at UC Davis uncovers fundamental principles of avian 
   </div>
 </section>
 
-
-<!-- Recognition + Featured in -->
-<section class="section section--tint">
-  <div class="container">
-    <p class="eyebrow">Recognition</p>
-    <h2>Honors &amp; awards</h2>
-    <div class="recognition-grid">
-      {%- for a in site.data.recognition.awards -%}
-      <div class="recognition">
-        <span class="recognition__medal" aria-hidden="true"><img src="{{ '/assets/img/icons/medal.svg' | relative_url }}" alt=""></span>
-        <span class="r-body">
-          <span class="r-award">{{ a.name }}</span>
-          <span class="r-meta">{{ a.who }}{% if a.org %} · {{ a.org }}{% endif %}{% if a.year %} · {{ a.year }}{% endif %}</span>
-        </span>
-      </div>
-      {%- endfor -%}
-    </div>
-
-    <p class="eyebrow" style="margin-top:2.6rem">Featured in</p>
-    <div class="media-row">
-      {%- for m in site.data.recognition.media -%}
-      <a class="media-chip" href="{{ m.url }}" rel="noopener">{{ m.name }}</a>
-      {%- endfor -%}
-      <a class="media-more" href="{{ '/news/#in-the-news' | relative_url }}">More coverage &rarr;</a>
-    </div>
-  </div>
-</section>
-
-<!-- Selected publications -->
+<!-- Recent publications (primary) + Honors & awards (compact sidebar) + Featured in -->
 <section class="section">
   <div class="container">
-    <div class="section-head">
-      <div><p class="eyebrow">Selected work</p><h2>Recent publications</h2></div>
-      <a class="btn btn--primary" href="{{ '/publications/' | relative_url }}">All publications &rarr;</a>
-    </div>
-    <div style="margin-top:1.5rem">
-      {%- assign recent = site.data.publications | sort: "year" | reverse -%}
-      {%- for pub in recent limit:3 -%}
-      <div class="pub">
-        <p class="pub__title">
-          {%- if pub.doi -%}<a href="{{ pub.doi }}">{{ pub.title }}</a>{%- else -%}{{ pub.title }}{%- endif -%}
-        </p>
-        <p class="pub__meta">{{ pub.authors }} · <span class="pub__venue">{{ pub.venue }}</span> · {{ pub.year }}</p>
+    <div class="home-highlights">
+      <div class="home-highlights__main">
+        <h2 class="eyebrow">Selected work</h2>
+        <div style="margin-top:1.5rem">
+          {%- comment -%} publications.yml is kept newest-first by date, so take the top 3. {%- endcomment -%}
+          {%- assign recent = site.data.publications -%}
+          {%- for pub in recent limit:3 -%}
+          <div class="pub">
+            <p class="pub__title">
+              {%- if pub.doi -%}<a href="{{ pub.doi }}">{{ pub.title }}</a>{%- else -%}{{ pub.title }}{%- endif -%}
+            </p>
+            <p class="pub__meta">{{ pub.authors }} · <span class="pub__venue">{{ pub.venue }}</span> · {{ pub.year }}</p>
+          </div>
+          {%- endfor -%}
+        </div>
       </div>
-      {%- endfor -%}
+
+      <aside class="home-highlights__side">
+        <h2 class="eyebrow">Recognition</h2>
+        <div class="recognition-grid recognition-grid--stack">
+          {%- for a in site.data.recognition.awards -%}
+          <div class="recognition recognition--compact">
+            <span class="recognition__medal" aria-hidden="true"><img src="{{ '/assets/img/icons/medal.svg' | relative_url }}" alt=""></span>
+            <span class="r-body">
+              <span class="r-award">{{ a.name }}</span>
+              <span class="r-meta">{{ a.who }}{% if a.org %} · {{ a.org }}{% endif %}{% if a.year %} · {{ a.year }}{% endif %}</span>
+            </span>
+          </div>
+          {%- endfor -%}
+        </div>
+      </aside>
+    </div>
+
+    <div class="home-highlights__foot">
+      <a class="btn btn--primary" href="{{ '/publications/' | relative_url }}">All publications &rarr;</a>
+      <div class="home-featured">
+        <h2 class="eyebrow">Featured in</h2>
+        <div class="media-row">
+          {%- for m in site.data.recognition.media -%}
+          <a class="media-chip" href="{{ m.url }}" rel="noopener">{{ m.name }}</a>
+          {%- endfor -%}
+          <a class="media-more" href="{{ '/news/#in-the-news' | relative_url }}">More coverage &rarr;</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -237,7 +194,7 @@ description: "The BIRD Lab at UC Davis uncovers fundamental principles of avian 
 <section class="section section--tint">
   <div class="container grid" style="grid-template-columns:1.3fr 1fr; gap:clamp(1.5rem,4vw,3rem); align-items:stretch">
     <div class="home-news">
-      <p class="eyebrow">Latest news</p>
+      <h2 class="eyebrow">Latest news</h2>
       {%- comment -%} Same month-grouped timeline as the News page; capped height, scroll for older. {%- endcomment -%}
       <div class="mini-scroll">
         <div class="news-timeline">
@@ -270,7 +227,7 @@ description: "The BIRD Lab at UC Davis uncovers fundamental principles of avian 
 <!-- Supported by (funders from _data/funders.yml) -->
 <section class="section">
   <div class="container center partners">
-    <p class="eyebrow">Supported by</p>
+    <h2 class="eyebrow">Supported by</h2>
     <div class="partners-grid partners-grid--lg" style="margin-top:1.5rem">
       {%- for f in site.data.funders -%}
       <a class="partner" href="{{ f.url }}"{% if f.url contains '://' %} rel="noopener"{% endif %}>
@@ -283,6 +240,22 @@ description: "The BIRD Lab at UC Davis uncovers fundamental principles of avian 
       </a>
       {%- endfor -%}
     </div>
-    <p style="margin-top:1.4rem"><a href="{{ '/people/#affiliates' | relative_url }}">Meet our partners &amp; collaborators &rarr;</a></p>
+    <p style="margin-top:1.4rem"><a href="{{ '/people/#affiliates' | relative_url }}">Meet our collaborators &rarr;</a></p>
+  </div>
+</section>
+
+<!-- In partnership with (collaborating organizations from _data/collaborators.yml) -->
+<section class="section section--tint">
+  <div class="container center partners">
+    <h2 class="eyebrow">In partnership with</h2>
+    <div class="partner-orgs">
+      {%- for c in site.data.collaborators -%}
+      <a class="partner-org" href="{{ c.url }}"{% if c.url contains '://' %} rel="noopener"{% endif %}>
+        {%- if c.photo %}<img src="{{ c.photo | relative_url }}" alt="" loading="lazy">{% endif -%}
+        <span class="partner-org__name">{{ c.name }}</span>
+        {%- if c.sub %}<span class="partner-org__sub">{{ c.sub }}</span>{% endif -%}
+      </a>
+      {%- endfor -%}
+    </div>
   </div>
 </section>

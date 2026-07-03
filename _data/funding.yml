@@ -1,0 +1,123 @@
+# ─────────────────────────────────────────────────────────────
+#  FELLOWSHIPS & SCHOLARSHIPS
+#  A curated list of funding students can bring to (or pursue for) the lab.
+#  Shown as a table on the Lab Guide "Applying for funding" page and linked
+#  from Join. Add an entry by copying a block; omit `eligibility` or `url`
+#  when there isn't one.
+#    level       : e.g. "UG", "Masters, PhD", "Post Doc"
+#    eligibility : any restriction (citizenship, identity, …); leave off if open
+#    url         : official application page
+# ─────────────────────────────────────────────────────────────
+
+- name: AAUW International Fellowships
+  level: "Masters, PhD, Post Doc"
+  eligibility: "International · Woman/Non-binary"
+  url: https://www.aauw.org/resources/programs/fellowships-grants/current-opportunities/international/
+
+- name: AIAA Diversity Scholars Program
+  level: "UG, Masters, PhD"
+  url: https://www.aiaa.org/get-involved/committees-groups/Diversity-and-Inclusion/Diversity-Scholars-Program
+
+- name: AIAA Scholarships & Graduate Awards
+  level: "Masters, PhD"
+  url: https://www.aiaa.org/get-involved/students-educators/scholarships-graduate-awards
+
+- name: Amelia Earhart Fellowship
+  level: "PhD"
+  eligibility: "Woman/Non-binary"
+  url: https://www.zonta.org/Web/Programs/Education/Amelia_Earhart_Fellowship
+
+- name: American Doctoral Fellowship (AAUW)
+  level: "PhD"
+  eligibility: "Woman/Non-binary"
+  url: https://www.aauw.org/resources/programs/fellowships-grants/american-doctoral-fellowship-program/
+
+- name: Bill H. James Foundation
+  level: "Masters, PhD"
+  eligibility: "Black/African American · US citizen"
+  url: https://www.billhjamesfoundation.org/scholarships
+
+- name: Brooke Owens Fellowship
+  level: "UG"
+  eligibility: "US citizen · Woman/Non-binary"
+  url: http://www.brookeowensfellowship.org/
+
+- name: Christine Stevens Wildlife Awards
+  url: https://awionline.org/funding-opportunities/christine-stevens-wildlife-awards/
+
+- name: DOD NDSEG Fellowship
+  level: "PhD"
+  eligibility: "US citizen"
+  url: https://ndseg.org/
+
+- name: DOE Computational Science Graduate Fellowship
+  level: "PhD"
+  eligibility: "US citizen"
+  url: https://www.krellinst.org/csgf/
+
+- name: Ford Foundation Fellowships
+  level: "PhD, Post Doc"
+  eligibility: "US citizen"
+  url: https://sites.nationalacademies.org/PGA/FordFellowships/index.htm
+
+- name: GeneTex Scholarship
+  level: "UG, Masters, PhD"
+  url: https://www.genetex.com/Article/Company/Index/Scholarship
+
+- name: HFSP Postdoctoral Fellowship
+  level: "Post Doc"
+
+- name: HHMI Hanna H. Gray Fellowship
+  level: "Post Doc"
+  url: https://www.hhmi.org/programs/hanna-h-gray-fellows
+
+- name: JEB Travelling Fellowship
+  level: "Masters, PhD, Post Doc"
+  url: https://www.biologists.com/travelling-fellowships/
+
+- name: Matthew Isakowitz Fellowship
+  level: "UG"
+  eligibility: "US citizen"
+  url: https://www.matthewisakowitzfellowship.org/
+
+- name: Minerva Scholarship Program
+  level: "UG, Masters, PhD"
+  eligibility: "US citizen · Woman/Non-binary"
+  url: https://wicl.us/scholarship-program/
+
+- name: NSF Graduate Research Fellowship Program (GRFP)
+  level: "Masters, PhD"
+  eligibility: "US citizen"
+  url: https://www.nsfgrfp.org/
+
+- name: NVIDIA Graduate Fellowship
+  level: "PhD"
+  url: https://research.nvidia.com/graduate-fellowships
+
+- name: "Provost's Undergraduate Fellowship (PUF) — UC Davis"
+  level: "UG"
+  url: https://urc.ucdavis.edu/PUF
+
+- name: SICB Grants & Scholarships
+  level: "UG, Masters, PhD"
+  url: https://sicb.org/grants-and-scholarships/
+
+- name: Simons Foundation Pivot Fellowship
+  level: "Post Doc"
+  url: https://www.simonsfoundation.org/grant/pivot-fellowship-request-for-applications/
+
+- name: Travel Award — UC Davis Graduate Studies
+  level: "Masters, PhD"
+  url: https://gradstudies.ucdavis.edu/travel-awards
+
+- name: Travel Award — UC Davis URC
+  level: "UG"
+  url: https://urc.ucdavis.edu/travel-awards
+
+- name: Wakeham Summer Research Fellowship — UC Davis
+  level: "Masters, PhD"
+  url: https://gradpathways.ucdavis.edu/summer-wakeham-research-fellowships
+
+- name: Zed Factor Fellowship
+  level: "UG"
+  url: https://zedfactorfellowship.org/apply

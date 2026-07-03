@@ -1,0 +1,24 @@
+# ─────────────────────────────────────────────────────────────
+#  PARTNER ORGANIZATIONS — shown in the "In partnership with" strip
+#  on the home page. These are collaborating organizations (not funders;
+#  funders live in funders.yml, individual academic collaborators live in
+#  people.yml under `affiliates`).
+#
+#  Each entry: name, sub (short descriptor), photo (square image in
+#  assets/img/partners/), url. Add one by copying a block.
+# ─────────────────────────────────────────────────────────────
+
+- name: California Raptor Center
+  sub: Rehabilitation, education & research
+  photo: /assets/img/partners/crc.jpg
+  url: https://crc.vetmed.ucdavis.edu
+
+- name: California Hawking Club
+  sub: Falconers
+  photo: /assets/img/partners/chc.jpg
+  url: https://www.calhawkingclub.org
+
+- name: Museum of Wildlife and Fish Biology
+  sub: Biologists, ecologists & curators
+  photo: /assets/img/partners/mwfb.jpg
+  url: https://mwfb.ucdavis.edu/#about

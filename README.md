@@ -51,13 +51,14 @@ On recent macOS this can fail on the `eventmachine` gem — see the fix in
 │   ├── press.yml           "In the news" external coverage
 │   ├── recognition.yml     home-page honors + "featured in" media
 │   ├── funders.yml         home-page "supported by" logos
+│   ├── collaborators.yml   home-page "in partnership with" org strip
 │   ├── partners.yml        partners / affiliates strip
 │   ├── gallery.yml         "scenes from the lab" photos
-│   ├── facilities.yml      facility descriptions
+│   ├── facilities.yml      facilities: tagline, specs, capabilities, funding
 │   └── navigation.yml      top menu
 ├── _layouts/  _includes/ ← page templates (rarely touched)
 ├── assets/              ← CSS, JS, logo, images
-├── scripts/             ← publications sync + image-optimization scripts
+├── scripts/             ← publications sync · press-entry helper · image tools
 ├── CONTRIBUTING.md      ← how lab members submit updates + delegation
 └── .github/             ← workflows (deploy · publications · checks) + issue forms
 ```

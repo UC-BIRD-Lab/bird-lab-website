@@ -1,45 +1,101 @@
 ---
 layout: page
 title: Facilities
-eyebrow: What we do
-subtitle: "Purpose-built spaces for studying real animal flight and translating those insights into bird-informed aircraft."
+eyebrow: Where we work
 ---
 
-{%- for f in site.data.facilities -%}
-{%- assign flip = forloop.index | modulo: 2 -%}
-<section class="people-group facility{% if flip == 0 %} facility--flip{% endif %}">
-  <h2>{{ f.name }}</h2>
-  {%- if f.partner or f.location -%}
-  <p class="muted">
-    {%- if f.partner %}{{ f.partner }}{% endif %}{% if f.partner and f.location %} · {% endif %}{% if f.location %}{{ f.location }}{% endif %}
-  </p>
+{%- assign featured = site.data.facilities | where_exp: "f", "f.featured" | first -%}
+{%- assign others = site.data.facilities | where_exp: "f", "f.featured != true" -%}
+
+{%- if featured -%}
+<section class="facility-flagship-section" aria-labelledby="flagship-h">
+  <div class="facility-flagship">
+    <img class="facility-flagship__img" src="{{ featured.photo | relative_url }}" alt="Inside {{ featured.name }}" loading="lazy">
+    {%- if featured.funding -%}
+    <a class="facility-funder" href="{{ featured.funding.url }}" rel="noopener">
+      <span class="facility-funder__note">{{ featured.funding.note }}</span>
+      <img src="{{ featured.funding.logo | relative_url }}" alt="{{ featured.funding.name }}">
+    </a>
+    {%- endif -%}
+    <div class="facility-flagship__body">
+      <p class="eyebrow facility-flagship__kicker">Flagship facility</p>
+      <h2 id="flagship-h" class="facility-flagship__title">{{ featured.name }}</h2>
+      {%- if featured.tagline %}<p class="facility-flagship__tagline">{{ featured.tagline }}</p>{% endif -%}
+      {%- if featured.partner or featured.location -%}
+      <p class="facility-flagship__meta">{% if featured.partner %}{{ featured.partner }}{% endif %}{% if featured.partner and featured.location %} · {% endif %}{% if featured.location %}{{ featured.location }}{% endif %}</p>
+      {%- endif -%}
+      <div class="hero__cta">
+        {%- if featured.url %}<a class="btn btn--light" href="{{ featured.url }}">{{ featured.url_label | default: "Learn more" }}</a>{% endif -%}
+        <a class="btn btn--ghost" style="color:#fff;border-color:rgba(255,255,255,.6)" href="{{ '/contact/' | relative_url }}">Visit or collaborate</a>
+      </div>
+    </div>
+  </div>
+
+  {%- if featured.blurb -%}
+  <div class="facility-flagship-copy prose">
+    <p>{{ featured.blurb }}</p>
+  </div>
   {%- endif -%}
+
+  {%- if featured.specs -%}
+  <div class="spec-grid">
+    {%- for s in featured.specs -%}
+    <div class="spec">
+      <span class="spec__value">{{ s.value }}</span>
+      <span class="spec__label">{{ s.label }}</span>
+    </div>
+    {%- endfor -%}
+  </div>
+  {%- endif -%}
+
+  {%- if featured.capabilities -%}
+  <ul class="facility-features">
+    {%- for c in featured.capabilities -%}<li>{{ c }}</li>{%- endfor -%}
+  </ul>
+  {%- endif -%}
+</section>
+{%- endif -%}
+
+<hr class="divider" style="margin:clamp(2.5rem,6vw,4rem) 0">
+
+{%- for f in others -%}
+{%- assign flip = forloop.index | modulo: 2 -%}
+<section class="facility-row facility{% if flip == 0 %} facility--flip{% endif %}" aria-labelledby="fac-{{ forloop.index }}-h">
   <div class="facility-grid">
     {%- if f.photo -%}
     <figure class="facility-photo">
-      <img src="{{ f.photo | relative_url }}" alt="{{ f.name }}" loading="lazy">
+      <img src="{{ f.photo | relative_url }}" alt="Inside {{ f.name }}" loading="lazy">
+      {%- if f.photo_note %}<figcaption class="facility-photo__note">{{ f.photo_note }}</figcaption>{% endif -%}
     </figure>
     {%- endif -%}
     <div class="facility-body">
-      <div class="prose">
-        <p>{{ f.blurb }}</p>
-        {%- if f.url -%}
-        <p><a class="btn btn--primary" href="{{ f.url }}">{{ f.url_label | default: "Learn more" }} &rarr;</a></p>
-        {%- endif -%}
+      <h2 id="fac-{{ forloop.index }}-h">{{ f.name }}</h2>
+      {%- if f.tagline %}<p class="facility-tagline">{{ f.tagline }}</p>{% endif -%}
+      {%- if f.partner or f.location -%}
+      <p class="muted facility-meta">{% if f.partner %}{{ f.partner }}{% endif %}{% if f.partner and f.location %} · {% endif %}{% if f.location %}{{ f.location }}{% endif %}</p>
+      {%- endif -%}
+      {%- if f.blurb %}<p>{{ f.blurb }}</p>{% endif -%}
+      {%- if f.specs -%}
+      <div class="spec-grid spec-grid--compact">
+        {%- for s in f.specs -%}
+        <div class="spec"><span class="spec__value">{{ s.value }}</span><span class="spec__label">{{ s.label }}</span></div>
+        {%- endfor -%}
       </div>
+      {%- endif -%}
       {%- if f.capabilities -%}
-      <div class="note" style="margin-top:1.2rem">
-        <p class="card__tag">Capabilities</p>
-        <ul style="margin:0">
-          {%- for c in f.capabilities -%}<li>{{ c }}</li>{%- endfor -%}
-        </ul>
-      </div>
+      <ul class="facility-features">
+        {%- for c in f.capabilities -%}<li>{{ c }}</li>{%- endfor -%}
+      </ul>
+      {%- endif -%}
+      {%- if f.url -%}
+      <p style="margin-top:1.1rem"><a class="btn btn--ghost" href="{{ f.url }}">{{ f.url_label | default: "Learn more" }} &rarr;</a></p>
       {%- endif -%}
     </div>
   </div>
 </section>
+{%- unless forloop.last %}<hr class="divider" style="margin:clamp(2.5rem,6vw,4rem) 0">{% endunless -%}
 {%- endfor -%}
 
-<div class="note" style="margin-top:2rem">
+<div class="note" style="margin-top:clamp(2.5rem,6vw,4rem)">
   <p style="margin:0">Interested in collaborating or visiting? <a href="{{ '/contact/' | relative_url }}">Get in touch</a>.</p>
 </div>

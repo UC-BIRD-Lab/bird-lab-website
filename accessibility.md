@@ -3,7 +3,6 @@ layout: page
 title: Accessibility
 eyebrow: About this site
 prose: true
-subtitle: "We want everyone to be able to read about and engage with our research."
 ---
 
 The BIRD Lab is committed to making this website usable by as many people as

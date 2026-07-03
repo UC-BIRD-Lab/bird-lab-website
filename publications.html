@@ -2,7 +2,6 @@
 layout: page
 title: Publications
 eyebrow: What we do
-subtitle: "Peer-reviewed journal articles are kept in sync automatically from the lab's ORCID record; conference papers, posters, and talks are curated by hand."
 ---
 
 {%- assign journals = site.data.publications -%}
@@ -29,8 +28,9 @@ subtitle: "Peer-reviewed journal articles are kept in sync automatically from th
 
 {%- for y in years -%}
   <h2 class="pub-year">{{ y }}</h2>
+  {%- comment -%} Entries keep the data-file order (publications.yml is written newest-first
+     by date; hand-curated conference items follow). {%- endcomment -%}
   {%- assign items = all | where: "year", y -%}
-  {%- assign items = items | sort: "type" | reverse -%}
   {%- for pub in items -%}
   {%- capture search %}{{ pub.title }} {{ pub.authors }} {{ pub.venue }}{% endcapture -%}
   {%- comment -%} Hand-curated extras (data / code / figure) matched by DOI. {%- endcomment -%}
@@ -40,16 +40,17 @@ subtitle: "Peer-reviewed journal articles are kept in sync automatically from th
     {%- if rich.image %}<img class="pub__thumb" src="{{ rich.image | relative_url }}" alt="Figure from “{{ pub.title }}”" loading="lazy">{% endif -%}
     <div class="pub__main">
       <p class="pub__title">
+        {%- if pub.type == "journal" -%}{%- assign jkind = rich.kind | default: "research" -%}{%- if jkind == "review" -%}<span class="badge badge--paper pub__type">Review article</span> {% elsif jkind == "commentary" -%}<span class="badge badge--paper pub__type">Commentary</span> {% else -%}<span class="badge badge--paper pub__type">Research article</span> {% endif -%}{% elsif pub.type == "conference" -%}{%- if pub.note -%}<span class="badge badge--minor pub__type">{{ pub.note }}</span> {% else -%}<span class="badge badge--conf pub__type">Conference paper</span> {% endif -%}{% endif -%}
         {%- if pub.doi -%}<a href="{{ pub.doi }}">{{ pub.title }}</a>{%- else -%}{{ pub.title }}{%- endif -%}
-        {%- if pub.type == "journal" %} <span class="badge badge--paper">Journal</span>
-        {%- elsif pub.type == "conference" %} <span class="badge">{{ pub.note | default: "Conference" }}</span>{% endif -%}
       </p>
       <p class="pub__meta">{{ pub.authors }} · <span class="pub__venue">{{ pub.venue }}</span> · {{ pub.year }}
-        {%- if pub.doi %} · <a href="{{ pub.doi }}">DOI</a>{% endif -%}
+        {%- if pub.doi %} · <a href="{{ pub.doi }}">{{ pub.doi | split: "doi.org/" | last | split: "/doi/" | last }}</a>{% endif -%}
         {%- if pub.doi -%}
           {%- assign press_hits = all_press | where_exp: "x", "x.doi and pub.doi contains x.doi" -%}
           {%- if press_hits.size > 0 -%} · <a class="pub-press" href="{{ '/news/#in-the-news' | relative_url }}"><span aria-hidden="true">📰</span> In the news · {{ press_hits.size }}</a>{%- endif -%}
         {%- endif -%}
+        {%- if rich.award -%} · <span class="pub-award"><span aria-hidden="true">🏆</span> {{ rich.award }}</span>{%- endif -%}
+        {%- if rich.correction -%} · <a class="pub-correction" href="{{ rich.correction }}" rel="noopener"><span aria-hidden="true">⚠</span> {{ rich.correction_label | default: "Correction" }}</a>{%- endif -%}
       </p>
       {%- if rich.data or rich.code -%}
       <p class="pub__extras">

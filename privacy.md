@@ -3,8 +3,10 @@ layout: page
 title: Privacy
 eyebrow: About this site
 prose: true
-subtitle: "We keep this simple: the site collects as little as possible, and never anything that identifies you."
 ---
+
+We keep this simple: the site collects as little as possible, and never anything that
+identifies you.
 
 ## What we collect
 

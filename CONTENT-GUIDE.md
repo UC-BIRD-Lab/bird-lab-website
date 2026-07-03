@@ -54,11 +54,14 @@ Add a block under the right group's `members:` list. Only `name` and `role` are 
   field someone *trained in*. Comma-separate for more than one.
 - **Promote someone** (e.g. undergrad → PhD): just change their `role:` text (and
   move the block if you want them earlier in the order). The bird updates itself.
-- **Someone left:** move their block to the `alumni:` list at the bottom and
-  shorten it to one line:
+- **Someone left:** cut their whole block from `groups:` and paste it into the
+  `alumni:` list at the bottom, then add a `now:` line for where they went. You
+  can trim it to one line or paste the full block as-is — extra fields are ignored:
   ```yaml
-    - { name: Jordan Rivera, role: "PhD → industry" }
+    - { name: Jordan Rivera, role: "PhD Researcher", start: 2024, now: "Boeing" }
   ```
+  `start:` (year they joined) sorts the alumni table newest-first, and any
+  `linkedin:` shows a LinkedIn icon beside their name.
 - **Photo (optional):** put a small square JPG in `assets/img/people/` (or a large
   original in `assets/img/people/_raw/` then run `bash scripts/apply-images.sh`),
   and add the `photo:` line above. No photo = a clean initials avatar.
@@ -78,7 +81,7 @@ at the **top** of `_data/publications.yml`:
   doi: "https://doi.org/10.xxxx/xxxxx"
 ```
 
-**Conference paper / poster / talk** — add under `conference:` in
+**Conference paper / poster / presentation** — add under `conference:` in
 `_data/publications_manual.yml`:
 ```yaml
   - title: "Talk or paper title"
@@ -86,9 +89,13 @@ at the **top** of `_data/publications.yml`:
     venue: "AIAA SciTech Forum, Orlando, FL"
     year: 2026
     type: conference
-    note: Poster          # or "Talk"; omit for a paper
+    note: Poster          # or "Presentation"; OMIT for a conference paper
     doi: "https://…"      # optional
 ```
+Each entry shows a colored type pill at the front of the title: **journal
+article** (green), **conference paper** (amber, shown when you omit `note`), and
+**presentation / poster** (muted gray, shown when `note` is set). So leaving
+`note` off is what marks something as a full conference paper.
 
 ---
 
@@ -103,9 +110,26 @@ its **bare DOI**. The auto-sync never touches it, so your extras are safe.
   data: "https://figshare.com/…"  # optional — dataset link
   code: "https://github.com/UC-BIRD-Lab/…"  # optional — code repo
   image: /assets/img/research/perchaero.jpg # optional — only for major papers
+  kind: review                    # optional — "review" or "commentary" (journals only)
+  award: "AIAA Jefferson Goblet Student Paper Award"  # optional — gold 🏆 pill
+  correction: "https://doi.org/…" # optional — a correction/corrigendum for this paper
 ```
 
 - Add `image:` **sparingly** — just standout papers, or the list gets busy.
+- **`kind:`** sets a journal article's type pill. Leave it off and the paper reads
+  **Research article** (the default). Add `kind: review` or `kind: commentary` for the
+  exceptions. The pill stays green either way — only the wording changes. (Conference
+  papers and posters are labelled from `publications_manual.yml`, not here.)
+- **`award:`** shows a gold 🏆 pill next to the paper — use it for a best-paper award,
+  a prize, etc.
+- **Something showed up that isn't a paper?** (a journal profile of the PI, a talk
+  OpenAlex indexed like an article.) Add its bare DOI under `exclude:` in
+  `_data/publications_manual.yml` with a short `reason:` — the sync removes it and never
+  re-adds it.
+- **Corrections/corrigenda:** the auto-sync skips them (it prints any it sees). If one
+  corrects a listed paper, add a `correction:` link to that paper's block here and it
+  shows as a small "Correction" pill next to it. Add `correction_label: "Corrigendum"`
+  to change the wording.
 - Nothing appears until the paper is on the Publications page, so you can add this
   as soon as a paper is accepted.
 - **Press/news is not listed here** — tag a story with the paper's `doi:` in
@@ -159,6 +183,40 @@ valid: `text: "We spoke at <a href='https://example.com'>the workshop</a>."`
   URL to the article's own image (`https://outlet.com/story.jpg`). A static site
   can't fetch a story's image on its own, so paste the link once here.
 
+**Shortcut — let the script do it.** Instead of filling the block by hand, run:
+
+```bash
+python scripts/add_press.py "https://outlet.com/story" --doi 10.1098/rsif.2025.0868 --featured
+```
+
+It reads the outlet, headline, and author from the page, and — only with `--featured` —
+downloads the lead image into `assets/img/news/` (resized/compressed), then prints a
+ready-to-paste entry. Add `--append` to have it inserted into `press.yml` for you. Drop
+`--featured` for a normal (non-card) story. See the script's header for all options.
+
+### Videos, podcasts & 3D models — `_data/media.yml`
+
+Non-article coverage (talks, podcast episodes, an interactive model) lives here and
+shows in the **"Watch & listen"** strip on the News page — as link-out cards, not
+embeds, so the page stays fast and cookie-free. Each entry has `title`, `kind`
+(`video` / `podcast` / `model`), `source`, `year`, `url`. For a YouTube link the
+thumbnail is generated automatically; podcasts and models get an icon tile.
+
+---
+
+## Fellowships & scholarships list — `_data/funding.yml`
+
+The funding table on the Lab Guide **"Applying for funding"** page (linked from Join)
+is generated from this file. Copy a block to add one; omit `eligibility` or `url`
+when there isn't one.
+
+```yaml
+- name: Brooke Owens Fellowship
+  level: "UG"                       # e.g. "UG", "Masters, PhD", "Post Doc"
+  eligibility: "US citizen · Woman/Non-binary"   # optional; leave off if open
+  url: http://www.brookeowensfellowship.org/
+```
+
 ---
 
 ## Edit a research project — `_data/research.yml`
@@ -188,6 +246,43 @@ ends, just delete its block (or move the lead to `alumni:` and remove the card).
   `papers:` out and no paper line shows. (The paper must already be listed on the
   Publications page — journal articles arrive automatically; add conference papers
   in `_data/publications_manual.yml`.)
+
+---
+
+## Edit a facility — `_data/facilities.yml`
+
+Each facility is one block. The first one with `featured: true` becomes the big
+photo band at the top of the Facilities page; the rest render as alternating
+photo rows. Prefer **specs** (big-number tiles) and short capability **chips** over
+long paragraphs.
+
+```yaml
+- name: Center for Animal Locomotion and Innovation (CALI)
+  featured: true                     # ONE facility only → the flagship band
+  tagline: >-
+    One credible line shown with the name.
+  partner: Co-directed with Dr. …    # optional
+  location: California Raptor Center, UC Davis   # optional
+  url: https://…                     # optional "Learn more" button
+  url_label: Visit the CALI consortium
+  photo: /assets/img/facilities/cali.jpg
+  photo_note: AI rendering based on real photos, to illustrate the setup.  # optional caption
+  funding:                           # optional credit badge in the photo corner
+    note: "DURIP support from:"
+    name: DEVCOM Army Research Laboratory
+    logo: /assets/img/partners/arl.png
+    url: https://www.arl.army.mil/
+  specs:                             # big-number tiles; keep `value` short
+    - { value: "48", label: "OptiTrack motion-capture cameras" }
+    - { value: "9", label: "high-speed Phantom cameras" }
+  capabilities:                      # short qualitative chips
+    - Sub-millisecond, sub-millimeter tracking
+    - Daylight-balanced lighting for live birds
+```
+
+- **`featured:`** — set on exactly one facility. Its `photo` becomes the flagship band; a real photo works best (not the AI renderings).
+- **`photo_note:`** — a small italic caption under the image (used to mark the wind-tunnel/specimen renderings as AI-based). Leave it off for real photos.
+- **`funding:`** — shows a small "thanks to…" logo badge in the top corner of the flagship photo. Logos live in `assets/img/partners/`.
 
 ---
 
@@ -327,6 +422,11 @@ These live directly in `index.html` (edit the text in place):
 - **`_data/partners.yml`** — the **partners / affiliates** strip (also shown on
   People). Add an entry under the right `groups:` heading. With a `logo:` it shows
   the image; without one it renders a clean wordmark.
+- **`_data/collaborators.yml`** — the home page **"In partnership with"** strip of
+  partner *organizations* (California Raptor Center, California Hawking Club, the
+  museum). Each entry: `name`, `sub` (short descriptor), `photo` (square image in
+  `assets/img/partners/`), `url`. Individual academic collaborators stay in
+  `people.yml` under `affiliates`.
 
 Drop all logos in `assets/img/partners/`.
 

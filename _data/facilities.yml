@@ -1,46 +1,71 @@
 # ─────────────────────────────────────────────────────────────
 #  FACILITIES
+#
+#  featured: true      → rendered as the full-bleed "flagship" band at the top
+#                        (only set this on ONE facility).
+#  tagline             → one credible line shown with the name.
+#  funding:            → optional credit badge shown in the corner of the
+#                        flagship photo ({ note, name, logo, url }).
+#  specs:              → big-number tiles (the headline capabilities). Each is
+#                        { value, label }. Keep `value` short (a number, size,
+#                        speed, or amount); the `label` says what it is.
+#  capabilities:       → remaining qualitative features, shown as chips.
+#  blurb               → optional; kept minimal. Prefer specs + chips over prose.
 # ─────────────────────────────────────────────────────────────
 
 - name: Center for Animal Locomotion and Innovation (CALI)
+  featured: true
+  tagline: >-
+    Purpose-built flight hall for studying animal locomotion
+    translating it into robotics and rehabilitation metrics.
   partner: Co-directed with Dr. Michelle Hawkins
   location: California Raptor Center, UC Davis
   url: https://sites.google.com/ucdavis.edu/cali/home
   url_label: Visit the CALI consortium
   photo: /assets/img/facilities/cali.jpg
-  blurb: >-
-    CALI is a purpose-built flight hall for studying real animal flight and
-    translating those insights into agile aerial robots. We combine controlled
-    indoor flight trials with high-speed motion capture, photogrammetry, and
-    rapid prototyping to test bio-informed designs. The facility, established
-    with a $2.9M DURIP equipment award and opened in 2026, anchors a broader
-    consortium connecting engineering, biology, and veterinary medicine.
+  funding:
+    note: "DURIP support from:"
+    name: DEVCOM Army Research Laboratory
+    logo: /assets/img/partners/arl.png
+    url: https://www.arl.army.mil/
+  specs:
+    - { value: "44", label: "OptiTrack Versa 120x motion capture cameras" }
+    - { value: "9", label: "high-speed Phantom cameras" }
+    - { value: "4", label: "attached bird mews" }
+    - { value: "2", label: "high-performance workstations" }
   capabilities:
-    - Controlled-environment indoor flight hall
-    - Four attached mews
-    - 48-camera OptiTrack Versa 120 system
-    - 9-camera high speed Phantom photogrammetry system
+    - Sub-millisecond, sub-millimeter tracking
+    - High-speed 3D reconstruction
+    - Controlled-environment flight hall
+    - Daylight-balanced lighting for live birds
 
 - name: UC Davis Aeronautical Wind Tunnel
+  tagline: >-
+    Precision aerodynamic testing of airfoils, morphing wings, and small UAVs.
   partner: Co-directed with Dr. Camli Badrya
   location: UC Davis Bainer Hall
   photo: /assets/img/facilities/wind-tunnel.jpg
-  blurb: >-
-    A university wind-tunnel facility for precision aerodynamic testing of
-    airfoils, morphing wings, and small UAV platforms. Researchers measure
-    forces, pressures, and flow behavior to validate models and refine designs.
+  photo_note: AI rendering based on real photos, to illustrate the setup.
+  specs:
+    - { value: "165 mph", label: "maximum test-section speed" }
+    - { value: "< 0.1%", label: "free-stream turbulence" }
+    - { value: "48 × 33.6 in", label: "closed test section" }
   capabilities:
-    - Force and pressure measurement
-    - Airfoil, morphing-wing & small-UAV testing
-    - 48" x 33.6" x 12' test section
+    - Six-component force & moment balance
+    - 2D-2C Particle Image Velocimetry (PIV) system
+    - Two axis traverse system
+    - Bambu Lab 3D printer
+
 
 - name: Specimen-focused Motion Capture Room
+  tagline: >-
+    High-resolution capture of specimens across their full range of motion.
   location: UC Davis Bainer Hall
   photo: /assets/img/facilities/specimen-room.jpg
-  blurb: >-
-    A dedicated space for high-resolution motion capture and morphological
-    measurement of wing specimens across their full range of motion.
+  photo_note: AI rendering based on real photos, to illustrate the setup.
+  specs:
+    - { value: "5", label: "OptiTrack Flex13 motion capture cameras" }
+    - { value: "1", label: "Dedicated specimen freezer" }
   capabilities:
     - Specimen range-of-motion capture
     - Morphological measurement
-    - five-camera OptiTrack Flex13 system

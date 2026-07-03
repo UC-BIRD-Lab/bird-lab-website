@@ -76,6 +76,27 @@
     });
   }
 
+  // ---- Fellowships table: show a preview, reveal the rest on demand ----
+  // Progressive enhancement: with JS off, every row (and no button) shows.
+  document.querySelectorAll(".fund-toggle").forEach(function (btn) {
+    var table = document.getElementById(btn.getAttribute("data-target"));
+    if (!table) return;
+    var rows = Array.prototype.slice.call(table.querySelectorAll("tbody tr"));
+    var preview = parseInt(btn.getAttribute("data-preview"), 10) || 6;
+    if (rows.length <= preview) return;              // nothing to collapse
+    var collapsed = true;
+    function apply() {
+      rows.forEach(function (r, i) { r.hidden = collapsed && i >= preview; });
+      btn.innerHTML = collapsed
+        ? ("Show all " + rows.length + " fellowships ↓")
+        : "Show fewer ↑";
+      btn.setAttribute("aria-expanded", collapsed ? "false" : "true");
+    }
+    btn.hidden = false;
+    apply();
+    btn.addEventListener("click", function () { collapsed = !collapsed; apply(); });
+  });
+
   // ---- Hero background video: pause/play control (WCAG 2.2.2) ----
   // The control lets anyone stop motion that lasts >5s. We also respect the
   // OS "reduce motion" setting: there the CSS hides the video, so we pause it

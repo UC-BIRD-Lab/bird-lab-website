@@ -24,7 +24,7 @@ groups:
     members:
       - name: Dr. Christina Harvey
         aliases: ["Dr. Harvey"]
-        role: Assistant Professor · Lab Director
+        role: Assistant Professor · BIRD Lab Director · CALI Director
         pronouns: she/her
         field: "Mechanical Engineering, Zoology, Aerospace Engineering"
         start: 2022
@@ -184,6 +184,7 @@ groups:
         role: Undergraduate Researcher
         start: 2026
         field: "Mech + Aero Engineering"
+        photo: /assets/img/people/zak-conte.jpg
       - name: Ananya Bansal
         role: Undergraduate Researcher
         start: 2026
@@ -207,9 +208,11 @@ groups:
         field: "Mechanical Engineering"
         photo: /assets/img/people/adam-halford.jpg
 
-# Collaborators and affiliated researchers outside the core group.
+# Individual collaborators and affiliated researchers outside the core group.
+# (Partner *organizations* — CRC, CHC, the museum — live in collaborators.yml
+#  and appear in the "In partnership with" strip on the home page.)
 affiliates:
-  title: Collaborators & Partners
+  title: Collaborators
   members:
     - name: Dr. Michelle Hawkins
       role: Emeritus Professor · UC Davis
@@ -225,7 +228,7 @@ affiliates:
       field: "Aerospace Engineering"
       photo: /assets/img/people/kevin-haughn.jpg
       orcid: 0000-0002-8219-8983
-      website: https://sites.google.com/umich.edu/kevin-haughn/home
+      website: https://haughn-morph-lab.github.io/morph-lab.github.io/
       linkedin: https://www.linkedin.com/in/kevin-haughn-20abb491/
     - name: Dr. Lydia France
       role: Schmidt AI in Science Fellow · University of Oxford
@@ -235,39 +238,31 @@ affiliates:
       orcid: 0000-0003-4392-568X
       website: https://lydiafrance.github.io/LydiaFrance/
       linkedin: https://www.linkedin.com/in/lydia-france-139864a3
-    - name: California Raptor Center
-      role: Rehabilitation, Education, and Research 
-      photo: /assets/img/partners/crc.jpg
-      website: https://crc.vetmed.ucdavis.edu
-    - name: California Hawking Club
-      role: Falconers
-      photo: /assets/img/partners/chc.jpg
-      website: https://www.calhawkingclub.org
-    - name: Museum of Wildlife and Fish Biology
-      role: Biologists, Ecologists, Museum Curators
-      photo: /assets/img/partners/mwfb.jpg
-      website: https://mwfb.ucdavis.edu/#about
 
-# Past members. `role` = position held in the lab; `now` = current
-# position / destination (fill in as you learn where folks land).
+# Past members.
+#  TO RETIRE SOMEONE: cut their whole block from `groups` above and paste it
+#  here, then just add a `now:` line. The alumni table reuses the same fields —
+#  `start` (year joined) and `linkedin` carry over automatically, and a LinkedIn
+#  icon appears beside the name whenever `linkedin` is present. Extra fields
+#  (photo, email, field, awards…) are simply ignored, so you don't have to trim.
+#  `role` = position held in the lab; `now` = current position / destination.
 alumni:
   title: Alumni
   members:
-    - { name: Benjamin Tai-Brownlee, role: "Undergraduate Researcher (first in lab)", joined: 2022, now: "Boeing" }
-    - { name: Rowan Glenn, role: "Undergraduate Researcher", joined: 2022, now: "Northwood" }
-    - { name: Tejas Lotay, role: "Undergraduate Researcher", joined: 2023, now: "NASA Ames" }
-    - { name: Lucas Dahlke, role: "Undergraduate Researcher", joined: 2023, now: "UCLA" }
-    - { name: Bryan Tiang, role: "Undergraduate Researcher", joined: 2023, now: "Stanford University" }
-    - { name: Jackie The, role: "Undergraduate Researcher", joined: 2023, now: "Industry" }
-    - { name: Alex Kerlee, role: "Undergraduate Researcher", joined: 2023, now: "Wish" }
-    - { name: Ellie Hintzman, role: "Undergraduate Researcher", joined: 2024, now: "Industry" }
-    - { name: Logan Reuter, role: "Undergraduate Researcher", joined: 2024, now: "Ultima Genomics" }
-    - { name: Stevi Dunn, role: "Undergraduate Researcher", joined: 2024, now: "Lucid" }
-    - { name: Gaurav Dhirar, role: "Undergraduate Researcher", joined: 2024, now: "Academia" }
-    - { name: Isa Khalak, role: "Undergraduate Researcher", joined: 2024, now: "UC Davis" }
-    - { name: Susie Benner, role: "Undergraduate Researcher", joined: 2024, now: "UC Davis" }
-    - { name: Meghna Tirumalai, role: "Undergraduate Researcher", joined: 2026, now: "" }
-    - { name: Adrian Chan, role: "Undergraduate Researcher", now: "Stanford University" }
-    - { name: Kiran Weston, role: "Visiting Student · University of Oxford", joined: 2023, now: "Newton Consulting" }
-    - { name: Francesca Ciocca, role: "Visiting Student · UBC", joined: 2023, now: "Industry" }
-    - { name: Mija Jovchevska, role: "Visiting Researcher (JEB ECR Fellow)", joined: 2024, now: "CU Boulder" }
+    - { name: Benjamin Tai-Brownlee, role: "Undergraduate Researcher (first in lab)", start: 2022, now: "Boeing" }
+    - { name: Rowan Glenn, role: "Undergraduate Researcher", start: 2022, now: "Northwood" }
+    - { name: Tejas Lotay, role: "Undergraduate Researcher", start: 2023, now: "NASA Ames" }
+    - { name: Lucas Dahlke, role: "Undergraduate Researcher", start: 2023, now: "UCLA" }
+    - { name: Bryan Tiang, role: "Undergraduate Researcher", start: 2023, now: "Stanford University" }
+    - { name: Jackie The, role: "Undergraduate Researcher", start: 2023, now: "Industry" }
+    - { name: Alex Kerlee, role: "Undergraduate Researcher", start: 2023, now: "Wisk" }
+    - { name: Ellie Hintzman, role: "Undergraduate Researcher", start: 2024, now: "Industry" }
+    - { name: Logan Reuter, role: "Undergraduate Researcher", start: 2024, now: "Ultima Genomics" }
+    - { name: Stevi Dunn, role: "Undergraduate Researcher", start: 2024, now: "Lucid" }
+    - { name: Gaurav Dhirar, role: "Undergraduate Researcher", start: 2024, now: "Academia" }
+    - { name: Isa Khalak, role: "Undergraduate Researcher", start: 2024, now: "UC Davis" }
+    - { name: Susie Benner, role: "Undergraduate Researcher", start: 2024, now: "UC Davis" }
+    - { name: Adrian Chan, role: "Undergraduate Researcher", start: 2025, now: "Stanford University" }
+    - { name: Kiran Weston, role: "Visiting Student · University of Oxford", start: 2023, now: "Newton Consulting" }
+    - { name: Francesca Ciocca, role: "Visiting Student · UBC", start: 2023, now: "Industry" }
+    - { name: Mija Jovchevska, role: "Visiting Researcher (JEB ECR Fellow)", start: 2024, now: "CU Boulder" }

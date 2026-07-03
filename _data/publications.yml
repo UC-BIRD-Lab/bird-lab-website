@@ -7,35 +7,16 @@
 #  hand-edit any entry to fix a detail; future runs preserve existing DOIs.
 #  Conference papers/posters/talks live in publications_manual.yml.
 #
-#  Fields: title, authors, venue, year, type (journal), doi (URL)
-#  Keep newest first.
+#  Fields: title, authors, venue, year, date (YYYY-MM-DD), type, doi (URL)
+#  `date` is used to sort within a year (the page still groups by `year`).
+#  Keep newest first — this file is written sorted by date, newest first.
 # ────────────────────────────────────────────────────────────
-
-- title: "Stability shifts in gliding flight: hawks morph from an unstable to stable state when navigating a gap"
-  authors: "K. Weston, H. Zhu, G. K. Taylor, C. Harvey"
-  venue: "Journal of the Royal Society Interface"
-  year: 2026
-  type: journal
-  doi: "https://doi.org/10.1098/rsif.2025.0868"
-
-- title: "How bio-inspired is your design? A transparent reporting framework"
-  authors: "C. Harvey"
-  venue: "Communications Engineering"
-  year: 2026
-  type: journal
-  doi: "https://doi.org/10.1038/s44172-026-00641-4"
-
-- title: "Dynamic Morphospaces for Animal Locomotion: A Case Study in Bird Flight"
-  authors: "L. A. France, C. Harvey, G. K. Taylor"
-  venue: "Integrative and Comparative Biology"
-  year: 2026
-  type: journal
-  doi: "https://doi.org/10.1093/icb/icag058"
 
 - title: "Tuning for feather loss: wing–tail kinematic adjustments of a moulting red-tailed hawk during perching flight"
   authors: "A. Martinez, M. G. Hawkins, C. Harvey"
   venue: "Journal of The Royal Society Interface"
   year: 2026
+  date: "2026-06-17"
   type: journal
   doi: "https://doi.org/10.1098/rsif.2025.1082"
 
@@ -43,6 +24,7 @@
   authors: "F. A. Jackson, J. Hrynuk, C. Harvey"
   venue: "AIAA AVIATION"
   year: 2026
+  date: "2026-06-04"
   type: conference
   doi: "https://doi.org/10.2514/6.2026-4555"
 
@@ -50,13 +32,39 @@
   authors: "K. Bordner, C. Cook, T. C. Henry, K. P. Haughn, C. Harvey"
   venue: "AIAA AVIATION"
   year: 2026
+  date: "2026-06-04"
   type: conference
   doi: "https://doi.org/10.2514/6.2026-4380"
+
+- title: "How bio-inspired is your design? A transparent reporting framework"
+  authors: "C. Harvey"
+  venue: "Communications Engineering"
+  year: 2026
+  date: "2026-04-13"
+  type: journal
+  doi: "https://doi.org/10.1038/s44172-026-00641-4"
+
+- title: "Stability shifts in gliding flight: hawks morph from an unstable to stable state when navigating a gap"
+  authors: "K. Weston, H. Zhu, G. K. Taylor, C. Harvey"
+  venue: "Journal of the Royal Society Interface"
+  year: 2026
+  date: "2026-03-04"
+  type: journal
+  doi: "https://doi.org/10.1098/rsif.2025.0868"
+
+- title: "Dynamic Morphospaces for Animal Locomotion: A Case Study in Bird Flight"
+  authors: "L. A. France, C. Harvey, G. K. Taylor"
+  venue: "Integrative and Comparative Biology"
+  year: 2026
+  date: "2026-01-01"
+  type: journal
+  doi: "https://doi.org/10.1093/icb/icag058"
 
 - title: "Longer wing bones in warmer climates suggest a role of thermoregulation in bird wing evolution"
   authors: "B. C. Weeks, C. Harvey, J. A. Tobias, C. Sheard, Z. Zhou, D. F. Fouhey"
   venue: "Global Ecology and Biogeography"
   year: 2025
+  date: "2025-04-01"
   type: journal
   doi: "https://doi.org/10.1111/geb.70033"
 
@@ -64,6 +72,7 @@
   authors: "H. Zhu, K. Bordner, R. J. Bomphrey, J. R. Usherwood, K. Haughn, C. Harvey"
   venue: "AIAA SciTech Forum"
   year: 2025
+  date: "2025-01-03"
   type: conference
   doi: "https://doi.org/10.2514/6.2025-1460"
 
@@ -71,27 +80,31 @@
   authors: "F. A. Jackson, S. Rovani, J. T. Hrynuk, C. Harvey"
   venue: "AIAA SciTech Forum"
   year: 2025
+  date: "2025-01-03"
   type: conference
   doi: "https://doi.org/10.2514/6.2025-1074"
-
-- title: "Deep learning reduces sensor requirements for gust rejection on a small uncrewed aerial vehicle morphing wing"
-  authors: "K. P. T. Haughn, C. Harvey, D. J. Inman"
-  venue: "Communications Engineering"
-  year: 2024
-  type: journal
-  doi: "https://doi.org/10.1038/s44172-024-00201-8"
 
 - title: "Joint extension speed dictates bio-inspired morphing trajectories for optimal longitudinal flight dynamics"
   authors: "C. Harvey"
   venue: "Journal of the Royal Society Interface"
   year: 2024
+  date: "2024-04-01"
   type: journal
   doi: "https://doi.org/10.1098/rsif.2023.0734"
+
+- title: "Deep learning reduces sensor requirements for gust rejection on a small uncrewed aerial vehicle morphing wing"
+  authors: "K. P. T. Haughn, C. Harvey, D. J. Inman"
+  venue: "Communications Engineering"
+  year: 2024
+  date: "2024-03-21"
+  type: journal
+  doi: "https://doi.org/10.1038/s44172-024-00201-8"
 
 - title: "Analysis of bird wing airfoil aerodynamic efficiency"
   authors: "R. K. Glenn, L. B. Dahlke, A. Engilis, C. Harvey"
   venue: "AIAA SciTech Forum"
   year: 2024
+  date: "2024-01-04"
   type: conference
   doi: "https://doi.org/10.2514/6.2024-1127"
 
@@ -99,6 +112,7 @@
   authors: "C. Harvey, G. de Croon, G. K. Taylor, R. J. Bomphrey"
   venue: "Journal of Experimental Biology"
   year: 2023
+  date: "2023-04-17"
   type: journal
   doi: "https://doi.org/10.1242/jeb.245409"
 
@@ -106,41 +120,39 @@
   authors: "C. Harvey"
   venue: "AIAA SCITECH 2023 Forum"
   year: 2023
-  type: journal
+  date: "2023-01-19"
+  type: conference
   doi: "https://doi.org/10.2514/6.2023-0827"
-
-- title: "Nature, smart structures, and morphing UAVs"
-  authors: "D. J. Inman, K. Haughn, C. Harvey"
-  venue: ""
-  year: 2023
-  type: journal
-  doi: "https://doi.org/10.1117/12.2666179"
-
-- title: "Birds can transition between stable and unstable states via wing morphing"
-  authors: "C. Harvey, V. B. Baliga, J. C. M. Wong, D. L. Altshuler, D. J. Inman"
-  venue: "Nature"
-  year: 2022
-  type: journal
-  doi: "https://doi.org/10.1038/s41586-022-04477-8"
-
-- title: "A review of avian-inspired morphing for UAV flight control"
-  authors: "C. Harvey, L. L. Gamble, C. R. Bolander, D. F. Hunsaker, J. J. Joo, D. J. Inman"
-  venue: "Progress in Aerospace Sciences"
-  year: 2022
-  type: journal
-  doi: "https://doi.org/10.1016/j.paerosci.2022.100825"
 
 - title: "Gull dynamic pitch stability is controlled by wing morphing"
   authors: "C. Harvey, D. J. Inman"
   venue: "Proceedings of the National Academy of Sciences"
   year: 2022
+  date: "2022-09-06"
   type: journal
   doi: "https://doi.org/10.1073/pnas.2204847119"
+
+- title: "A review of avian-inspired morphing for UAV flight control"
+  authors: "C. Harvey, L. L. Gamble, C. R. Bolander, D. F. Hunsaker, J. J. Joo, D. J. Inman"
+  venue: "Progress in Aerospace Sciences"
+  year: 2022
+  date: "2022-04-21"
+  type: journal
+  doi: "https://doi.org/10.1016/j.paerosci.2022.100825"
+
+- title: "Birds can transition between stable and unstable states via wing morphing"
+  authors: "C. Harvey, V. B. Baliga, J. C. M. Wong, D. L. Altshuler, D. J. Inman"
+  venue: "Nature"
+  year: 2022
+  date: "2022-03-09"
+  type: journal
+  doi: "https://doi.org/10.1038/s41586-022-04477-8"
 
 - title: "Gull-inspired joint-driven wing morphing allows adaptive longitudinal flight control"
   authors: "C. Harvey, V. B. Baliga, C. D. Goates, D. F. Hunsaker, D. J. Inman"
   venue: "Journal of the Royal Society Interface"
   year: 2021
+  date: "2021-06-01"
   type: journal
   doi: "https://doi.org/10.1098/rsif.2021.0132"
 
@@ -148,6 +160,7 @@
   authors: "C. Harvey, D. J. Inman"
   venue: "Bioinspiration & Biomimetics"
   year: 2021
+  date: "2020-11-06"
   type: journal
   doi: "https://doi.org/10.1088/1748-3190/abc86a"
 
@@ -155,6 +168,7 @@
   authors: "L. L. Gamble, C. Harvey, D. J. Inman"
   venue: "Bioinspiration & Biomimetics"
   year: 2020
+  date: "2020-06-10"
   type: journal
   doi: "https://doi.org/10.1088/1748-3190/ab9b6f"
 
@@ -162,13 +176,23 @@
   authors: "C. Harvey, V. B. Baliga, D. J. Inman"
   venue: "AIAA Scitech 2020 Forum"
   year: 2020
-  type: journal
+  date: "2020-01-05"
+  type: conference
   doi: "https://doi.org/10.2514/6.2020-1037"
+
+- title: "Pitch Control Effectiveness of the Avian Elbow and Wrist via a Numerical Lifting Line Analysis"
+  authors: "C. Harvey, V. B. Baliga, D. L. Altshuler, D. J. Inman"
+  venue: "AIAA Scitech 2019 Forum"
+  year: 2019
+  date: "2019-01-06"
+  type: conference
+  doi: "https://doi.org/10.2514/6.2019-0853"
 
 - title: "Wing morphing allows gulls to modulate static pitch stability during gliding"
   authors: "C. Harvey, V. B. Baliga, P. Lavoie, D. L. Altshuler"
   venue: "Journal of the Royal Society Interface"
   year: 2019
+  date: "2019-01-01"
   type: journal
   doi: "https://doi.org/10.1098/rsif.2018.0641"
 

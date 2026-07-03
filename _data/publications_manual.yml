@@ -1,35 +1,24 @@
 # ─────────────────────────────────────────────────────────────
 #  PUBLICATIONS — manually maintained
-#  Conference papers, posters, talks, and blog posts. These are
-#  NOT pulled automatically (OpenAlex coverage of conferences is
-#  incomplete), so add them here by hand. See MAINTENANCE.md.
+#  Conference talks & posters WITHOUT a DOI, plus blog posts. These are NOT
+#  indexed by OpenAlex, so add them here by hand. Conference/meeting papers that
+#  DO have a DOI (e.g. AIAA SciTech/AVIATION) are pulled automatically into
+#  publications.yml — don't duplicate them here. See MAINTENANCE.md.
 # ─────────────────────────────────────────────────────────────
 
 conference:
-  - title: "Distributed pressure sensing for analyzing aerodynamic characteristics in avian-like formation flight"
-    authors: "H. Zhu, K. Bordner, R. J. Bomphrey, J. R. Usherwood, K. P. T. Haughn, C. Harvey"
-    venue: "AIAA SciTech Forum, Orlando, FL (also GRC & NCAS, poster)"
-    year: 2025
-    type: conference
-    doi: "https://arc.aiaa.org/doi/10.2514/6.2025-1460"
-  - title: "Experimental study of dynamic stall with avian airfoils"
-    authors: "F. Jackson, S. Rovani, J. T. Hrynuk, C. Harvey"
-    venue: "AIAA SciTech Forum, Orlando, FL (also NCAS, poster)"
-    year: 2025
-    type: conference
-    doi: "https://arc.aiaa.org/doi/10.2514/6.2025-1074"
   - title: "Wing–tail interaction effects in a morphing-tail aircraft during perch"
     authors: "K. Bordner, C. Cook, T. C. Henry, J. T. Hrynuk, C. Harvey, K. P. T. Haughn"
     venue: "SICB Annual Meeting, Atlanta, GA (also NCAS, poster)"
     year: 2025
     type: conference
-    note: Talk
+    note: Presentation
   - title: "Effect of tail molting on the perching flight of a hawk"
     authors: "A. Martínez, M. Hawkins, H. Zhu, K. Buehring, C. Harvey"
     venue: "SICB Annual Meeting, Atlanta, GA"
     year: 2025
     type: conference
-    note: Talk
+    note: Presentation
   - title: "Effects of avian morphology on flight dynamics modes"
     authors: "K. Bordner, K. P. T. Haughn, C. Harvey"
     venue: "GRC Multifunctional Materials & Structures, Ventura, CA"
@@ -41,37 +30,13 @@ conference:
     venue: "SICB Annual Meeting, Seattle, WA"
     year: 2024
     type: conference
-    note: Talk
-  - title: "Analysis of bird wing aerodynamic efficiency"
-    authors: "R. Glenn, L. B. Dahlke, A. Engilis Jr., C. Harvey"
-    venue: "AIAA SciTech Forum (Jefferson Goblet Student Paper Award)"
-    year: 2024
-    type: conference
-    doi: "https://arc.aiaa.org/doi/10.2514/6.2023-0827"
-  - title: "A longitudinal linear parameter-varying model of a gliding gull during wing morphing"
-    authors: "C. Harvey"
-    venue: "AIAA SciTech Forum, National Harbor, MD"
-    year: 2023
-    type: conference
-    doi: "https://arc.aiaa.org/doi/10.2514/6.2023-0827"
+    note: Presentation
   - title: "Longitudinal gust response of a gliding gull"
     authors: "C. Harvey"
     venue: "SICB Annual Meeting, Austin, TX"
     year: 2023
     type: conference
-    note: Talk
-  - title: "Control force required to morph the elbow and wrist in gulls"
-    authors: "C. Harvey, V. B. Baliga, D. J. Inman"
-    venue: "AIAA SciTech Forum"
-    year: 2020
-    type: conference
-    doi: "https://arc.aiaa.org/doi/10.2514/6.2020-1037"
-  - title: "Pitch control effectiveness of the avian elbow and wrist via a numerical lifting-line analysis"
-    authors: "C. Harvey, V. B. Baliga, D. L. Altshuler, D. J. Inman"
-    venue: "AIAA SciTech Forum"
-    year: 2019
-    type: conference
-    doi: "https://arc.aiaa.org/doi/10.2514/6.2019-0853"
+    note: Presentation
 
 blog:
   - title: "To be (stable) or not to be"
@@ -83,3 +48,15 @@ blog:
     venue: "Springer Nature Communities"
     year: 2024
     url: "https://communities.springernature.com/posts/tap-tap-tap-three-is-plenty-for-windy-flight"
+
+# ─────────────────────────────────────────────────────────────
+#  DO-NOT-LIST — OpenAlex sometimes returns things under the lab's ORCID that
+#  aren't really papers (a profile write-up, a talk abstract indexed like an
+#  article, …). List their BARE DOI here and the sync will drop them and never
+#  re-add them. Add a short `reason:` for the next person.
+# ─────────────────────────────────────────────────────────────
+exclude:
+  - doi: "10.1242/jeb.245923"    # "ECR Spotlight – Christina Harvey" — profile write-up, not a paper
+    reason: "Journal spotlight/profile of the PI, not a research paper."
+  - doi: "10.1117/12.2666179"    # "Nature, smart structures, and morphing UAVs" — conference talk
+    reason: "Invited conference talk, not a peer-reviewed paper."

@@ -2,31 +2,67 @@
 layout: page
 title: Research
 eyebrow: What we do
-subtitle: "Every member of the BIRD Lab owns a project end to end — leading it from question to publication, with guidance from Christina and the wider group."
 ---
 
 <!-- Mission as a bold statement -->
 <section class="mission-statement">
-  <p class="eyebrow" id="mission">Our mission</p>
-  <p class="mission-statement__text">To identify fundamental biological principles
-  of flight that can be optimized and refined to improve engineered systems —
-  within the framework of <em>bio-informed</em> research.</p>
+  <h2 class="eyebrow" id="mission">Our mission</h2>
+  <p class="mission-statement__text">To use <em>bio-informed</em> and <em>bio-inspired</em> approaches to identify fundamental biological principles and attributes relating to flight that can be optimized and refined to improve engineered systems.</p>
 </section>
 
-<div class="note prose" style="margin:0 0 2.6rem;max-width:62rem">
-  <p class="card__tag">Why “bio-informed”?</p>
-  <p>Bio-informed design embeds scientifically supported biological principles into the
-  engineering design process. Rather than copying biological systems, it abstracts the
-  underlying principles, tests them through a hypothesis-driven approach, and applies them
-  where they improve engineering while simultaneously advancing biological understanding.</p>
-  <p style="margin-top:.7rem">We hold these claims to a transparent standard: every
-  bio-inspired idea should state its <strong>source of inspiration</strong>, its
-  <strong>level of mimicry</strong>, and the <strong>strength of the biological evidence</strong>
-  behind it (<a href="https://doi.org/10.1038/s44172-026-00641-4">Harvey 2026, <em>Communications Engineering</em></a>).</p>
-</div>
+<!-- transparent bio-inspired reporting framework -->
+<section class="section" style="padding-block: clamp(1.5rem, 3vw, 2.75rem)">
+  <div class="container framework-section">
+    <div class="framework-intro">
+      <h2 class="eyebrow">Our guiding framework</h2>
+      <p class="lead">Bio-informed design embeds scientifically supported biological principles into the
+  engineering design process. </p>
+  <p>However, not all designs need to be bio-informed, so for each project we report three key attributes.</p>
+
+    <p class="muted" style="font-size:var(--step--1);margin-top:0.2rem">        Harvey, C. (2026).
+        <em>Communications Engineering.</em>
+        <a href="https://doi.org/10.1038/s44172-026-00641-4">doi:10.1038/s44172-026-00641-4</a>
+        </p>
+    </div>
+    <div class="framework-flow">
+      <div class="framework-card">
+        <div class="framework-card__body">
+          <div class="framework-card__head">
+            <span class="framework-card__num">1</span>
+            <h3>Source of inspiration</h3>
+          </div>
+          <p>Explicit identification of the species or family from which an idea originates.</p>
+        </div>
+        <span class="fw-icon" aria-hidden="true"><img src="{{ '/assets/img/icons/fw-source.svg' | relative_url }}" alt=""></span>
+      </div>
+      <div class="framework-card">
+        <div class="framework-card__body">
+          <div class="framework-card__head">
+            <span class="framework-card__num">2</span>
+            <h3>Level of mimicry</h3>
+          </div>
+          <p>How closely biology is mimicked: abstracted, analogy, or direct mimicry.</p>
+        </div>
+        <span class="fw-icon" aria-hidden="true"><img src="{{ '/assets/img/icons/fw-mimicry.svg' | relative_url }}" alt=""></span>
+      </div>
+      <div class="framework-card">
+        <div class="framework-card__body">
+          <div class="framework-card__head">
+            <span class="framework-card__num">3</span>
+            <h3>Strength of evidence</h3>
+          </div>
+          <p>How much and what type of biological evidence supports the implemented design.</p>
+        </div>
+        <span class="fw-icon" aria-hidden="true"><img src="{{ '/assets/img/icons/fw-evidence.svg' | relative_url }}" alt=""></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" style="margin:3rem 0">
 
 <!-- Values as scannable cards -->
-<h2 id="values">What we value</h2>
+<h2 class="eyebrow">Our core values</h2>
 <div class="grid grid-3" style="margin-top:1.2rem">
   <div class="card value-card">
     <div class="card-head">
@@ -54,12 +90,12 @@ subtitle: "Every member of the BIRD Lab owns a project end to end — leading it
   </div>
 </div>
 
+
 <hr class="divider" style="margin:3rem 0">
 
 <h2 id="projects">Active projects</h2>
-<p class="lead prose">A snapshot of current member-led projects, grouped by the three
-themes above. Each is led end to end by a lab member — follow the link to meet them, or
-email them with questions. Recent papers appear automatically.</p>
+<p class="lead prose">A snapshot of current member-led projects, grouped by the lab's main
+themes above. </p>
 
 <div class="grid grid-2 projects-grid" style="margin-top:1.5rem">
   {%- for p in site.data.research.projects -%}

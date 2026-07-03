@@ -2,21 +2,31 @@
 layout: page
 title: Lab Guide
 eyebrow: How we work
-subtitle: "A public, searchable knowledge base spanning onboarding, day-to-day lab life, the research workflow, scientific writing, and professional development. This guide is ever-evolving. Members are encouraged to improve it, and it's open so prospective members can see how the lab really works."
 ---
 
-<label class="visually-hidden" for="guide-search">Filter guide pages</label>
-<input type="search" id="guide-search" placeholder="Filter guide pages…" autocomplete="off"
-       aria-describedby="guide-search-hint"
-       style="width:100%;max-width:520px;padding:.7rem .9rem;border:1px solid var(--c-line);border-radius:10px;font:inherit;margin-bottom:.5rem">
-<p id="guide-search-hint" class="muted" style="font-size:var(--step--1);margin:0 0 2rem">Pages with your word in the <strong>title</strong> come first, then pages that mention it in the text.</p>
-<p id="guide-noresults" class="muted" hidden style="margin:0 0 2rem">No guide pages match that yet. Try a shorter or different word.</p>
+<p class="lead prose">A living handbook of how we run the lab — onboarding, day-to-day life, the research workflow, scientific writing, and professional development. It's public so prospective members can see how we really work, and every member is welcome to improve it.</p>
 
 {%- assign order = "Getting Started,Working in the Lab,Research Workflow,Writing & Dissemination,Communication & Culture,Professional Development" | split: "," -%}
+
+<div class="guide-search">
+  <label class="visually-hidden" for="guide-search">Search the guide</label>
+  <span class="guide-search__icon" aria-hidden="true">🔍</span>
+  <input type="search" id="guide-search" placeholder="Search the guide…" autocomplete="off" aria-describedby="guide-search-hint">
+</div>
+<p id="guide-search-hint" class="muted" style="font-size:var(--step--1);margin:.5rem 0 0">Pages with your word in the <strong>title</strong> come first, then pages that mention it in the text.</p>
+<p id="guide-noresults" class="muted" hidden style="font-size:var(--step--1);margin:.5rem 0 0">No guide pages match that yet. Try a shorter or different word.</p>
+
+<nav class="guide-cats" aria-label="Jump to a category">
+  {%- for cat in order -%}
+  {%- assign pages = site.guide | where: "category", cat -%}
+  {%- if pages.size > 0 %}<a class="guide-cat-chip" href="#{{ cat | slugify }}">{{ cat }}</a>{% endif -%}
+  {%- endfor -%}
+</nav>
+
 {%- for cat in order -%}
   {%- assign pages = site.guide | where: "category", cat | sort: "order" -%}
   {%- if pages.size > 0 -%}
-  <section class="people-group">
+  <section class="people-group" id="{{ cat | slugify }}">
     <h2>{{ cat }}</h2>
     <div class="grid grid-3">
       {%- for p in pages -%}
