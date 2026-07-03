@@ -40,7 +40,7 @@
       url: "https://engineering.ucdavis.edu/news/engineers-biologists-capture-aerodynamic-secret-behind-hawks-mid-flight-transformation"
       doi: "10.1098/rsif.2025.0868"
       featured: true
-      image: /assets/img/research/perchaero.jpg
+      image: /assets/img/news/weston-windtunnel.png
     - title: "Jets, drones could become highly maneuverable using design, flight lessons from hawks"
       source: "Interesting Engineering"
       url: "https://interestingengineering.com/transportation/jets-drones-could-become-highly-maneuverable"
@@ -64,6 +64,8 @@
     - title: "Birds, wings and sonic booms: researchers adapt shapes to advance flight"
       source: "Aerospace America"
       url: "https://aerospaceamerica.aiaa.org/year-in-review/birds-wings-and-sonic-booms-researchers-adapt-shapes-to-advance-flight/"
+      featured: true
+      image: /assets/img/news/aeroamerica-2026.jpg
 
 - year: 2025
   items:
@@ -71,8 +73,6 @@
       source: "Michigan News"
       url: "https://news.umich.edu/ai-vision-system-reveals-bird-wings-evolved-for-heat-regulation-not-just-flight/"
       doi: "10.1111/geb.70033"
-      featured: true
-      image: /assets/img/research/airfoil.jpg
     - title: "AI vision system reveals bird wings evolved for heat regulation, not just flight"
       source: "Phys.org"
       url: "https://phys.org/news/2025-05-ai-vision-reveals-bird-wings.amp"
@@ -86,6 +86,8 @@
     - title: "Aeronautics-centered structural adaptivity shares the stage"
       source: "Aerospace America"
       url: "https://digitaleditions.walsworth.com/article/Aeronautics-Centered+Structural+Adaptivity+Shares+the+Stage+with+Extraterrestrial+and+Transitional+Solutions/4895679/836684/article.html"
+      featured: true
+      image: /assets/img/news/aeroamerica-2025.jpg
     - title: "Bird Flight Research Center breaks ground at UC Davis"
       source: "UC Davis Engineering"
       url: "https://engineering.ucdavis.edu/news/bird-flight-research-center-breaks-ground-uc-davis"
@@ -102,6 +104,8 @@
     - title: "Fly like an eagle"
       source: "Comstock's Magazine"
       url: "https://comstocksmag.com/article/fly-eagle"
+      featured: true
+      image: /assets/img/news/comstockcover.png
     - title: "New UC Davis research center combines biology, engineering to study bird flight"
       source: "The Aggie"
       url: "https://theaggie.org/2024/03/07/new-uc-davis-research-center-combines-biology-engineering-to-study-bird-flight/"
