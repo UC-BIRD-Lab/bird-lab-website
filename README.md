@@ -52,7 +52,6 @@ On recent macOS this can fail on the `eventmachine` gem: see the fix in
 │   ├── recognition.yml     home-page honors + "featured in" media
 │   ├── funders.yml         home-page "supported by" logos
 │   ├── collaborators.yml   home-page "in partnership with" org strip
-│   ├── partners.yml        partners / affiliates strip
 │   ├── gallery.yml         "scenes from the lab" photos
 │   ├── facilities.yml      facilities: tagline, specs, capabilities, funding
 │   └── navigation.yml      top menu

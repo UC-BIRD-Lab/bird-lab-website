@@ -339,8 +339,7 @@ one entry per role with its `name`, `tagline`, `purpose`, `owns`, and `can`
 (authority). Edit that file to add, retire, or reword a role; both the
 at-a-glance table and the role cards update. Leave `_includes/lab-roles.html`
 (the template) alone. Each role's detailed routine, what it avoids, and its
-handoff live in the internal companion (`INTERNAL-lab-roles.md`, kept in the
-Notion member portal), not on the public page.
+handoff live in the private Notion member portal, not on the public page.
 
 ---
 
@@ -432,16 +431,14 @@ These live directly in `index.html` (edit the text in place):
 - **"A signature idea"**: the three-axis bio-inspired reporting framework
   (source / mimicry / evidence) tied to Harvey 2026.
 - **"We run our lab in the open"**: links to the Lab Guide, GitHub, and blog.
-- **Partners list**: `_data/partners.yml` (see below); also rendered on People.
+- **Supported by / In partnership with**: funder logos from `_data/funders.yml`
+  and partner organizations from `_data/collaborators.yml` (see below).
 
 ### Funders & partners: two files
 - **`_data/funders.yml`**: the home page **"Supported by"** logo band (AFOSR,
   Packard, NSF, ARL, CITRIS…). Each entry has `name`, `short` (the name shown
   under the logo), `url`, and `logo:`. Logos sit in a fixed-height box so their
   names line up across the row.
-- **`_data/partners.yml`**: the **partners / affiliates** strip (also shown on
-  People). Add an entry under the right `groups:` heading. With a `logo:` it shows
-  the image; without one it renders a clean wordmark.
 - **`_data/collaborators.yml`**: the home page **"In partnership with"** strip of
   partner *organizations* (California Raptor Center, California Hawking Club, the
   museum). Each entry: `name`, `sub` (short descriptor), `photo` (square image in
