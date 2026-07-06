@@ -8,7 +8,7 @@ in from small text files in `_data/`; you edit a file, publish it, and GitHub
 rebuilds the site automatically in a minute or two.
 
 - **Copy-paste templates for every kind of edit:** [CONTENT-GUIDE.md](CONTENT-GUIDE.md)
-- **Publishing / deploy setup and fixes:** [DEPLOYMENT.md](DEPLOYMENT.md)
+- **Editing locally, previewing, and Git fixes:** [Editing on your computer with RStudio](#editing-on-your-computer-with-rstudio) (below)
 - **Letting members submit changes without editing files:** [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ---
@@ -49,7 +49,7 @@ changes**. Done: the site rebuilds itself.
 
 If you edit **locally in RStudio**: in the **Git** pane, **Pull → tick the changed
 files → Commit (with a message) → Push**. Full setup and troubleshooting is in
-[DEPLOYMENT.md](DEPLOYMENT.md).
+[Editing on your computer with RStudio](#editing-on-your-computer-with-rstudio) below.
 
 > **One important habit: don't push many times in a row.** Every push republishes
 > the site, and GitHub limits how often a site can deploy. If you push five times
@@ -57,6 +57,87 @@ files → Commit (with a message) → Push**. Full setup and troubleshooting is 
 > your edits, push **once**, and wait for the green ✓ on the **deploy** step
 > before pushing again. If a deploy ever sits on "queued" and times out, that's
 > the cause: wait about an hour and run it once.
+
+---
+
+## Editing on your computer with RStudio
+
+Prefer to edit locally instead of on github.com? RStudio has a built-in **Git**
+pane, so you can publish without the command line. Repo:
+`https://github.com/UC-BIRD-Lab/bird-lab-website.git`.
+
+**One-time setup**
+
+1. **Install Git.** macOS: run `xcode-select --install` in Terminal. Windows:
+   install [Git for Windows](https://git-scm.com/download/win). In RStudio,
+   **Tools → Global Options → Git/SVN** should show a Git path.
+2. **Install helper packages:** `install.packages(c("usethis", "gitcreds"))`.
+3. **Tell Git who you are** (your own name, and the email on your GitHub account):
+   ```r
+   usethis::use_git_config(user.name = "Your Name", user.email = "you@ucdavis.edu")
+   ```
+4. **Create a GitHub token** (GitHub no longer accepts passwords over HTTPS). Run
+   `usethis::create_github_token()` (opens GitHub; keep defaults, Generate, copy the
+   token), then `gitcreds::gitcreds_set()` and paste it. Once per computer.
+5. **Connect the project to the repo.** If you already have the folder: in the
+   RStudio **Terminal**, from the project folder, run `git init`, `git branch -M
+   main`, `git remote add origin <repo URL>`, `git add .`, `git commit -m "…"`,
+   `git pull origin main --allow-unrelated-histories`, `git push -u origin main`;
+   then **File → New Project → Existing Directory** to get the Git pane. Or start
+   fresh: **File → New Project → Version Control → Git** and paste the repo URL.
+
+**Day-to-day: push a change**
+
+1. Edit and **save** your files.
+2. In the **Git** pane, click **Pull** (⬇) *first* to grab anything changed on
+   GitHub (a browser edit, or a merged publications PR). Always pull before you push.
+3. **Stage** (tick the changed files), **Commit** with a short message, then
+   **Push** (⬆). The site rebuilds in ~1–2 minutes (watch the Actions tab).
+
+**If something goes wrong**
+
+- **"Push rejected" / "non-fast-forward":** GitHub is ahead. Click **Pull**,
+  resolve any conflict RStudio flags, then **Push** again.
+- **Merge conflict:** RStudio marks the file with `<<<<<<<` / `>>>>>>>`. Keep the
+  right lines, delete the markers, save, then Stage → Commit → Push.
+- **Auth keeps failing:** rerun `gitcreds::gitcreds_set()` with a fresh token.
+- **No Git tab:** the folder isn't an RStudio Project with Git; redo step 5.
+- **Nothing appears under Actions / the site never builds:** the `.github/` folder
+  probably wasn't committed. RStudio's Git pane **hides dotfiles**, so the
+  checkboxes skip `.github/` and `.gitignore`. In the Terminal:
+  `git add .github .gitignore && git commit -m "Add workflows" && git push`.
+- **Large first push fails** (`HTTP 400` / `unexpected disconnect`): the push is
+  choking on Git's small buffer. Run once
+  `git config --global http.postBuffer 524288000` and
+  `git config --global http.version HTTP/1.1`, then push again.
+
+Build artifacts (`_site/`, `.jekyll-cache/`, …) are in `.gitignore`, so RStudio
+won't offer to commit them. For a friendly Git + RStudio reference, see
+[Happy Git and GitHub for the useR](https://happygitwithr.com/).
+
+---
+
+## Preview locally before publishing (optional)
+
+- **Easiest (no Ruby):** `./serve.sh` (needs Docker Desktop); serves
+  http://localhost:4000 with no native gems to compile.
+- **Native Ruby:** `bundle install` once, then `bundle exec jekyll serve`.
+- **Or skip it:** push to a branch, open a pull request, and let GitHub build it.
+
+On recent macOS, `bundle install` can fail building the **`eventmachine`** gem
+(`use of undeclared identifier '__builtin_ctzg'`): an incompatibility between that
+old gem and Apple's newest headers, not your setup. Easiest fix: use `./serve.sh`
+(Docker), or preview on GitHub via a pull request. Only if you want native Jekyll,
+make sure Conda is off (`conda deactivate`) and refresh the Command Line Tools
+(`sudo rm -rf /Library/Developer/CommandLineTools && xcode-select --install`).
+
+---
+
+## Undo a change (rollback)
+
+Every change is a commit. To undo one: open the repo's **commit history**, find
+the last good commit, and click **Revert** (or `git revert <sha>`). The site
+rebuilds from the reverted state automatically.
 
 ---
 
@@ -198,4 +279,4 @@ matching `_data/*.yml` file using the cheat-sheet in
 - **It checks itself.** Every push runs link, image, and accessibility checks, so
   regressions are caught before anyone sees them.
 - **Access is controlled.** Only the Graduate Students & Postdocs team (plus the
-  PI) can push to `main`; see DEPLOYMENT.md for the ruleset details.
+  PI) can push to `main`, and every change goes through a reviewed pull request.

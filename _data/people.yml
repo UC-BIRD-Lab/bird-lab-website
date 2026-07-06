@@ -152,6 +152,13 @@ groups:
         photo: /assets/img/people/narihide-fujita.jpg
         email: ntfujita@ucdavis.edu
         linkedin: https://www.linkedin.com/in/narihidefujita
+      - name: Jiayi Li
+        role: Undergraduate Researcher
+        start: 2025
+        pronouns: she/her
+        field: "Mech + Aero Engineering"
+        photo: /assets/img/people/jiayi-li.jpg
+        email: dhtzhang@ucdavis.edu
       - name: Haotian Zhang
         role: Undergraduate Researcher
         start: 2026
@@ -169,6 +176,7 @@ groups:
         role: Undergraduate Researcher
         start: 2026
         field: "Mech + Aero Engineering"
+        photo: /assets/img/people/wyatt-liu.png
       - name: Prabhat Karthikeyan
         role: Undergraduate Researcher
         start: 2026
@@ -189,6 +197,7 @@ groups:
         role: Undergraduate Researcher
         start: 2026
         field: "Mech + Aero Engineering"
+        photo: /assets/img/people/ananya-bansal.jpg
       - name: Elliot Crowder
         role: Visiting Undergraduate Researcher · Sacramento City College
         start: 2026

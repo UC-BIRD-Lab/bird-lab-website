@@ -7,9 +7,8 @@ current by editing plain text files.
 
 > **New here? Read these in order:**
 > [CONTENT-GUIDE.md](CONTENT-GUIDE.md) (edit content) ·
-> [CONTRIBUTING.md](CONTRIBUTING.md) (submit updates / delegate) ·
-> [DEPLOYMENT.md](DEPLOYMENT.md) (put it online) ·
-> [MAINTENANCE.md](MAINTENANCE.md) (keep it running) ·
+> [CONTRIBUTING.md](CONTRIBUTING.md) (submit updates) ·
+> [MAINTENANCE.md](MAINTENANCE.md) (keep it running: publish, preview, fixes) ·
 > [ARCHITECTURE.md](ARCHITECTURE.md) (why it's built this way)
 
 ---
@@ -27,7 +26,7 @@ This avoids compiling Ruby gems on your Mac.
 
 **Native Ruby** (if you prefer): `bundle install`, then `bundle exec jekyll serve`.
 On recent macOS this can fail on the `eventmachine` gem: see the fix in
-[DEPLOYMENT.md](DEPLOYMENT.md#troubleshooting-native-bundle-install-on-macos).
+[MAINTENANCE.md](MAINTENANCE.md#preview-locally-before-publishing-optional).
 
 ---
 

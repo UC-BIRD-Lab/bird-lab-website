@@ -1,7 +1,7 @@
 # Keeping the BIRD Lab site up to date
 
-The goal: the PI does as little as possible, the site stays current, and nothing
-can break the live site (every change is reviewed and auto-checked first).
+The goal: keep the site current with as little effort as possible, and make it
+hard to break the live site (every change is reviewed and auto-checked first).
 
 There are **three ways** to get an update in, from least to most technical.
 
@@ -29,9 +29,9 @@ maintainer reviews and merges. The site rebuilds itself.
 
 ## 3. The maintainer way: applying a submission
 
-A maintainer (the PI **or a delegate**: see below) turns an issue into a commit.
-This takes ~30 seconds with the cheat-sheet below: open the file, paste the block
-at the **top** of the list, fill in the submitted values, commit.
+If you're a **web steward** (see below), you turn an issue into a commit. This
+takes ~30 seconds with the cheat-sheet below: open the file, paste the block at
+the **top** of the list, fill in the submitted values, commit.
 
 ---
 
@@ -77,18 +77,18 @@ After committing, close the issue with a note like "Live on the next build 👍"
 
 ---
 
-## Delegate it: appoint a "web steward"
+## Web stewards: who merges
 
-You do not have to be the maintainer. Give **one or two trusted lab members**
-(rotate yearly: a senior student is ideal) the ability to merge:
-
-1. On GitHub: **Settings → Collaborators** (or add them to a team) with **Write**
-   access.
-2. They handle steps 2–3 above; you only step in for big changes.
+Merging is handled by a small number of **web stewards**: one or two trusted lab
+members (rotated yearly is ideal), alongside the PI. If you're a steward, you
+handle steps 2–3 above; the PI only steps in for big changes.
 
 Because every change goes through a pull request and the automated checks, a
 steward can't accidentally break the live site: the worst case is a PR that
 fails its checks and doesn't get merged.
+
+> Steward access (GitHub **Write** permission) is granted by the repo owner under
+> **Settings → Collaborators**.
 
 ## What protects the site automatically
 

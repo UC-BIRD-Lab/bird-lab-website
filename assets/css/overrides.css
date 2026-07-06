@@ -103,6 +103,16 @@
    The extra selectors make this win over the base rule in style.css. */
 .site-footer .brandmark img.footer-logo { height: 120px; width: auto; opacity: 1; }
 
+/* Footer on mobile: the brand block (logo + name + address) spans the full width,
+   so Explore and Connect sit as an even two-column row beneath it instead of
+   Connect dropping under the tall brand column. The logo also shrinks. */
+@media (max-width: 720px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 1.6rem 1.25rem; padding-block: 2.25rem; }
+  .footer-grid > :first-child { grid-column: 1 / -1; }
+  .site-footer .brandmark img.footer-logo { height: 84px; }
+  .footer-bottom { flex-direction: column; gap: .35rem; }
+}
+
 /* ---------- Alumni table ---------- */
 .alumni-table { width: 100%; border-collapse: collapse; margin-top: 1.2rem; }
 .alumni-table caption { text-align: left; color: var(--c-muted); font-size: var(--step--1); margin-bottom: .6rem; }

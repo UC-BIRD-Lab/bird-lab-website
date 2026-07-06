@@ -99,7 +99,6 @@ defaults:
 
 exclude:
   - README.md
-  - DEPLOYMENT.md
   - MAINTENANCE.md
   - ARCHITECTURE.md
   - CONTENT-GUIDE.md

@@ -67,6 +67,9 @@ body {
   background: var(--c-bg);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  /* Long unbreakable strings (DOIs, URLs, emails) wrap instead of being clipped
+     on narrow screens. Only kicks in when a word would otherwise overflow. */
+  overflow-wrap: break-word;
 }
 img, svg, video { max-width: 100%; height: auto; display: block; }
 ul, ol { padding-left: 1.2em; }
