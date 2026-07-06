@@ -4,7 +4,8 @@ _site/
 .jekyll-metadata
 vendor/
 .bundle/
-# RStudio project session state (per-user, never share)
+# RStudio project files + per-user session state (never share)
+*.Rproj
 .Rproj.user/
 .Rhistory
 .Rapp.history

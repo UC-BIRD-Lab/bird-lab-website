@@ -90,15 +90,10 @@ collections:
   guide:
     output: true
     permalink: /lab-guide/:name/
-  updates:
-    output: true
-    permalink: /news/:name/
 
 defaults:
   - scope: { path: "", type: "guide" }
     values: { layout: "wiki" }
-  - scope: { path: "", type: "updates" }
-    values: { layout: "update" }
   - scope: { path: "" }
     values: { layout: "page" }
 
@@ -109,8 +104,6 @@ exclude:
   - ARCHITECTURE.md
   - CONTENT-GUIDE.md
   - CONTRIBUTING.md
-  - INTERNAL-lab-roles.md   # internal-only companion to the public roles page; never publish
-  - lab-roles-tasks.csv     # internal-only roles routine (import into Notion); never publish
   - scripts/
   - Gemfile
   - Gemfile.lock
@@ -123,4 +116,3 @@ exclude:
   # blank card on the Lab Guide hub), so keep them out of the build entirely.
   - ".fuse_hidden*"
   - "_guide/.fuse_hidden*"
-  - "_updates/.fuse_hidden*"
