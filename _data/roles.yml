@@ -1,0 +1,72 @@
+# Lab operations roles shown on _guide/lab-operations-roles.md.
+# This is the single source of truth: edit a role here and both the
+# "at a glance" table and the role cards update. To add or retire a role,
+# add or remove an entry below; the page can't structurally re-bloat.
+#
+# Keep the PUBLIC signal here: what a member would own and the authority they
+# hold. Step-by-step routines, weekly/monthly checklists, and handoff details
+# live on each role's handoff page in the member portal, not on this page.
+#
+# Fields per role:
+#   name     - role title (required; also becomes the card's anchor id)
+#   tagline  - short "what they keep on track" line for the at-a-glance table
+#   purpose  - one sentence on what the role is for
+#   owns     - scope this role is responsible for
+#   can      - authority this role holds to act
+#
+# Order below is the order roles appear on the page.
+
+roles:
+  - name: Onboarding Officer
+    tagline: New members ramp up fast and safe
+    purpose: Gets new members set up quickly, consistently, and safely.
+    owns: onboarding checklists and Slack workflow, initial-training coordination, access-request guidance, starter templates.
+    can: schedule onboarding sessions, request standard access for new members, and require the checklist before independent lab work.
+
+  - name: Safety Officer
+    tagline: No injuries or compliance surprises
+    purpose: Keeps safety practices current and visible.
+    owns: lab walkthroughs, certification tracking, safety docs, chemical acquisition verification.
+    can: pause unsafe work; require refresher training before re-access.
+
+  - name: Facilities & Infrastructure Coordinator
+    tagline: Functional spaces, little downtime
+    purpose: Keeps lab spaces functional with little downtime.
+    owns: facilities tickets, infrastructure issues (HVAC, trash, access, basic lab environment), room readiness and cleanliness.
+    can: file facilities requests directly, coordinate repair access, and set limited-access windows for repairs.
+
+  - name: Equipment & Experiment Coordinator
+    tagline: Reliable, ready core equipment
+    purpose: Keeps core equipment reliable, safe, and ready so experiments don't stall.
+    owns: maintenance schedule, calibration reminders, equipment readiness, training-material coordination, maintenance logs.
+    can: restrict equipment use until training and SOP requirements are met; book maintenance windows on the lab calendar.
+
+  - name: IT & Data Administrator
+    tagline: Organized, backed-up, reproducible data
+    purpose: Keeps code and data organized, backed up, and reproducible with minimal friction.
+    owns: GitHub norms, data-storage structure, backups, permissions, software-license tracking.
+    can: require a minimum repo and data structure; lock down permissions if data integrity is at risk.
+
+  - name: Communication & Outreach Lead
+    tagline: A sharp, current public face
+    purpose: Keeps the lab's public face legible and appealing to collaborators, recruits, and funders, without pulling researchers off their work.
+    owns: website updates, Instagram post coordination, scripts for tours, outreach events, inclusive-culture events.
+    can: publish routine updates, request content with deadlines, and set the monthly content schedule.
+
+  - name: Animal Care Coordinator
+    tagline: Predictable animal welfare and compliance
+    purpose: Keeps animal welfare and compliance predictable and reliable.
+    owns: feeding and monitoring schedules, welfare logs, IACUC reminders, partner coordination.
+    can: pause animal-related activities if welfare or compliance is at risk; require training before animal handling.
+
+  - name: Inventory & Process Improvement Lead
+    tagline: Stocked consumables, steady upgrades
+    purpose: Keeps common consumables stocked and ships small workflow upgrades that cut friction.
+    owns: inventory tracking, reorder thresholds, small systems improvements, chemical-inventory review.
+    can: reorder under an agreed threshold or pre-approved list.
+
+  - name: Offboarding & Access Control Officer
+    tagline: Smooth, low-risk departures
+    purpose: Keeps departures smooth and low-risk.
+    owns: offboarding checklist and Slack workflow, access removal, ownership transfer, data-archiving pointers, key and badge returns, exit handoff-packet collection.
+    can: freeze or remove access after the last day (or as agreed); require the handoff packet before closing offboarding.

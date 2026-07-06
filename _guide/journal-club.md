@@ -3,6 +3,9 @@ title: Journal club
 category: Communication & Culture
 order: 4
 summary: A regular space to discuss the meeting point of biology and engineering in flight.
+keywords: [journal club, paper discussion, reading group]
+icon: "📖"
+reviewed: 2026-07-05
 ---
 
 Our goal is to hold a space to discuss the interaction between biology and
@@ -19,7 +22,8 @@ follow our [discussion guidelines]({{ '/lab-guide/discussion-guidelines/' | rela
 
 - We meet every two weeks in 155 Hutchinson Hall (a hybrid option is available).
 - We take turns explaining the key takeaways of each figure, followed by general
-  discussion.
+  discussion (the [Figures]({{ '/lab-guide/figures/' | relative_url }}) principles
+  are a good lens).
 - Come prepared to share your thoughts, questions, and ideas after reading the
   selected paper.
 - We alternate who suggests the article and leads the discussion. The leader
@@ -28,5 +32,5 @@ follow our [discussion guidelines]({{ '/lab-guide/discussion-guidelines/' | rela
 
 <div class="callout callout--warn" markdown="1">
 It's easy to criticize. For every negative comment, try to offer a positive one
-as well.
+as well; see [giving and receiving feedback]({{ '/lab-guide/communication/' | relative_url }}#giving-and-receiving-feedback).
 </div>

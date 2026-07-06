@@ -94,7 +94,7 @@
   level: "PhD"
   url: https://research.nvidia.com/graduate-fellowships
 
-- name: "Provost's Undergraduate Fellowship (PUF) — UC Davis"
+- name: "Provost's Undergraduate Fellowship (PUF), UC Davis"
   level: "UG"
   url: https://urc.ucdavis.edu/PUF
 
@@ -106,15 +106,15 @@
   level: "Post Doc"
   url: https://www.simonsfoundation.org/grant/pivot-fellowship-request-for-applications/
 
-- name: Travel Award — UC Davis Graduate Studies
+- name: Travel Award, UC Davis Graduate Studies
   level: "Masters, PhD"
   url: https://gradstudies.ucdavis.edu/travel-awards
 
-- name: Travel Award — UC Davis URC
+- name: Travel Award, UC Davis URC
   level: "UG"
   url: https://urc.ucdavis.edu/travel-awards
 
-- name: Wakeham Summer Research Fellowship — UC Davis
+- name: Wakeham Summer Research Fellowship, UC Davis
   level: "Masters, PhD"
   url: https://gradpathways.ucdavis.edu/summer-wakeham-research-fellowships
 

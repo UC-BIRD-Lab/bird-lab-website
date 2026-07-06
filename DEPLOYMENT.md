@@ -2,11 +2,14 @@
 
 How to put the BIRD Lab site online with **GitHub Pages**. You do this once;
 after that, every change you commit republishes automatically. No command line
-is strictly required — the steps below use github.com.
+is strictly required: the steps below use github.com.
 
 ---
 
 ## One-time setup
+
+Roughly **20–30 minutes**, done once. Steps 1–2 get the site live; 3–5 configure the
+URL, portal link, and publications bot.
 
 ### 1. Create the repository
 1. Sign in to [github.com](https://github.com) with the lab account.
@@ -19,7 +22,7 @@ is strictly required — the steps below use github.com.
 ### 2. Turn on GitHub Pages (Actions build)
 1. In the repo, go to **Settings → Pages**.
 2. Under **Build and deployment → Source**, choose **GitHub Actions**.
-3. That's it — the included `Build & deploy site` workflow takes over. Open the
+3. That's it: the included `Build & deploy site` workflow takes over. Open the
    **Actions** tab to watch the first build; when it's green, your site is live.
 
 ### 3. Set the site URL
@@ -59,12 +62,12 @@ edit a file on github.com  ─►  commit  ─►  "Build & deploy" Action runs 
 ```
 
 You never deploy by hand. Every commit to the **main** branch rebuilds and
-republishes. Check the **Actions** tab if something doesn't appear — a red run
+republishes. Check the **Actions** tab if something doesn't appear: a red run
 means the build failed (see Troubleshooting in [MAINTENANCE.md](MAINTENANCE.md)).
 
 You can commit either **on github.com** (edit → Commit, as above) **or from your
 own computer with RStudio** (next section). Both push to `main` and trigger the
-same rebuild — use whichever you prefer.
+same rebuild: use whichever you prefer.
 
 ---
 
@@ -98,7 +101,7 @@ edit files  ─►  Git tab: Pull  ─►  Stage (tick boxes)  ─►  Commit (+
    ```
 
 4. **Create a GitHub access token.** GitHub no longer accepts your password over
-   HTTPS — you authenticate with a Personal Access Token (PAT) instead. Run:
+   HTTPS: you authenticate with a Personal Access Token (PAT) instead. Run:
    ```r
    usethis::create_github_token()   # opens GitHub; keep the defaults, click "Generate", copy the token
    gitcreds::gitcreds_set()         # paste the token when prompted
@@ -107,7 +110,7 @@ edit files  ─►  Git tab: Pull  ─►  Stage (tick boxes)  ─►  Commit (+
 
 5. **Connect your project folder to the repo.** Pick the case that matches you:
 
-   **A — You already have the site folder on your computer** (most likely). Open
+   **A: You already have the site folder on your computer** (most likely). Open
    the RStudio **Terminal** (Tools → Terminal → New Terminal), make sure you're in
    the project folder, and run:
    ```bash
@@ -123,7 +126,7 @@ edit files  ─►  Git tab: Pull  ─►  Stage (tick boxes)  ─►  Commit (+
    **File → New Project → Existing Directory →** choose this folder → **Create
    Project**. (You'll now see a **Git** tab in the top-right pane.)
 
-   **B — Start from a fresh copy of the repo.** **File → New Project → Version
+   **B: Start from a fresh copy of the repo.** **File → New Project → Version
    Control → Git**, paste the URL above, pick a location, **Create Project**.
    RStudio clones the repo and the Git pane is ready immediately.
 
@@ -131,13 +134,13 @@ edit files  ─►  Git tab: Pull  ─►  Stage (tick boxes)  ─►  Commit (+
 
 1. Edit and **save** your files (e.g. `_data/people.yml`).
 2. Open the **Git** tab (top-right pane).
-3. Click **Pull** (⬇) **first** — this grabs anything changed on GitHub since you
+3. Click **Pull** (⬇) **first**: this grabs anything changed on GitHub since you
    last synced (a browser edit, or a merged publications PR). *Always pull before
    you push.*
 4. **Stage** your changes: tick the checkbox next to each changed file.
 5. Click **Commit**, write a short message ("Add new student to People"), and
    click **Commit**.
-6. Click **Push** (⬆). That's it — GitHub's Action rebuilds and the site updates
+6. Click **Push** (⬆). That's it: GitHub's Action rebuilds and the site updates
    in ~1–2 minutes (watch the **Actions** tab).
 
 ### If something goes wrong
@@ -149,6 +152,13 @@ edit files  ─►  Git tab: Pull  ─►  Stage (tick boxes)  ─►  Commit (+
   → Push.
 - **Auth keeps failing:** rerun `gitcreds::gitcreds_set()` and paste a fresh token
   from `usethis::create_github_token()`.
+- **You don't see a Git tab:** the folder isn't an RStudio Project with Git: redo
+  step 5 (New Project → Existing Directory), or check Tools → Global Options →
+  Git/SVN.
+
+<details>
+<summary><strong>Rarer snags</strong> (large-push errors, missing <code>.github/</code>)</summary>
+
 - **Push fails with `RPC failed; HTTP 400` / `send-pack: unexpected disconnect
   while reading sideband packet`:** the (often large first) push is choking on
   Git's small default buffer. In the RStudio Terminal run once:
@@ -157,18 +167,15 @@ edit files  ─►  Git tab: Pull  ─►  Stage (tick boxes)  ─►  Commit (+
   git config --global http.version HTTP/1.1
   ```
   then push again. A trailing "Everything up-to-date" after that error is
-  misleading — the upload aborted, so nothing reached GitHub (`git log --oneline
+  misleading: the upload aborted, so nothing reached GitHub (`git log --oneline
   -1` confirms your commit is still there locally). If it persists, a campus
-  VPN/proxy is likely interfering — try a different network or switch the remote
+  VPN/proxy is likely interfering: try a different network or switch the remote
   to SSH.
-- **You don't see a Git tab:** the folder isn't an RStudio Project with Git — redo
-  step 5 (New Project → Existing Directory), or check Tools → Global Options →
-  Git/SVN.
 - **Nothing appears under the repo's Actions tab / the site never builds:** the
   `.github/` workflow folder probably wasn't committed. RStudio's Git pane **hides
   dotfiles** (names starting with `.`), so staging via the checkboxes silently
   skips `.github/` and `.gitignore`. Confirm with `git ls-files .github` in the
-  Terminal — if it's empty, add them there (the Terminal sees hidden files):
+  Terminal: if it's empty, add them there (the Terminal sees hidden files):
   ```bash
   git add .github .gitignore
   git commit -m "Add GitHub Actions workflows and .gitignore"
@@ -177,8 +184,10 @@ edit files  ─►  Git tab: Pull  ─►  Stage (tick boxes)  ─►  Commit (+
   Also make sure **Settings → Actions → General → Actions permissions** is set to
   *Allow all actions* (organization repos sometimes disable Actions by default).
 
+</details>
+
 > **Note:** build artifacts (`_site/`, `.jekyll-cache/`, etc.) are already listed
-> in `.gitignore`, so RStudio won't offer to commit them — only your real edits
+> in `.gitignore`, so RStudio won't offer to commit them: only your real edits
 > show up in the Git pane. That's expected.
 
 For a friendly, in-depth reference on Git + RStudio, see
@@ -188,7 +197,7 @@ For a friendly, in-depth reference on Git + RStudio, see
 
 ## Preview changes before publishing (optional)
 
-**Easiest — no Ruby on your machine:** run `./serve.sh` (needs Docker Desktop).
+**Easiest: no Ruby on your machine:** run `./serve.sh` (needs Docker Desktop).
 It runs Jekyll inside a container and serves the site at http://localhost:4000.
 This avoids compiling any native gems on your Mac.
 
@@ -198,7 +207,7 @@ bundle install                # one-time
 bundle exec jekyll serve      # then open http://localhost:4000
 ```
 
-**Or skip local preview entirely** — push to a branch and open a pull request;
+**Or skip local preview entirely**: push to a branch and open a pull request;
 GitHub builds it, and merging to `main` publishes.
 
 ### Troubleshooting native `bundle install` on macOS
@@ -206,7 +215,7 @@ GitHub builds it, and merging to `main` publishes.
 On recent macOS, `bundle install` can fail while building the **`eventmachine`**
 gem (Jekyll uses it only for the live-reload server) with errors like
 `use of undeclared identifier '__builtin_ctzg'`. This is an incompatibility
-between that old gem and Apple's newest C++ headers — not your setup. Options, in
+between that old gem and Apple's newest C++ headers: not your setup. Options, in
 order of least hassle:
 
 1. **Use Docker instead:** `./serve.sh` (above). Recommended.
@@ -214,7 +223,7 @@ order of least hassle:
 3. **Fix the toolchain (only if you want native Jekyll):** make sure Conda is not
    active (`conda deactivate`), then refresh the Command Line Tools
    (`sudo rm -rf /Library/Developer/CommandLineTools && xcode-select --install`).
-   If it still fails, your Apple compiler is older than your SDK — installing a
+   If it still fails, your Apple compiler is older than your SDK: installing a
    newer compiler via `brew install llvm` and building with it can resolve it, but
    Docker is far simpler.
 

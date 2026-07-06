@@ -1,5 +1,5 @@
 # ─────────────────────────────────────────────────────────────
-#  WATCH & LISTEN — videos, podcasts, and interactive media about the lab.
+#  WATCH & LISTEN, videos, podcasts, and interactive media about the lab.
 #  Shown as a card strip on the News page, separate from written press coverage.
 #  These are LINKS OUT (no embeds), so the page stays fast and cookie-free.
 #
@@ -20,13 +20,13 @@
   year: 2021
   url: "https://the-next-byte-wevolver.simplecast.com/episodes/23-bird-inspired-drone-wings-scaling-digital-twins-microplastic-tracking-from-space"
 
-- title: "Wing-morphing drone — interactive 3D model"
+- title: "Wing-morphing drone, interactive 3D model"
   kind: model
   source: "Sketchfab"
   year: 2021
   url: "https://sketchfab.com/3d-models/3d-wing-morphing-drone-373a7bc4544e4b26b2f24388d855f8c5"
 
-# To add a video, paste the YouTube link and its title — the thumbnail is automatic:
+# To add a video, paste the YouTube link and its title, the thumbnail is automatic:
 # - title: "Video title (copy it from YouTube)"
 #   kind: video
 #   source: "Channel or outlet"

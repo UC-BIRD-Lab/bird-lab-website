@@ -1,10 +1,10 @@
 # ─────────────────────────────────────────────────────────────
-#  PUBLICATION EXTRAS — the hand-curated "rich info" for a paper.
+#  PUBLICATION EXTRAS, the hand-curated "rich info" for a paper.
 #
 #  WHY THIS FILE EXISTS: journal articles in `_data/publications.yml` are synced
 #  automatically from ORCID (the monthly bot only ADDS new DOIs and never
-#  rewrites entries). Things the bot can't know — a data link, a code repo, a
-#  figure — live HERE instead, so the automation is never blocked and your
+#  rewrites entries). Things the bot can't know, a data link, a code repo, a
+#  figure, live HERE instead, so the automation is never blocked and your
 #  extras are never overwritten.
 #
 #  HOW IT WORKS: each entry is matched to a paper by its DOI. Use the BARE doi
@@ -12,13 +12,13 @@
 #     doi:    the paper's DOI, e.g. "10.1098/rsif.2025.0868"   (required to match)
 #     data:   link to the dataset (FigShare, Dryad, Zenodo…)
 #     code:   link to the code (a GitHub repo)
-#     image:  a SMALL figure — add only for MAJOR papers, or the list gets busy
-#     kind:   for a JOURNAL article, its sub-type — "review" or "commentary".
+#     image:  a SMALL figure, add only for MAJOR papers, or the list gets busy
+#     kind:   for a JOURNAL article, its sub-type, "review" or "commentary".
 #             Untagged journal articles read "Research article". Changes only the
 #             pill's label; the colour stays green.
 #     award:  an honor this paper received (e.g. "AIAA Jefferson Goblet Student
-#             Paper Award") — shows as a gold 🏆 pill next to the paper.
-#     correction: link to a published correction/corrigendum for this paper — it
+#             Paper Award"), shows as a gold 🏆 pill next to the paper.
+#     correction: link to a published correction/corrigendum for this paper, it
 #                 shows as a "Correction" pill next to the paper. (The sync bot
 #                 skips corrections, so add them here.) Optional `correction_label:`
 #                 overrides the pill text (e.g. "Corrigendum").
@@ -35,83 +35,89 @@
 #  their repositories go public.
 # ─────────────────────────────────────────────────────────────
 
-# 2026 · Communications Engineering — COMMENTARY how bio-inspired (Harvey)
+# 2026 · Communications Engineering, COMMENTARY how bio-inspired (Harvey)
 - doi: "10.1038/s44172-026-00641-4"
   kind: commentary
 
-# 2026 · J. R. Soc. Interface — moulting perching (Martinez, Hawkins, Harvey)
+# 2026 · J. R. Soc. Interface, moulting perching (Martinez, Hawkins, Harvey)
 - doi: "10.1098/rsif.2025.1082"
   image: /assets/img/pubs/martinez-moultingperch.jpg
   code: "https://github.com/a-mtnz/Moult-effect-on-perching-hawk"
   data: "https://doi.org/10.6084/m9.figshare.c.8092138"
 
-# 2026 · J. R. Soc. Interface — hawks morph through a gap (Weston, Zhu, Taylor, Harvey)
+# 2026 · J. R. Soc. Interface, hawks morph through a gap (Weston, Zhu, Taylor, Harvey)
 - doi: "10.1098/rsif.2025.0868"
   image: /assets/img/pubs/weston-hawkgap.jpg
   code: "https://github.com/UC-BIRD-Lab/StabilityShiftsInGlidingFlight"
   data: "https://doi.org/10.6084/m9.figshare.c.7889849"
 
-# 2026 · ICB — COMMENTARY dynamic morphospaces (France et al)
+# 2026 · ICB, COMMENTARY dynamic morphospaces (France et al)
 - doi: "10.1093/icb/icag058"
   kind: commentary
 
-# 2025 · Global Ecology & Biogeography — wing bones & thermoregulation (Weeks, Harvey … Fouhey)
+# 2025 · Global Ecology & Biogeography, wing bones & thermoregulation (Weeks, Harvey … Fouhey)
 - doi: "10.1111/geb.70033"
   image: /assets/img/pubs/weeks-thermoregulation.jpg
   code: "https://doi.org/10.5281/zenodo.14983115"
   data: "https://doi.org/10.5061/dryad.7wm37pw4h"
 
-# 2024 · AIAA SciTech — airfoil aerodynamic efficiency (Glenn, Dahlke, Engilis, Harvey)
+# 2024 · AIAA SciTech, airfoil aerodynamic efficiency (Glenn, Dahlke, Engilis, Harvey)
 - doi: "10.2514/6.2024-1127"
   award: "AIAA Jefferson Goblet Student Paper Award"
 
-# 2024 · Communications Engineering — deep learning & gust response (Haughn, Harvey, Inman)
+# 2024 · Communications Engineering, deep learning & gust response (Haughn, Harvey, Inman)
 - doi: "10.1038/s44172-024-00201-8"
   image: /assets/img/pubs/haughn-gust.png
   code: "https://github.com/kevpatha/few_sensor_gust_alleviation/"
   data: "https://github.com/kevpatha/few_sensor_gust_alleviation/"
 
-# 2024 · J. R. Soc. Interface — gull LPV (Harvey)
+# 2024 · J. R. Soc. Interface, gull LPV (Harvey)
 - doi: "10.1098/rsif.2023.0734"
   image: /assets/img/pubs/harvey-lpv.png
   code: "https://github.com/UC-BIRD-Lab/StitchDyn"
   data: "https://doi.org/10.6084/m9.figshare.c.6835722"
 
-# 2026 · JEB — REVIEW lessons from natural flight (Harvey et al)
+# 2026 · JEB, REVIEW lessons from natural flight (Harvey et al)
 - doi: "10.1242/jeb.245409"
   kind: review
 
 
-# 2022 · Nature — birds transition between stable & unstable states (Harvey et al.)
+# 2022 · Nature, birds transition between stable & unstable states (Harvey et al.)
 - doi: "10.1038/s41586-022-04477-8"
   image: /assets/img/pubs/harvey-naturestability.png
   code: "https://github.com/charvey23/AvInertia"
   data: "https://doi.org/10.6084/m9.figshare.c.5503989"
 
-# 2022 · PNAS — gull dynamic pitch stability (Harvey & Inman)
+# 2022 · PNAS, gull dynamic pitch stability (Harvey & Inman)
 - doi: "10.1073/pnas.2204847119"
   image: /assets/img/pubs/harvey-pnasgull.jpg
   code: "https://github.com/charvey23/AvianDynStab"
   data: "https://doi.org/10.6084/m9.figshare.c.5895032"
 
-# 2021 · J. R. Soc. Interface — gull-inspired joint-driven wing morphing (Harvey et al.)
+# 2021 · J. R. Soc. Interface, gull-inspired joint-driven wing morphing (Harvey et al.)
 - doi: "10.1098/rsif.2021.0132"
+  image: /assets/img/pubs/harvey-jrsi2021.jpg
   code: "https://doi.org/10.6084/m9.figshare.13615964"
   data: "https://doi.org/10.6084/m9.figshare.c.5275490"
   correction: "https://doi.org/10.1098/rsif.2021.0635"
 
-# 2022 · Progress in Aerospace Sciences — REVIEW of avian-inspired morphing (Harvey et al.)
+# 2022 · Progress in Aerospace Sciences, REVIEW of avian-inspired morphing (Harvey et al.)
 - doi: "10.1016/j.paerosci.2022.100825"
   kind: review
 
-# 2020 · B&B — A survey of the aerodynamic efficiency of gliding birds vs. modern UAVs (Harvey et al.)
+# 2020 · B&B, A survey of the aerodynamic efficiency of gliding birds vs. modern UAVs (Harvey et al.)
 - doi: "10.1088/1748-3190/abc86a"
   kind: review
   code: "https://doi.org/10.6084/m9.figshare.12594746"
   data: "https://doi.org/10.6084/m9.figshare.12575855"
   correction: "https://doi.org/10.1088/1748-3190/ad7082"
 
-# 2019 · J. R. Soc. Interface — gulls modulate static pitch stability (Harvey et al.)
+# 2020 · B&B, Flexible feather TE (Gamble et al.)
+- doi: "10.1088/1748-3190/ab9b6f"
+  image: /assets/img/pubs/gamble-flexte.jpg
+
+# 2019 · J. R. Soc. Interface, gulls modulate static pitch stability (Harvey et al.)
 - doi: "10.1098/rsif.2018.0641"
+  image: /assets/img/pubs/harvey-firstever.jpg
   code: "https://doi.org/10.6084/m9.figshare.5791740"
   data: "https://figshare.com/collections/Supplement_to_Wing_morphing_allows_gulls_to_modulate_static_pitch_stability_during_gliding/3977505"

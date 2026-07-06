@@ -7,19 +7,19 @@ eyebrow: What we do
 <!-- Mission as a bold statement -->
 <section class="mission-statement">
   <h2 class="eyebrow" id="mission">Our mission</h2>
-  <p class="mission-statement__text">To use <em>bio-informed</em> and <em>bio-inspired</em> approaches to identify fundamental biological principles and attributes relating to flight that can be optimized and refined to improve engineered systems.</p>
+  <p class="mission-statement__text">To identify fundamental biological principles and attributes relating to flight that can be optimized and refined to improve engineered systems.</p>
 </section>
 
 <!-- transparent bio-inspired reporting framework -->
-<section class="section" style="padding-block: clamp(1.5rem, 3vw, 2.75rem)">
+<section class="section u-pb-fluid" id="framework">
   <div class="container framework-section">
     <div class="framework-intro">
       <h2 class="eyebrow">Our guiding framework</h2>
       <p class="lead">Bio-informed design embeds scientifically supported biological principles into the
-  engineering design process. </p>
-  <p>However, not all designs need to be bio-informed, so for each project we report three key attributes.</p>
+  engineering design process. We strive for it.</p>
+  <p>Not every design is bio-informed, though; some are bio-inspired, drawing on biology more loosely. Being clear about which is which matters more than the label, so for every project we report three attributes that make the distinction explicit:</p>
 
-    <p class="muted" style="font-size:var(--step--1);margin-top:0.2rem">        Harvey, C. (2026).
+    <p class="muted u-fs-sm u-mt-02">        Harvey, C. (2026).
         <em>Communications Engineering.</em>
         <a href="https://doi.org/10.1038/s44172-026-00641-4">doi:10.1038/s44172-026-00641-4</a>
         </p>
@@ -59,11 +59,11 @@ eyebrow: What we do
   </div>
 </section>
 
-<hr class="divider" style="margin:3rem 0">
+<hr class="divider u-my-30">
 
 <!-- Values as scannable cards -->
 <h2 class="eyebrow">Our core values</h2>
-<div class="grid grid-3" style="margin-top:1.2rem">
+<div class="grid grid-3 u-mt-12">
   <div class="card value-card">
     <div class="card-head">
       <span class="value-icon" aria-hidden="true"><img src="{{ '/assets/img/icons/value-multidisciplinary.svg' | relative_url }}" alt=""></span>
@@ -91,13 +91,30 @@ eyebrow: What we do
 </div>
 
 
-<hr class="divider" style="margin:3rem 0">
+<hr class="divider u-my-30">
+
+<h2 class="eyebrow" id="themes">What we study</h2>
+<p class="lead prose u-mt-10">Three connected research areas bridge biology, aerospace, and robotics.</p>
+<div class="grid grid-3 u-mt-15">
+  {%- for t in site.data.research.themes -%}
+  <div class="card">
+    <div class="card-head">
+      <div class="theme-icon">{% include theme-icon.html id=t.id %}</div>
+      <h3>{{ t.title }}</h3>
+    </div>
+    <p>{{ t.blurb }}</p>
+    {%- if t.why %}<p class="why"><span class="why__label">Why it matters</span>{{ t.why }}</p>{% endif -%}
+  </div>
+  {%- endfor -%}
+</div>
+
+<hr class="divider u-my-30">
 
 <h2 id="projects">Active projects</h2>
 <p class="lead prose">A snapshot of current member-led projects, grouped by the lab's main
 themes above. </p>
 
-<div class="grid grid-2 projects-grid" style="margin-top:1.5rem">
+<div class="grid grid-2 projects-grid u-mt-15">
   {%- for p in site.data.research.projects -%}
   <div class="card proj-card" id="project-{{ p.lead | slugify }}">
     {%- if p.image -%}
@@ -123,13 +140,13 @@ themes above. </p>
         </p>
       {%- endif -%}
 
-      <p class="muted" style="font-size:var(--step--1);margin-top:.6rem">
+      <p class="muted u-fs-sm u-mt-06">
         {%- assign lead_anchor = p.lead | slugify -%}
         Led by <a href="{{ '/people/' | relative_url }}#{{ lead_anchor }}">{{ p.lead }}</a>
       </p>
       {%- if p.contact -%}
-      <p style="margin-top:.9rem;margin-bottom:0">
-        <a class="btn btn--ghost" style="padding:.4rem .9rem;font-size:var(--step--1)"
+      <p class="u-mt-09 u-mb0">
+        <a class="btn btn--ghost btn--sm"
            href="mailto:{{ p.contact }}?subject={{ p.title | uri_escape }}">Ask the lead &rarr;</a>
       </p>
       {%- endif -%}
@@ -138,5 +155,5 @@ themes above. </p>
   {%- endfor -%}
 </div>
 
-<p class="muted" style="font-size:var(--step--1);margin-top:1.5rem">Project figures
+<p class="muted u-fs-sm u-mt-15">Project figures
 are from lab members' own work or presentations; attribution should be given appropriately.</p>

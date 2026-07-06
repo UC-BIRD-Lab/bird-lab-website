@@ -13,7 +13,7 @@
 #  text: Postdoc 🦉 · PhD 🦢 · MSc 🦜 · Undergrad 🐥 · Visiting 🕊️ · PI 🦅.
 #  Override one with  role_icon: "🦅"  if needed.
 #
-#  FIELD (optional) — shows small discipline tag(s) so the lab's engineering/
+#  FIELD (optional), shows small discipline tag(s) so the lab's engineering/
 #  biology mix is visible. Comma-separate for more than one, e.g.
 #    field: "Aerospace, Animal Behavior"
 # ─────────────────────────────────────────────────────────────
@@ -209,7 +209,7 @@ groups:
         photo: /assets/img/people/adam-halford.jpg
 
 # Individual collaborators and affiliated researchers outside the core group.
-# (Partner *organizations* — CRC, CHC, the museum — live in collaborators.yml
+# (Partner *organizations*, CRC, CHC, the museum, live in collaborators.yml
 #  and appear in the "In partnership with" strip on the home page.)
 affiliates:
   title: Collaborators
@@ -230,6 +230,13 @@ affiliates:
       orcid: 0000-0002-8219-8983
       website: https://haughn-morph-lab.github.io/morph-lab.github.io/
       linkedin: https://www.linkedin.com/in/kevin-haughn-20abb491/
+    - name: Juan Sebastian Niño Florez
+      role: Senior Animator
+      pronouns: he/him
+      field: "Animation"
+      photo: /assets/img/people/seb-nino-florez.jpg
+      website: https://www.imdb.com/name/nm6695637/
+      linkedin: https://www.linkedin.com/in/juan-sebastian-niño-florez-a9b23650/
     - name: Dr. Lydia France
       role: Schmidt AI in Science Fellow · University of Oxford
       pronouns: she/her
@@ -241,7 +248,7 @@ affiliates:
 
 # Past members.
 #  TO RETIRE SOMEONE: cut their whole block from `groups` above and paste it
-#  here, then just add a `now:` line. The alumni table reuses the same fields —
+#  here, then just add a `now:` line. The alumni table reuses the same fields,
 #  `start` (year joined) and `linkedin` carry over automatically, and a LinkedIn
 #  icon appears beside the name whenever `linkedin` is present. Extra fields
 #  (photo, email, field, awards…) are simply ignored, so you don't have to trim.

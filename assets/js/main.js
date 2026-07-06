@@ -53,15 +53,18 @@
   var guideSearch = document.getElementById("guide-search");
   if (guideSearch) {
     var cards = Array.prototype.slice.call(document.querySelectorAll(".card--link"));
-    var sections = Array.prototype.slice.call(document.querySelectorAll(".people-group"));
+    // Sections that hold guide cards: the "Start here" block and each category
+    // band. Empty ones hide while the visitor is searching.
+    var sections = Array.prototype.slice.call(document.querySelectorAll(".guide-start, .guide-cat"));
     var guideNoResults = document.getElementById("guide-noresults");
     guideSearch.addEventListener("input", function () {
       var q = guideSearch.value.toLowerCase().trim();
       cards.forEach(function (c) {
         var h = c.querySelector("h3");
+        var kw = (c.getAttribute("data-keywords") || "").toLowerCase();
         var inTitle = q && h && h.textContent.toLowerCase().indexOf(q) !== -1;
-        var inText = q && c.textContent.toLowerCase().indexOf(q) !== -1;
-        // Hide non-matches; keep any card whose title OR body matches.
+        var inText = q && (c.textContent.toLowerCase().indexOf(q) !== -1 || kw.indexOf(q) !== -1);
+        // Hide non-matches; keep any card whose title, body, OR keywords match.
         c.hidden = !!q && !inText;
         // Rank: title matches (order 0) rise above body-only matches (order 1).
         c.style.order = q ? (inTitle ? "0" : "1") : "";
@@ -136,11 +139,13 @@
   // ---- Wiki search (filters side nav + jumps) ----
   var wikiSearch = document.getElementById("wiki-search");
   if (wikiSearch) {
-    var items = Array.prototype.slice.call(document.querySelectorAll(".wiki-side li"));
+    var items = Array.prototype.slice.call(document.querySelectorAll(".wiki-nav li"));
     wikiSearch.addEventListener("input", function () {
       var q = wikiSearch.value.toLowerCase().trim();
       items.forEach(function (li) {
-        li.hidden = q && li.textContent.toLowerCase().indexOf(q) === -1;
+        var kw = (li.getAttribute("data-keywords") || "").toLowerCase();
+        var text = li.textContent.toLowerCase();
+        li.hidden = q && text.indexOf(q) === -1 && kw.indexOf(q) === -1;
       });
     });
   }
@@ -172,4 +177,49 @@
     chip.addEventListener("focusin",  function () { set(true); });
     chip.addEventListener("focusout", function () { set(false); });
   });
+})();
+
+// ---- Lab Guide: copyable section links ----
+// Adds a small "link" affordance to each H2/H3 in a guide page that has an id
+// (kramdown auto-generates these). Click copies the section's full URL to the
+// clipboard so members can paste a deep link straight into Slack or a PR. Purely
+// an enhancement: the headings and their anchors work with JS off.
+(function () {
+  var article = document.querySelector(".wiki-content");
+  if (!article) return;
+
+  article.querySelectorAll("h2[id], h3[id]").forEach(function (h) {
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "anchor-link";
+    btn.setAttribute("aria-label", "Copy link to this section");
+    btn.title = "Copy link to this section";
+    btn.innerHTML = "<span aria-hidden=\"true\">#</span>";
+
+    btn.addEventListener("click", function () {
+      var url = location.origin + location.pathname + "#" + h.id;
+      var done = function () {
+        btn.classList.add("copied");
+        var live = document.getElementById("anchor-live");
+        if (live) live.textContent = "Section link copied";
+        setTimeout(function () { btn.classList.remove("copied"); }, 1600);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(done, function () {
+          location.hash = h.id; done();
+        });
+      } else {
+        location.hash = h.id; done();
+      }
+    });
+
+    h.appendChild(btn);
+  });
+
+  // One polite live region for the "copied" confirmation.
+  var live = document.createElement("div");
+  live.id = "anchor-live";
+  live.className = "visually-hidden";
+  live.setAttribute("aria-live", "polite");
+  article.appendChild(live);
 })();

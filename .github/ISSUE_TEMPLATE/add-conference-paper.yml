@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Journal articles update **automatically** from OpenAlex — you only need this
+        Journal articles update **automatically** from OpenAlex, you only need this
         form for conference papers, talks, and posters.
   - type: input
     id: title

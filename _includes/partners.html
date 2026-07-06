@@ -4,7 +4,7 @@
   {%- if site.data.partners.intro %}<p class="muted prose">{{ site.data.partners.intro }}</p>{% endif -%}
 
   {%- for group in site.data.partners.groups -%}
-  <h3 style="font-size:var(--step-1);margin:1.6rem 0 .4rem">{{ group.heading }}</h3>
+  <h3 class="u-fs-md u-mrow-16">{{ group.heading }}</h3>
   <div class="partners-grid">
     {%- for it in group.items -%}
     <a class="partner" href="{{ it.url }}" {% if it.url contains '://' %}rel="noopener"{% endif %}>

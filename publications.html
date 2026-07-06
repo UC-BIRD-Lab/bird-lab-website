@@ -5,7 +5,24 @@ eyebrow: What we do
 ---
 
 {%- assign journals = site.data.publications -%}
-{%- assign conf = site.data.publications_manual.conference -%}
+{%- comment -%}
+  Safety net against double-listing. Conference papers WITH a DOI sync into
+  publications.yml automatically; DOI-less talks/posters are hand-added in
+  publications_manual.yml. If a hand-added item later gets a DOI and syncs, the
+  two lists would collide. So we drop any manual conference entry whose title
+  already appears in the synced list: the DOI (auto) version always wins. Match
+  is on the exact title, downcased. Removing the manual entry once it syncs is
+  still the tidy thing to do; this just prevents a visible duplicate if you don't.
+{%- endcomment -%}
+{%- assign auto_titles = journals | map: "title" | join: "||" | downcase -%}
+{%- assign conf = "" | split: "," -%}
+{%- for c in site.data.publications_manual.conference -%}
+  {%- assign ctitle = c.title | downcase -%}
+  {%- unless auto_titles contains ctitle -%}
+    {%- assign one = site.data.publications_manual.conference | where: "title", c.title -%}
+    {%- assign conf = conf | concat: one -%}
+  {%- endunless -%}
+{%- endfor -%}
 {%- assign all = journals | concat: conf -%}
 {%- assign years = all | map: "year" | uniq | sort | reverse -%}
 
@@ -13,6 +30,31 @@ eyebrow: What we do
    news stories reference its DOI (see the "In the news" badge below). {%- endcomment -%}
 {%- assign all_press = "" | split: "" -%}
 {%- for yr in site.data.press -%}{%- assign all_press = all_press | concat: yr.items -%}{%- endfor -%}
+
+{%- comment -%}
+  Roster of current lab members + alumni (NOT affiliates), built from people.yml so
+  it stays a single source of truth. Used to (1) bold their names where they appear
+  as authors and (2) let the search box match a full FIRST or LAST name even though
+  author lists carry only initials (typing "Kaleb" finds "K. Bordner"). Each record
+  is "firstInitial|lastname|searchwords" joined by ~. Last names are accent-folded
+  (so "Martinez" matches "Martínez") and split on hyphens so a compound surname like
+  "Martínez-Carmena" still matches the "Martinez" an author list uses.
+{%- endcomment -%}
+{%- assign roster_people = "" | split: "" -%}
+{%- for g in site.data.people.groups -%}{%- assign roster_people = roster_people | concat: g.members -%}{%- endfor -%}
+{%- assign roster_people = roster_people | concat: site.data.people.alumni.members -%}
+{%- assign roster = "" -%}
+{%- for m in roster_people -%}
+  {%- assign parts = m.name | remove: "Dr. " | strip | split: " " -%}
+  {%- assign fname = parts | first -%}
+  {%- assign lname = parts | last -%}
+  {%- assign r_ini = fname | slice: 0 | downcase -%}
+  {%- assign r_last = lname | downcase | replace: "í","i" | replace: "é","e" | replace: "á","a" | replace: "ó","o" | replace: "ú","u" | replace: "ñ","n" | replace: "ü","u" | replace: "è","e" | replace: "à","a" | replace: "ö","o" | replace: "ä","a" | replace: "ç","c" -%}
+  {%- assign r_search = fname | append: " " | append: lname -%}
+  {%- if m.aliases -%}{%- assign r_alias = m.aliases | join: " " -%}{%- assign r_search = r_search | append: " " | append: r_alias -%}{%- endif -%}
+  {%- assign roster = roster | append: r_ini | append: "|" | append: r_last | append: "|" | append: r_search | append: "~" -%}
+{%- endfor -%}
+{%- assign roster_records = roster | split: "~" -%}
 
 <div class="pub-controls">
   <label class="visually-hidden" for="pub-search">Search publications</label>
@@ -24,6 +66,7 @@ eyebrow: What we do
     <option value="conference">Conference &amp; posters</option>
   </select>
   <a class="btn btn--ghost" href="{{ site.lab.scholar }}">Google Scholar</a>
+  {%- if site.data.publications_manual.blog -%}<a class="btn btn--ghost" href="#blog">Jump to blogs &darr;</a>{%- endif -%}
 </div>
 
 {%- for y in years -%}
@@ -32,7 +75,45 @@ eyebrow: What we do
      by date; hand-curated conference items follow). {%- endcomment -%}
   {%- assign items = all | where: "year", y -%}
   {%- for pub in items -%}
-  {%- capture search %}{{ pub.title }} {{ pub.authors }} {{ pub.venue }}{% endcapture -%}
+  {%- comment -%} Bold lab members / alumni in the author list, and collect their full
+     names (member_hits) so the search box matches a first or last name. {%- endcomment -%}
+  {%- assign authors_html = "" -%}
+  {%- assign member_hits = "" -%}
+  {%- assign author_tokens = pub.authors | split: "," -%}
+  {%- for traw in author_tokens -%}
+    {%- assign tok = traw | strip -%}
+    {%- unless tok == "" -%}
+      {%- comment -%} Ignore any trailing "(note)" so the surname is read from the name
+         itself; the note (if any) is kept but not bolded. {%- endcomment -%}
+      {%- assign tname = tok | split: "(" | first | strip -%}
+      {%- assign tsur = tname | split: " " | last | downcase | remove: "." | replace: "í","i" | replace: "é","e" | replace: "á","a" | replace: "ó","o" | replace: "ú","u" | replace: "ñ","n" | replace: "ü","u" | replace: "è","e" | replace: "à","a" | replace: "ö","o" | replace: "ä","a" | replace: "ç","c" -%}
+      {%- assign tini = tname | slice: 0 | downcase -%}
+      {%- assign hit = "" -%}
+      {%- for rec in roster_records -%}
+        {%- unless rec == "" -%}
+          {%- assign rf = rec | split: "|" -%}
+          {%- if rf[0] == tini -%}
+            {%- assign rlastparts = rf[1] | split: "-" -%}
+            {%- if rf[1] == tsur or rlastparts contains tsur -%}
+              {%- assign hit = rf[2] -%}
+              {%- break -%}
+            {%- endif -%}
+          {%- endif -%}
+        {%- endunless -%}
+      {%- endfor -%}
+      {%- if hit == "" -%}
+        {%- assign piece = tok -%}
+      {%- else -%}
+        {%- assign tafter = "" -%}
+        {%- if tok contains "(" -%}{%- assign tnote = tok | split: "(" | last -%}{%- assign tafter = " (" | append: tnote -%}{%- endif -%}
+        {%- assign piece = "<strong>" | append: tname | append: "</strong>" | append: tafter -%}
+        {%- assign member_hits = member_hits | append: " " | append: hit -%}
+      {%- endif -%}
+      {%- if authors_html == "" -%}{%- assign authors_html = piece -%}
+      {%- else -%}{%- assign authors_html = authors_html | append: ", " | append: piece -%}{%- endif -%}
+    {%- endunless -%}
+  {%- endfor -%}
+  {%- capture search %}{{ pub.title }} {{ pub.authors }} {{ pub.venue }} {{ member_hits }}{% endcapture -%}
   {%- comment -%} Hand-curated extras (data / code / figure) matched by DOI. {%- endcomment -%}
   {%- assign rich = "" -%}
   {%- if pub.doi -%}{%- assign rich = site.data.pub_links | where_exp: "x", "x.doi and pub.doi contains x.doi" | first -%}{%- endif -%}
@@ -43,14 +124,14 @@ eyebrow: What we do
         {%- if pub.type == "journal" -%}{%- assign jkind = rich.kind | default: "research" -%}{%- if jkind == "review" -%}<span class="badge badge--paper pub__type">Review article</span> {% elsif jkind == "commentary" -%}<span class="badge badge--paper pub__type">Commentary</span> {% else -%}<span class="badge badge--paper pub__type">Research article</span> {% endif -%}{% elsif pub.type == "conference" -%}{%- if pub.note -%}<span class="badge badge--minor pub__type">{{ pub.note }}</span> {% else -%}<span class="badge badge--conf pub__type">Conference paper</span> {% endif -%}{% endif -%}
         {%- if pub.doi -%}<a href="{{ pub.doi }}">{{ pub.title }}</a>{%- else -%}{{ pub.title }}{%- endif -%}
       </p>
-      <p class="pub__meta">{{ pub.authors }} · <span class="pub__venue">{{ pub.venue }}</span> · {{ pub.year }}
+      <p class="pub__meta">{{ authors_html }} · <span class="pub__venue">{{ pub.venue }}</span> · {{ pub.year }}
         {%- if pub.doi %} · <a href="{{ pub.doi }}">{{ pub.doi | split: "doi.org/" | last | split: "/doi/" | last }}</a>{% endif -%}
+        {%- if rich.correction -%} · <a class="pub-correction" href="{{ rich.correction }}" rel="noopener"><span aria-hidden="true">⚠</span> {{ rich.correction_label | default: "Correction" }}</a>{%- endif -%}
         {%- if pub.doi -%}
           {%- assign press_hits = all_press | where_exp: "x", "x.doi and pub.doi contains x.doi" -%}
           {%- if press_hits.size > 0 -%} · <a class="pub-press" href="{{ '/news/#in-the-news' | relative_url }}"><span aria-hidden="true">📰</span> In the news · {{ press_hits.size }}</a>{%- endif -%}
         {%- endif -%}
         {%- if rich.award -%} · <span class="pub-award"><span aria-hidden="true">🏆</span> {{ rich.award }}</span>{%- endif -%}
-        {%- if rich.correction -%} · <a class="pub-correction" href="{{ rich.correction }}" rel="noopener"><span aria-hidden="true">⚠</span> {{ rich.correction_label | default: "Correction" }}</a>{%- endif -%}
       </p>
       {%- if rich.data or rich.code -%}
       <p class="pub__extras">
@@ -63,12 +144,11 @@ eyebrow: What we do
   {%- endfor -%}
 {%- endfor -%}
 
-<p id="pub-noresults" hidden class="muted" style="margin-top:1.5rem">No publications match your search.</p>
+<p id="pub-noresults" hidden class="muted u-mt-15">No publications match your search.</p>
 
 {%- if site.data.publications_manual.blog -%}
-<hr class="divider" style="margin:3rem 0">
-<h2 id="blog">Blog posts &amp; plain-language summaries</h2>
-<div class="press-list" style="margin-top:1rem">
+<h2 id="blog" class="u-mt-fluid">Blog posts &amp; plain-language summaries</h2>
+<div class="press-list u-mt-10">
   {%- for b in site.data.publications_manual.blog -%}
   <a href="{{ b.url }}">{{ b.title }}
     <span class="src">{% if b.authors %}{{ b.authors }} · {% endif %}{{ b.venue }} · {{ b.year }}</span>
@@ -77,14 +157,13 @@ eyebrow: What we do
 </div>
 {%- endif -%}
 
-<hr class="divider" style="margin:3rem 0">
-<h2 id="data-code">Data &amp; code</h2>
+<h2 id="data-code" class="u-mt-fluid">Data &amp; code</h2>
 <p class="prose">We practice open science: the data and code behind our papers are released
 publicly on publication, so results can be checked, reused, and built upon.</p>
-<p class="hero__cta" style="margin-top:1rem">
+<p class="hero__cta u-mt-10">
   {%- if site.lab.github_org %}<a class="btn btn--primary" href="{{ site.lab.github_org }}" rel="noopener">UC-BIRD-Lab on GitHub</a>{% endif -%}
   {%- if site.lab.figshare_url and site.lab.figshare_url != "" %}<a class="btn btn--ghost" href="{{ site.lab.figshare_url }}" rel="noopener">Datasets on FigShare</a>{% endif -%}
 </p>
 {%- if site.lab.figshare_url == "" -%}
-<p class="muted" style="font-size:var(--step--1)">A dedicated data repository (FigShare) is being set up; add its URL as <code>figshare_url</code> in <code>_config.yml</code> to surface it here.</p>
+<p class="muted u-fs-sm">A dedicated data repository (FigShare) is being set up; add its URL as <code>figshare_url</code> in <code>_config.yml</code> to surface it here.</p>
 {%- endif -%}

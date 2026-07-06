@@ -6,11 +6,20 @@ vendor/
 .bundle/
 # RStudio project session state (per-user, never share)
 .Rproj.user/
+.Rhistory
+.Rapp.history
 Gemfile.lock
 .DS_Store
 *.log
+# FUSE / editor-sync artifacts left when a file is edited while open. They can
+# carry corrupted front matter and must never be committed or built.
+.fuse_hidden*
 # Backup files left by image tools / editors (e.g. photo.jpg~)
 *~
+# One-off scratch/preview image exports (never part of the site)
+*-tmp.png
+*-preview.png
+_logocheck.png
 node_modules/
 .venv/
 __pycache__/

@@ -1,15 +1,15 @@
 # ─────────────────────────────────────────────────────────────
-#  NEWS & UPDATES — lab milestones timeline. Newest first.
+#  NEWS & UPDATES, lab milestones timeline. Newest first.
 #  type controls the icon: award, paper, talk, funding, build,
 #  service, people, travel, graduation.
 #
 #  MEMBER NAMES LINK AUTOMATICALLY. Just write a name as it appears on the People
 #  page (e.g. "Kaleb Bordner") and it becomes a link to that person's card;
-#  alumni names link to the alumni table. Do NOT wrap names in <a> yourself — that
+#  alumni names link to the alumni table. Do NOT wrap names in <a> yourself, that
 #  would double-link. For nicknames/short forms ("Dr. Harvey", "Adam Zhu"), add an
 #  `aliases:` line to that person in people.yml.
 #
-#  For OTHER links (papers, events, external sites) you may add plain HTML — use
+#  For OTHER links (papers, events, external sites) you may add plain HTML, use
 #  single quotes inside so the YAML stays valid:
 #      <a href='https://example.com'>the workshop</a>
 # ─────────────────────────────────────────────────────────────
@@ -67,7 +67,7 @@
     - { date: "November 2023", type: people, text: "Dr. Alfonso Martínez joined the lab as its first postdoctoral scholar." }
     - { date: "October 2023", type: award, text: "Dr. Harvey was named a 2023 Packard Fellow." }
     - { date: "August 2023", type: people, text: "Kaleb Bordner (the lab's first PhD student) and Francisco Jackson (the lab's first MS student) joined the lab." }
-    - { date: "April 2023", type: paper, text: "Review in the Journal of Experimental Biology examined how biological insight has shaped—and can continue to advance—aircraft design." }
+    - { date: "April 2023", type: paper, text: "Review in the Journal of Experimental Biology examined how biological insight has shaped, and can continue to advance, aircraft design." }
 
 - year: 2022
   events:

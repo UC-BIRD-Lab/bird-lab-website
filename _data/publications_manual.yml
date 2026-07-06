@@ -1,15 +1,38 @@
 # ─────────────────────────────────────────────────────────────
-#  PUBLICATIONS — manually maintained
+#  PUBLICATIONS, manually maintained
 #  Conference talks & posters WITHOUT a DOI, plus blog posts. These are NOT
 #  indexed by OpenAlex, so add them here by hand. Conference/meeting papers that
 #  DO have a DOI (e.g. AIAA SciTech/AVIATION) are pulled automatically into
-#  publications.yml — don't duplicate them here. See MAINTENANCE.md.
+#  publications.yml, so don't add those here. See MAINTENANCE.md.
+#
+#  If a talk you added here later gets a DOI and syncs into publications.yml,
+#  delete it here to keep this file tidy. As a safety net, the Publications page
+#  already hides any entry here whose title matches a synced one (the DOI version
+#  wins), so you won't see a duplicate even if you forget.
 # ─────────────────────────────────────────────────────────────
 
 conference:
+  - title: "Quantifying range of motion in the avian tail"
+    authors: "A. Fillman, C. Harvey"
+    venue: "SICB Annual Meeting, Portland, OR (also BISCCITs poster)"
+    year: 2026
+    type: conference
+    note: Presentation
+  - title: "The interaction between bird flight styles and their airfoil aerodynamics"
+    authors: "F. Alvi, H.A. Zhu, A. Engilis Jr, T. Hedrick, J. Rader, P. Sharpe, C. Harvey"
+    venue: "SICB Annual Meeting, Portland, OR"
+    year: 2026
+    type: conference
+    note: Presentation
+  - title: "Considering the past, present, and future of bio-informed design"
+    authors: "J.C.M. Wong, C. Harvey, V.B. Baliga"
+    venue: "SICB Annual Meeting, Portland, OR"
+    year: 2026
+    type: conference
+    note: Presentation
   - title: "Wing–tail interaction effects in a morphing-tail aircraft during perch"
     authors: "K. Bordner, C. Cook, T. C. Henry, J. T. Hrynuk, C. Harvey, K. P. T. Haughn"
-    venue: "SICB Annual Meeting, Atlanta, GA (also NCAS, poster)"
+    venue: "SICB Annual Meeting, Atlanta, GA (also NCAS and GRC poster)"
     year: 2025
     type: conference
     note: Presentation
@@ -37,6 +60,36 @@ conference:
     year: 2023
     type: conference
     note: Presentation
+  - title: "Longitudinal dynamic stability of a gliding gull"
+    authors: "C. Harvey, D.J. Inman"
+    venue: "GRC Multifunctional Materials & Structures, Ventura, CA"
+    year: 2022
+    type: conference
+    note: Poster
+  - title: "Avian flight maneuverability: An inertial perspective"
+    authors: "C. Harvey, V.B. Baliga, J.C.M Wong, D. Altshuler, D.J. Inman"
+    venue: "SICB Annual Meeting, Phoenix, AZ"
+    year: 2022
+    type: conference
+    note: Presentation
+  - title: "Static longitudinal stability of four avian species’ wings"
+    authors: "C. Harvey, V.B. Baliga, D. Altshuler, D.J. Inman"
+    venue: "GRC Multifunctional Materials & Structures, Ventura, CA"
+    year: 2020
+    type: conference
+    note: Poster
+  - title: "A finite element analysis of a gull wing through varied morphed configurations"
+    authors: "C. Harvey, D.J. Inman"
+    venue: "International Conference on Adaptive Structures and Technologies (ICAST), Montreal, QC, CA"
+    year: 2019
+    type: conference
+    note: Presentation
+  - title: "How elbow deflection affects the aerodynamic performance and stability of gliding gulls at varying turbulence conditions"
+    authors: "C. Harvey, V.B. Baliga, P. Lavoie, D.L. Altshuler (also GRC poster)"
+    venue: "SICB Annual Meeting, San Francisco, CA"
+    year: 2018
+    type: conference
+    note: Presentation
 
 blog:
   - title: "To be (stable) or not to be"
@@ -50,13 +103,13 @@ blog:
     url: "https://communities.springernature.com/posts/tap-tap-tap-three-is-plenty-for-windy-flight"
 
 # ─────────────────────────────────────────────────────────────
-#  DO-NOT-LIST — OpenAlex sometimes returns things under the lab's ORCID that
+#  DO-NOT-LIST, OpenAlex sometimes returns things under the lab's ORCID that
 #  aren't really papers (a profile write-up, a talk abstract indexed like an
 #  article, …). List their BARE DOI here and the sync will drop them and never
 #  re-add them. Add a short `reason:` for the next person.
 # ─────────────────────────────────────────────────────────────
 exclude:
-  - doi: "10.1242/jeb.245923"    # "ECR Spotlight – Christina Harvey" — profile write-up, not a paper
+  - doi: "10.1242/jeb.245923"    # "ECR Spotlight – Christina Harvey", profile write-up, not a paper
     reason: "Journal spotlight/profile of the PI, not a research paper."
-  - doi: "10.1117/12.2666179"    # "Nature, smart structures, and morphing UAVs" — conference talk
+  - doi: "10.1117/12.2666179"    # "Nature, smart structures, and morphing UAVs", conference talk
     reason: "Invited conference talk, not a peer-reviewed paper."

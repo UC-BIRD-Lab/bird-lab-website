@@ -19,13 +19,13 @@ description: "The BIRD Lab at UC Davis uncovers fundamental principles of avian 
       <!-- Decorative logo -->
   <img
     class="hero__logo"
-    src="{{ '/assets/img/logo_whiteshading.pdf' | relative_url }}"
+    src="{{ '/assets/img/logo_whiteshading.png' | relative_url }}"
     alt=""
     aria-hidden="true">
 
   <!-- Left column -->
     <div>
-      <p class="eyebrow" style="color:#bfe0f4">Bio-Informed Research &amp; Design · UC Davis</p>
+      <p class="eyebrow eyebrow--on-dark">Bio-Informed Research &amp; Design · UC Davis</p>
       <h1>Where biology meets aerospace.</h1>
       <p class="lead">
         Flight is one of nature's greatest experiments. We study birds not to copy them, but to 
@@ -33,7 +33,7 @@ description: "The BIRD Lab at UC Davis uncovers fundamental principles of avian 
       </p>
       <div class="hero__cta">
         <a class="btn btn--light" href="{{ '/research/' | relative_url }}">Explore the research</a>
-        <a class="btn btn--ghost" style="color:#fff;border-color:rgba(255,255,255,.6)" href="{{ '/join/' | relative_url }}">Join the lab</a>
+        <a class="btn btn--ghost btn--on-dark" href="{{ '/join/' | relative_url }}">Join the lab</a>
       </div>
       {%- assign member_count = 0 -%}
       {%- for g in site.data.people.groups -%}
@@ -41,7 +41,12 @@ description: "The BIRD Lab at UC Davis uncovers fundamental principles of avian 
       {%- endfor -%}
       <div class="hero__stats">
         <div><span class="num">2022</span><span class="lbl">Founded at UC&nbsp;Davis</span></div>
-        <div><span class="num">{{ site.data.publications | size }}</span><span class="lbl">Publications</span></div>
+        {%- comment -%} Count peer-reviewed research + conference papers. publications.yml
+           already holds both journal and conference entries, so filter by type rather than
+           adding the manual list on top (which double-counted before). {%- endcomment -%}
+        {%- assign paper_pubs = site.data.publications | where_exp: "p", "p.type == 'journal' or p.type == 'conference'" -%}
+        {%- assign pub_count = paper_pubs | size -%}
+        <div><span class="num">{{ pub_count }}</span><span class="lbl">Publications</span></div>
         <div><span class="num">{{ member_count }}</span><span class="lbl">Researchers</span></div>
       </div>
     </div>
@@ -64,42 +69,83 @@ description: "The BIRD Lab at UC Davis uncovers fundamental principles of avian 
   </div>
 </section>
 
-<!-- Research themes -->
+<!-- Our research: areas we study + why it matters, one section, one CTA -->
 <section class="section section--tint">
   <div class="container">
     <div class="section-head">
       <div>
-        <h2 class="eyebrow">What we do</h2>
+        <h2 class="eyebrow">Our research</h2>
       </div>
-      <a class="btn btn--primary" href="{{ '/research/' | relative_url }}">See all projects &rarr;</a>
+      <a class="btn btn--primary" href="{{ '/research/#projects' | relative_url }}">See all projects &rarr;</a>
     </div>
-    <p class="lead prose" style="margin-top:1rem">Three connected research areas bridge biology, aerospace, and robotics.</p>
-    <div class="grid grid-3" style="margin-top:2rem">
-      {%- for t in site.data.research.themes -%}
-      <div class="card">
-        <div class="card-head">
-          <div class="theme-icon">{% include theme-icon.html id=t.id %}</div>
-          <h3>{{ t.title }}</h3>
-        </div>
-        <p>{{ t.blurb }}</p>
-        {%- if t.why %}<p class="why"><span class="why__label">Why it matters</span>{{ t.why }}</p>{% endif -%}
+    <p class="lead prose u-mt-10">Many desirable characteristics of bird flight still elude current aircraft design. We study birds to identify which attributes are useful for engineered systems and which attributes are not.</p>
+
+    <div class="research-split">
+      <div class="research-col">
+        <h3 class="research-col__label">What we study</h3>
+        <ul class="rlist">
+          {%- for t in site.data.research.themes -%}
+          <li class="rlist__item">
+            <span class="rlist__icon">{% include theme-icon.html id=t.id %}</span>
+            <span class="rlist__body">
+              <a class="rlist__title" href="{{ '/research/#themes' | relative_url }}">{{ t.title }}</a>
+              <span class="rlist__line">{{ t.short | default: t.blurb }}</span>
+            </span>
+          </li>
+          {%- endfor -%}
+        </ul>
       </div>
-      {%- endfor -%}
+      <div class="research-col">
+        <h3 class="research-col__label">Why it matters</h3>
+        <ul class="rlist">
+          <li class="rlist__item">
+            <span class="rlist__icon"><img src="{{ '/assets/img/icons/impact-aircraft.svg' | relative_url }}" alt="" aria-hidden="true"></span>
+            <span class="rlist__body">
+              <span class="rlist__title">Adaptable drones</span>
+              <span class="rlist__line">We translate avian control actions into maneuvers to enable UAV operation in urban and disaster environments.</span>
+            </span>
+          </li>
+          <li class="rlist__item">
+            <span class="rlist__icon"><img src="{{ '/assets/img/icons/impact-wildlife.svg' | relative_url }}" alt="" aria-hidden="true"></span>
+            <span class="rlist__body">
+              <span class="rlist__title">Healthier wildlife</span>
+              <span class="rlist__line">We establish quantitative metrics to improve wild raptor rehabilitation and release success.</span>
+            </span>
+          </li>
+          <li class="rlist__item">
+            <span class="rlist__icon"><img src="{{ '/assets/img/icons/impact-people.svg' | relative_url }}" alt="" aria-hidden="true"></span>
+            <span class="rlist__body">
+              <span class="rlist__title">The next generation</span>
+              <span class="rlist__line">We train the next generation of engineers and scientists to tackle complex, interdisciplinary challenges.</span>
+            </span>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </section>
 
+<!-- Bio-informed principle (the spine) -->
+<section class="section">
+  <div class="container center">
+    <h2 class="eyebrow">Bio-informed, not just bio-inspired</h2>
+    <p class="lead prose u-mt-10 u-mi-auto">Engineers are often inspired by biological systems; however, literature often conflates inspiration with scientific evidence. For every project we report the difference.</p>
+    <p class="u-mt-12"><a class="btn btn--ghost" href="{{ '/research/#framework' | relative_url }}">See how we report it &rarr;</a></p>
+  </div>
+</section>
+
+<!-- CALI band -->
 {%- if site.assets.lab_photo and site.assets.lab_photo != "" -%}
 <section class="field-band" aria-label="The BIRD Lab in the field">
   <img class="field-band__img" src="{{ site.assets.lab_photo | relative_url }}" alt="The BIRD Lab team with live raptors in the CALI flight hall" loading="lazy">
   <div class="field-band__overlay"></div>
   <div class="container field-band__caption">
-    <p class="eyebrow" style="color:#bfe0f4">Unique Facilities</p>
+    <p class="eyebrow eyebrow--on-dark">Unique Facilities</p>
     <h2 class="field-band__line">The Center for Animal Locomotion & Innovation (CALI)</h2>
     <p > World-class high-speed, high-resolution photogrammetry and motion capture capabilties to study animal or engineered locomotion.</p>
           <div class="hero__cta">
         <a class="btn btn--light" href="{{ '/facilities/' | relative_url }}">Tour the facilities</a>
-        <a class="btn btn--ghost" style="color:#fff;border-color:rgba(255,255,255,.6)" href="https://sites.google.com/ucdavis.edu/cali/home">CALI consortium</a>
+        <a class="btn btn--ghost btn--on-dark" href="https://sites.google.com/ucdavis.edu/cali/home">CALI consortium</a>
       </div>
   </div>
 </section>
@@ -113,7 +159,7 @@ description: "The BIRD Lab at UC Davis uncovers fundamental principles of avian 
     <p class="lead prose">Transparency is part of the science. Our day-to-day handbook is
     public, our data and code go public on publication, and we write plain-language
     summaries so anyone can follow the work.</p>
-    <div class="grid grid-3" style="margin-top:1.6rem">
+    <div class="grid grid-3 u-mt-16">
       <a class="card card--link" href="{{ '/lab-guide/' | relative_url }}">
         <div class="card-head">
           <div class="os-icon"><img src="{{ '/assets/img/icons/os-lab-guide.svg' | relative_url }}" alt="" aria-hidden="true"></div>
@@ -145,15 +191,22 @@ description: "The BIRD Lab at UC Davis uncovers fundamental principles of avian 
     <div class="home-highlights">
       <div class="home-highlights__main">
         <h2 class="eyebrow">Selected work</h2>
-        <div style="margin-top:1.5rem">
-          {%- comment -%} publications.yml is kept newest-first by date, so take the top 3. {%- endcomment -%}
+        <div class="u-mt-15">
+          {%- comment -%} publications.yml is kept newest-first by date, so take the top 3.
+             A thumbnail shows when the paper has a figure in pub_links.yml, matched by
+             DOI, the same way the Publications page does it. {%- endcomment -%}
           {%- assign recent = site.data.publications -%}
           {%- for pub in recent limit:3 -%}
-          <div class="pub">
-            <p class="pub__title">
-              {%- if pub.doi -%}<a href="{{ pub.doi }}">{{ pub.title }}</a>{%- else -%}{{ pub.title }}{%- endif -%}
-            </p>
-            <p class="pub__meta">{{ pub.authors }} · <span class="pub__venue">{{ pub.venue }}</span> · {{ pub.year }}</p>
+          {%- assign rich = "" -%}
+          {%- if pub.doi -%}{%- assign rich = site.data.pub_links | where_exp: "x", "x.doi and pub.doi contains x.doi" | first -%}{%- endif -%}
+          <div class="pub{% if rich.image %} pub--rich{% endif %}">
+            {%- if rich.image %}<img class="pub__thumb" src="{{ rich.image | relative_url }}" alt="Figure from “{{ pub.title }}”" loading="lazy">{% endif -%}
+            <div class="pub__main">
+              <p class="pub__title">
+                {%- if pub.doi -%}<a href="{{ pub.doi }}">{{ pub.title }}</a>{%- else -%}{{ pub.title }}{%- endif -%}
+              </p>
+              <p class="pub__meta">{{ pub.authors }} · <span class="pub__venue">{{ pub.venue }}</span> · {{ pub.year }}</p>
+            </div>
           </div>
           {%- endfor -%}
         </div>
@@ -192,7 +245,7 @@ description: "The BIRD Lab at UC Davis uncovers fundamental principles of avian 
 
 <!-- News + CTA -->
 <section class="section section--tint">
-  <div class="container grid" style="grid-template-columns:1.3fr 1fr; gap:clamp(1.5rem,4vw,3rem); align-items:stretch">
+  <div class="container home-news-row">
     <div class="home-news">
       <h2 class="eyebrow">Latest news</h2>
       {%- comment -%} Same month-grouped timeline as the News page; capped height, scroll for older. {%- endcomment -%}
@@ -217,7 +270,7 @@ description: "The BIRD Lab at UC Davis uncovers fundamental principles of avian 
         </div>
       </div>
     </div>
-    <a class="home-photo" href="{{ '/people/' | relative_url }}" style="align-self:start">
+    <a class="home-photo u-self-start" href="{{ '/people/' | relative_url }}">
       <img src="{{ '/assets/img/lab/students-CALIopening-2026.jpg' | relative_url }}" alt="The BIRD Lab team at the CALI flight hall, 2026" loading="lazy">
       <span class="home-photo__cap">The BIRD Lab, 2026 &middot; Meet the Team &rarr;</span>
     </a>
@@ -228,7 +281,7 @@ description: "The BIRD Lab at UC Davis uncovers fundamental principles of avian 
 <section class="section">
   <div class="container center partners">
     <h2 class="eyebrow">Supported by</h2>
-    <div class="partners-grid partners-grid--lg" style="margin-top:1.5rem">
+    <div class="partners-grid partners-grid--lg u-mt-15">
       {%- for f in site.data.funders -%}
       <a class="partner" href="{{ f.url }}"{% if f.url contains '://' %} rel="noopener"{% endif %}>
         {%- if f.logo -%}
@@ -240,7 +293,7 @@ description: "The BIRD Lab at UC Davis uncovers fundamental principles of avian 
       </a>
       {%- endfor -%}
     </div>
-    <p style="margin-top:1.4rem"><a href="{{ '/people/#affiliates' | relative_url }}">Meet our collaborators &rarr;</a></p>
+    <p class="u-mt-14"><a href="{{ '/people/#affiliates' | relative_url }}">Meet our collaborators &rarr;</a></p>
   </div>
 </section>
 

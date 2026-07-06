@@ -1,0 +1,31 @@
+{%- comment -%}
+  Renders the lab operations roles from _data/roles.yml: an at-a-glance table
+  followed by one card per role (name, purpose, owns, authority). Edit the data
+  file, not this template, to add, retire, or change a role. Detailed routines
+  and handoff checklists live in the member portal, not here.
+{%- endcomment -%}
+{%- assign roles = site.data.roles.roles -%}
+
+<div class="roles-map">
+<table>
+  <thead><tr><th>Role</th><th>What they keep on track</th></tr></thead>
+  <tbody>
+  {%- for r in roles -%}
+    <tr><td>{{ r.name }}</td><td>{{ r.tagline }}</td></tr>
+  {%- endfor -%}
+  </tbody>
+</table>
+</div>
+
+{%- for r in roles -%}
+<div class="role-card">
+  <div class="role-card__side">
+    <h2 id="{{ r.name | slugify }}">{{ r.name }}</h2>
+    <p>{{ r.purpose }}</p>
+  </div>
+  <div class="role-card__main">
+    <p><strong>Owns</strong> {{ r.owns }}</p>
+    <p><strong>Can</strong> {{ r.can }}</p>
+  </div>
+</div>
+{%- endfor -%}

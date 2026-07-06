@@ -1,11 +1,11 @@
 # ─────────────────────────────────────────────────────────────
-#  SCENES FROM THE LAB — candid/storytelling photos.
+#  SCENES FROM THE LAB, candid/storytelling photos.
 #  Each scene renders ONLY when ready: true, so the build never points at a
 #  missing image. Workflow:
 #    1. Put the original in  assets/img/lab/_raw/  (name it raptor-hall / outreach
 #       / wind-tunnel) and run  bash scripts/apply-images.sh
 #    2. Flip ready: true here.
-#  Captions are in the lab's voice — edit freely; keep them short.
+#  Captions are in the lab's voice, edit freely; keep them short.
 # ─────────────────────────────────────────────────────────────
 
 scenes:

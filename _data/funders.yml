@@ -1,5 +1,5 @@
 # ─────────────────────────────────────────────────────────────
-#  FUNDERS — shown in the "Supported by" band on the home page.
+#  FUNDERS, shown in the "Supported by" band on the home page.
 #
 #  To show a logo: drop the image in assets/img/partners/ and set `logo:`
 #  to its path (uncomment the line). Without a logo, a clean wordmark is

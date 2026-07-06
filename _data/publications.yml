@@ -1,15 +1,16 @@
 # ────────────────────────────────────────────────────────────
-#  PUBLICATIONS — peer-reviewed journal articles
+#  PUBLICATIONS, journal articles and DOI-bearing conference papers
 #
-#  ⚙️  THIS FILE IS AUTO-MANAGED by scripts/update_publications.py.
+#  THIS FILE IS AUTO-MANAGED by scripts/update_publications.py.
 #  The "Update publications" GitHub Action opens a pull request when new works
 #  appear on OpenAlex for the lab's ORCID. Review and merge it. You may also
 #  hand-edit any entry to fix a detail; future runs preserve existing DOIs.
-#  Conference papers/posters/talks live in publications_manual.yml.
+#  Anything with a DOI syncs here; conference talks and posters WITHOUT a DOI
+#  live in publications_manual.yml.
 #
 #  Fields: title, authors, venue, year, date (YYYY-MM-DD), type, doi (URL)
 #  `date` is used to sort within a year (the page still groups by `year`).
-#  Keep newest first — this file is written sorted by date, newest first.
+#  Keep newest first: this file is written sorted by date, newest first.
 # ────────────────────────────────────────────────────────────
 
 - title: "Tuning for feather loss: wing–tail kinematic adjustments of a moulting red-tailed hawk during perching flight"
@@ -69,7 +70,7 @@
   doi: "https://doi.org/10.1111/geb.70033"
 
 - title: "Distributed Pressure Sensing for Analyzing Aerodynamic Characteristics in Avian-Like Formation Flight"
-  authors: "H. Zhu, K. Bordner, R. J. Bomphrey, J. R. Usherwood, K. Haughn, C. Harvey"
+  authors: "H. Zhu, K. Bordner, R. J. Bomphrey, J. R. Usherwood, K. Haughn, C. Harvey (also NCAS and GRC poster)"
   venue: "AIAA SciTech Forum"
   year: 2025
   date: "2025-01-03"
@@ -195,9 +196,3 @@
   date: "2019-01-01"
   type: journal
   doi: "https://doi.org/10.1098/rsif.2018.0641"
-
-- title: "Pitch Control Effectiveness of the Avian Elbow and Wrist via a Numerical Lifting Line Analysis"
-  authors: "C. Harvey, V. B. Baliga, D. L. Altshuler, D. J. Inman"
-  venue: "AIAA Scitech 2019 Forum"
-  year: 2019
-  type: conference

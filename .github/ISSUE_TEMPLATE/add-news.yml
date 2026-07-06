@@ -1,5 +1,5 @@
 name: "📣 Add a news milestone"
-description: A lab milestone for the News timeline — an award, talk, paper, funding, defense, new member, travel, etc.
+description: A lab milestone for the News timeline, an award, talk, paper, funding, defense, new member, travel, etc.
 title: "[News] "
 labels: ["website-update", "news"]
 body:

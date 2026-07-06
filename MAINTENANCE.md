@@ -1,6 +1,6 @@
 # Maintaining the BIRD Lab website
 
-Everything you need to keep the site current and healthy — written so any lab
+Everything you need to keep the site current and healthy: written so any lab
 member can do it, no coding required.
 
 **How the site works in one sentence:** almost everything on the site is filled
@@ -20,26 +20,23 @@ Do these once a month. None of them require the command line.
 1. **Merge the publications update.** On the 1st, a bot checks ORCID for new
    journal articles and opens a **pull request**. Open the **Pull requests** tab,
    review the new entry (title, authors, venue, DOI), fix anything, and **Merge**.
-   No PR that month just means no new papers — that's normal.
-2. **Add any new press.** For each new article about the lab, add a block to
-   `_data/press.yml` — or let the helper do it: run
-   `python scripts/add_press.py "<url>" --doi <doi> --featured`. It reads the outlet,
-   headline, and author from the page, downloads the lead image (only with `--featured`),
-   and prints a ready-to-paste entry (add `--append` to insert it for you). If the story
-   is about a specific paper, include that paper's `doi:` — it then shows up automatically
-   as the "In the news" badge on the Publications page. (Template + script in
-   CONTENT-GUIDE → *Add press coverage*.)
+   No PR that month just means no new papers: that's normal.
+2. **Add any new press** (~2 min each). Run the helper:
+   `python scripts/add_press.py "<url>" --doi <doi> --featured`: it reads the
+   outlet, headline, and author, downloads the lead image (only with `--featured`),
+   and prints a paste-ready block (add `--append` to insert it for you). Include the
+   paper's `doi:` and the story shows up as the "In the news" badge on Publications.
+   Prefer to do it by hand? Template and all flags are in CONTENT-GUIDE → *Add press
+   coverage*.
 3. **Add notable milestones.** Awards, talks, funding, new members, graduations →
    add a one-line entry to the top of the current year in `_data/updates.yml`.
    Member names link themselves automatically.
-4. **Update People.** Add new members, and change anyone's `role:` if they've been
-   promoted (the bird badge updates itself). To retire someone, **cut their whole block
-   from `groups:` and paste it under `alumni:`, then add a `now:` line** — their `start:`
-   (year joined) and any `linkedin:` carry over automatically, and a LinkedIn icon appears
-   beside their name in the alumni table.
+4. **Update People** (`_data/people.yml`):
+   - **Add** a new member, or **promote** someone by changing their `role:` (the bird badge updates itself).
+   - **Retire** someone: cut their whole block from `groups:` and paste it under `alumni:`, then add a `now:` line. Their `start:` (year joined) and any `linkedin:` carry over, and a LinkedIn icon appears beside their name in the alumni table.
 5. **Confirm the Join page** hiring status still reads correctly (`join.md`).
 6. **Glance at the Actions tab.** Every run should have a green ✓. A red ✗ means a
-   build failed — see *If something breaks* below.
+   build failed: see *If something breaks* below.
 7. **(Optional) enrich a new paper.** When a paper's data/code/figure are ready,
    add them in `_data/pub_links.yml` (see *Publications* below).
 
@@ -48,7 +45,7 @@ Do these once a month. None of them require the command line.
 ## How to publish a change
 
 If you edit on **github.com** (the ✏️ pencil on any file): just click **Commit
-changes**. Done — the site rebuilds itself.
+changes**. Done: the site rebuilds itself.
 
 If you edit **locally in RStudio**: in the **Git** pane, **Pull → tick the changed
 files → Commit (with a message) → Push**. Full setup and troubleshooting is in
@@ -59,7 +56,7 @@ files → Commit (with a message) → Push**. Full setup and troubleshooting is 
 > in five minutes, deployments start to **queue up and stall**. Instead, make all
 > your edits, push **once**, and wait for the green ✓ on the **deploy** step
 > before pushing again. If a deploy ever sits on "queued" and times out, that's
-> the cause — wait about an hour and run it once.
+> the cause: wait about an hour and run it once.
 
 ---
 
@@ -81,6 +78,8 @@ Each is a small edit to one file; full templates are in
 | Partner organizations (home "in partnership with") | `_data/collaborators.yml` |
 | Honors & "featured in" media | `_data/recognition.yml` |
 | A Lab Guide page | the matching file in `_guide/` |
+| A lab operations role (add / edit / retire) | `_data/roles.yml` |
+| Mark a guide page reviewed (no edits needed) | set `reviewed:` in its front matter to today |
 | The top menu | `_data/navigation.yml` |
 | Site title, URLs, portal link, PI links, analytics | `_config.yml` |
 
@@ -107,11 +106,11 @@ request adding any new articles to `_data/publications.yml`. You review and merg
   publication `date`); it never overwrites text you've edited, so your corrections are safe.
 - **Ordering by month:** each entry stores a `date:` (`YYYY-MM-DD`) so the list sorts
   correctly *within* a year, not just by year. The sync backfills this onto older entries
-  the next time it runs — to update them right now, run
+  the next time it runs: to update them right now, run
   `python scripts/update_publications.py` locally and commit the result.
 - **Fix a wrong author/venue:** edit the entry in `_data/publications.yml`
   directly. Future syncs keep your version (they match on DOI).
-- **Conference papers, posters, talks, blogs:** OpenAlex doesn't index these —
+- **Conference papers, posters, talks, blogs:** OpenAlex doesn't index these:
   add them by hand in `_data/publications_manual.yml`.
 
 **Data, code, and figures** for a paper live in `_data/pub_links.yml`, matched to
@@ -133,22 +132,22 @@ this the moment a paper is accepted.
 
 ## Occasional / yearly
 
-- Rotate the **Join** page hiring status when openings change.
-- Review **alumni** destinations and add where people landed.
-- Refresh **photos** and the lab **group photo** as the team changes.
-- Confirm **funders** and any external links (guides, forms) still work.
-- Merge Dependabot's **dependency-bump** PRs when convenient (they clear
-  deprecation warnings). Because `main` is protected, merge them yourself — you're
-  on the bypass list — one at a time.
+- **When openings change:** rotate the **Join** page hiring status.
+- **Each term / as people move on:** review **alumni** destinations and add where people landed.
+- **As the team changes:** refresh **photos** and the lab **group photo**.
+- **Yearly:** confirm **funders** and any external links (guides, forms) still work. (The [guide-link-check Action](.github/workflows/guide-link-check.yml) already sweeps the lab guide's external links once a year and files an issue for any that break.)
+- **When convenient:** merge Dependabot's **dependency-bump** PRs (they clear
+  deprecation warnings). Because `main` is protected, merge them yourself; you're
+  on the bypass list. Do them one at a time.
 
 ---
 
 ## Keeping it accessible (when you edit)
 
-- **Don't skip heading levels** — use `##` then `###`, never jump `##` → `####`.
-- **Write real link text** — "see the [funding guide](…)", not "click [here](…)".
+- **Don't skip heading levels**: use `##` then `###`, never jump `##` → `####`.
+- **Write real link text**: "see the [funding guide](…)", not "click [here](…)".
 - **Every informative image needs `alt` text;** decorative images get empty `alt`.
-- **Don't hard-code text colors** — the theme already meets AA contrast. The
+- **Don't hard-code text colors**: the theme already meets AA contrast. The
   palette lives in `assets/css/overrides.css`; if you change a color, re-check it
   with the [WebAIM Contrast Checker](https://webaim.org/resources/contrastchecker/)
   (aim for 4.5:1 for body text). The **Site checks** Action re-tests links,
@@ -159,7 +158,7 @@ this the moment a paper is accepted.
 ## If something breaks
 
 **A build failed (red ✗ in Actions).** Open the failed run and read the last red
-lines. The usual cause is a YAML typo — a missing space after a colon, or a tab
+lines. The usual cause is a YAML typo: a missing space after a colon, or a tab
 instead of spaces. Paste the file into [yamllint.com](https://www.yamllint.com/)
 to find the line. YAML uses **two spaces** to indent, never tabs.
 
@@ -173,9 +172,9 @@ above). Stop pushing, wait about an hour, then trigger **one** deploy
 last good deploy in the meantime.
 
 **A page 404s.** Permalinks come from the file location. If a `_guide/` file was
-renamed, its URL changed — update links to it.
+renamed, its URL changed: update links to it.
 
-**A Dependabot PR won't merge ("Cannot update this protected ref").** Expected —
+**A Dependabot PR won't merge ("Cannot update this protected ref").** Expected:
 `main` is protected. Merge it yourself (you're on the bypass list); if needed,
 tick "Merge without waiting for requirements to be met."
 
@@ -187,7 +186,7 @@ matching `_data/*.yml` file using the cheat-sheet in
 
 ## Built to last
 
-- **It's data-driven.** New students maintain it by editing text files — point
+- **It's data-driven.** New students maintain it by editing text files: point
   them at [CONTENT-GUIDE.md](CONTENT-GUIDE.md) and this page. Nothing here needs a
   web developer.
 - **Some numbers count themselves.** The home-page "Researchers" and "Publications"

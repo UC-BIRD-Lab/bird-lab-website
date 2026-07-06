@@ -7,7 +7,7 @@ There are **three ways** to get an update in, from least to most technical.
 
 ---
 
-## 1. The easy way — submit a form (no coding, anyone in the lab)
+## 1. The easy way: submit a form (no coding, anyone in the lab)
 
 Go to the repo's **Issues → New issue**, pick the matching form, fill it in, submit:
 
@@ -17,19 +17,19 @@ Go to the repo's **Issues → New issue**, pick the matching form, fill it in, s
 - 📰 **Add press coverage**
 
 That's it. The submission lands as a tidy GitHub issue for a maintainer to apply.
-You only need a free GitHub account. (Journal articles aren't here — they update
+You only need a free GitHub account. (Journal articles aren't here: they update
 themselves from OpenAlex.)
 
-## 2. The direct way — edit the file (a little GitHub comfort)
+## 2. The direct way: edit the file (a little GitHub comfort)
 
 Edit the relevant `_data/*.yml` file on github.com (pencil icon ✏️), then
 **Commit → Propose changes → open a pull request**. The exact formats are in
 [CONTENT-GUIDE.md](CONTENT-GUIDE.md). A check runs automatically (see below); a
 maintainer reviews and merges. The site rebuilds itself.
 
-## 3. The maintainer way — applying a submission
+## 3. The maintainer way: applying a submission
 
-A maintainer (the PI **or a delegate** — see below) turns an issue into a commit.
+A maintainer (the PI **or a delegate**: see below) turns an issue into a commit.
 This takes ~30 seconds with the cheat-sheet below: open the file, paste the block
 at the **top** of the list, fill in the submitted values, commit.
 
@@ -39,21 +39,21 @@ at the **top** of the list, fill in the submitted values, commit.
 
 **New member → `_data/people.yml`** (add under the right group's `members:`)
 ```yaml
-      - name: Jordan Rivera
+      - name: Jane Doe
         role: PhD Researcher          # exactly as submitted; sets the bird
         start: 2026
         pronouns: they/them
         field: "Mechanical & Aerospace Engineering"
-        email: jrivera@ucdavis.edu
-        linkedin: https://www.linkedin.com/in/jordan-rivera
+        email: jdoe@ucdavis.edu
+        linkedin: https://www.linkedin.com/in/jane-doe
         note: One short line about their project.
-        # photo: /assets/img/people/jordan-rivera.jpg   # after adding the image
+        # photo: /assets/img/people/jane-doe.jpg   # after adding the image
 ```
 
 **Conference item → `_data/publications_manual.yml`** (top of `conference:`)
 ```yaml
   - title: "Exact title"
-    authors: "K. Bordner, C. Harvey"
+    authors: "J. Doe, C. Harvey"
     venue: "AIAA SciTech Forum, Orlando, FL"
     year: 2026
     type: conference
@@ -80,14 +80,14 @@ After committing, close the issue with a note like "Live on the next build 👍"
 ## Delegate it: appoint a "web steward"
 
 You do not have to be the maintainer. Give **one or two trusted lab members**
-(rotate yearly — a senior student is ideal) the ability to merge:
+(rotate yearly: a senior student is ideal) the ability to merge:
 
 1. On GitHub: **Settings → Collaborators** (or add them to a team) with **Write**
    access.
 2. They handle steps 2–3 above; you only step in for big changes.
 
 Because every change goes through a pull request and the automated checks, a
-steward can't accidentally break the live site — the worst case is a PR that
+steward can't accidentally break the live site: the worst case is a PR that
 fails its checks and doesn't get merged.
 
 ## What protects the site automatically
@@ -95,7 +95,7 @@ fails its checks and doesn't get merged.
 - **`site-checks.yml`** builds every pull request and flags broken links/images
   and accessibility issues before anything merges.
 - **`update-publications.yml`** opens a monthly PR with new journal articles from
-  OpenAlex — just review and merge.
+  OpenAlex: just review and merge.
 - **Dependabot** keeps dependencies current with small PRs.
 
 ## The one formatting rule

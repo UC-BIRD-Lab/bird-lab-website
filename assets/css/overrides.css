@@ -28,9 +28,14 @@
    grey, and Firefox halves the opacity) so search fields meet WCAG AA (5.9:1). */
 ::placeholder { color: var(--c-muted); opacity: 1; }
 
+/* On-dark text/controls. Kept here in the palette (not inline in templates) so
+   contrast stays centrally controlled. Use over the hero, field-band, and
+   facility flagship, which all sit on a dark navy wash. */
+.eyebrow.eyebrow--on-dark { color: #bfe0f4; }  /* light sky, AA on the navy wash; two classes so it beats the later .eyebrow color rule */
+.btn--on-dark     { color: #fff; border-color: rgba(255,255,255,.6); }
+
 /* Hero + dark sections retuned to the logo navy→slate ramp */
 .hero { background: linear-gradient(158deg, #11203f 0%, #2c4a72 62%, #4f7094 128%); }
-.section--navy { background: var(--c-navy); }
 .wing .accent { stroke: #b3c1d0; }
 .hero .lead { color: #dbe6f1; }
 .hero { position: relative; overflow: hidden; }
@@ -189,6 +194,9 @@
 
 /* Publications — hand-curated extras (figure thumbnail + data/code chips) */
 .pub--rich { display: flex; gap: 1rem; align-items: flex-start; }
+/* The search hides non-matches with the [hidden] attribute; this must beat
+   .pub--rich's display:flex, or thumbnailed papers stay visible when filtered. */
+.pub[hidden] { display: none; }
 .pub__thumb { width: 108px; height: 72px; object-fit: cover; border-radius: 8px; border: 1px solid var(--c-line); flex: none; background: var(--c-sky-2); }
 .pub__main { flex: 1 1 auto; min-width: 0; }
 .pub__extras { margin-top: .45rem; display: flex; gap: .5rem; flex-wrap: wrap; }
@@ -223,6 +231,259 @@
   text-underline-offset: 3px;
 }
 
+/* Guide content: slightly narrower measure keeps lines readable and leaves
+   room in the right margin for margin notes on wide screens. */
+.wiki-content { max-width: 66ch; }
+
+/* Subheadings: base CSS sizes h3 the same as h2, so shrink h3 inside guide
+   content to make the hierarchy legible. */
+.wiki-content h3 { font-size: var(--step-1); margin-top: 1.6rem; }
+
+/* "On this page" sits in a tinted card so it reads as distinct from the plain
+   guide-page navigation below it. */
+.wiki-toc {
+  background: var(--c-sky-2);
+  border: 1px solid var(--c-line);
+  border-radius: var(--radius-sm);
+  padding: .7rem .85rem .8rem;
+  margin-bottom: 1.4rem;
+}
+.wiki-toc .wiki-side__label { margin-top: 0; }
+
+/* Nested H3 entries in the "On this page" list: indented and lighter so they
+   read as children of their H2. */
+.wiki-toc ul ul { margin: .1rem 0 .4rem .55rem; padding-left: .6rem; border-left: 1px solid var(--c-line); }
+.wiki-toc ul ul a { font-size: .82rem; color: var(--c-muted); padding-top: .18rem; padding-bottom: .18rem; }
+
+/* Let the guide sidebar scroll on its own when it is taller than the viewport,
+   so you don't have to scroll the whole page to reach the bottom of the nav.
+   Desktop only; on mobile the sidebar is static and stacks above the content. */
+@media (min-width: 821px) {
+  .wiki-side {
+    max-height: calc(100vh - var(--header-h) - 2rem);
+    overflow-y: auto; padding-right: .4rem;
+    scrollbar-width: thin; scrollbar-color: transparent transparent;
+  }
+  .wiki-side:hover, .wiki-side:focus-within { scrollbar-color: var(--c-line) transparent; }
+  .wiki-side::-webkit-scrollbar { width: 8px; }
+  .wiki-side::-webkit-scrollbar-track { background: transparent; }
+  .wiki-side::-webkit-scrollbar-thumb { background: transparent; border-radius: 8px; }
+  .wiki-side:hover::-webkit-scrollbar-thumb,
+  .wiki-side:focus-within::-webkit-scrollbar-thumb { background: var(--c-line); }
+}
+
+/* Guide tables: lift the header row so by-role tables scan at a glance. */
+.wiki-content table { margin: 1.2rem 0; }
+.wiki-content thead th {
+  background: var(--c-sky); color: var(--c-navy);
+  font-family: var(--font-display); font-weight: 600;
+}
+/* Channel table: give the "You need" column room, keep "Use" tight so Notes
+   has space. */
+.channel-table td:first-child, .channel-table th:first-child { width: 32%; }
+.channel-table td:nth-child(2), .channel-table th:nth-child(2) { width: 14%; }
+/* Leave notice table: balance the four columns so none gets crushed. Length,
+   notice, and how-to-report stay compact; "Before you go" takes the remainder. */
+.leave-table td:nth-child(1), .leave-table th:nth-child(1) { width: 17%; }
+.leave-table td:nth-child(2), .leave-table th:nth-child(2) { width: 20%; }
+.leave-table td:nth-child(3), .leave-table th:nth-child(3) { width: 21%; }
+/* Safety recurring schedule: keep the cadence column tight. */
+.sched-table td:last-child, .sched-table th:last-child { width: 26%; white-space: nowrap; }
+
+/* Checklist: a plain markdown list tagged {: .checklist} renders each item with
+   an empty check box. The box is drawn in CSS, so non-technical editors just
+   write a normal list and add the class line, the same way the tables work. */
+.checklist { list-style: none; padding-left: 0; }
+.checklist li { position: relative; padding-left: 1.9em; margin-bottom: .4em; }
+.checklist li::before {
+  content: "";
+  position: absolute; left: 0; top: .2em;
+  width: 1.05em; height: 1.05em;
+  border: 2px solid var(--c-blue-600); border-radius: 4px;
+}
+
+/* Start-guide onboarding blocks: welcome panel, first-weeks roadmap, at-a-glance
+   grid, and step cards. Thin HTML wrappers around normal markdown, so editors
+   mostly write markdown; each wrapper appears once (or once per step). */
+.guide-welcome {
+  background: var(--c-navy); color: #fff;
+  border-radius: var(--radius); padding: 1.4rem 1.6rem; margin: 0 0 1.6rem;
+}
+.guide-welcome p { margin: 0; color: #dbe6f1; }
+.guide-welcome .eyebrow { display: block; color: #bfe0f4; margin-bottom: .35rem; }
+.guide-welcome a { color: #bfe0f4; }
+/* Three start-guide block types, three distinct visual roles so the page reads
+   as journey → facts → actions instead of one wall of identical boxes.
+
+   1. Roadmap = the JOURNEY. Numbered phase cards with a top accent and an emoji
+      disc, so the three phases read as an ordered path (the number badge keeps
+      the sequence clear whether the cards sit in a row or stack on mobile). */
+.guide-roadmap {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+  gap: .6rem; margin: 0 0 1.8rem; counter-reset: phase;
+}
+.guide-roadmap > div {
+  position: relative; counter-increment: phase;
+  background: #fff; border: 1px solid var(--c-line);
+  border-top: 3px solid var(--c-blue-500);
+  border-radius: var(--radius-sm); padding: .85rem .95rem;
+}
+.guide-roadmap > div::before {
+  content: counter(phase);
+  position: absolute; top: .6rem; right: .65rem;
+  width: 1.35rem; height: 1.35rem; border-radius: 50%;
+  background: var(--c-navy); color: #fff;
+  font-family: var(--font-body); font-size: .72rem; font-weight: 700;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.guide-roadmap .i {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 2rem; height: 2rem; border-radius: 50%;
+  background: var(--c-sky); font-size: 1.05rem; margin-bottom: .4rem;
+}
+.guide-roadmap .k {
+  display: block; font-size: var(--step--1); text-transform: uppercase;
+  letter-spacing: .09em; font-weight: 700; color: var(--c-blue-700);
+}
+.guide-roadmap .t { display: block; font-weight: 600; color: var(--c-navy); }
+
+/* 2. At a glance = the FACTS. A compact spec sheet: tinted cells with an
+      uppercase label above each value. No borders, so it never competes with
+      the step cards below it. */
+.guide-glance {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: .5rem; margin: .6rem 0 1.6rem;
+}
+.guide-glance > div {
+  background: var(--c-sky-2); border-radius: var(--radius-sm);
+  padding: .75rem .95rem;
+}
+.guide-glance .k {
+  display: block; font-size: var(--step--1); text-transform: uppercase;
+  letter-spacing: .07em; font-weight: 700; color: var(--c-blue-700);
+  margin-bottom: .2rem;
+}
+
+/* 3. Steps = the ACTIONS. White cards on a left rail; the tight stack makes the
+      rails line up into a spine so the numbered steps read as one sequence. */
+.guide-step {
+  background: #fff; border: 1px solid var(--c-line);
+  border-left: 3px solid var(--c-blue-500);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: .9rem 1.1rem; margin: .5rem 0;
+}
+.guide-step > :first-child { margin-top: 0; }
+.guide-step > :last-child { margin-bottom: 0; }
+.guide-step > p:first-child strong { color: var(--c-navy); }
+
+/* Section headers on the start guides: a clear chunking rule, with the phase
+   descriptor as an inline pill instead of a dropped muted line. Scoped with
+   :has(.when) so only start-guide section headers are affected; every other
+   guide page's h2 is untouched. */
+.wiki-content h2:has(.when) {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: .55rem;
+  padding-bottom: .4rem; border-bottom: 2px solid var(--c-line);
+}
+.wiki-content h2 .when {
+  font-family: var(--font-body); font-size: var(--step--1); font-weight: 700;
+  text-transform: uppercase; letter-spacing: .07em; color: var(--c-blue-700);
+  background: var(--c-sky); border-radius: 999px; padding: .12rem .6rem;
+}
+/* Inline info note for the start guides: full-width, in-flow, led by an info
+   glyph. Authored as a normal paragraph tagged {: .guide-info}. */
+.guide-info {
+  background: var(--c-sky-2); border-left: 3px solid var(--c-blue-500);
+  border-radius: var(--radius-sm); padding: .55rem .8rem; margin: .85rem 0 0;
+  font-size: var(--step--1); color: var(--c-ink-soft);
+}
+.guide-info::before { content: "ⓘ  "; color: var(--c-blue-600); font-weight: 700; }
+
+/* Lab operations roles: "at a glance" map tints the role-name column, reusing
+   the AA-verified navy-on-sky pair. Cells stay plain text so non-technical
+   editors just type the word. */
+.roles-map tbody td:first-child {
+  background: var(--c-sky-2); color: var(--c-navy);
+  font-family: var(--font-display); font-weight: 600;
+}
+
+/* Lab operations roles: split two-panel cards. Left panel = identity (role name,
+   purpose, Owns, Can); right panel = cadence deliverables + Avoids/Handoff. The
+   Markdown inside each panel stays plain (heading, paragraphs, table) so editors
+   never touch the layout. Field labels (Owns/Can/Avoids/Handoff) are the leading
+   <strong> of a paragraph; CSS lifts them into small navy captions. */
+.role-card {
+  display: grid;
+  grid-template-columns: 218px 1fr;
+  border: 1px solid var(--c-line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin: 1rem 0 1.25rem;
+}
+.role-card__side {
+  background: var(--c-sky-2);
+  border-right: 1px solid var(--c-line);
+  padding: 1rem 1.15rem;
+}
+.role-card__main { padding: 1rem 1.25rem; }
+.role-card h2 {
+  font-size: var(--step-1);
+  margin: 0 0 .35rem;
+  color: var(--c-navy);
+}
+.role-card__side > p { font-size: var(--step--1); color: var(--c-ink-soft); margin: 0 0 .7rem; }
+.role-card__main > p { font-size: var(--step--1); margin: .7rem 0 0; }
+/* Divider between the deliverables list and the Owns/Can/Avoids/Handoff block. */
+.role-card__main table + p { border-top: 1px solid var(--c-line); margin-top: .9rem; padding-top: .85rem; }
+.role-card p strong:first-child {
+  display: block;
+  font-family: var(--font-display); font-weight: 600;
+  font-size: var(--step--1); color: var(--c-muted);
+}
+/* Deliverables render as a clean "cadence tag + task" list: drop the header,
+   turn the cadence cell into a rounded navy-on-sky tag. */
+.role-card__main table {
+  border-collapse: separate; border-spacing: 0 5px; margin: 0; width: 100%;
+}
+.role-card__main thead { display: none; }
+.role-card__main tbody td { padding: .3rem .55rem; vertical-align: top; font-size: var(--step--1); }
+.role-card__main tbody td:first-child {
+  background: var(--c-sky); color: var(--c-navy);
+  font-family: var(--font-display); font-weight: 600;
+  white-space: nowrap; width: 1%; border-radius: 8px;
+}
+@media (max-width: 640px) {
+  .role-card { grid-template-columns: 1fr; }
+  .role-card__side { border-right: 0; border-bottom: 1px solid var(--c-line); }
+}
+
+/* Margin notes — short asides authored as
+   <aside class="marginnote" markdown="1">…</aside> right after the paragraph
+   they relate to (so screen readers meet them in context). By default they sit
+   inline as a tidy block; on wide screens they float into the right margin to
+   cut scrolling. Nested inside <article>, <aside> is not a landmark, so these
+   don't clutter the landmark list. */
+.marginnote {
+  background: var(--c-sky-2);
+  border-left: 3px solid var(--c-blue-500);
+  border-radius: var(--radius-sm);
+  padding: .7rem .85rem;
+  margin: 1.1rem 0;
+  font-size: var(--step--1);
+  color: var(--c-ink-soft);
+  line-height: 1.45;
+}
+.marginnote > * + * { margin-top: .5rem; }
+.marginnote--warn { background: #fdf8ec; border-left-color: var(--c-gold); }
+.marginnote--stop { background: #fdeeec; border-left-color: #c0392b; }
+@media (min-width: 1200px) {
+  .marginnote {
+    float: right;
+    clear: right;
+    width: 16.5rem;
+    margin: .3rem -18rem 1rem 1.5rem;
+  }
+}
+
 /* ---------- Partners / affiliations strip ---------- */
 .partners { text-align: center; }
 .partners .eyebrow { color: var(--c-blue-700); }
@@ -241,9 +502,9 @@
 
 /* Larger funder logos (home "Supported by" band). Fixed-height logo box centers
    each logo vertically; names then start at the same line across all cards. */
-.partners-grid--lg { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+.partners-grid--lg { grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
 .partners-grid--lg .partner { min-height: 0; padding: 1.4rem 1.2rem; gap: .9rem; justify-content: flex-start; }
-.partners-grid--lg .partner img { height: 96px; max-height: 96px; width: 100%; max-width: 172px; object-fit: contain; }
+.partners-grid--lg .partner img { height: 124px; max-height: 124px; width: 100%; max-width: 220px; object-fit: contain; }
 .partner .pname { font-family: var(--font-display); font-weight: 600; font-size: 1rem; line-height: 1.15; text-align: center; }
 .partner .psub { font-size: var(--step--1); color: var(--c-muted); }
 
@@ -293,10 +554,6 @@
 /* Page-head band — compact, since pages use only eyebrow + title (no subtitle) */
 .page-head { padding-block: clamp(1.5rem, 3.5vw, 2.5rem); }
 .page-head .eyebrow { margin-bottom: .35rem; }
-
-/* Featured logo band (home page) */
-.brand-band { background: var(--c-sky-2); border-block: 1px solid var(--c-line); text-align: center; }
-.brand-band__logo { width: min(340px, 70vw); height: auto; margin: 0 auto; display: block; }
 
 /* Anchor cards (open-science grid, lab-guide hub): make the whole card a link */
 a.card--link { display: flex; flex-direction: column; color: inherit; text-decoration: none; }
@@ -387,6 +644,66 @@ a.card--link h3 { color: var(--c-navy); }
   transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
 }
 .guide-cat-chip:hover, .guide-cat-chip:focus-visible { transform: translateY(-2px); box-shadow: var(--shadow); border-color: var(--c-blue-500); }
+
+/* Lab guide landing — hint text, card CTA, portal note, misconfig banner */
+.guide-hint { font-size: var(--step--1); margin: .5rem 0 0; }
+.card--link .card__more { margin-top: .6rem; color: var(--c-blue-700); font-weight: 600; }
+.guide-note { margin-top: 2.5rem; }
+.guide-start { margin-top: 1.6rem; }
+.guide-start > .muted { margin-top: .3rem; }
+.card--start { border-top: 3px solid var(--c-gold); }
+
+/* Emoji badge on lab-guide index cards: a rounded tinted chip beside the title,
+   using the same icon-left / title-right card-head layout as the home page's
+   research and open-science cards. Decorative, so hidden from screen readers. */
+.card-emoji {
+  flex: none;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 2.6rem; height: 2.6rem;
+  font-size: 1.5rem; line-height: 1;
+  background: var(--c-sky); border: 1px solid var(--c-line); border-radius: 12px;
+  transition: transform .15s ease, border-color .15s ease;
+}
+.card--link:hover .card-emoji { transform: translateY(-2px); border-color: var(--c-blue-500); }
+
+/* Guide index stat band: reuses the home hero's serif-number + uppercase-label
+   pattern, recoloured for a light background (number navy, label muted). */
+.guide-stats { display: flex; gap: 2.5rem; flex-wrap: wrap; margin: 1.6rem 0 .4rem; }
+.guide-stats .num {
+  font-family: var(--font-display); font-size: var(--step-3); font-weight: 600;
+  color: var(--c-navy); display: block; line-height: 1;
+}
+.guide-stats .lbl {
+  font-size: var(--step--1); color: var(--c-muted);
+  text-transform: uppercase; letter-spacing: .08em;
+}
+
+/* Category band heading: give the title room above its card grid. The bands
+   themselves (alternating .section / .section--tint) carry the separation, so
+   no underline is needed here. */
+.guide-cat > .container > h2 { margin: 0 0 1.5rem; }
+
+/* Lab safety: requirement tables + audience badges (colors reuse verified pills). */
+.req-group-label { font-family: var(--font-body); text-transform: uppercase; letter-spacing: .06em; font-size: .75rem; color: var(--c-muted); margin: 1.3rem 0 .3rem; }
+.req-table { width: 100%; border-collapse: collapse; margin: .3rem 0 1rem; }
+.req-table td { padding: .55rem .7rem; border-bottom: 1px solid var(--c-line); vertical-align: top; font-size: .95rem; }
+.req-table td:last-child { text-align: right; white-space: nowrap; width: 1%; }
+.req-note { display: block; color: var(--c-muted); font-size: var(--step--1); margin-top: .15rem; }
+.aud { display: inline-block; font-family: var(--font-body); font-weight: 600; font-size: .72rem; text-transform: uppercase; letter-spacing: .03em; padding: .18rem .55rem; border-radius: 999px; white-space: nowrap; }
+.aud--base { background: var(--c-sky); color: var(--c-blue-700); }
+.aud--care { background: #fdf8ec; color: #8a6d1f; }
+.aud--addon { background: var(--c-sky-2); color: var(--c-ink-soft); border: 1px solid var(--c-line); }
+.note--warn { background: #fdf8ec; border-color: var(--c-gold); border-left: 3px solid var(--c-gold); }
+.note--warn code { background: #fff; padding: .05em .35em; border-radius: 4px; }
+
+/* Lab guide — "needs review" band (shown by _includes/guide-review-banner.html
+   when a page hasn't been reviewed or edited within the past year). */
+.guide-stale {
+  background: #fdf8ec; border: 1px solid var(--c-line); border-left: 3px solid var(--c-gold);
+  border-radius: var(--radius); padding: .8rem 1.1rem; margin: 0 0 1.5rem;
+  font-size: var(--step--1); color: var(--c-ink);
+}
+.guide-stale p { margin: 0; }
 
 /* Lab guide — fellowships table (framed, with level pills + preview toggle) */
 .fund-table-wrap {
@@ -599,9 +916,9 @@ a.card--link h3 { color: var(--c-navy); }
 
 /* Home: partner-organization tiles ("In partnership with") */
 .partner-orgs { display: flex; flex-wrap: wrap; justify-content: center; gap: clamp(1.2rem, 4vw, 2.6rem); margin-top: 1.6rem; }
-.partner-org { display: flex; flex-direction: column; align-items: center; gap: .55rem; width: 160px; text-decoration: none; color: var(--c-navy); }
+.partner-org { display: flex; flex-direction: column; align-items: center; gap: .55rem; width: 188px; text-decoration: none; color: var(--c-navy); }
 .partner-org img {
-  width: 88px; height: 88px; border-radius: 50%; object-fit: cover; background: #fff;
+  width: 120px; height: 120px; border-radius: 50%; object-fit: cover; background: #fff;
   border: 1px solid var(--c-line); box-shadow: var(--shadow);
   transition: transform .15s ease, box-shadow .15s ease;
 }
@@ -613,24 +930,19 @@ a.card--link h3 { color: var(--c-navy); }
 .section-head { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem; }
 .section-head h2 { margin: 0; }
 
-/* Home "From the lab" — scannable mini-timeline */
-.mini-timeline { list-style: none; margin: 1.1rem 0 0; padding: 0 0 0 1.3rem; border-left: 2px solid var(--c-line); }
-.mini-timeline li { position: relative; padding: 0 0 1rem 0; }
-.mini-timeline li:last-child { padding-bottom: 0; }
-.mini-timeline li::before {
-  content: ""; position: absolute; left: calc(-1.3rem - 5px); top: .3rem;
-  width: 9px; height: 9px; border-radius: 50%; background: var(--c-blue-600); box-shadow: 0 0 0 3px var(--c-sky-2);
+/* Home news + team-photo row. Two columns on desktop; on mobile it stacks and
+   the team photo moves above the news scroll (order:-1). */
+.home-news-row { display: grid; grid-template-columns: 1.3fr 1fr; gap: clamp(1.5rem, 4vw, 3rem); align-items: stretch; }
+@media (max-width: 820px) {
+  .home-news-row { grid-template-columns: 1fr; }
+  .home-news-row .home-photo { order: -1; }
 }
-.mt-date { display: block; font-size: .7rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--c-blue-700); }
-.mt-text { display: block; font-size: var(--step--1); line-height: 1.45; margin-top: .12rem; }
-/* Cap the home news list at a comfortable height; scroll for older items */
 /* Home news column: fill to the height of the photo beside it, then scroll */
 .home-news { display: flex; flex-direction: column; min-height: 0; }
 /* flex-basis:0 keeps the (tall) list from inflating the grid row — the photo
    sets the height, and this box fills to it and scrolls. */
 .mini-scroll { flex: 1 1 0; min-height: 8rem; overflow-y: auto; overflow-x: hidden; padding-left: 6px; margin-top: 1.1rem; }
 @media (max-width: 860px) { .mini-scroll { flex: 0 1 auto; max-height: 60vh; } }
-.mini-scroll .mini-timeline { margin-top: 0; }
 .mini-scroll .news-year:first-child { margin-top: 0; }
 .mini-scroll { scrollbar-width: thin; scrollbar-color: var(--c-blue-500) transparent; }
 .mini-scroll::-webkit-scrollbar { width: 8px; }
@@ -711,9 +1023,8 @@ a.card--link h3 { color: var(--c-navy); }
   border-radius: 50%; background: var(--c-sky); font-size: 1.02rem; line-height: 1;
 }
 .ev-text { flex: 1; font-size: var(--step--1); line-height: 1.5; color: var(--c-ink); }
-/* Base emoji (home "From the lab" mini-timeline: inline, no badge) */
+/* Base emoji sizing for event icons (emitted by the update-icon include). */
 .ev-icon { font-size: 1.05rem; }
-.mt-text .ev-icon { margin-right: .35rem; }
 
 /* PI feature block (home) */
 .pi-feature { display: grid; grid-template-columns: 220px 1fr; gap: clamp(1.4rem,4vw,2.6rem); align-items: start; }
@@ -788,140 +1099,44 @@ a.card--link h3 { color: var(--c-navy); }
 .ev-text a { color: var(--link); text-decoration: underline; text-underline-offset: 2px; }
 .ev-text a:hover { color: var(--link-hover); }
 
-/* Role key / legend */
-.team-section{
-    position:relative;
+/* Role key / legend (People page): sticky header with the bird-taxonomy chips,
+   plus the hover/focus highlight that dims non-matching members (see main.js). */
+.team-section { position: relative; }
+.people-header {
+  position: sticky; top: calc(var(--header-h)); z-index: 20;
+  background: rgba(255,255,255,.96); backdrop-filter: blur(10px);
+  border-bottom: 2px solid var(--c-line); padding: .75rem 0;
 }
-
-.people-header{
-    position:sticky;
-    top:calc(var(--header-h));
-    z-index:20;
-    background:rgba(255,255,255,.96);
-    backdrop-filter:blur(10px);
-    border-bottom:2px solid var(--c-line);
-    padding:.75rem 0;
+.people-header__inner { display: flex; justify-content: space-between; align-items: flex-end; gap: 2rem; }
+.role-key { display: flex; gap: 1.2rem; }
+.role-chip {
+  display: flex; flex-direction: column; align-items: center;
+  min-width: 66px; cursor: pointer; transition: transform .18s ease;
 }
-
-.people-header__inner{
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-end;
-    gap:2rem;
+.role-chip:hover { transform: translateY(-2px); }
+.role-chip .bird { font-size: 1.05rem; margin-bottom: .18rem; }
+.role-chip .role-label { font-size: .62rem; letter-spacing: .1em; font-weight: 700; text-transform: uppercase; color: var(--c-muted); }
+.role-count {
+  font-size: .7rem; font-weight: 700; color: var(--c-blue-700);
+  min-height: .95em;   /* reserve space so the chip doesn't jump */
+  line-height: 1; margin-top: .1rem;
 }
-.role-key{
-    display:flex;
-    gap:1.2rem;
+.role-chip.active .role-label { color: var(--c-blue-700); }
+#team-grid.filtering .person { opacity: .45; transition: opacity .18s ease, transform .18s ease; }
+#team-grid.filtering .person.highlight { opacity: 1; transform: translateY(-4px); }
+@media (max-width: 900px) {
+  .people-header { flex-direction: column; align-items: flex-start; }
+  .role-key {
+    width: 100%; justify-content: center; margin-top: 1rem;
+    flex-wrap: wrap;   /* let the bird chips wrap instead of running off the right edge */
+    gap: .7rem 1rem;
+  }
 }
-
-.role-chip{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    min-width:66px;
-    cursor:pointer;
-    transition:transform .18s ease;
-}
-
-.role-chip:hover{
-    transform:translateY(-2px);
-}
-
-.role-chip .bird{
-    font-size:1.05rem;
-    margin-bottom:.18rem;
-}
-
-.role-chip .role-label{
-    font-size:.62rem;
-    letter-spacing:.1em;
-    font-weight:700;
-    text-transform:uppercase;
-    color:var(--c-muted);
-}
-
-.role-count{
-    font-size:.7rem;
-    font-weight:700;
-    color:var(--c-blue-700);
-    min-height:.95em;          /* reserve space so the chip doesn't jump */
-    line-height:1;
-    margin-top:.1rem;
-}
-
-.role-chip.active .role-label{ color:var(--c-blue-700); }
-
-#team-grid.filtering .person{
-
-    opacity:.45;
-
-    transition:
-        opacity .18s ease,
-        transform .18s ease;
-
-}
-
-#team-grid.filtering .person.highlight{
-
-    opacity:1;
-
-    transform:translateY(-4px);
-
-}
-
-@media (max-width:900px){
-    .people-header{
-        flex-direction:column;
-
-        align-items:flex-start;
-
-    }
-
-    .role-key{
-
-        width:100%;
-
-        justify-content:center;
-
-        margin-top:1rem;
-
-    }
-
-}
-
-.person{
-
-    transition:
-        transform .18s ease,
-        box-shadow .18s ease;
-
-}
-
-.person.highlight{
-
-    transform:translateY(-4px);
-
-}
-
-.role-pip{
-
-    transition:
-        transform .18s ease,
-        box-shadow .18s ease;
-
-}
-
-.role-pip.highlight{
-
-    transform:scale(1.12);
-
-}
-
-.person.highlight .role{
-
-    color:var(--c-blue-700);
-
-}
+.person { transition: transform .18s ease, box-shadow .18s ease; }
+.person.highlight { transform: translateY(-4px); }
+.role-pip { transition: transform .18s ease, box-shadow .18s ease; }
+.role-pip.highlight { transform: scale(1.12); }
+.person.highlight .role { color: var(--c-blue-700); }
 
 /* Cinematic "In the field" band (Home, under hero) */
 /* Full-bleed banner: force viewport width even inside a constrained/padded parent.
@@ -959,7 +1174,7 @@ main { overflow-x: clip; }
 }
 .scene figcaption { margin-top: .55rem; font-size: var(--step--1); color: var(--c-muted); line-height: 1.4; }
 
-/* Lab-culture moment (Join) — compact, floated beside the intro */
+/* Lab-culture moment (Join): compact, floated beside the intro */
 .culture-shot { float: right; width: min(320px, 42%); margin: .2rem 0 1rem 1.8rem; }
 .culture-shot img {
   width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;
@@ -972,26 +1187,295 @@ main { overflow-x: clip; }
 .culture-shot ~ h2 { clear: both; }
 @media (max-width: 640px) { .culture-shot { float: none; width: 100%; margin: 1.4rem 0; } }
 
+/* Join page: the culture photo floats to the full container's right edge, so let
+   the intro text and the openings cards span the full width too (instead of the
+   default readable-width cap). Everything then shares one right edge with the
+   photo. Scoped to Join via the per-page <body> class. */
+.page--join-the-lab .container.prose > * { max-width: none; }
+
 /* Lab group photo band */
 .lab-photo { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 16px; border: 1px solid var(--c-line); box-shadow: var(--shadow); display: block; }
 
 /* In-page anchor jumps land below the sticky header, not under it */
 [id] { scroll-margin-top: calc(var(--header-h) + 1.2rem); }
 
-/* Collapsible alumni list — keeps the full record without a long default page */
-.alumni-details, .press-details { margin-top: 1rem; }
-.alumni-details > summary, .press-details > summary {
+/* Collapsible details — keeps long reference blocks (alumni list, past press,
+   guide code samples and lookup tables) from stretching a page. To collapse
+   something in a guide page, wrap it in
+   <details class="guide-details" markdown="1"> with a <summary>, and keep a
+   blank line before any Markdown inside. */
+.alumni-details, .press-details, .guide-details { margin-top: 1rem; }
+.alumni-details > summary, .press-details > summary, .guide-details > summary {
   cursor: pointer; display: inline-flex; align-items: center; gap: .5rem; width: fit-content;
   font-weight: 650; color: var(--c-navy); padding: .55rem 1rem;
   border: 1px solid var(--c-line); border-radius: 999px; background: var(--c-sky-2);
 }
-.alumni-details > summary:hover, .press-details > summary:hover { border-color: var(--c-blue-500); }
-.alumni-details > summary:focus-visible, .press-details > summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
-.alumni-details > summary::-webkit-details-marker, .press-details > summary::-webkit-details-marker { display: none; }
-.alumni-details > summary::before, .press-details > summary::before { content: "▸"; color: var(--c-blue-600); font-size: .8em; }
-.alumni-details[open] > summary::before, .press-details[open] > summary::before { content: "▾"; }
-.lab-photo--placeholder {
-  aspect-ratio: 16/7; border: 1px dashed var(--c-blue-500); background: var(--c-sky-2);
-  display: flex; align-items: center; justify-content: center; text-align: center;
-  color: var(--c-muted); padding: 1.5rem; border-radius: 16px;
+.alumni-details > summary:hover, .press-details > summary:hover, .guide-details > summary:hover { border-color: var(--c-blue-500); }
+.alumni-details > summary:focus-visible, .press-details > summary:focus-visible, .guide-details > summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.alumni-details > summary::-webkit-details-marker, .press-details > summary::-webkit-details-marker, .guide-details > summary::-webkit-details-marker { display: none; }
+.alumni-details > summary::before, .press-details > summary::before, .guide-details > summary::before { content: "▸"; color: var(--c-blue-600); font-size: .8em; }
+.alumni-details[open] > summary::before, .press-details[open] > summary::before, .guide-details[open] > summary::before { content: "▾"; }
+
+/* Brand palette swatches (Logos & branding guide page). The chip background is
+   the colour being documented, so it stays inline in the markup; every text
+   colour comes from the tokens above so contrast stays centrally controlled. */
+.brand-swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--gap);
+  margin: 1.5rem 0;
+  padding: 0;
+  list-style: none;
 }
+.swatch {
+  border: 1px solid var(--c-line);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--c-paper);
+}
+.swatch__chip {
+  display: block;
+  height: 72px;
+  border-bottom: 1px solid var(--c-line);
+}
+.swatch__body { display: block; padding: .7rem .8rem .85rem; }
+.swatch__name { display: block; font-weight: 600; color: var(--c-ink); }
+.swatch__hex {
+  display: inline-block;
+  margin: .15rem 0 .35rem;
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  color: var(--c-muted);
+  text-transform: uppercase;
+}
+.swatch__use { display: block; font-size: var(--step--1); color: var(--c-muted); }
+
+/* Home "Our research": two aligned columns (What we study | Why it matters)
+   sharing one row style, with a central spine divider. Both columns use the
+   same icon chip + title + one-line format, so the two halves read as a
+   consistent, vertically aligned pair rather than two different components. */
+.research-split {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: clamp(1.8rem, 5vw, 3.5rem); margin-top: 2rem; position: relative;
+}
+/* thin vertical rule between the columns — echoes the bio-informed "spine" */
+@media (min-width: 761px) {
+  .research-split::before {
+    content: ""; position: absolute; top: .3rem; bottom: .3rem; left: 50%;
+    width: 1px; background: var(--c-line); transform: translateX(-50%);
+  }
+}
+.research-col__label {
+  font-family: var(--font-display); font-weight: 600; color: var(--c-navy);
+  font-size: var(--step-1); margin: 0;
+}
+.research-col__label::after {
+  content: ""; display: block; width: 2.2rem; height: 3px; border-radius: 3px;
+  background: var(--c-blue-500); margin-top: .5rem;
+}
+.rlist { list-style: none; padding: 0; margin: 1.1rem 0 0; display: grid; gap: 1.15rem; }
+.rlist__item { display: flex; gap: .85rem; align-items: flex-start; }
+.rlist__icon {
+  flex: none; width: 44px; height: 44px; border-radius: 12px;
+  background: var(--c-sky); display: flex; align-items: center; justify-content: center;
+}
+.rlist__icon img, .rlist__icon svg { width: 26px; height: 26px; }
+.rlist__body { display: block; }
+.rlist__title {
+  display: block; font-family: var(--font-display); font-weight: 600;
+  color: var(--c-navy); font-size: var(--step-0); line-height: 1.25; text-decoration: none;
+}
+a.rlist__title:hover, a.rlist__title:focus-visible { text-decoration: underline; }
+.rlist__line { display: block; margin-top: .25rem; font-size: var(--step--1); color: var(--c-muted); line-height: 1.5; }
+@media (max-width: 760px) { .research-split { grid-template-columns: 1fr; } }
+
+/* ---------- Lab Guide: copyable section-link anchors ----------
+   A small "#" button appended to each guide H2/H3 with an id. Hidden until the
+   heading is hovered or the button is focused, so it never clutters the page but
+   is always keyboard-reachable. Clicking copies the section's deep link. */
+.wiki-content h2, .wiki-content h3 { position: relative; }
+.anchor-link {
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font: inherit;
+  color: var(--c-blue-600);
+  opacity: 0;
+  padding: 0 .35em;
+  margin-left: .1em;
+  line-height: 1;
+  transition: opacity .12s ease;
+}
+.wiki-content h2:hover .anchor-link,
+.wiki-content h3:hover .anchor-link,
+.anchor-link:focus-visible { opacity: 1; }
+.anchor-link:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 3px; }
+.anchor-link.copied { opacity: 1; color: #2e7d32; }
+.anchor-link.copied::after {
+  content: " link copied";
+  font-size: var(--step--1);
+  font-weight: 600;
+}
+/* Touch devices can't hover: keep the anchors visible but faint. */
+@media (hover: none) {
+  .anchor-link { opacity: .5; }
+}
+
+/* ---------- Lab Guide: quiet "improve this page" footer note ----------
+   Deliberately understated so it reads as a page utility, not a content
+   callout: no fill, no colored bar, just small muted text with inline links. */
+.guide-edit {
+  margin: 1.4rem 0 .2rem;
+  font-size: var(--step--1);
+  color: var(--c-muted);
+  line-height: 1.5;
+}
+.guide-edit__icon { margin-right: .3rem; opacity: .8; }
+.guide-edit a {
+  color: var(--c-blue-600);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+.guide-edit a:hover, .guide-edit a:focus-visible {
+  color: var(--c-blue-700);
+  border-bottom-color: currentColor;
+}
+
+/* ---------- Lab Guide sidebar: "Your journey" mini-path ---------- */
+.wiki-journey { margin-top: 1.2rem; }
+.journey--side {
+  list-style: none;
+  padding: 0;
+  margin: .3rem 0 0;
+  counter-reset: journey;
+}
+.journey--side > li {
+  counter-increment: journey;
+  position: relative;
+  padding-left: 1.6rem;
+  margin: 0;
+}
+/* the connecting line of the path */
+.journey--side > li::after {
+  content: "";
+  position: absolute;
+  left: .58rem;
+  top: 1.5rem;
+  bottom: -.15rem;
+  width: 2px;
+  background: var(--c-line);
+}
+.journey--side > li:last-child::after { display: none; }
+.journey--side > li > a {
+  display: block;
+  position: relative;
+  padding: .28rem .4rem .28rem 0;
+  font-size: .85rem;
+  color: var(--c-ink);
+  text-decoration: none;
+  border-radius: 6px;
+}
+.journey--side > li > a::before {
+  content: counter(journey);
+  position: absolute;
+  left: -1.6rem;
+  top: .2rem;
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 50%;
+  background: var(--c-sky);
+  color: var(--c-blue-700);
+  font-size: .68rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+.journey--side > li > a:hover, .journey--side > li > a:focus-visible { color: var(--c-blue-700); text-decoration: underline; }
+.journey--side > li > a:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+/* Lab Guide hub: demoted stat line (was a prominent big-number bar up top) */
+.guide-stats-line { margin-top: .8rem; font-size: var(--step--1); }
+
+/* ---------- Lab Guide hub: two-column top with journey sidebar ---------- */
+.guide-hub-top { display: block; }
+@media (min-width: 900px) {
+  .guide-hub-top {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 16.5rem;
+    gap: 2.5rem;
+    align-items: start;
+  }
+  .guide-hub-top__side { position: sticky; top: calc(var(--header-h) + 1rem); }
+}
+.guide-journey-panel {
+  background: var(--c-sky-2);
+  border: 1px solid var(--c-line);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.2rem 1.2rem;
+  margin-top: 1.5rem;
+}
+@media (min-width: 900px) { .guide-journey-panel { margin-top: 0; } }
+.guide-journey-panel h2 { font-size: var(--step-1); margin: 0 0 .2rem; }
+.guide-journey-panel .muted { font-size: var(--step--1); margin: 0 0 .6rem; }
+
+/* ---------- Lab Guide sidebar: nicer "All guide pages" list ---------- */
+.wiki-nav li a { display: flex; align-items: center; gap: .55rem; }
+.wiki-nav__i {
+  flex: none;
+  width: 1.25rem;
+  text-align: center;
+  font-size: .95rem;
+  line-height: 1;
+  opacity: .9;
+}
+.wiki-nav__t { min-width: 0; }
+/* current page: a subtle left marker plus the existing tint */
+.wiki-nav li a[aria-current="page"] {
+  box-shadow: inset 2px 0 0 var(--c-blue-500);
+  font-weight: 600;
+}
+
+/* ---------- Utilities ----------------------------------------------------
+   Single home for the small spacing/type tweaks that used to live as inline
+   style= on the page templates. Values map to the design scale and tokens, so
+   moving a style here never changes how a page looks. Prefer an existing
+   component class when one fits; reach for a utility only for one-off spacing.
+   Naming: u-mt-NN = margin-top, u-my-NN = margin block (top+bottom),
+   NN is the rem value x10 (12 = 1.2rem); "fluid" = the clamp() page rhythm. */
+.u-fs-sm { font-size: var(--step--1); }
+.u-fs-md { font-size: var(--step-1); }
+.u-fs-lg { font-size: var(--step-2); }
+
+.u-mt-02 { margin-top: .2rem; }
+.u-mt-06 { margin-top: .6rem; }
+.u-mt-09 { margin-top: .9rem; }
+.u-mt-10 { margin-top: 1rem; }
+.u-mt-11 { margin-top: 1.1rem; }
+.u-mt-12 { margin-top: 1.2rem; }
+.u-mt-14 { margin-top: 1.4rem; }
+.u-mt-15 { margin-top: 1.5rem; }
+.u-mt-16 { margin-top: 1.6rem; }
+.u-mt-18 { margin-top: 1.8rem; }
+.u-mt-fluid { margin-top: clamp(2.5rem, 6vw, 4rem); }
+
+.u-my-15 { margin: 1.5rem 0; }
+.u-my-16 { margin: 1.6rem 0; }
+.u-my-30 { margin: 3rem 0; }
+.u-my-32 { margin: 3.2rem 0; }
+.u-my-fluid { margin: clamp(2.5rem, 6vw, 4rem) 0; }
+.u-mrow-24 { margin: 2.4rem 0 1.2rem; }
+.u-mrow-16 { margin: 1.6rem 0 .4rem; }
+
+.u-m0 { margin: 0; }
+.u-mb0 { margin-bottom: 0; }
+.u-mi-auto { margin-inline: auto; }
+.u-self-start { align-self: start; }
+.u-justify-start { justify-content: flex-start; }
+
+.u-pb-30 { padding-block: 3rem; }
+.u-pb-fluid { padding-block: clamp(1.5rem, 3vw, 2.75rem); }
+
+/* Small variant of a button (the "Ask the lead" ghost button on Research). */
+.btn--sm { padding: .4rem .9rem; font-size: var(--step--1); }

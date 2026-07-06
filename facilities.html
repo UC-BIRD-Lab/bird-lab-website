@@ -26,7 +26,7 @@ eyebrow: Where we work
       {%- endif -%}
       <div class="hero__cta">
         {%- if featured.url %}<a class="btn btn--light" href="{{ featured.url }}">{{ featured.url_label | default: "Learn more" }}</a>{% endif -%}
-        <a class="btn btn--ghost" style="color:#fff;border-color:rgba(255,255,255,.6)" href="{{ '/contact/' | relative_url }}">Visit or collaborate</a>
+        <a class="btn btn--ghost btn--on-dark" href="{{ '/contact/' | relative_url }}">Visit or collaborate</a>
       </div>
     </div>
   </div>
@@ -56,7 +56,7 @@ eyebrow: Where we work
 </section>
 {%- endif -%}
 
-<hr class="divider" style="margin:clamp(2.5rem,6vw,4rem) 0">
+<hr class="divider u-my-fluid">
 
 {%- for f in others -%}
 {%- assign flip = forloop.index | modulo: 2 -%}
@@ -88,14 +88,14 @@ eyebrow: Where we work
       </ul>
       {%- endif -%}
       {%- if f.url -%}
-      <p style="margin-top:1.1rem"><a class="btn btn--ghost" href="{{ f.url }}">{{ f.url_label | default: "Learn more" }} &rarr;</a></p>
+      <p class="u-mt-11"><a class="btn btn--ghost" href="{{ f.url }}">{{ f.url_label | default: "Learn more" }} &rarr;</a></p>
       {%- endif -%}
     </div>
   </div>
 </section>
-{%- unless forloop.last %}<hr class="divider" style="margin:clamp(2.5rem,6vw,4rem) 0">{% endunless -%}
+{%- unless forloop.last %}<hr class="divider u-my-fluid">{% endunless -%}
 {%- endfor -%}
 
-<div class="note" style="margin-top:clamp(2.5rem,6vw,4rem)">
-  <p style="margin:0">Interested in collaborating or visiting? <a href="{{ '/contact/' | relative_url }}">Get in touch</a>.</p>
+<div class="note u-mt-fluid">
+  <p class="u-m0">Interested in collaborating or visiting? <a href="{{ '/contact/' | relative_url }}">Get in touch</a>.</p>
 </div>

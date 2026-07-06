@@ -4,4 +4,4 @@ blank_issues_enabled: true
 contact_links:
   - name: Prefer to edit the files yourself?
     url: https://github.com/UC-BIRD-Lab
-    about: "If you're comfortable with GitHub, edit the _data/*.yml files and open a pull request — see CONTENT-GUIDE.md."
+    about: "If you're comfortable with GitHub, edit the _data/*.yml files and open a pull request, see CONTENT-GUIDE.md."

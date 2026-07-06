@@ -3,6 +3,9 @@ title: Code
 category: Research Workflow
 order: 5
 summary: Version control, coding style, documentation, and dependency management.
+keywords: [coding, software, programming, git, version control, python, R, repository, github]
+icon: "💻"
+reviewed: 2026-07-05
 ---
 
 Good software practices make research reproducible, collaborative, and easier to
@@ -24,7 +27,7 @@ A repository should tell the story of a project. Someone unfamiliar with your wo
 should be able to understand what changed simply by reading the commit history.
 
 <div class="callout" markdown="1">
-**Good commit messages describe a logical change—not simply that files changed.**
+**Good commit messages describe a logical change, not simply that files changed.**
 
 ✔ `Add pressure calibration routine`
 
@@ -34,6 +37,13 @@ should be able to understand what changed simply by reading the commit history.
 
 ✘ `Fixed stuff`
 </div>
+
+**Starting a project.** Create the repository in the UC-BIRD-Lab organization
+(for shared work), name it per the conventions below, set permissions, and clone
+it from your IDE (PyCharm: *Get from VCS*; RStudio: *File → New Project → Version
+Control → Git*). A Python and an R project can share one repository. First-time
+Git setup (installing Git and setting your username and email) is in the
+[graduate student start guide]({{ '/lab-guide/graduate-students/' | relative_url }}).
 
 ## Repository organization
 
@@ -51,7 +61,7 @@ Each repository should correspond to a single research project. Repository names
 
 Code is read far more often than it is written.
 
-Write comments that explain **why** something exists—not simply **what** the code
+Write comments that explain **why** something exists, not simply **what** the code
 is doing.
 
 Whenever implementing new methods:
@@ -67,7 +77,7 @@ If a function cannot be summarized in a few sentences, consider simplifying it.
 
 **Plan for publication.**
 
-Most BIRD Lab repositories become public when the associated paper is published. Organize your code from the start as though another researcher will eventually explore it. Clear repository structure, meaningful commit messages, and thoughtful documentation are much easier to maintain than to reconstruct at the end of a project.
+Repositories start private. Most become public when the associated paper is published, released under an open-source license so others can reuse the work. Organize your code from the start as though another researcher will eventually explore it. Clear repository structure, meaningful commit messages, and thoughtful documentation are much easier to maintain than to reconstruct at the end of a project.
 </div>
 
 ## Style

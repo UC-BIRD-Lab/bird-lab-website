@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
-add_press.py — turn a news-article URL into a ready-to-paste _data/press.yml entry.
+add_press.py: turn a news-article URL into a ready-to-paste _data/press.yml entry.
 
 You give it the article URL, (optionally) the DOI of the paper the story covers, and
 whether the story should be "featured". It fetches the page, reads the outlet name,
-headline, and author from the page's own metadata, and — ONLY when --featured is set —
+headline, and author from the page's own metadata, and: ONLY when --featured is set:
 downloads the article's lead image into assets/img/news/ (resized and compressed to the
 site's image budget). It then prints a YAML block you can paste into _data/press.yml under
 the right year. Pass --append to have it inserted for you (comments/formatting preserved).
@@ -21,7 +21,7 @@ Examples:
   python scripts/add_press.py "https://news.site/story" --featured --append
 
 Requires: Python 3.8+ . Pillow is used to resize/compress the image when --featured
-(optional — without it the raw image is saved and you can shrink it later).
+(optional: without it the raw image is saved and you can shrink it later).
 """
 from __future__ import annotations
 import argparse
@@ -141,7 +141,7 @@ def clean_title(title, source):
         return ""
     t = html.unescape(title).strip()
     if source:
-        for sep in (" | ", " – ", " — ", " - ", " • "):
+        for sep in (" | ", " – ", ": ", " - ", " • "):
             suffix = sep + source
             if t.lower().endswith(suffix.lower()):
                 t = t[: -len(suffix)].strip()
@@ -291,7 +291,7 @@ def main(argv=None):
     if page:
         m.feed(page)
     elif args.source and args.title and (args.image or not args.featured):
-        # Site blocked us, but you supplied the essentials by hand — carry on.
+        # Site blocked us, but you supplied the essentials by hand: carry on.
         print("Note: couldn't fetch the page (%s); using the values you passed."
               % fetch_err, file=sys.stderr)
     else:
@@ -332,9 +332,9 @@ def main(argv=None):
 
     warnings = []
     if not title:
-        warnings.append("no headline found — fill in `title:` by hand (or pass --title).")
+        warnings.append("no headline found: fill in `title:` by hand (or pass --title).")
     if not source:
-        warnings.append("no outlet name found — fill in `source:` (or pass --source).")
+        warnings.append("no outlet name found: fill in `source:` (or pass --source).")
 
     if args.featured:
         img_ref = args.image
@@ -344,7 +344,7 @@ def main(argv=None):
             img_url = img_ref or meta.get("og:image") or meta.get("og:image:url") \
                 or meta.get("twitter:image") or meta.get("twitter:image:src")
             if not img_url:
-                warnings.append("featured, but no lead image found — add `image:` by hand "
+                warnings.append("featured, but no lead image found: add `image:` by hand "
                                 "(or pass --image URL).")
             else:
                 slug = slugify((source + "-" + title) if title else args.url)
@@ -354,7 +354,7 @@ def main(argv=None):
                     fields["image"] = rel
                     print("Saved image -> %s (%s)" % (rel, info), file=sys.stderr)
                 except Exception as e:
-                    warnings.append("could not download the image (%s) — add `image:` by hand." % e)
+                    warnings.append("could not download the image (%s): add `image:` by hand." % e)
 
     entry = build_entry(fields)
 

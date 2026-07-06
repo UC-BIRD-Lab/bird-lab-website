@@ -1,5 +1,5 @@
 # ─────────────────────────────────────────────────────────────
-#  RESEARCH — themes (the narrative threads) + a simple project directory.
+#  RESEARCH, themes (the narrative threads) + a simple project directory.
 #
 #  Each project is a small card: a one-sentence blurb, its theme, the lead
 #  (linked to their People entry), and an "ask the lead" email button.
@@ -12,19 +12,22 @@
 themes:
   - id: morphology-kinematics
     title: Morphology & Kinematics
+    short: We quantify how wings, tails, feathers, and joints move to uncover the mechanics of avian flight.
     blurb: >-
       We study and quantify how wings, tails, feathers, and joints move during flight to discover biological principles that affect aerial locomotion.
     why: >-
-      Before a principle can be transferred to an aircraft, you have to measure
-      what birds actually do within quantified uncertainty.
+      You cannot transfer a principle to an aircraft until you have measured
+      what birds actually do, within quantified uncertainty.
   - id: mechanics-dynamics
     title: Mechanics & Dynamics
+    short: We investigate how birds generate aerodynamic and inertial forces to perform agile flight maneuvers.
     blurb: >-
       We investigate how birds adjust aerodynamic and inertial forces and moments to achieve maneuvers across the full spectrum of flight.
     why: >-
-      Understanding functional associations allows design engineers to intentionally and carefully negotiate quantified trade-offs.
+      Flight dynamics balances forces, moments and accelerations. By determining how birds adjust their flight we may identify effective methods to design morphing aircraft.
   - id: sensing-control
     title: Sensing & Control
+    short: We study how animals sense and control flight to inspire adaptive autonomous systems.
     blurb: >-
       We study how animals sense and control flight, asking if an engineered sensory world can encapsulate biological capabilities.
     why: >-
@@ -59,7 +62,6 @@ projects:
       - "10.2514/6.2025-1460"
     contact: lszhu@ucdavis.edu
     theme: sensing-control
-    link: https://arc.aiaa.org/doi/10.2514/6.2025-1460
     image: /assets/img/research/formation.jpg
     blurb: >-
       Distributed pressure sensing that lets an aircraft perceive the
@@ -93,8 +95,6 @@ projects:
       wings, defining the envelope within which morphing control can act.
   - title: Morphing aerodynamics
     lead: Cooper Cook
-    papers:
-      - "10.2514/6.2026-4380"
     contact: ctcook@ucdavis.edu
     theme: mechanics-dynamics
     image: /assets/img/research/morphaero.jpg

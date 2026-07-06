@@ -11,28 +11,76 @@ layout: default
 
 <div class="section">
   <div class="container wiki-layout">
-    <aside class="wiki-side" aria-label="Lab guide navigation">
+    <aside class="wiki-side">
       <label class="visually-hidden" for="wiki-search">Search the lab guide</label>
       <input type="search" id="wiki-search" placeholder="Search the guide…" autocomplete="off">
 
-      {%- assign cats = site.guide | map: "category" | uniq -%}
-      {%- assign order = "Getting Started,Working in the Lab,Research Workflow,Writing & Dissemination,Communication & Culture,Professional Development" | split: "," -%}
-      {%- for cat in order -%}
-        {%- assign pages = site.guide | where: "category", cat | sort: "order" -%}
-        {%- if pages.size > 0 -%}
-        <h4>{{ cat }}</h4>
+      {%- comment -%}
+        "On this page" jumps to the current page's H2s, with its H3s nested
+        beneath. Built from the rendered content (kramdown auto-generates the
+        ids we link to), so there's nothing to hardcode: add an H2 or H3 and it
+        appears here. Assumes plain-text headings, which is how the guide is
+        written. A trailing <span class="when"> badge (the start-guide phase
+        pill) is treated as a badge, not part of the title, so it's stripped
+        here and the TOC shows the section name, not the pill text.
+      {%- endcomment -%}
+      {%- assign h2parts = content | split: '<h2 id="' -%}
+      {%- if h2parts.size > 1 -%}
+      <nav class="wiki-toc" aria-labelledby="wiki-toc-label">
+        <p class="wiki-side__label" id="wiki-toc-label">On this page</p>
         <ul>
-          {%- for p in pages -%}
-          <li><a href="{{ p.url | relative_url }}" {% if p.url == page.url %}aria-current="page"{% endif %}>{{ p.title }}</a></li>
+          {%- for sec in h2parts offset: 1 -%}
+          {%- assign h2_id = sec | split: '"' | first -%}
+          {%- assign h2_text = sec | split: '</h2>' | first | split: '<span' | first | split: '">' | last | strip_html | strip -%}
+          <li><a href="#{{ h2_id }}">{{ h2_text }}</a>
+          {%- assign subs = sec | split: '<h3 id="' -%}
+          {%- if subs.size > 1 -%}
+            <ul>
+            {%- for sub in subs offset: 1 -%}
+            {%- assign h3_id = sub | split: '"' | first -%}
+            {%- assign h3_text = sub | split: '</h3>' | first | split: '<span' | first | split: '">' | last | strip_html | strip -%}
+            <li><a href="#{{ h3_id }}">{{ h3_text }}</a></li>
+            {%- endfor -%}
+            </ul>
+          {%- endif -%}
+          </li>
           {%- endfor -%}
         </ul>
-        {%- endif -%}
-      {%- endfor -%}
+      </nav>
+      {%- endif -%}
+
+      <nav class="wiki-nav" aria-label="All guide pages">
+        {%- assign order = site.guide_order -%}
+        {%- for cat in order -%}
+          {%- assign pages = site.guide | where: "category", cat | sort: "order" -%}
+          {%- if pages.size > 0 -%}
+          <p class="wiki-side__label">{{ cat }}</p>
+          <ul>
+            {%- for p in pages -%}
+            <li data-keywords="{{ p.keywords | join: ' ' | downcase }}"><a href="{{ p.url | relative_url }}" {% if p.url == page.url %}aria-current="page"{% endif %}>{%- if p.icon %}<span class="wiki-nav__i" aria-hidden="true">{{ p.icon }}</span>{% endif -%}<span class="wiki-nav__t">{{ p.title }}</span></a></li>
+            {%- endfor -%}
+          </ul>
+          {%- endif -%}
+        {%- endfor -%}
+      </nav>
     </aside>
 
     <article class="wiki-content">
+      {% include guide-review-banner.html %}
       {{ content }}
       <hr class="divider">
+
+      <p class="guide-edit">
+        <span class="guide-edit__icon" aria-hidden="true">✏️</span>
+        Spot something to improve? Anyone in the lab can edit this guide.
+        <a href="https://github.com/UC-BIRD-Lab/bird-lab-website/edit/main/_guide/{{ page.path | remove: '_guide/' }}">Edit this page</a> ·
+        <a href="https://github.com/UC-BIRD-Lab/bird-lab-website/issues/new/choose">suggest a change</a> ·
+        <a href="https://github.com/UC-BIRD-Lab/bird-lab-website/blob/main/CONTRIBUTING.md">how edits work</a>
+      </p>
+
+      {%- if page.last_modified_at %}
+      <p class="muted">Last updated <time datetime="{{ page.last_modified_at | date_to_xmlschema }}">{{ page.last_modified_at | date: "%B %-d, %Y" }}</time></p>
+      {%- endif %}
       <p class="muted"><a href="{{ '/lab-guide/' | relative_url }}">&larr; Back to Lab Guide overview</a></p>
     </article>
   </div>

@@ -10,8 +10,10 @@ scraping, so it is unsuitable for an automated, reliable pipeline.
 Design choices that make this SAFE to run unattended:
   * The committed YAML is the source of truth. If the API is unreachable or
     returns nothing, we exit WITHOUT modifying the file (never destructive).
-  * We only ADD journal articles whose DOI is not already present, so any manual
-    corrections to existing entries are preserved.
+  * We only ADD works whose DOI is not already present (journal articles and
+    DOI-bearing conference papers), so manual corrections to existing entries are
+    preserved. Conference talks/posters without a DOI are added by hand in
+    publications_manual.yml.
   * We backfill a missing `date` (YYYY-MM-DD) onto existing entries from OpenAlex so
     the list sorts correctly within a year, but never overwrite a date you've set.
   * Corrections / corrigenda / errata are NOT listed as separate papers. We skip them
@@ -20,7 +22,7 @@ Design choices that make this SAFE to run unattended:
   * AIAA works are classified journal-vs-conference by their venue NAME (AIAA
     journals and meeting papers share the 10.2514/ DOI prefix). Anything we can't
     classify is flagged in the run log and LEFT OUT for you to add by hand.
-  * Conference talks/posters *without a DOI* aren't indexed by OpenAlex — add those
+  * Conference talks/posters *without a DOI* aren't indexed by OpenAlex: add those
     by hand in _data/publications_manual.yml.
   * A do-not-list (`exclude:` in publications_manual.yml) drops items OpenAlex returns
     that aren't papers (a profile write-up, a talk indexed like an article). Listed DOIs
@@ -78,17 +80,18 @@ CORRECTION_TITLE_PREFIXES = (
 
 HEADER = """\
 # ────────────────────────────────────────────────────────────
-#  PUBLICATIONS — peer-reviewed journal articles
+#  PUBLICATIONS: journal articles and DOI-bearing conference papers
 #
-#  ⚙️  THIS FILE IS AUTO-MANAGED by scripts/update_publications.py.
+#  THIS FILE IS AUTO-MANAGED by scripts/update_publications.py.
 #  The "Update publications" GitHub Action opens a pull request when new works
 #  appear on OpenAlex for the lab's ORCID. Review and merge it. You may also
 #  hand-edit any entry to fix a detail; future runs preserve existing DOIs.
-#  Conference papers/posters/talks live in publications_manual.yml.
+#  Anything with a DOI syncs here; conference talks and posters WITHOUT a DOI
+#  live in publications_manual.yml.
 #
 #  Fields: title, authors, venue, year, date (YYYY-MM-DD), type, doi (URL)
 #  `date` is used to sort within a year (the page still groups by `year`).
-#  Keep newest first — this file is written sorted by date, newest first.
+#  Keep newest first: this file is written sorted by date, newest first.
 # ────────────────────────────────────────────────────────────
 """
 
@@ -110,7 +113,7 @@ def fetch_works() -> list[dict]:
             req = urllib.request.Request(url, headers={"User-Agent": f"BIRDLab-site ({MAILTO})"})
             with urllib.request.urlopen(req, timeout=30) as resp:
                 data = json.load(resp)
-        except Exception as exc:  # network/JSON/HTTP — fail safe
+        except Exception as exc:  # network/JSON/HTTP: fail safe
             print(f"::warning::OpenAlex fetch failed ({exc}); leaving file unchanged.")
             return []
         works.extend(data.get("results", []))
@@ -175,7 +178,7 @@ def publication_type(source_type: str, source_name: str, doi: str) -> str | None
     """journal | conference | None (None = exclude, or flag for manual handling)."""
     if source_type == "repository":
         return None
-    if doi.startswith("10.2514/"):               # AIAA — shared journal/conference prefix
+    if doi.startswith("10.2514/"):               # AIAA: shared journal/conference prefix
         return aiaa_type(source_name, doi)
     return "journal"
 
@@ -301,7 +304,7 @@ def main() -> int:
     date_by_doi = {norm_doi(w.get("doi")): w["publication_date"]
                    for w in works if w.get("doi") and w.get("publication_date")}
 
-    # Backfill: add a `date` to any existing entry that lacks one (non-destructive —
+    # Backfill: add a `date` to any existing entry that lacks one (non-destructive:
     # we only fill an empty field, never change an existing value).
     backfilled = 0
     for e in existing:
@@ -332,7 +335,7 @@ def main() -> int:
     flagged = [w for w in works if aiaa_flagged(w)]
     if flagged:
         print("Note: %d AIAA work(s) couldn't be typed journal-vs-conference (no clear "
-              "source name). Left out — add by hand to _data/publications.yml and set "
+              "source name). Left out: add by hand to _data/publications.yml and set "
               "`type: journal` or `type: conference` yourself:" % len(flagged))
         for w in flagged:
             print(f"  ? {norm_doi(w.get('doi'))}  {(w.get('title') or '').strip()}")
@@ -343,7 +346,7 @@ def main() -> int:
             print(f"  - {norm_doi(e.get('doi'))}  {e.get('title')}")
 
     if not new and not backfilled and not removed:
-        print("Up to date — no new articles, and every entry already has a date.")
+        print("Up to date: no new articles, and every entry already has a date.")
         return 0
 
     combined = existing + new

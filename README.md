@@ -1,7 +1,7 @@
 # BIRD Lab website
 
 The public website for the **Bio-Informed Research & Design (BIRD) Lab** at UC
-Davis — built as a static [Jekyll](https://jekyllrb.com/) site, hosted free on
+Davis: built as a static [Jekyll](https://jekyllrb.com/) site, hosted free on
 **GitHub Pages**, and designed so that non-technical lab members can keep it
 current by editing plain text files.
 
@@ -26,7 +26,7 @@ You only need this to preview changes locally. Editing through GitHub's website
 This avoids compiling Ruby gems on your Mac.
 
 **Native Ruby** (if you prefer): `bundle install`, then `bundle exec jekyll serve`.
-On recent macOS this can fail on the `eventmachine` gem — see the fix in
+On recent macOS this can fail on the `eventmachine` gem: see the fix in
 [DEPLOYMENT.md](DEPLOYMENT.md#troubleshooting-native-bundle-install-on-macos).
 
 ---
@@ -69,41 +69,22 @@ day-to-day updates without touching the design.
 
 ---
 
-## The four planning questions, answered
+## How it's built (in brief)
 
-### 1 · Content inventory
-The current site/lab-guide content was catalogued and mapped to its new home.
-Full table in [ARCHITECTURE.md → Content inventory](ARCHITECTURE.md#1-content-inventory).
-In short: public "who we are / what we do / get involved" pages became the main
-nav; the how-to lab-guide pages became a searchable **wiki**; explicitly internal
-pages were **excluded** and point to the private Notion portal.
+Static **Jekyll** site on **GitHub Pages**: content in Markdown + YAML, no runtime
+services, three GitHub Actions (deploy · publications sync · link + accessibility
+check) plus Dependabot. Journal articles and DOI-bearing conference papers sync
+monthly from **OpenAlex** by the PI's **ORCID** and open a pull request for
+review; DOI-less talks and posters and everything else are hand-curated in
+`_data/`. The design prioritizes **maintainability → accessibility (WCAG 2.1
+AA) → scientific communication → automation → design**, in that order, so where
+they traded off the higher priority won (e.g. plain editable data files over a
+headless CMS).
 
-### 2 · Sitemap
-Home · Research · People · Publications · Facilities · Lab Guide (wiki) · News ·
-Join · Contact · Member Portal. Diagram in
-[ARCHITECTURE.md → Sitemap](ARCHITECTURE.md#2-sitemap).
-
-### 3 · Architecture
-Static **Jekyll** site on **GitHub Pages**, content in Markdown + YAML, zero
-runtime services, three GitHub Actions + Dependabot. Rationale and trade-offs in
-[ARCHITECTURE.md → Architecture](ARCHITECTURE.md#3-architecture-decision).
-
-### 4 · Publication workflow
-Journal articles sync automatically from **OpenAlex** (by the PI's **ORCID**) via
-a monthly GitHub Action that opens a **pull request** for human review. The
-committed file is always the source of truth, so the site never breaks if the API
-is down. Conference work is curated by hand, and per-paper data/code/figures live
-in `_data/pub_links.yml`. Full details in
-[MAINTENANCE.md → Publications](MAINTENANCE.md#publications-how-the-automation-works).
+The decisions and trade-offs behind all of this are in
+[ARCHITECTURE.md](ARCHITECTURE.md).
 
 ---
-
-## Priorities this build optimizes for
-
-In the project's stated order: **maintainability → accessibility (WCAG 2.1 AA) →
-scientific communication → automation → design quality → visual effects.** Where
-these traded off, the higher priority won — e.g. plain editable data files over
-a fancier headless CMS, and semantic HTML that works without JavaScript.
 
 ## License / credit
 Content © BIRD Lab, UC Davis. Lab logo is the lab's own mark. Built with Jekyll;

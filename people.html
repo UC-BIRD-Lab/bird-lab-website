@@ -4,7 +4,7 @@ title: People
 eyebrow: Who we are
 ---
 
-{%- comment -%} Featured PI block (Christina) — richer than a standard card. {%- endcomment -%}
+{%- comment -%} Featured PI block (Christina): richer than a standard card. {%- endcomment -%}
 {%- assign pi_group = site.data.people.groups | where: "id", "pi" | first -%}
 {%- assign pi = pi_group.members | first -%}
 <section class="people-group">
@@ -14,8 +14,8 @@ eyebrow: Who we are
       {%- if pi.photo -%}
         <img class="pi-feature__photo" src="{{ pi.photo | relative_url }}" alt="{{ pi.name }}" width="220" height="220">
       {%- else -%}
-        <div class="pi-feature__placeholder" role="img" aria-label="{{ pi.name }} — photo to be added">
-          Photo coming soon — drop <code>christina-harvey.jpg</code> in <code>assets/img/people/</code> and add a <code>photo:</code> line.
+        <div class="pi-feature__placeholder" role="img" aria-label="{{ pi.name }} (photo to be added)">
+          Photo coming soon. Drop <code>christina-harvey.jpg</code> in <code>assets/img/people/</code> and add a <code>photo:</code> line.
         </div>
       {%- endif -%}
       <p class="links links--left">
@@ -27,10 +27,10 @@ eyebrow: Who we are
       </p>
     </div>
     <div>
-      <h3 style="margin:0;font-size:var(--step-2)">{{ pi.name }}</h3>
+      <h3 class="u-m0 u-fs-lg">{{ pi.name }}</h3>
       <p class="role">{{ pi.role }}{% if pi.pronouns %} · {{ pi.pronouns }}{% endif %}</p>
-      {%- if pi.field %}<p class="field-tags" style="justify-content:flex-start">{%- assign pifields = pi.field | split: "," -%}{%- for fld in pifields -%}<span class="field-tag">{{ fld | strip }}</span>{%- endfor -%}</p>{% endif -%}
-      <div class="prose" style="margin-top:.6rem">
+      {%- if pi.field %}<p class="field-tags u-justify-start">{%- assign pifields = pi.field | split: "," -%}{%- for fld in pifields -%}<span class="field-tag">{{ fld | strip }}</span>{%- endfor -%}</p>{% endif -%}
+      <div class="prose u-mt-06">
         <p>Christina Harvey is an engineer and zoologist who seeks to understand the fundamental principles of biological flight. Her research combines biomechanics, aerodynamics, flight dynamics, and animal behavior to 
         uncover biological principles and determine which of those principles may benefit in engineering designs.</p>
         
@@ -93,7 +93,7 @@ eyebrow: Who we are
       </div>
     </div>
 
-    <div id="team-grid" class="grid grid-4" style="margin-top:1.4rem">
+    <div id="team-grid" class="grid grid-4 u-mt-14">
       {% comment %} Within each role group: sort by year joined (oldest first),
          then alphabetically by name. Year-bucketing guarantees the alphabetical
          tie-break regardless of sort stability. {% endcomment %}
@@ -114,7 +114,7 @@ eyebrow: Who we are
 
 </section>
 
-{%- comment -%} Scenes from the lab — renders only the scenes flagged ready: true. {%- endcomment -%}
+{%- comment -%} Scenes from the lab: renders only the scenes flagged ready: true. {%- endcomment -%}
 {%- assign ready_scenes = site.data.gallery.scenes | where_exp: "s", "s.ready" -%}
 {%- if ready_scenes and ready_scenes.size > 0 -%}
 <section class="people-group">
@@ -141,8 +141,14 @@ eyebrow: Who we are
 
 <section class="people-group" id="alumni">
   <h2>{{ site.data.people.alumni.title }}</h2>
-  <p class="muted">We are forever grateful to the members who helped build and grow our lab. 
-  They've gone on to positions in industry at <strong>Boeing, NASA&nbsp;Ames, and Northwood </strong> 
+  {%- comment -%}
+    EDIT ME BY HAND. This sentence highlights a few notable alumni destinations.
+    It is intentionally hand-written (not generated from the alumni table below),
+    so update these company/school names here whenever you want to refresh the
+    highlights. The full, always-current list lives in the table underneath.
+  {%- endcomment -%}
+  <p class="muted">We are forever grateful to the members who helped build and grow our lab.
+  They've gone on to positions in industry at <strong>Boeing, NASA&nbsp;Ames, and Northwood</strong>
   as well as to pursue academic positions at <strong>Stanford, UCLA, and CU&nbsp;Boulder</strong>.</p>
   <details class="alumni-details">
     <summary>See all {{ site.data.people.alumni.members | size }} past members &amp; where they are now</summary>
@@ -165,8 +171,8 @@ eyebrow: Who we are
         <tr>
           <td class="nm" data-label="Name">{{ a.name }}{% if a.linkedin %} <a class="alum-linkedin" href="{{ a.linkedin }}" rel="noopener"><img src="{{ '/assets/img/icons/link-linkedin.svg' | relative_url }}" alt="{{ a.name }} on LinkedIn"></a>{% endif %}</td>
           <td data-label="Role">{{ a.role }}</td>
-          <td data-label="Joined">{{ a.start | default: "—" }}</td>
-          <td data-label="Now">{% if a.now and a.now != "" %}{{ a.now }}{% else %}<span class="now-unknown">—</span>{% endif %}</td>
+          <td data-label="Joined">{{ a.start | default: "–" }}</td>
+          <td data-label="Now">{% if a.now and a.now != "" %}{{ a.now }}{% else %}<span class="now-unknown">–</span>{% endif %}</td>
         </tr>
         {%- endfor -%}
         {%- endfor -%}

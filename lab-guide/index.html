@@ -1,48 +1,164 @@
 ---
-layout: page
+layout: default
 title: Lab Guide
-eyebrow: How we work
 ---
 
-<p class="lead prose">A living handbook of how we run the lab — onboarding, day-to-day life, the research workflow, scientific writing, and professional development. It's public so prospective members can see how we really work, and every member is welcome to improve it.</p>
-
-{%- assign order = "Getting Started,Working in the Lab,Research Workflow,Writing & Dissemination,Communication & Culture,Professional Development" | split: "," -%}
-
-<div class="guide-search">
-  <label class="visually-hidden" for="guide-search">Search the guide</label>
-  <span class="guide-search__icon" aria-hidden="true">🔍</span>
-  <input type="search" id="guide-search" placeholder="Search the guide…" autocomplete="off" aria-describedby="guide-search-hint">
+<div class="page-head">
+  <div class="container">
+    <p class="eyebrow">How we work</p>
+    <h1>Lab Guide</h1>
+  </div>
 </div>
-<p id="guide-search-hint" class="muted" style="font-size:var(--step--1);margin:.5rem 0 0">Pages with your word in the <strong>title</strong> come first, then pages that mention it in the text.</p>
-<p id="guide-noresults" class="muted" hidden style="font-size:var(--step--1);margin:.5rem 0 0">No guide pages match that yet. Try a shorter or different word.</p>
 
-<nav class="guide-cats" aria-label="Jump to a category">
-  {%- for cat in order -%}
-  {%- assign pages = site.guide | where: "category", cat -%}
-  {%- if pages.size > 0 %}<a class="guide-cat-chip" href="#{{ cat | slugify }}">{{ cat }}</a>{% endif -%}
-  {%- endfor -%}
-</nav>
+{%- assign order = site.guide_order -%}
+{%- assign featured_cat = "Getting Started" -%}
+{%- assign start_pages = site.guide | where: "category", featured_cat | sort: "order" -%}
+{%- assign section_count = order.size | minus: 1 -%}
 
+<section class="section">
+  <div class="container">
+    <div class="guide-hub-top">
+    <div class="guide-hub-top__main">
+    <p class="lead prose">A living handbook of how we run the lab. It's public so prospective members can see how we really work, and every member is welcome to improve it.</p>
+
+    {%- comment -%}
+      Fail loud, not silent. Two failure modes:
+      1. guide_order missing (e.g. _config.yml not loaded, or Jekyll not restarted
+         after editing it): nothing can render, so say so plainly.
+      2. A page whose category isn't in guide_order: it renders in no section,
+         so name it instead of dropping it silently.
+    {%- endcomment -%}
+    {%- if order == nil or order == empty -%}
+    <div class="note note--warn" role="alert">
+      <p style="margin:0"><strong>The category list isn't loaded.</strong> It lives in
+      <code>_config.yml</code> as <code>guide_order:</code>. If you just edited
+      <code>_config.yml</code>, restart Jekyll: it doesn't reload config while
+      running. If you're deploying, make sure <code>_config.yml</code> is included.</p>
+    </div>
+    {%- else -%}
+    {%- assign orphans = "" -%}
+    {%- for p in site.guide -%}
+      {%- unless order contains p.category -%}
+        {%- assign label = p.category | default: "(no category set)" -%}
+        {%- assign who = p.title | default: "(no title set)" -%}
+        {%- assign orphans = orphans | append: "<li><code>" | append: p.path | append: "</code> · title: “" | append: who | append: "”, category: “" | append: label | append: "”</li>" -%}
+      {%- endunless -%}
+    {%- endfor -%}
+    {%- if orphans != "" %}
+    <div class="note note--warn" role="alert">
+      <p style="margin:0 0 .4rem"><strong>Some guide pages aren't showing.</strong> Each
+      page below has a <code>category:</code> that isn't listed in
+      <code>guide_order:</code> in <code>_config.yml</code> (a missing or blank
+      category is the usual cause). Fix the page's front matter, or add the
+      category to <code>guide_order:</code>. The file path is shown first so you
+      can find it:</p>
+      <ul style="margin:0">{{ orphans | strip }}</ul>
+    </div>
+    {%- endif -%}
+    {%- endif -%}
+
+    {%- comment -%} Feature the role start-guides up top; they're dropped from the
+      category loop below so nothing renders twice. {%- endcomment -%}
+    {%- if start_pages.size > 0 -%}
+    <div class="guide-start" id="start-here">
+      <h2>Start here</h2>
+      <p class="muted">New to the lab? Begin with the guide for your role.</p>
+      <div class="grid grid-3">
+        {%- for p in start_pages -%}
+        <a class="card card--link card--start" href="{{ p.url | relative_url }}" data-keywords="{{ p.keywords | join: ' ' | downcase }}">
+          <div class="card-head">
+            {%- if p.icon %}<span class="card-emoji" aria-hidden="true">{{ p.icon }}</span>{% endif -%}
+            <h3>{{ p.title }}</h3>
+          </div>
+          {%- if p.summary %}<p class="muted">{{ p.summary }}</p>{% endif -%}
+          <p class="card__more">Read &rarr;</p>
+        </a>
+        {%- endfor -%}
+      </div>
+    </div>
+    {%- endif -%}
+
+    <div class="guide-search">
+      <label class="visually-hidden" for="guide-search">Search the guide</label>
+      <span class="guide-search__icon" aria-hidden="true">🔍</span>
+      <input type="search" id="guide-search" placeholder="Search the guide…" autocomplete="off" aria-describedby="guide-search-hint">
+    </div>
+    <p id="guide-search-hint" class="muted guide-hint">Pages with your word in the <strong>title</strong> come first, then pages that mention it in the text or related terms.</p>
+    <p id="guide-noresults" class="muted guide-hint" hidden aria-live="polite">No guide pages match that yet. Try a shorter or different word.</p>
+
+    <nav class="guide-cats" aria-label="Jump to a section">
+      <a class="guide-cat-chip" href="#start-here">Start here</a>
+      {%- for cat in order -%}
+      {%- unless cat == featured_cat -%}
+      {%- assign pages = site.guide | where: "category", cat -%}
+      {%- if pages.size > 0 %}<a class="guide-cat-chip" href="#{{ cat | slugify }}">{{ cat }}</a>{% endif -%}
+      {%- endunless -%}
+      {%- endfor -%}
+    </nav>
+    </div><!-- /.guide-hub-top__main -->
+
+    <aside class="guide-hub-top__side" aria-labelledby="journey-title">
+      <div class="guide-journey-panel">
+        <h2 id="journey-title">Your journey</h2>
+        <p class="muted">Roughly the order most projects move in. Jump in anywhere.</p>
+        <ol class="journey journey--side">
+          <li><a href="#start-here">Get oriented</a></li>
+          <li><a href="{{ '/lab-guide/goal-setting/' | relative_url }}">Set your goals</a></li>
+          <li><a href="{{ '/lab-guide/literature-reviews/' | relative_url }}">Read &amp; form a question</a></li>
+          <li><a href="{{ '/lab-guide/data-analysis/' | relative_url }}">Run &amp; analyze</a></li>
+          <li><a href="{{ '/lab-guide/first-drafts/' | relative_url }}">Figure &amp; write</a></li>
+          <li><a href="{{ '/lab-guide/presentations/' | relative_url }}">Present it</a></li>
+          <li><a href="{{ '/lab-guide/before-you-submit/' | relative_url }}">Submit</a></li>
+          <li><a href="{{ '/lab-guide/paper-revisions/' | relative_url }}">Revise &amp; publish</a></li>
+          <li><a href="{{ '/lab-guide/career-planning/' | relative_url }}">Grow &amp; plan ahead</a></li>
+          <li><a href="{{ '/lab-guide/leaving-the-lab/' | relative_url }}">Move on</a></li>
+        </ol>
+      </div>
+    </aside>
+    </div><!-- /.guide-hub-top -->
+  </div>
+</section>
+
+{%- comment -%} One full-width band per category, alternating tint like the home
+  page. `band` counts only the categories that actually render, so the tint
+  pattern stays correct even if a category is empty. {%- endcomment -%}
+{%- assign band = 0 -%}
 {%- for cat in order -%}
+  {%- unless cat == featured_cat -%}
   {%- assign pages = site.guide | where: "category", cat | sort: "order" -%}
   {%- if pages.size > 0 -%}
-  <section class="people-group" id="{{ cat | slugify }}">
-    <h2>{{ cat }}</h2>
-    <div class="grid grid-3">
-      {%- for p in pages -%}
-      <a class="card card--link" href="{{ p.url | relative_url }}">
-        <h3>{{ p.title }}</h3>
-        {%- if p.summary %}<p class="muted">{{ p.summary }}</p>{% endif -%}
-        <p style="margin-top:.6rem;color:var(--c-blue-700);font-weight:600">Read &rarr;</p>
-      </a>
-      {%- endfor -%}
+  {%- assign band = band | plus: 1 -%}
+  {%- assign tint = band | modulo: 2 -%}
+  <section class="section guide-cat{% if tint == 1 %} section--tint{% endif %}" id="{{ cat | slugify }}">
+    <div class="container">
+      <h2>{{ cat }}</h2>
+      <div class="grid grid-3">
+        {%- for p in pages -%}
+        <a class="card card--link" href="{{ p.url | relative_url }}" data-keywords="{{ p.keywords | join: ' ' | downcase }}">
+          <div class="card-head">
+            {%- if p.icon %}<span class="card-emoji" aria-hidden="true">{{ p.icon }}</span>{% endif -%}
+            <h3>{{ p.title }}</h3>
+          </div>
+          {%- if p.summary %}<p class="muted">{{ p.summary }}</p>{% endif -%}
+          <p class="card__more">Read &rarr;</p>
+        </a>
+        {%- endfor -%}
+      </div>
     </div>
   </section>
   {%- endif -%}
+  {%- endunless -%}
 {%- endfor -%}
 
-<div class="note" style="margin-top:2.5rem">
-  <p style="margin:0">Members can also access the private
-  <a href="{{ '/portal/' | relative_url }}">Notion workspace</a> for internal
-  operations and onboarding material.</p>
-</div>
+{%- assign band = band | plus: 1 -%}
+{%- assign tint = band | modulo: 2 -%}
+<section class="section{% if tint == 1 %} section--tint{% endif %}">
+  <div class="container">
+    <div class="note guide-note">
+      <p style="margin:0">Members can also access the private
+      <a href="{{ '/portal/' | relative_url }}">Notion workspace</a> for internal
+      operations and onboarding material.</p>
+    </div>
+    <p class="muted guide-stats-line">{{ site.guide.size }} guides across {{ section_count }} topic areas, including {{ start_pages.size }} role start-guides.</p>
+  </div>
+</section>

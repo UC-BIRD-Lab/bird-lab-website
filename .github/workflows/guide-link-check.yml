@@ -1,0 +1,63 @@
+name: Guide link check
+
+# Yearly sweep for dead EXTERNAL links in the lab guide (Site checks skips
+# external links on purpose, they flake, so this runs them separately, on a
+# schedule). It builds the site first, then scans the rendered lab-guide pages,
+# so it automatically picks up every external URL: ones written in the
+# Markdown, ones added later, and ones that come from data files
+# (e.g. _data/safety.yml, _data/funding.yml). Nothing to register by hand.
+#
+# If broken links are found, it opens a GitHub issue listing them.
+# You can also run it any time from the Actions tab ("Run workflow").
+on:
+  schedule:
+    - cron: "0 8 5 7 *"   # once a year: July 5, 08:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check-external-links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # full history so jekyll-last-modified-at reads real dates
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+      - name: Build site
+        run: bundle exec jekyll build
+        env:
+          JEKYLL_ENV: production
+
+      - name: Check external links in the lab guide (lychee)
+        id: lychee
+        uses: lycheeverse/lychee-action@v2
+        with:
+          # Only http(s) URLs are checked (internal/relative links are already
+          # covered by the Site checks workflow). 429 = "slow down", not broken.
+          args: >-
+            --no-progress
+            --scheme https
+            --scheme http
+            --accept 200..=206,429
+            --max-retries 3
+            --timeout 30
+            '_site/lab-guide/**/*.html'
+          output: ./lychee-report.md
+          fail: false   # don't fail the run; the issue below is the alert
+
+      - name: Open an issue listing the broken links
+        if: steps.lychee.outputs.exit_code != 0
+        uses: peter-evans/create-issue-from-file@v5
+        with:
+          title: "Lab guide: broken external links (scheduled check)"
+          content-filepath: ./lychee-report.md
+          labels: |
+            lab-guide
+            link-rot

@@ -8,18 +8,17 @@ edit, then **Commit changes**. The site rebuilds itself.
 > spaces**, and keep a space after every colon (`name: Ada`, not `name:Ada`).
 
 **Don't want to touch files at all?** Lab members can submit a person, paper,
-news item, or press link through the site's **GitHub issue forms** (no YAML) —
+news item, or press link through the site's **GitHub issue forms** (no YAML):
 see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ---
 
-## Add or update a team member — `_data/people.yml`
+## Add or update a team member: `_data/people.yml`
 
-On the People page everyone (except the PI, who has a featured block) now shows in
-**one combined "The team" grid** — no separate role sections. Each card gets its
-**role text**, a **bird badge** inferred from that text, and optional **discipline
-tags**. In the file, members are still kept under `groups:` (`postdocs`, `phd`,
-`masters`, `undergrad`) — that only controls the **order** they appear in the grid.
+Everyone except the PI shows in one combined **"The team" grid**; each card gets a
+bird badge (from the `role` text) and optional discipline tags. In the file,
+members sit under `groups:` (`postdocs`, `phd`, `masters`, `undergrad`), which only
+sets the **order** they appear.
 
 Add a block under the right group's `members:` list. Only `name` and `role` are required.
 
@@ -43,12 +42,12 @@ Add a block under the right group's `members:` list. Only `name` and `role` are 
 - **The bird is automatic** from the `role` words: Postdoc 🦉 · PhD 🦢 · MSc 🦜 ·
   Undergrad 🐥 · Visiting 🕊️ · PI 🦅. Force a different one with `role_icon: "🦅"`.
 - **Contact links become icons** automatically. Add any of `email`, `website`,
-  `scholar`, `orcid`, `linkedin`, `github` and each shows as a small icon button —
+  `scholar`, `orcid`, `linkedin`, `github` and each shows as a small icon button:
   no wording needed. This works the same on the PI's featured block.
 - **`awards:`** is a list. The card shows a single 🏆 with the awards stacked
   beside it, so two or three honors stay tidy (no repeated trophies).
 - **`aliases:`** lists other name forms (a nickname, or "Dr. Rivera") that should
-  also auto-link in the news timeline — see *Auto-linking* under news milestones.
+  also auto-link in the news timeline: see *Auto-linking* under news milestones.
 - **`field:`** shows small tags (e.g. `Aerospace`, `Biology`, `Animal Behavior`,
   `Computer Science`) so the lab's engineering/biology mix is visible. Use the
   field someone *trained in*. Comma-separate for more than one.
@@ -56,7 +55,7 @@ Add a block under the right group's `members:` list. Only `name` and `role` are 
   move the block if you want them earlier in the order). The bird updates itself.
 - **Someone left:** cut their whole block from `groups:` and paste it into the
   `alumni:` list at the bottom, then add a `now:` line for where they went. You
-  can trim it to one line or paste the full block as-is — extra fields are ignored:
+  can trim it to one line or paste the full block as-is: extra fields are ignored:
   ```yaml
     - { name: Jordan Rivera, role: "PhD Researcher", start: 2024, now: "Boeing" }
   ```
@@ -70,7 +69,7 @@ Add a block under the right group's `members:` list. Only `name` and `role` are 
 
 ## Add a publication
 
-**Journal article** — usually automatic. If you need to add one by hand, put it
+**Journal article**: usually automatic. If you need to add one by hand, put it
 at the **top** of `_data/publications.yml`:
 ```yaml
 - title: "Your exact paper title"
@@ -81,7 +80,7 @@ at the **top** of `_data/publications.yml`:
   doi: "https://doi.org/10.xxxx/xxxxx"
 ```
 
-**Conference paper / poster / presentation** — add under `conference:` in
+**Conference paper / poster / presentation**: add under `conference:` in
 `_data/publications_manual.yml`:
 ```yaml
   - title: "Talk or paper title"
@@ -99,32 +98,32 @@ article** (green), **conference paper** (amber, shown when you omit `note`), and
 
 ---
 
-## Add data / code / a figure to a paper — `_data/pub_links.yml`
+## Add data / code / a figure to a paper: `_data/pub_links.yml`
 
-Journal articles sync automatically, so the "extras" a bot can't know — a dataset
-link, a code repo, a figure — go in this separate file, matched to the paper by
+Journal articles sync automatically, so the "extras" a bot can't know: a dataset
+link, a code repo, a figure: go in this separate file, matched to the paper by
 its **bare DOI**. The auto-sync never touches it, so your extras are safe.
 
 ```yaml
 - doi: "10.1098/rsif.2025.0868"   # bare DOI, no "https://doi.org/"
-  data: "https://figshare.com/…"  # optional — dataset link
-  code: "https://github.com/UC-BIRD-Lab/…"  # optional — code repo
-  image: /assets/img/research/perchaero.jpg # optional — only for major papers
-  kind: review                    # optional — "review" or "commentary" (journals only)
-  award: "AIAA Jefferson Goblet Student Paper Award"  # optional — gold 🏆 pill
-  correction: "https://doi.org/…" # optional — a correction/corrigendum for this paper
+  data: "https://figshare.com/…"  # optional: dataset link
+  code: "https://github.com/UC-BIRD-Lab/…"  # optional: code repo
+  image: /assets/img/research/perchaero.jpg # optional: only for major papers
+  kind: review                    # optional: "review" or "commentary" (journals only)
+  award: "AIAA Jefferson Goblet Student Paper Award"  # optional: gold 🏆 pill
+  correction: "https://doi.org/…" # optional: a correction/corrigendum for this paper
 ```
 
-- Add `image:` **sparingly** — just standout papers, or the list gets busy.
+- Add `image:` **sparingly**: just standout papers, or the list gets busy.
 - **`kind:`** sets a journal article's type pill. Leave it off and the paper reads
   **Research article** (the default). Add `kind: review` or `kind: commentary` for the
-  exceptions. The pill stays green either way — only the wording changes. (Conference
+  exceptions. The pill stays green either way: only the wording changes. (Conference
   papers and posters are labelled from `publications_manual.yml`, not here.)
-- **`award:`** shows a gold 🏆 pill next to the paper — use it for a best-paper award,
+- **`award:`** shows a gold 🏆 pill next to the paper: use it for a best-paper award,
   a prize, etc.
 - **Something showed up that isn't a paper?** (a journal profile of the PI, a talk
   OpenAlex indexed like an article.) Add its bare DOI under `exclude:` in
-  `_data/publications_manual.yml` with a short `reason:` — the sync removes it and never
+  `_data/publications_manual.yml` with a short `reason:`: the sync removes it and never
   re-adds it.
 - **Corrections/corrigenda:** the auto-sync skips them (it prints any it sees). If one
   corrects a listed paper, add a `correction:` link to that paper's block here and it
@@ -132,12 +131,12 @@ its **bare DOI**. The auto-sync never touches it, so your extras are safe.
   to change the wording.
 - Nothing appears until the paper is on the Publications page, so you can add this
   as soon as a paper is accepted.
-- **Press/news is not listed here** — tag a story with the paper's `doi:` in
+- **Press/news is not listed here**: tag a story with the paper's `doi:` in
   `_data/press.yml` and it's counted automatically as the "In the news" badge.
 
 ---
 
-## Add a news milestone — `_data/updates.yml`
+## Add a news milestone: `_data/updates.yml`
 
 Add an item to the top of the current year's `events:` list. `type` picks the
 label; use one of: `award, paper, talk, funding, build, service, people, travel,
@@ -153,16 +152,16 @@ Starting a new year? Add a new block at the very top:
 ```
 
 **Auto-linking (names + links).** Just write a lab member's name the way it
-appears on the People page — "Kaleb Bordner" — and it becomes a link to their
+appears on the People page: "Kaleb Bordner": and it becomes a link to their
 card automatically. Alumni names link to the alumni table. **Don't** wrap names in
 your own `<a>` tag (that would double-link). For a nickname or short form, add an
 `aliases:` line to that person in `people.yml`. To link to an outside page (a
-paper, an event), you can paste plain HTML — use single quotes so the YAML stays
+paper, an event), you can paste plain HTML: use single quotes so the YAML stays
 valid: `text: "We spoke at <a href='https://example.com'>the workshop</a>."`
 
 ---
 
-## Add press coverage — `_data/press.yml`
+## Add press coverage: `_data/press.yml`
 
 ```yaml
 - year: 2026
@@ -170,41 +169,41 @@ valid: `text: "We spoke at <a href='https://example.com'>the workshop</a>."`
     - title: "Headline of the article"
       source: "Outlet name"
       url: "https://…"
-      doi: "10.1098/rsif.2025.0868"   # optional — see below
-      featured: true                   # optional — see below
+      doi: "10.1098/rsif.2025.0868"   # optional: see below
+      featured: true                   # optional: see below
       image: /assets/img/research/perchaero.jpg   # needed if featured
 ```
 (If the year already exists, just add another `- title:` block under its `items:`.)
 
-- **`doi:`** — the DOI of the paper the story covers. When set, that paper on the
+- **`doi:`**: the DOI of the paper the story covers. When set, that paper on the
   Publications page shows an "In the news · N" badge counting its stories.
-- **`featured: true` + `image:`** — promotes the story to the big cards at the top
+- **`featured: true` + `image:`**: promotes the story to the big cards at the top
   of the News page. `image:` can be a local file (`/assets/img/…`) **or** a direct
   URL to the article's own image (`https://outlet.com/story.jpg`). A static site
   can't fetch a story's image on its own, so paste the link once here.
 
-**Shortcut — let the script do it.** Instead of filling the block by hand, run:
+**Shortcut: let the script do it** (~1 min). Instead of filling the block by hand, run:
 
 ```bash
 python scripts/add_press.py "https://outlet.com/story" --doi 10.1098/rsif.2025.0868 --featured
 ```
 
-It reads the outlet, headline, and author from the page, and — only with `--featured` —
+It reads the outlet, headline, and author from the page, and: only with `--featured`:
 downloads the lead image into `assets/img/news/` (resized/compressed), then prints a
 ready-to-paste entry. Add `--append` to have it inserted into `press.yml` for you. Drop
 `--featured` for a normal (non-card) story. See the script's header for all options.
 
-### Videos, podcasts & 3D models — `_data/media.yml`
+### Videos, podcasts & 3D models: `_data/media.yml`
 
 Non-article coverage (talks, podcast episodes, an interactive model) lives here and
-shows in the **"Watch & listen"** strip on the News page — as link-out cards, not
+shows in the **"Watch & listen"** strip on the News page: as link-out cards, not
 embeds, so the page stays fast and cookie-free. Each entry has `title`, `kind`
 (`video` / `podcast` / `model`), `source`, `year`, `url`. For a YouTube link the
 thumbnail is generated automatically; podcasts and models get an icon tile.
 
 ---
 
-## Fellowships & scholarships list — `_data/funding.yml`
+## Fellowships & scholarships list: `_data/funding.yml`
 
 The funding table on the Lab Guide **"Applying for funding"** page (linked from Join)
 is generated from this file. Copy a block to add one; omit `eligibility` or `url`
@@ -219,9 +218,9 @@ when there isn't one.
 
 ---
 
-## Edit a research project — `_data/research.yml`
+## Edit a research project: `_data/research.yml`
 
-Projects are small cards under `projects:` — a one-sentence blurb, a theme tag,
+Projects are small cards under `projects:`: a one-sentence blurb, a theme tag,
 the lead (linked to their People entry), and an "Ask the lead" email button.
 Because each card is just a sentence, it rarely needs touching; when a project
 ends, just delete its block (or move the lead to `alumni:` and remove the card).
@@ -241,15 +240,15 @@ ends, just delete its block (or move the lead to `alumni:` and remove the card).
 - **The lead links to their People card.** Keep `lead` spelled exactly as their
   `name:` in `people.yml` (e.g. `Dr. Alfonso Martínez-Carmena`).
 - **Link a paper by pasting its DOI** under `papers:` (one per line). The card
-  looks the DOI up in the publications data and shows the title, year, and link —
+  looks the DOI up in the publications data and shows the title, year, and link:
   so when a new paper comes out, you add one line here and it appears. Leave
   `papers:` out and no paper line shows. (The paper must already be listed on the
-  Publications page — journal articles arrive automatically; add conference papers
+  Publications page: journal articles arrive automatically; add conference papers
   in `_data/publications_manual.yml`.)
 
 ---
 
-## Edit a facility — `_data/facilities.yml`
+## Edit a facility: `_data/facilities.yml`
 
 Each facility is one block. The first one with `featured: true` becomes the big
 photo band at the top of the Facilities page; the rest render as alternating
@@ -280,13 +279,13 @@ long paragraphs.
     - Daylight-balanced lighting for live birds
 ```
 
-- **`featured:`** — set on exactly one facility. Its `photo` becomes the flagship band; a real photo works best (not the AI renderings).
-- **`photo_note:`** — a small italic caption under the image (used to mark the wind-tunnel/specimen renderings as AI-based). Leave it off for real photos.
-- **`funding:`** — shows a small "thanks to…" logo badge in the top corner of the flagship photo. Logos live in `assets/img/partners/`.
+- **`featured:`**: set on exactly one facility. Its `photo` becomes the flagship band; a real photo works best (not the AI renderings).
+- **`photo_note:`**: a small italic caption under the image (used to mark the wind-tunnel/specimen renderings as AI-based). Leave it off for real photos.
+- **`funding:`**: shows a small "thanks to…" logo badge in the top corner of the flagship photo. Logos live in `assets/img/partners/`.
 
 ---
 
-## Edit a Lab Guide page — `_guide/`
+## Edit a Lab Guide page: `_guide/`
 
 Each page is one Markdown file. Edit the text below the `---` block normally.
 To **add a new guide page**, create `_guide/my-page.md` starting with:
@@ -296,16 +295,17 @@ title: My new page
 category: Working in the Lab
 order: 4
 summary: One sentence shown on the Lab Guide hub.
+reviewed: 2026-07-03   # date you last checked the page (see "Keeping pages fresh")
 ---
 
 Your content here. Use ## for section headings.
 ```
-`category` must be one of (they appear in the sidebar in this order):
-`Getting Started`, `Working in the Lab`, `Research Workflow`,
-`Writing & Dissemination`, `Communication & Culture`, `Professional Development`.
-`order` sets the position within that category. To add a brand-new category,
-also add its name to the `order` list in `_layouts/wiki.html` and
-`lab-guide/index.html`. The page automatically appears in the wiki sidebar and on
+`category` must be one of the categories listed in `guide_order:` in
+`_config.yml`: that list is the single source of truth for the category names
+and their sidebar order. `order` sets the position within that category. To add a
+brand-new category, add its name to `guide_order:` in `_config.yml`; the wiki
+sidebar and the Lab Guide hub both read from there (the hub warns you if a page's
+category isn't listed). The page automatically appears in the wiki sidebar and on
 the Lab Guide hub.
 
 Useful callout boxes (paste directly into a guide page):
@@ -323,12 +323,31 @@ Something important / a hard rule.
 </div>
 ```
 
+### Keeping pages fresh
+
+Every guide page shows a **"Needs review" band** at the top once it hasn't been
+reviewed or edited in over a year. To clear it, either edit the page or, if you
+read it through and nothing needs changing, set `reviewed:` in its front matter
+to today's date (for example `reviewed: 2026-07-03`). That records the review
+without a content change. A page with no `reviewed:` date and no recent edit
+shows the band by design, so nothing goes stale silently.
+
+### Lab operations roles: `_data/roles.yml`
+
+The public **Lab operations roles** page is generated from `_data/roles.yml`:
+one entry per role with its `name`, `tagline`, `purpose`, `owns`, and `can`
+(authority). Edit that file to add, retire, or reword a role; both the
+at-a-glance table and the role cards update. Leave `_includes/lab-roles.html`
+(the template) alone. Each role's detailed routine, what it avoids, and its
+handoff live in the internal companion (`INTERNAL-lab-roles.md`, kept in the
+Notion member portal), not on the public page.
+
 ---
 
-## Change the menu — `_data/navigation.yml`
+## Change the menu: `_data/navigation.yml`
 Reorder, rename, or add items. `cta: true` makes an item the pill button.
 
-## Change site-wide settings — `_config.yml`
+## Change site-wide settings: `_config.yml`
 Title, tagline, the **member portal URL**, contact email, ORCID, the
 undergraduate interest-form link, the PI **LinkedIn** and **GitHub org**, the
 **FigShare** data URL, and the **social-share image** all live here. After
@@ -338,13 +357,13 @@ editing `_config.yml`, the change appears on the next build.
 cookieless analytics ([GoatCounter](https://www.goatcounter.com/)) that stay
 **off** until you add a code. Make a free GoatCounter site, then set
 `analytics: { goatcounter: "yourcode" }` in `_config.yml`. It collects only
-anonymous page counts — no cookies, no personal data — so no consent banner is
+anonymous page counts: no cookies, no personal data: so no consent banner is
 needed (the [Privacy]({{ '/privacy/' | relative_url }}) page explains this to
 visitors). Leave it blank to collect nothing.
 
 ---
 
-## Add a research figure — `assets/img/research/`
+## Add a research figure: `assets/img/research/`
 
 Each project card on the Research page can show one figure. To add or change one:
 
@@ -356,12 +375,12 @@ Each project card on the Research page can show one figure. To add or change one
 `theme:` on each project must match a theme `id` in the same file. The three ids
 are: **`morphology-kinematics`**, **`mechanics-dynamics`**, **`sensing-control`**.
 A matching theme shows its label as a tag on the card. Each theme also has a
-`why:` line ("why it matters") shown on the Home and Research pages — keep it to
+`why:` line ("why it matters") shown on the Home and Research pages: keep it to
 one plain-language sentence.
 
 ---
 
-## Recognition & media strips — `_data/recognition.yml`
+## Recognition & media strips: `_data/recognition.yml`
 
 The Home page shows an **Honors & awards** grid and a **Featured in** row from
 this file. Add an award under `awards:` (`name`, `who`, `org`, `year`) or an
@@ -372,8 +391,9 @@ outlet under `media:` (`name`, `url`). Keep awards accurate and specific.
 ## People photos & the lab group photo
 
 - **Headshots:** drop originals in `assets/img/people/_raw/`, run
-  `bash scripts/apply-images.sh`, then add `photo: /assets/img/people/<name>.jpg`
-  to that person on `_data/people.yml`. No photo = a clean initials avatar.
+  `bash scripts/apply-images.sh` (~1 min; resizes and compresses everything), then
+  add `photo: /assets/img/people/<name>.jpg` to that person on `_data/people.yml`.
+  No photo = a clean initials avatar.
 - **PI bio:** Christina's featured bio is written directly in `people.html`
   (top of the page); edit the prose there.
 - **Group photo:** run `bash scripts/apply-images.sh "/path/to/group-photo.jpg"`
@@ -404,25 +424,25 @@ site never shows a broken image.
 
 These live directly in `index.html` (edit the text in place):
 
-- **Video hero** — background video is `assets/video/bird-glide.mp4` with a dark
+- **Video hero**: background video is `assets/video/bird-glide.mp4` with a dark
   overlay and a pause/play button. It auto-hides for visitors who set "reduce
-  motion." To swap the clip, replace the `.mp4` (keep it small — see budget). The
+  motion." To swap the clip, replace the `.mp4` (keep it small: see budget). The
   poster frame shown before the video loads is `assets/img/facilities/cali.jpg`.
-- **Brand band** — the logo + one-line "principles, not mimicry" statement.
-- **"A signature idea"** — the three-axis bio-inspired reporting framework
+- **Brand band**: the logo + one-line "principles, not mimicry" statement.
+- **"A signature idea"**: the three-axis bio-inspired reporting framework
   (source / mimicry / evidence) tied to Harvey 2026.
-- **"We run our lab in the open"** — links to the Lab Guide, GitHub, and blog.
-- **Partners list** — `_data/partners.yml` (see below); also rendered on People.
+- **"We run our lab in the open"**: links to the Lab Guide, GitHub, and blog.
+- **Partners list**: `_data/partners.yml` (see below); also rendered on People.
 
-### Funders & partners — two files
-- **`_data/funders.yml`** — the home page **"Supported by"** logo band (AFOSR,
+### Funders & partners: two files
+- **`_data/funders.yml`**: the home page **"Supported by"** logo band (AFOSR,
   Packard, NSF, ARL, CITRIS…). Each entry has `name`, `short` (the name shown
   under the logo), `url`, and `logo:`. Logos sit in a fixed-height box so their
   names line up across the row.
-- **`_data/partners.yml`** — the **partners / affiliates** strip (also shown on
+- **`_data/partners.yml`**: the **partners / affiliates** strip (also shown on
   People). Add an entry under the right `groups:` heading. With a `logo:` it shows
   the image; without one it renders a clean wordmark.
-- **`_data/collaborators.yml`** — the home page **"In partnership with"** strip of
+- **`_data/collaborators.yml`**: the home page **"In partnership with"** strip of
   partner *organizations* (California Raptor Center, California Hawking Club, the
   museum). Each entry: `name`, `sub` (short descriptor), `photo` (square image in
   `assets/img/partners/`), `url`. Individual academic collaborators stay in

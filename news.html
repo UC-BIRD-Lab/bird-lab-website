@@ -32,22 +32,22 @@ eyebrow: Latest
   </div>
 </section>
 
-<hr class="divider" style="margin:3.2rem 0">
+<hr class="divider u-my-32">
 
-<!-- In the news: one cohesive press section — reach, highlights, then full archive -->
+<!-- In the news: one cohesive press section: reach, highlights, then full archive -->
 <section id="in-the-news" aria-labelledby="press-h">
   <p class="eyebrow">In the news</p>
   <h2 id="press-h">Where our work has landed</h2>
   {%- assign press_total = 0 -%}
   {%- for yr in site.data.press -%}{%- assign press_total = press_total | plus: yr.items.size -%}{%- endfor -%}
-  <p class="lead prose">Our research has been covered in <strong>{{ press_total }}+ stories</strong> — from
-  <em>Nature</em> and <em>The Atlantic</em> to <em>Quanta</em> and <em>Aerospace&nbsp;America</em>. A few highlights:</p>
+  <p class="lead prose">Our research has been covered in <strong>{{ press_total }} stories</strong> from
+  <em>Quanta</em> to <em>Aerospace&nbsp;America</em>. A few highlights:</p>
 
   {%- comment -%} Featured cards come from _data/press.yml items marked `featured: true`. {%- endcomment -%}
   {%- assign all_stories = "" | split: "" -%}
   {%- for yr in site.data.press -%}{%- assign all_stories = all_stories | concat: yr.items -%}{%- endfor -%}
   {%- assign featured = all_stories | where: "featured", true -%}
-  <div class="featured-grid" style="margin-top:1.6rem">
+  <div class="featured-grid u-mt-16">
     {%- for item in featured -%}
     <a class="feature" href="{{ item.url }}" rel="noopener">
       {%- if item.image -%}
@@ -62,10 +62,10 @@ eyebrow: Latest
     {%- endfor -%}
   </div>
 
-  <details class="press-details" style="margin-top:1.8rem">
+  <details class="press-details u-mt-18">
     <summary>Browse all coverage by year</summary>
     {%- for yr in site.data.press -%}
-    <h3 class="pub-year" style="font-size:var(--step-1)">{{ yr.year }}</h3>
+    <h3 class="pub-year u-fs-md">{{ yr.year }}</h3>
     <div class="news-press">
       {%- for item in yr.items -%}
       <div class="news-press__row">
@@ -80,11 +80,11 @@ eyebrow: Latest
     {%- endfor -%}
   </details>
 
-  <p class="muted" style="font-size:var(--step--1);margin-top:1rem">Card images are from lab research and facilities; headlines link to the original articles.</p>
+  <p class="muted u-fs-sm u-mt-10">Card images are from lab research and facilities; headlines link to the original articles.</p>
 </section>
 
 {%- if site.data.media and site.data.media.size > 0 -%}
-<hr class="divider" style="margin:3.2rem 0">
+<hr class="divider u-my-32">
 
 <section aria-labelledby="media-h">
   <p class="eyebrow">Watch &amp; listen</p>

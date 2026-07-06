@@ -12,7 +12,7 @@ Design choices that make this SAFE to run unattended:
     returns nothing, we exit WITHOUT modifying the file (never destructive).
   * We only ADD journal articles whose DOI is not already present, so any manual
     corrections to existing entries are preserved.
-  * Conference papers/posters/talks are NOT touched here — they live in
+  * Conference papers/posters/talks are NOT touched here: they live in
     _data/publications_manual.yml and are curated by hand.
 
 Run locally:   python scripts/update_publications.py
@@ -40,7 +40,7 @@ JOURNAL_TYPES = {"article", "review", "letter"}
 
 HEADER = """\
 # ────────────────────────────────────────────────────────────
-#  PUBLICATIONS — peer-reviewed journal articles
+#  PUBLICATIONS: peer-reviewed journal articles
 #
 #  ⚙️  THIS FILE IS AUTO-MANAGED by scripts/update_publications.py.
 #  The "Update publications" GitHub Action opens a pull request when new works
@@ -71,7 +71,7 @@ def fetch_works() -> list[dict]:
             req = urllib.request.Request(url, headers={"User-Agent": f"BIRDLab-site ({MAILTO})"})
             with urllib.request.urlopen(req, timeout=30) as resp:
                 data = json.load(resp)
-        except Exception as exc:  # network/JSON/HTTP — fail safe
+        except Exception as exc:  # network/JSON/HTTP: fail safe
             print(f"::warning::OpenAlex fetch failed ({exc}); leaving file unchanged.")
             return []
         works.extend(data.get("results", []))
@@ -153,7 +153,7 @@ def main() -> int:
             existing_dois.add(norm_doi(entry["doi"]))
 
     if not new:
-        print("Up to date — no new journal articles found.")
+        print("Up to date: no new journal articles found.")
         return 0
 
     combined = existing + new

@@ -19,7 +19,7 @@ layout: default
     {%- if page.summary %}<p class="lead prose">{{ page.summary }}</p>{% endif -%}
 
     {%- if page.image -%}
-    <figure class="figure" style="margin:1.6rem 0">
+    <figure class="figure u-my-16">
       <img src="{{ page.image | relative_url }}" alt="Figure from the project: {{ page.title }}" loading="lazy">
       {%- if page.figure_caption %}<figcaption>{{ page.figure_caption }}</figcaption>{% endif -%}
     </figure>
@@ -36,14 +36,14 @@ layout: default
 
     {%- comment -%} Optional free-form body below the structured story. {%- endcomment -%}
     {%- assign body = content | strip -%}
-    {%- if body != "" -%}<div class="prose" style="margin-top:1.4rem">{{ content }}</div>{% endif -%}
+    {%- if body != "" -%}<div class="prose u-mt-14">{{ content }}</div>{% endif -%}
 
     {%- if page.paper -%}
-    <p style="margin-top:1.6rem"><a class="btn btn--primary" href="{{ page.paper }}">Read the related paper &rarr;</a></p>
+    <p class="u-mt-16"><a class="btn btn--primary" href="{{ page.paper }}">Read the related paper &rarr;</a></p>
     {%- endif -%}
 
-    <hr class="divider" style="margin:2.4rem 0 1.2rem">
-    <p class="muted" style="font-size:var(--step--1)">
+    <hr class="divider u-mrow-24">
+    <p class="muted u-fs-sm">
       {%- if page.status == "completed" %}Completed{% if page.updated %} {{ page.updated }}{% endif %}.{% else %}Active project.{% endif %}
       {%- if page.updated %} Last updated {{ page.updated }}.{% endif %}
       {%- if page.contact %} Questions? <a href="mailto:{{ page.contact }}">Contact {{ page.lead }}</a>.{% endif -%}

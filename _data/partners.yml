@@ -26,4 +26,4 @@ groups:
     items:
       - { name: "Rose-Hulman Institute of Technology", sub: "Dr. Kevin Haughn", url: "https://www.rose-hulman.edu/" }
       - { name: "The Alan Turing Institute", sub: "Dr. Lydia France", url: "https://www.turing.ac.uk/" }
-      - { name: "University of Oxford — Flight Group", url: "https://flight.zoo.ox.ac.uk/" }
+      - { name: "University of Oxford, Flight Group", url: "https://flight.zoo.ox.ac.uk/" }

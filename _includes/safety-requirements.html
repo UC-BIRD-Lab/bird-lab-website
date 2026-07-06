@@ -1,0 +1,30 @@
+{%- comment -%}
+  Renders the Lab safety requirements from _data/safety.yml as two badged
+  tables: what everyone must do, and add-ons that apply only to some. Edit the
+  data file, not this template, to change requirements.
+{%- endcomment -%}
+{%- assign reqs = site.data.safety.requirements -%}
+
+<p class="req-group-label">Everyone must complete</p>
+<table class="req-table">
+  <tbody>
+  {%- for r in reqs -%}{%- if r.who == "Everyone" -%}
+    <tr>
+      <td>{% if r.link %}<a href="{{ r.link }}">{{ r.name }}</a>{% else %}{{ r.name }}{% endif %}{% if r.note %}<span class="req-note">{{ r.note }}</span>{% endif %}</td>
+      <td><span class="aud aud--base">{{ r.who }}</span></td>
+    </tr>
+  {%- endif -%}{%- endfor -%}
+  </tbody>
+</table>
+
+<p class="req-group-label">Only if it applies to you</p>
+<table class="req-table">
+  <tbody>
+  {%- for r in reqs -%}{%- unless r.who == "Everyone" -%}
+    <tr>
+      <td>{% if r.link %}<a href="{{ r.link }}">{{ r.name }}</a>{% else %}{{ r.name }}{% endif %}{% if r.note %}<span class="req-note">{{ r.note }}</span>{% endif %}</td>
+      <td><span class="aud {% if r.who == 'CALI researchers' %}aud--care{% else %}aud--addon{% endif %}">{{ r.who }}</span></td>
+    </tr>
+  {%- endunless -%}{%- endfor -%}
+  </tbody>
+</table>

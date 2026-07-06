@@ -51,7 +51,7 @@
     <span class="award__list">{%- for aw in p.awards -%}<span class="award">{{ aw }}</span>{%- endfor -%}</span>
   </div>
   {%- endif -%}
-  {%- if p.note %}<p class="muted" style="font-size:var(--step--1)">{{ p.note }}</p>{% endif -%}
+  {%- if p.note %}<p class="muted u-fs-sm">{{ p.note }}</p>{% endif -%}
   {%- assign my_project = site.data.research.projects | where: "lead", p.name | first -%}
   {%- if my_project %}<p class="person-project"><a href="{{ '/research/' | relative_url }}#project-{{ p.name | slugify }}">View research project &rarr;</a></p>{% endif -%}
   <p class="links">

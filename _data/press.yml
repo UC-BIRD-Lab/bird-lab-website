@@ -1,11 +1,11 @@
 # ─────────────────────────────────────────────────────────────
-#  IN THE NEWS — external press coverage. Newest year first.
+#  IN THE NEWS, external press coverage. Newest year first.
 #  Add an item: title, url, source, year.
-#  Optional `doi:` — the DOI of the paper the story is about. When set, that
+#  Optional `doi:`, the DOI of the paper the story is about. When set, that
 #  paper on the Publications page shows a "In the news · N" badge counting its
 #  stories. Use the bare DOI, e.g.  doi: "10.1098/rsif.2025.0868"
 #
-#  Optional `featured: true` + `image:` — promotes a story to the big cards at
+#  Optional `featured: true` + `image:`, promotes a story to the big cards at
 #  the top of the News page. `image:` can be a local file (/assets/img/…) OR a
 #  direct URL to the article's own image, e.g.
 #    image: "https://example.com/story-hero.jpg"

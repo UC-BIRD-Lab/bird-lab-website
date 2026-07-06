@@ -17,10 +17,10 @@ University of California, Davis · Davis, CA 95616</p>
 
 ## Where to go next
 
-<div class="grid grid-3" style="margin-top:1.2rem">
+<div class="grid grid-3 u-mt-12">
 <a class="card card--link" href="{{ '/join/' | relative_url }}">
 <h3>Join the lab</h3>
-<p>Current openings and the best way to introduce yourself — including what to put in a first email.</p>
+<p>Current openings and the best way to introduce yourself, including what to put in a first email.</p>
 </a>
 <a class="card card--link" href="{{ '/people/' | relative_url }}">
 <h3>Meet the team</h3>
@@ -32,7 +32,7 @@ University of California, Davis · Davis, CA 95616</p>
 </a>
 </div>
 
-<p class="muted" style="font-size:var(--step--1);margin-top:1.6rem">Find me online:
+<p class="muted u-fs-sm u-mt-16">Find me online:
 <a href="https://www.christinaharvey.ca">personal website</a> ·
 <a href="{{ site.lab.scholar }}">Google Scholar</a> ·
 <a href="https://orcid.org/{{ site.lab.orcid }}">ORCID</a> ·

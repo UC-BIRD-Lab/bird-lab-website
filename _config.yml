@@ -1,5 +1,5 @@
 # ─────────────────────────────────────────────────────────────
-#  BIRD Lab — Jekyll configuration
+#  BIRD Lab, Jekyll configuration
 #  Bio-Informed Research & Design Lab · UC Davis
 # ─────────────────────────────────────────────────────────────
 
@@ -11,7 +11,7 @@ description: >-
   them to improve engineered systems through bio-informed research.
 
 # Site address. `url` is the ORIGIN only (no path, no trailing slash).
-# Leave `baseurl` EMPTY — the deploy workflow fills in the project path
+# Leave `baseurl` EMPTY, the deploy workflow fills in the project path
 # ("/bird-lab-website") automatically at build time, and an empty baseurl keeps
 # the Site-checks link test passing. When you move to the custom domain, just
 # change `url` to "https://birdlab.ucdavis.edu".
@@ -33,8 +33,9 @@ lab:
   figshare_url: "https://figshare.com/authors/Christina_Harvey/4766004"
 
 # Default social-share (Open Graph) image used by jekyll-seo-tag.
-# Generate assets/img/og-image.jpg with apply.sh (see CONTENT-GUIDE.md) before launch.
-image: /assets/img/og-image.jpg
+# Points at the BIRD Lab logo on white.
+# To use a photo instead, point this at /assets/img/og-image.jpg (the wind-tunnel shot).
+image: /assets/img/logo_whiteshading.png
 
 # Optional image assets. 
 # Pages only render the image when its path is set, so the build never references a missing file.
@@ -46,7 +47,7 @@ assets:
   culture_photo: "/assets/img/lab/labphoto-silly-2024.jpg"
 
 # Private member workspace (Notion - Internal Pages).
-member_portal_url: "https://app.notion.com/p/birdlab/Internal-Lab-Pages-6d6f4c7465a44de5a518a5a6786593f1?source=copy_link"
+member_portal_url: "https://app.notion.com/p/birdlab/Internal-Lab-Pages-6d6f4c7465a44de5a518a5a6786593f1"
 
 # Undergraduate interest form
 undergrad_form_url: "https://forms.gle/TsddkYBtYMH5zkt78"
@@ -70,6 +71,19 @@ plugins:
   - jekyll-feed
   - jekyll-seo-tag
   - jekyll-sitemap
+  - jekyll-last-modified-at   # per-page "Last updated" date, from git history
+
+# ── Lab guide category order ─────────────────────────────────
+# Single source of truth for the guide's category order. Both the guide
+# landing page and the wiki sidebar read from this. Add a new category
+# here when you introduce one (the landing page warns if you forget).
+guide_order:
+  - Getting Started
+  - Communication & Culture
+  - Working in the Lab
+  - Research Workflow
+  - Writing & Dissemination
+  - Professional Development
 
 # ── Collections ──────────────────────────────────────────────
 collections:
@@ -95,9 +109,18 @@ exclude:
   - ARCHITECTURE.md
   - CONTENT-GUIDE.md
   - CONTRIBUTING.md
+  - INTERNAL-lab-roles.md   # internal-only companion to the public roles page; never publish
+  - lab-roles-tasks.csv     # internal-only roles routine (import into Notion); never publish
   - scripts/
   - Gemfile
   - Gemfile.lock
   - vendor/
   - .github/
   - pa11yci.json
+  # FUSE / editor-sync artifacts (".fuse_hiddenXXXX") can appear in collection
+  # folders when a file is edited while another process holds it open. They carry
+  # stale, sometimes corrupted front matter (a missing category shows up as a
+  # blank card on the Lab Guide hub), so keep them out of the build entirely.
+  - ".fuse_hidden*"
+  - "_guide/.fuse_hidden*"
+  - "_updates/.fuse_hidden*"
