@@ -1,18 +1,43 @@
 # ─────────────────────────────────────────────────────────────
 #  WATCH & LISTEN, videos, podcasts, and interactive media about the lab.
-#  Shown as a card strip on the News page, separate from written press coverage.
+#  Shown on the News page, separate from written press coverage: YouTube
+#  links render as thumbnail cards (the thumbnail is automatic), podcasts
+#  and 3D models render as compact rows.
 #  These are LINKS OUT (no embeds), so the page stays fast and cookie-free.
 #
 #    kind : video | podcast | model
-#    For a YouTube link the thumbnail is generated automatically; podcasts and
-#    3D models show an icon tile instead.
+#  Keep newest first.
 # ─────────────────────────────────────────────────────────────
+
+- title: "Bird flight research advances drone tech"
+  kind: video
+  source: "FOX40 News"
+  year: 2026
+  url: "https://www.youtube.com/watch?v=fz4SfRr6xvA"
+
+- title: "The Condor Chat, October 2024"
+  kind: video
+  source: "Ventana Wildlife Society"
+  year: 2024
+  url: "https://www.youtube.com/watch?v=TUVUjut9Z-A"
+
+- title: "Bio-informed flight with Christina Harvey and Michelle Hawkins"
+  kind: podcast
+  source: "Comstock's Talks"
+  year: 2024
+  url: "https://www.comstocksmag.com/podcast/bio-informed-flight-christina-harvey-and-michelle-hawkins"
 
 - title: "Try the hard things and see what happens"
   kind: podcast
   source: "The Engineer Whisperer · S2 E3"
   year: 2024
   url: "https://podcasters.spotify.com/pod/show/andrea-clough/episodes/S2--Episode-3--Christina-Harvey--Try-The-Hard-Things-And-See-What-Happens-e2fmtva"
+
+- title: "Evolution of bird maneuverability and lessons for UAV design"
+  kind: video
+  source: "Michigan Engineering"
+  year: 2022
+  url: "https://www.youtube.com/watch?v=gKnuEEUKAFg"
 
 - title: "Bird-inspired drone wings, digital twins & tracking microplastics from space"
   kind: podcast
@@ -26,9 +51,8 @@
   year: 2021
   url: "https://sketchfab.com/3d-models/3d-wing-morphing-drone-373a7bc4544e4b26b2f24388d855f8c5"
 
-# To add a video, paste the YouTube link and its title, the thumbnail is automatic:
-# - title: "Video title (copy it from YouTube)"
-#   kind: video
-#   source: "Channel or outlet"
-#   year: 2022
-#   url: "https://www.youtube.com/watch?v=fz4SfRr6xvA"
+- title: "Gull 'wing morphing' could be the future of airplane tech"
+  kind: video
+  source: "Amaze Lab"
+  year: 2019
+  url: "https://www.youtube.com/watch?v=qU86n3Xmrs0"

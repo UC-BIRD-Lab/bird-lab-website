@@ -71,7 +71,12 @@ the **top** of the list, fill in the submitted values, commit.
     - title: "Article headline"
       source: "Outlet name"
       url: "https://…"
+      doi: "10.1098/rsif.2025.0868"   # if the issue gave a DOI (shows a "Paper" pill)
+      tag: Center                      # else use the issue's reason tag (no doi + tag together)
 ```
+The issue form collects an optional DOI and, for stories not tied to a paper, a reason
+tag (`Center` / `Award` / `Funding` / `Profile` / `Feature`). Add whichever the issue
+provides — a story has **either** a `doi:` **or** a `tag:`, not both.
 
 After committing, close the issue with a note like "Live on the next build 👍".
 

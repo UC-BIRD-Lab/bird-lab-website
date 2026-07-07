@@ -31,3 +31,30 @@ body:
       placeholder: "2026"
     validations:
       required: true
+  - type: input
+    id: doi
+    attributes:
+      label: Paper DOI (optional)
+      description: >-
+        If the story is about a specific lab paper, paste its DOI. This links the
+        story to that paper and powers the "In the news" badge on the Publications
+        page. Leave blank for general coverage (center, award, funding, profile).
+      placeholder: "10.1098/rsif.2025.0868"
+    validations:
+      required: false
+  - type: dropdown
+    id: tag
+    attributes:
+      label: Reason tag (optional — for stories NOT tied to a paper)
+      description: >-
+        Only pick one if you left the DOI blank. It labels WHY the story is in the
+        list. Paper-linked stories show a "Paper" pill instead and need no tag.
+      options:
+        - "(none — this story has a DOI above)"
+        - Center
+        - Award
+        - Funding
+        - Profile
+        - Feature
+    validations:
+      required: false

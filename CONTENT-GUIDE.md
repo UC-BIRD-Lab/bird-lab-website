@@ -170,13 +170,22 @@ valid: `text: "We spoke at <a href='https://example.com'>the workshop</a>."`
       source: "Outlet name"
       url: "https://…"
       doi: "10.1098/rsif.2025.0868"   # optional: see below
+      tag: Feature                     # optional: see below (skip if doi is set)
       featured: true                   # optional: see below
       image: /assets/img/research/perchaero.jpg   # needed if featured
 ```
 (If the year already exists, just add another `- title:` block under its `items:`.)
 
 - **`doi:`**: the DOI of the paper the story covers. When set, that paper on the
-  Publications page shows an "In the news · N" badge counting its stories.
+  Publications page shows an "In the news · N" badge counting its stories, and the
+  story shows a "Paper" pill.
+- **`tag:`**: labels **why** a story that is *not* tied to a paper is in the list.
+  Use it only when there's no `doi:` (a paper-linked story shows the "Paper" pill
+  instead, so the two are mutually exclusive). Pick one from this small vocabulary:
+  `Center` (the flight-research center / CALI facility), `Award` (fellowships,
+  faculty honors), `Funding` (grants, research-award milestones), `Profile`
+  (interviews/profiles of the PI or lab members), `Feature` (general research
+  coverage not tied to one specific paper).
 - **`featured: true` + `image:`**: promotes the story to the big cards at the top
   of the News page. `image:` can be a local file (`/assets/img/…`) **or** a direct
   URL to the article's own image (`https://outlet.com/story.jpg`). A static site
@@ -191,7 +200,9 @@ python scripts/add_press.py "https://outlet.com/story" --doi 10.1098/rsif.2025.0
 It reads the outlet, headline, and author from the page, and: only with `--featured`:
 downloads the lead image into `assets/img/news/` (resized/compressed), then prints a
 ready-to-paste entry. Add `--append` to have it inserted into `press.yml` for you. Drop
-`--featured` for a normal (non-card) story. See the script's header for all options.
+`--featured` for a normal (non-card) story. For coverage not tied to a paper, pass a
+reason tag instead of a DOI, e.g. `--tag Center` (choices: `Center`, `Award`,
+`Funding`, `Profile`, `Feature`). See the script's header for all options.
 
 ### Videos, podcasts & 3D models: `_data/media.yml`
 

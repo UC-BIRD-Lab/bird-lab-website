@@ -26,6 +26,7 @@
     - { date: "May 2026", type: build, text: "The Center for Animal Locomotion & Innovation (CALI) celebrated its official grand opening." }
     - { date: "April 2026", type: award, text: "Alex Fillman received the 2026 Maury L. Hull Endowed Fellowship for Musculoskeletal Biomechanics Research." }
     - { date: "April 2026", type: talk, text: "Dr. Harvey gave an invited talk at the Janelia Simulated Bodies Symposium." }
+    - { date: "April 2026", type: paper, text: "Paper by Dr. Harvey in Communications Engineering introduced a transparent framework for reporting how bio-inspired a design really is." }
     - { date: "March 2026", type: award, text: "Kaleb Bordner and Francisco Jackson passed the QE exam advancing to PhD candidacy." }
     - { date: "March 2026", type: talk, text: "Kaleb Bordner and Adam Zhu presented at the Gordon Research Conference on Multifunctional Materials & Structures (Ventura, CA)." }
     - { date: "March 2026", type: paper, text: "Paper by Kiran Weston and Adam Zhu, in collaboration with Dr. Graham Taylor (University of Oxford), was published in the Journal of the Royal Society Interface." }

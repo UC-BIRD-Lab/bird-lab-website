@@ -1305,6 +1305,20 @@ a.card--link h3 { color: var(--c-navy); }
   transition: background .15s ease, color .15s ease, border-color .15s ease;
 }
 .news-press__doi:hover, .news-press__doi:focus-visible { background: var(--c-blue-600); color: #fff; border-color: var(--c-blue-600); }
+/* Reason tag on non-paper entries. Paper-linked rows use the blue "Paper" pill
+   instead, so a row shows at most one chip. Each reason gets a meaningful colour +
+   emoji: Center = institutional blue, Award = gold, Funding = green (money),
+   Profile = violet (person), Feature = teal (news). */
+.news-press__tag {
+  flex: none; font-size: .62rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--c-ink-soft); background: #eceff2; border: 1px solid var(--c-line);
+  border-radius: 999px; padding: .2rem .6rem; white-space: nowrap;
+}
+.news-press__tag[data-tag="Center"]  { background: #e9eef5; color: #34567f; border-color: #cddcec; }
+.news-press__tag[data-tag="Award"]   { background: #f7edcf; color: #8a6a1e; border-color: #ecdca6; }
+.news-press__tag[data-tag="Funding"] { background: #e6f3ea; color: #2e6b43; border-color: #cde6d6; }
+.news-press__tag[data-tag="Profile"] { background: #ece7fb; color: #533a97; border-color: #dcd2f3; }
+.news-press__tag[data-tag="Feature"] { background: #e2f0f2; color: #2b6b73; border-color: #c7e2e5; }
 
 /* News — "Watch & listen" media cards (link-outs, no embeds) */
 .media-grid {
@@ -1331,6 +1345,22 @@ a.card--link h3 { color: var(--c-navy); }
 .media-item__icon { font-size: 2.4rem; }
 .media-item__body { padding: .9rem 1rem 1.1rem; display: flex; flex-direction: column; gap: .25rem; }
 .media-item__kind { font-size: .62rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--c-blue-700); }
+/* Compact rows for media without a thumbnail (podcasts, 3D models): same
+   pattern as the press-coverage rows, so nothing looks like an empty card. */
+.media-lines { margin-top: 1.2rem; }
+.media-line {
+  display: flex; align-items: baseline; gap: .7rem; flex-wrap: wrap;
+  padding: .6rem .2rem; border-bottom: 1px solid var(--c-line);
+  text-decoration: none; transition: padding-left .15s ease;
+}
+.media-line:hover, .media-line:focus-visible { padding-left: .5rem; }
+.media-line__kind {
+  flex: none; font-size: .62rem; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--c-blue-700);
+  background: var(--c-sky); border-radius: 999px; padding: .2rem .6rem;
+}
+.media-line__title { color: var(--c-navy); font-weight: 600; }
+.media-line__meta { color: var(--c-muted); font-size: var(--step--1); margin-left: auto; }
 .media-item__title { font-family: var(--font-display); font-weight: 600; line-height: 1.25; }
 .media-item__meta { font-size: var(--step--1); color: var(--c-muted); }
 

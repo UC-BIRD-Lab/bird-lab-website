@@ -226,6 +226,11 @@ def build_entry(f, indent="      "):
         lines.append(indent + "author: " + yaml_dq(f["author"]))
     if f.get("doi"):
         lines.append(indent + "doi: " + yaml_dq(f["doi"]))
+    elif f.get("tag"):
+        # `tag:` labels why a NON-paper story is in the list (Center/Award/Funding/
+        # Profile/Feature). A story with a doi shows a "Paper" pill instead, so the
+        # two are mutually exclusive — only emit tag when there is no doi.
+        lines.append(indent + "tag: " + f["tag"])
     if f.get("featured"):
         lines.append(indent + "featured: true")
         if f.get("image"):
@@ -267,6 +272,8 @@ def main(argv=None):
     p = argparse.ArgumentParser(description="Build a press.yml entry from a news URL.")
     p.add_argument("url", help="Article URL")
     p.add_argument("--doi", default="", help="DOI of the paper the story covers (bare or URL)")
+    p.add_argument("--tag", default="", choices=["", "Center", "Award", "Funding", "Profile", "Feature"],
+                   help="Reason tag for a story NOT tied to a paper (ignored if --doi is given)")
     p.add_argument("--featured", action="store_true", help="Promote to the big News cards + fetch image")
     p.add_argument("--year", type=int, help="Override the year (else read from the page)")
     p.add_argument("--source", help="Override the outlet name")
@@ -327,8 +334,10 @@ def main(argv=None):
     year = get_year(meta, ld, args.year)
     doi = strip_doi(args.doi)
 
+    # A tag only applies to stories without a DOI (doi shows a "Paper" pill instead).
+    tag = "" if doi else args.tag
     fields = {"title": title, "source": source, "url": args.url,
-              "author": author, "doi": doi, "featured": args.featured}
+              "author": author, "doi": doi, "tag": tag, "featured": args.featured}
 
     warnings = []
     if not title:
@@ -365,6 +374,7 @@ def main(argv=None):
     print("  author   : %s" % (author or "(none found)"), file=sys.stderr)
     print("  year     : %s" % year, file=sys.stderr)
     print("  doi      : %s" % (doi or "(none)"), file=sys.stderr)
+    print("  tag      : %s" % (tag or "(none)"), file=sys.stderr)
     print("  featured : %s" % ("yes" if args.featured else "no"), file=sys.stderr)
     if fields.get("image"):
         print("  image    : %s" % fields["image"], file=sys.stderr)
