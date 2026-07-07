@@ -158,13 +158,6 @@ groups:
         photo: /assets/img/people/narihide-fujita.jpg
         email: ntfujita@ucdavis.edu
         linkedin: https://www.linkedin.com/in/narihidefujita
-      - name: Jiayi Li
-        role: Undergraduate Researcher
-        start: 2025
-        pronouns: she/her
-        field: "Mech + Aero Engineering"
-        photo: /assets/img/people/jiayi-li.jpg
-        email: dhtzhang@ucdavis.edu
       - name: Haotian Zhang
         role: Undergraduate Researcher
         start: 2026
@@ -263,29 +256,38 @@ affiliates:
       linkedin: https://www.linkedin.com/in/lydia-france-139864a3
 
 # Past members.
-#  TO RETIRE SOMEONE: cut their whole block from `groups` above and paste it
-#  here, then just add a `now:` line. The alumni table reuses the same fields,
-#  `start` (year joined) and `linkedin` carry over automatically, and a LinkedIn
-#  icon appears beside the name whenever `linkedin` is present. Extra fields
-#  (photo, email, field, awards…) are simply ignored, so you don't have to trim.
+#  TO RETIRE SOMEONE: cut their whole block from `groups` above (from its
+#  `- name:` line through its last field) and paste it below AS IS: the
+#  indentation here matches the groups, so no re-indenting is needed. Then just
+#  add a `now:` line (current position / destination); until you do, the table
+#  shows a dash. The alumni table reuses the same fields, `start` (year joined)
+#  and `linkedin` carry over automatically, and a LinkedIn icon appears beside
+#  the name whenever `linkedin` is present. Extra fields (photo, email, field,
+#  awards…) are simply ignored, so you don't have to trim them.
 #  `role` = position held in the lab; `now` = current position / destination.
 alumni:
   title: Alumni
   members:
-    - { name: Benjamin Tai-Brownlee, role: "Undergraduate Researcher (first in lab)", start: 2022, now: "Boeing" }
-    - { name: Rowan Glenn, role: "Undergraduate Researcher", start: 2022, now: "Northwood" }
-    - { name: Tejas Lotay, role: "Undergraduate Researcher", start: 2023, now: "NASA Ames" }
-    - { name: Lucas Dahlke, role: "Undergraduate Researcher", start: 2023, now: "UCLA" }
-    - { name: Bryan Tiang, role: "Undergraduate Researcher", start: 2023, now: "Stanford University" }
-    - { name: Jackie The, role: "Undergraduate Researcher", start: 2023, now: "Industry" }
-    - { name: Alex Kerlee, role: "Undergraduate Researcher", start: 2023, now: "Wisk" }
-    - { name: Ellie Hintzman, role: "Undergraduate Researcher", start: 2024, now: "Industry" }
-    - { name: Logan Reuter, role: "Undergraduate Researcher", start: 2024, now: "Ultima Genomics" }
-    - { name: Stevi Dunn, role: "Undergraduate Researcher", start: 2024, now: "Lucid" }
-    - { name: Gaurav Dhirar, role: "Undergraduate Researcher", start: 2024, now: "Academia" }
-    - { name: Isa Khalak, role: "Undergraduate Researcher", start: 2024, now: "UC Davis" }
-    - { name: Susie Benner, role: "Undergraduate Researcher", start: 2024, now: "UC Davis" }
-    - { name: Adrian Chan, role: "Undergraduate Researcher", start: 2025, now: "Stanford University" }
-    - { name: Kiran Weston, role: "Visiting Student · University of Oxford", start: 2023, now: "Newton Consulting" }
-    - { name: Francesca Ciocca, role: "Visiting Student · UBC", start: 2023, now: "Industry" }
-    - { name: Mija Jovchevska, role: "Visiting Researcher (JEB ECR Fellow)", start: 2024, now: "CU Boulder" }
+      - { name: Benjamin Tai-Brownlee, role: "Undergraduate Researcher (first in lab)", start: 2022, now: "Boeing" }
+      - { name: Rowan Glenn, role: "Undergraduate Researcher", start: 2022, now: "Northwood" }
+      - { name: Tejas Lotay, role: "Undergraduate Researcher", start: 2023, now: "NASA Ames" }
+      - { name: Lucas Dahlke, role: "Undergraduate Researcher", start: 2023, now: "UCLA" }
+      - { name: Bryan Tiang, role: "Undergraduate Researcher", start: 2023, now: "Stanford University" }
+      - { name: Jackie The, role: "Undergraduate Researcher", start: 2023, now: "Industry" }
+      - { name: Alex Kerlee, role: "Undergraduate Researcher", start: 2023, now: "Wisk" }
+      - { name: Ellie Hintzman, role: "Undergraduate Researcher", start: 2024, now: "Industry" }
+      - { name: Logan Reuter, role: "Undergraduate Researcher", start: 2024, now: "Ultima Genomics" }
+      - { name: Stevi Dunn, role: "Undergraduate Researcher", start: 2024, now: "Lucid" }
+      - { name: Gaurav Dhirar, role: "Undergraduate Researcher", start: 2024, now: "Academia" }
+      - { name: Isa Khalak, role: "Undergraduate Researcher", start: 2024, now: "UC Davis" }
+      - { name: Susie Benner, role: "Undergraduate Researcher", start: 2024, now: "UC Davis" }
+      - { name: Adrian Chan, role: "Undergraduate Researcher", start: 2025, now: "Stanford University" }
+      - { name: Kiran Weston, role: "Visiting Student · University of Oxford", start: 2023, now: "Newton Consulting" }
+      - { name: Francesca Ciocca, role: "Visiting Student · UBC", start: 2023, now: "Industry" }
+      - { name: Mija Jovchevska, role: "Visiting Researcher (JEB ECR Fellow)", start: 2024, now: "CU Boulder" }
+      - name: Jiayi Li
+        role: Undergraduate Researcher
+        start: 2025
+        pronouns: she/her
+        field: "Mech + Aero Engineering"
+        photo: /assets/img/people/jiayi-li.jpg

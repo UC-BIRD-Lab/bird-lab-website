@@ -30,6 +30,10 @@ premium hotels), alcohol or expensive meals, and avoidable late-booking fees.
 See [Travel]({{ '/lab-guide/travel/' | relative_url }}) for the full booking and reimbursement policy.
 </aside>
 
+<aside class="marginnote" markdown="1">
+**Paying & shipping.** Card details and how to file a reimbursement are on **Pay for things** in the [member portal]({{ '/portal/' | relative_url }}). Shipping a poster tube or equipment ahead? See **Ship Packages** there.
+</aside>
+
 **How payment works:** in most cases you pay upfront and get reimbursed, so keep
 itemized receipts. If the lab needs to pay directly (e.g., registration on the
 P-card), request that during the approval step.

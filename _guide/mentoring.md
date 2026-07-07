@@ -101,7 +101,7 @@ The clearest thing you teach is how you behave. Handle data honestly (see
 work fairly, cite carefully, and admit your own mistakes. People remember how they
 were treated far longer than any single piece of advice.
 
-## Mentor across difference
+## Mentoring across different backgrounds
 
 You can be an excellent mentor to someone whose background differs from yours. What
 you share, a commitment to the work and a desire to see them succeed, matters more
@@ -118,7 +118,5 @@ serves them better. Knowing when to hand off is part of mentoring well.
 ## Resources
 
 - [How to Mentor Graduate Students: A Guide for Faculty](https://myumi.ch/R58Oq) (University of Michigan Rackham). There is a companion volume for students on getting the mentoring they want.
-- [UC Davis GradPathways Institute](https://gradpathways.ucdavis.edu/) runs mentoring workshops for students and mentors.
-
-<!-- TODO: Christina to add the direct link to the UC Davis GradPathways mentoring page and the Rackham student companion guide if she wants them linked explicitly. -->
+- [UC Davis GradPathways Institute](https://gradpathways.ucdavis.edu/) runs mentoring workshops for students and mentors: see their [mentoring page](https://gradpathways.ucdavis.edu/mentoring) and [resources for mentors](https://gradpathways.ucdavis.edu/resources-mentors).
 

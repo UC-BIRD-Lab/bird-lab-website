@@ -27,6 +27,10 @@ toward your final degree.
 
 ## Write your dissertation
 
+<aside class="marginnote" markdown="1">
+The lab's **LaTeX thesis template**, pre-formatted for the UC Davis guidelines, is in the [member portal]({{ '/portal/' | relative_url }}).
+</aside>
+
 Compile your work into a comprehensive document. Note that UC Davis has strict
 formatting guidelines; see
 [Preparing & filing your thesis or dissertation](https://gradstudies.ucdavis.edu/preparing-filing-your-thesis-or-dissertation).

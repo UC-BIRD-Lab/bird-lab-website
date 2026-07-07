@@ -52,6 +52,7 @@ On recent macOS this can fail on the `eventmachine` gem: see the fix in
 │   ├── funders.yml         home-page "supported by" logos
 │   ├── collaborators.yml   home-page "in partnership with" org strip
 │   ├── gallery.yml         "scenes from the lab" photos
+│   ├── openings.yml        Join-page recruiting status (one-line toggles)
 │   ├── facilities.yml      facilities: tagline, specs, capabilities, funding
 │   └── navigation.yml      top menu
 ├── _layouts/  _includes/ ← page templates (rarely touched)

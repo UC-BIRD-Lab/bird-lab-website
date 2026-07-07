@@ -54,6 +54,10 @@ When you combine measured values into a derived quantity, the uncertainty in eac
 input carries through to the result, and errors tend to accumulate rather than
 cancel. Skip this and your final numbers will look far more precise than they are.
 
+<aside class="marginnote" markdown="1">
+**Collecting the data itself?** Operating procedures for the wind tunnel, high-speed cameras, and 3D scanner are in the [member portal]({{ '/portal/' | relative_url }}).
+</aside>
+
 This comes up constantly in our wind tunnel work. The forces and moments we report
 are rarely measured directly: we build them from load-cell readings, geometry, and
 flow conditions, then combine those into coefficients, static margins, and

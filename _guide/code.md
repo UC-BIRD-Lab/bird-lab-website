@@ -8,6 +8,10 @@ icon: "💻"
 reviewed: 2026-07-05
 ---
 
+<aside class="marginnote" markdown="1">
+**Lab-specific software.** Getting-started guides for **FlightStream** (our CFD tool) and our **reinforcement-learning stack** are in the [member portal]({{ '/portal/' | relative_url }}).
+</aside>
+
 Good software practices make research reproducible, collaborative, and easier to
 maintain. As the lab evolves, so will these recommendations.
 

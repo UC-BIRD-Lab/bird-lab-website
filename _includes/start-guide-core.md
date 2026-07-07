@@ -45,10 +45,14 @@ See [Data management]({{ '/lab-guide/data-management/' | relative_url }}) for th
 Email Christina from your UC Davis address to request:
 
 - Slack workspace access
+- [member portal]({{ '/portal/' | relative_url }}) access
 - an entry on the team page
 - Box folder access
 - GitHub organization access (include your username; you can also contact the GitHub owner, see [Lab operations roles]({{ '/lab-guide/lab-operations-roles/' | relative_url }}))
 {: .checklist}
+
+Once you have portal access, bookmark it and save the **Emergency Contact Information** page offline — it's the one page you may need when nothing else is working.
+{: .guide-info}
 
 - Get added to the weekly lab meeting and a weekly 30-minute one-on-one (see [Meetings]({{ '/lab-guide/meetings/' | relative_url }})).
 {: .checklist}

@@ -7,6 +7,10 @@
 # ─────────────────────────────────────────────────────────────
 
 awards:
+  - name: "NSF CAREER Award"
+    who: "Dr. Christina Harvey"
+    org: "National Science Foundation (BIO Directorate)"
+    year: 2026
   - name: "Packard Fellowship for Science and Engineering"
     who: "Dr. Christina Harvey"
     org: "The David & Lucile Packard Foundation"

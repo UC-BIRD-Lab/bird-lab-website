@@ -112,7 +112,7 @@ Further reading:
 ## Resolving conflict
 
 <aside class="marginnote" markdown="1">
-For our shared norms in group settings and our brave space, see
+For our shared norms in group settings, see
 [Discussion guidelines]({{ '/lab-guide/discussion-guidelines/' | relative_url }}).
 </aside>
 

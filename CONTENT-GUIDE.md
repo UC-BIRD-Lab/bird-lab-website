@@ -212,8 +212,9 @@ when there isn't one.
 ```yaml
 - name: Brooke Owens Fellowship
   level: "UG"                       # e.g. "UG", "Masters, PhD", "Post Doc"
-  eligibility: "US citizen · Woman/Non-binary"   # optional; leave off if open
   url: http://www.brookeowensfellowship.org/
+  # `eligibility:` is an optional field describing a program's own published
+  # rules (e.g. citizenship). Leave it off when a program is open to all.
 ```
 
 ---
@@ -266,6 +267,11 @@ long paragraphs.
   url_label: Visit the CALI consortium
   photo: /assets/img/facilities/cali.jpg
   photo_note: AI rendering based on real photos, to illustrate the setup.  # optional caption
+  # photo_alt describes the photo for screen readers (note if it is a
+  # rendering). Falls back to "Inside {name}" if omitted.
+  photo_alt: >-
+    The CALI flight hall, a long bright room lined with white curtains
+    and motion capture cameras.
   funding:                           # optional credit badge in the photo corner
     note: "DURIP support from:"
     name: DEVCOM Army Research Laboratory
@@ -282,6 +288,17 @@ long paragraphs.
 - **`featured:`**: set on exactly one facility. Its `photo` becomes the flagship band; a real photo works best (not the AI renderings).
 - **`photo_note:`**: a small italic caption under the image (used to mark the wind-tunnel/specimen renderings as AI-based). Leave it off for real photos.
 - **`funding:`**: shows a small "thanks to…" logo badge in the top corner of the flagship photo. Logos live in `assets/img/partners/`.
+
+---
+
+## Open or close a position: `_data/openings.yml`
+
+The three status pills on the **Join** page (undergrad, graduate, postdoc) are
+driven by this file; flip the matching `open:` line and the pill text and color
+update themselves. `open: true` shows the green pill with `open_note`,
+`open: false` the amber pill with `closed_note`. The file's header comment has
+the details, including the shared `email_body` draft that pre-fills the
+"Email me" buttons.
 
 ---
 

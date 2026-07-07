@@ -34,7 +34,9 @@ Do these once a month. None of them require the command line.
 4. **Update People** (`_data/people.yml`):
    - **Add** a new member, or **promote** someone by changing their `role:` (the bird badge updates itself).
    - **Retire** someone: cut their whole block from `groups:` and paste it under `alumni:`, then add a `now:` line. Their `start:` (year joined) and any `linkedin:` carry over, and a LinkedIn icon appears beside their name in the alumni table.
-5. **Confirm the Join page** hiring status still reads correctly (`join.md`).
+5. **Confirm the Join page** hiring status still reads correctly. All three
+   status pills (undergrad, graduate, postdoc) are one-line `open:` toggles in
+   `_data/openings.yml`.
 6. **Glance at the Actions tab.** Every run should have a green ✓. A red ✗ means a
    build failed: see *If something breaks* below.
 7. **(Optional) enrich a new paper.** When a paper's data/code/figure are ready,
@@ -213,7 +215,8 @@ this the moment a paper is accepted.
 
 ## Occasional / yearly
 
-- **When openings change:** rotate the **Join** page hiring status.
+- **When openings change:** flip the matching `open:` line in
+  `_data/openings.yml` (undergrad, graduate, or postdoc).
 - **Each term / as people move on:** review **alumni** destinations and add where people landed.
 - **As the team changes:** refresh **photos** and the lab **group photo**.
 - **Yearly:** confirm **funders** and any external links (guides, forms) still work. (The [guide-link-check Action](.github/workflows/guide-link-check.yml) already sweeps the lab guide's external links once a year and files an issue for any that break.)
@@ -229,7 +232,8 @@ this the moment a paper is accepted.
 - **Write real link text**: "see the [funding guide](…)", not "click [here](…)".
 - **Every informative image needs `alt` text;** decorative images get empty `alt`.
 - **Don't hard-code text colors**: the theme already meets AA contrast. The
-  palette lives in `assets/css/overrides.css`; if you change a color, re-check it
+  palette lives in the `:root` block at the top of `assets/css/style.css` (the
+  site's single stylesheet); if you change a color, re-check it
   with the [WebAIM Contrast Checker](https://webaim.org/resources/contrastchecker/)
   (aim for 4.5:1 for body text). The **Site checks** Action re-tests links,
   images, and accessibility on every push.
@@ -264,6 +268,17 @@ matching `_data/*.yml` file using the cheat-sheet in
 [CONTRIBUTING.md](CONTRIBUTING.md), commit, and close the issue.
 
 ---
+
+## Moving to a custom domain later (optional)
+
+If the lab ever wants `birdlab.ucdavis.edu` or similar instead of
+`uc-bird-lab.github.io`: request the subdomain from UC Davis IT (or buy a
+domain), then in the repo go to **Settings → Pages → Custom domain**, enter it,
+and keep **Enforce HTTPS** checked. GitHub writes a `CNAME` file to the repo;
+your DNS host needs a matching CNAME record pointing at
+`uc-bird-lab.github.io`. Afterward, update `url:` in `_config.yml` so absolute
+links and the sitemap use the new address. Old links keep redirecting from the
+github.io address automatically.
 
 ## Built to last
 

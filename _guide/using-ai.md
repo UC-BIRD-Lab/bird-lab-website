@@ -50,7 +50,7 @@ If a generative AI tool (e.g., ChatGPT) is used, your research publications (the
 
 ### Be aware of AI limitations
 
-- **Bias and stereotypes**. Generative AI uses datasets from diverse online sources, so it is possible for responses to include prejudice and bias. Researchers and developers are trying to mitigate these issues, but humans are biased so systems trained on our outputs will be biased as well. Be aware that these tools cannot recognize bias, and may perpetuate them.
+- **Bias and stereotypes**. Generative AI is trained on large amounts of text and data collected from across the internet, so it is possible for responses to include prejudice and bias. Researchers and developers are trying to mitigate these issues, but humans are biased so systems trained on our outputs will be biased as well. Be aware that these tools cannot recognize bias, and may perpetuate them.
 - **Fake citations**. Generative AI can produce fake information (hallucinations), including fake references and citations, which can lead to academic misconduct and plagiarism. Because its outputs draw on real source material, AI text can also reproduce that material closely enough to count as plagiarism, even unintentionally.
 - **Limited calculation ability**. Generative AI is not designed to perform calculations, thus its responses may be incorrect and inconsistent. You must always compare quantitative results with tools designed for calculations.
 

@@ -134,6 +134,23 @@ description: "The BIRD Lab at UC Davis uncovers fundamental principles of avian 
   </div>
 </section>
 
+<!-- In partnership with (collaborating organizations from _data/collaborators.yml) -->
+<section class="section section--tint">
+  <div class="container center partners">
+    <h2 class="eyebrow">In partnership with</h2>
+    <div class="partner-orgs">
+      {%- for c in site.data.collaborators -%}
+      <a class="partner-org" href="{{ c.url }}"{% if c.url contains '://' %} rel="noopener"{% endif %}>
+        {%- if c.photo %}<img src="{{ c.photo | relative_url }}" alt="" loading="lazy">{% endif -%}
+        <span class="partner-org__name">{{ c.name }}</span>
+        {%- if c.sub %}<span class="partner-org__sub">{{ c.sub }}</span>{% endif -%}
+      </a>
+      {%- endfor -%}
+    </div>
+    <p class="u-mt-14"><a href="{{ '/people/#affiliates' | relative_url }}">Meet our collaborators &rarr;</a></p>
+  </div>
+</section>
+
 <!-- CALI band -->
 {%- if site.assets.lab_photo and site.assets.lab_photo != "" -%}
 <section class="field-band" aria-label="The BIRD Lab in the field">
@@ -142,7 +159,7 @@ description: "The BIRD Lab at UC Davis uncovers fundamental principles of avian 
   <div class="container field-band__caption">
     <p class="eyebrow eyebrow--on-dark">Unique Facilities</p>
     <h2 class="field-band__line">The Center for Animal Locomotion & Innovation (CALI)</h2>
-    <p > World-class high-speed, high-resolution photogrammetry and motion capture capabilties to study animal or engineered locomotion.</p>
+    <p>World-class high-speed, high-resolution photogrammetry and motion capture capabilities to study animal or engineered locomotion.</p>
           <div class="hero__cta">
         <a class="btn btn--light" href="{{ '/facilities/' | relative_url }}">Tour the facilities</a>
         <a class="btn btn--ghost btn--on-dark" href="https://sites.google.com/ucdavis.edu/cali/home">CALI consortium</a>
@@ -150,6 +167,7 @@ description: "The BIRD Lab at UC Davis uncovers fundamental principles of avian 
   </div>
 </section>
 {%- endif -%}
+
 
 
 <!-- Open by default: public lab guide, data & code, plain-language writing -->
@@ -296,19 +314,3 @@ description: "The BIRD Lab at UC Davis uncovers fundamental principles of avian 
   </div>
 </section>
 
-<!-- In partnership with (collaborating organizations from _data/collaborators.yml) -->
-<section class="section section--tint">
-  <div class="container center partners">
-    <h2 class="eyebrow">In partnership with</h2>
-    <div class="partner-orgs">
-      {%- for c in site.data.collaborators -%}
-      <a class="partner-org" href="{{ c.url }}"{% if c.url contains '://' %} rel="noopener"{% endif %}>
-        {%- if c.photo %}<img src="{{ c.photo | relative_url }}" alt="" loading="lazy">{% endif -%}
-        <span class="partner-org__name">{{ c.name }}</span>
-        {%- if c.sub %}<span class="partner-org__sub">{{ c.sub }}</span>{% endif -%}
-      </a>
-      {%- endfor -%}
-    </div>
-    <p class="u-mt-14"><a href="{{ '/people/#affiliates' | relative_url }}">Meet our collaborators &rarr;</a></p>
-  </div>
-</section>

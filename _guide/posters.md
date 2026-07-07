@@ -126,6 +126,10 @@ honest notes about titles set too small or a section that carried too many words
 
 ## Making and printing it
 
+<aside class="marginnote" markdown="1">
+**Billing & shipping.** Chart strings and reimbursements are covered on **Pay for things** in the [member portal]({{ '/portal/' | relative_url }}); if you'd rather ship the printed poster than carry it, see **Ship Packages**.
+</aside>
+
 - You can build a poster as a single large slide in PowerPoint or Keynote, or use Google Slides, Inkscape, or Illustrator (paid).
 - Include the appropriate funding-agency logos; for the lab and UC Davis logos, see [Logos & branding]({{ '/lab-guide/logos-branding/' | relative_url }}).
 - Check your event's poster sizing and formatting guide *before* you start.

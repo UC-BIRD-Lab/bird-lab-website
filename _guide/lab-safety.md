@@ -53,6 +53,10 @@ drink is allowed in the main wind tunnel room (Room 1402).
 
 ## Access levels
 
+<aside class="marginnote" markdown="1">
+Step-by-step operating procedures for the wind tunnel, high-speed cameras, 3D scanner, and frozen-specimen handling are in the [member portal]({{ '/portal/' | relative_url }}).
+</aside>
+
 Your site-specific training approves you for specific spaces and activities:
 
 - **Office work:** working in the office.

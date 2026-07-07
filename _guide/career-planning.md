@@ -35,8 +35,9 @@ Keep these current as you go, not just when you apply (see
 
 - **CV** for academic and research roles; a one-to-two-page **résumé** tailored to
   each industry role.
-- **Statements** as needed: research, teaching, and diversity statements for
-  faculty applications; a **cover letter** tailored to each posting.
+- **Statements** as needed: research and teaching statements for faculty
+  applications, plus any statements a posting requires; a **cover letter**
+  tailored to each posting.
 - **A portfolio or work samples** (papers, code, figures, or a talk) that show
   what you can do.
 

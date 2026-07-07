@@ -8,7 +8,7 @@ icon: "🫂"
 reviewed: 2026-07-03
 ---
 
-It is our goal that every member has a fair, equitable, safe, and positive
+It is our goal that every member has a fair, safe, and positive
 experience in our community. Use the resources below to seek help for yourself or
 someone you know who needs support (with their consent). If you'd like help
 getting connected with a confidential resource, just ask.
@@ -37,9 +37,9 @@ Counseling through Student Health and Counseling Services (SHCS) and Aggie Menta
 - [Office of the Ombuds](https://ombuds.ucdavis.edu/): everyone. Confidential problem-solving and conflict management.
 - [Center for Advocacy, Resources & Education (CARE)](https://care.ucdavis.edu/): everyone, including postdocs. Advocates and a 24/7 help line (confidential; sexual harassment and violence).
 - [LGBTQIA Resource Center](https://lgbtqia.ucdavis.edu/): community counselors and wellness workshops.
-- [Women's Resources and Research Center](https://wrrc.ucdavis.edu/): centers women, transgender, femme, and non-binary individuals.
+- [Women's Resources and Research Center](https://wrrc.ucdavis.edu/)
 - [Student Disability Center](https://sdc.ucdavis.edu/): students. Accommodation requests (employees use Disability Management Services).
-- [Explore identities and cultures](https://studentaffairs.ucdavis.edu/student-life/communities/identity): find and join an affinity group.
+- [Student communities and groups](https://studentaffairs.ucdavis.edu/student-life/communities/identity)
 
 ## Reporting resources
 
