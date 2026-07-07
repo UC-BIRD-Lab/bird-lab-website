@@ -363,7 +363,17 @@ blockquote { border-left: 4px solid var(--c-blue-500); padding-left: 1rem; color
   /* Anchor the footage to the top and zoom it so the lower part of the shot
      (including the cardboard box on the floor) is cropped off on phones.
      .hero has overflow:hidden, so the extra height below the fold is clipped. */
-  .hero .section-bg { height: 130%; bottom: auto; object-position: center top; }
+  .hero .section-bg {
+    height: 130%; bottom: auto;
+    /* Two tuning knobs for the phone framing:
+       - object-position X: 50% = centered, higher % pans toward the RIGHT of
+         the shot to bring the perch into view (lower % if the perch is left).
+       - translateY: nudges the footage UP to show more of the bird flight;
+         more negative shows more but eventually reveals the cardboard box, so
+         keep it small. */
+    object-position: 62% top;
+    transform: translateY(-8%);
+  }
   /* Keep the three stats on a single row (they were wrapping 2 + 1). Equal
      flexible columns; labels wrap inside their own column if needed. */
   .hero__stats { margin-top: 1.2rem; flex-wrap: nowrap; gap: 1rem; }
