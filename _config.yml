@@ -35,9 +35,17 @@ lab:
   figshare_url: "https://figshare.com/authors/Christina_Harvey/4766004"
 
 # Default social-share (Open Graph) image used by jekyll-seo-tag.
-# Points at the BIRD Lab logo on white.
-# To use a photo instead, point this at /assets/img/og-image.jpg (the wind-tunnel shot).
-image: /assets/img/logo_whiteshading.png
+# A purpose-built 1200x630 branded card (logo on brand navy), opaque so it reads
+# the same in light and dark preview surfaces. Dimensions are declared so the
+# preview reserves the right space (og:image:width/height + twitter tags).
+image:
+  path: /assets/img/og-image.png
+  width: 1200
+  height: 630
+
+# Big summary card on X/Twitter (instead of the tiny square default).
+twitter:
+  card: summary_large_image
 
 # Optional image assets. 
 # Pages only render the image when its path is set, so the build never references a missing file.

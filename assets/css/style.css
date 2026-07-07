@@ -371,7 +371,7 @@ blockquote { border-left: 4px solid var(--c-blue-500); padding-left: 1rem; color
        - translateY: nudges the footage UP to show more of the bird flight;
          more negative shows more but eventually reveals the cardboard box, so
          keep it small. */
-    object-position: 48% top;
+    object-position: 38% top;
     transform: translateY(-10%);
   }
   /* Keep the three stats on a single row (they were wrapping 2 + 1). Equal
