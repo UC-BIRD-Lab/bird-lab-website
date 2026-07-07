@@ -94,28 +94,42 @@ eyebrow: Who we are
     </div>
 
     <div id="team-grid" class="grid grid-4 u-mt-14">
-      {% comment %} Within each role group: sort by year joined (oldest first),
-         then alphabetically by name. Year-bucketing guarantees the alphabetical
-         tie-break regardless of sort stability. {% endcomment %}
-      {% for group in site.data.people.groups %}
-        {% unless group.id == "pi" %}
-          {% assign group_years = group.members | map: "start" | uniq | sort %}
-          {% for yr in group_years %}
-            {% assign yr_members = group.members | where: "start", yr | sort_natural: "name" %}
-            {% for p in yr_members %}
-              {% include person.html p=p badge=true role=group.id %}
-            {% endfor %}
-          {% endfor %}
-        {% endunless %}
-      {% endfor %}
+      {%- comment -%} Order: by role (the group order in people.yml), then by LAST
+         NAME A–Z within each role. Last name = the person's `last:` field if set,
+         otherwise the last word of their `name` (so "Alfonso Martínez-Carmena" →
+         "Martínez-Carmena"). Set `last:` in people.yml for anyone the last-word
+         guess gets wrong. The sort key is lower-cased and accent-folded, so e.g.
+         "Martínez" files under M and ties break by full name. {%- endcomment -%}
+      {%- for group in site.data.people.groups -%}
+        {%- unless group.id == "pi" -%}
+          {%- assign keyed = "" | split: "" -%}
+          {%- for p in group.members -%}
+            {%- if p.last -%}{%- assign ln = p.last -%}
+            {%- else -%}{%- assign np = p.name | remove: "Dr. " | strip | split: " " -%}{%- assign ln = np | last -%}{%- endif -%}
+            {%- assign ln = ln | downcase | replace: "í","i" | replace: "é","e" | replace: "á","a" | replace: "ó","o" | replace: "ú","u" | replace: "ñ","n" | replace: "ü","u" | replace: "è","e" | replace: "à","a" | replace: "ö","o" | replace: "ä","a" | replace: "ç","c" -%}
+            {%- comment -%} Separator "#" sorts before letters, so a short surname
+               ("Li") correctly precedes a longer one it prefixes ("Liu"). {%- endcomment -%}
+            {%- assign entry = ln | append: "#" | append: p.name -%}
+            {%- assign one = entry | split: "~" -%}
+            {%- assign keyed = keyed | concat: one -%}
+          {%- endfor -%}
+          {%- assign keyed = keyed | sort -%}
+          {%- for k in keyed -%}
+            {%- assign nm = k | split: "#" | last -%}
+            {%- assign p = group.members | where: "name", nm | first -%}
+            {% include person.html p=p badge=true role=group.id %}
+          {%- endfor -%}
+        {%- endunless -%}
+      {%- endfor -%}
     </div>
 
   </div>
 
 </section>
 
-{%- comment -%} Scenes from the lab: renders only the scenes flagged ready: true. {%- endcomment -%}
-{%- assign ready_scenes = site.data.gallery.scenes | where_exp: "s", "s.ready" -%}
+{%- comment -%} Scenes from the lab: renders only scenes flagged ready: true that also
+   have alt text, so a photo can never ship with an empty alt attribute. {%- endcomment -%}
+{%- assign ready_scenes = site.data.gallery.scenes | where_exp: "s", "s.ready and s.alt" -%}
 {%- if ready_scenes and ready_scenes.size > 0 -%}
 <section class="people-group">
   <h2>Scenes from the lab</h2>

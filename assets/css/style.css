@@ -280,7 +280,9 @@ blockquote { border-left: 4px solid var(--c-blue-500); padding-left: 1rem; color
 .site-footer a { color: #d9ecf8; text-decoration: none; }
 .site-footer a:hover { text-decoration: underline; }
 .footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 2rem; padding-block: 3rem; }
-.site-footer h4 { color: #fff; font-family: var(--font-body); font-size: .8rem; text-transform: uppercase; letter-spacing: .1em; margin-bottom: .8rem; }
+/* Rendered as h2 so the heading outline never skips a level (h4 looked the same
+   but followed an h2 on most pages); styled small to keep the visual design. */
+.site-footer h2 { color: #fff; font-family: var(--font-body); font-size: .8rem; text-transform: uppercase; letter-spacing: .1em; margin-bottom: .8rem; }
 .site-footer ul { list-style: none; padding: 0; }
 .site-footer li { margin-bottom: .4rem; font-size: .95rem; }
 .site-footer .brandmark { display:flex; align-items:center; gap:.6rem; margin-bottom: .8rem; }

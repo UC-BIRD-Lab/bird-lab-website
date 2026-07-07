@@ -410,7 +410,9 @@ one person's bird, add `role_icon: "🦅"` to them in `_data/people.yml`.
 - **Scenes (People):** put optimized photos in `assets/img/lab/` (or a large
   original in `assets/img/lab/_raw/` and run `apply-images.sh`). In
   `_data/gallery.yml`, point each scene's `file:` at your image, write the `alt`
-  and `caption`, and set `ready: true`. A scene only shows when `ready: true`.
+  and `caption`, and set `ready: true`. A scene only shows when it has both
+  `ready: true` and an `alt:` (alt text is required so screen-reader users get
+  a description of every photo).
 - **Join culture photo:** set `culture_photo:` under `assets:` in `_config.yml`
   to a photo in `assets/img/lab/` to show it on the Join page.
 

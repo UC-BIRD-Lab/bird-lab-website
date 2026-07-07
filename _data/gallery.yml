@@ -5,6 +5,8 @@
 #    1. Put the original in  assets/img/lab/_raw/  (name it raptor-hall / outreach
 #       / wind-tunnel) and run  bash scripts/apply-images.sh
 #    2. Flip ready: true here.
+#  alt: is REQUIRED, a scene without it will not render (accessibility rule:
+#  every photo needs a description for screen-reader users).
 #  Captions are in the lab's voice, edit freely; keep them short.
 # ─────────────────────────────────────────────────────────────
 

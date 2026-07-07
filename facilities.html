@@ -10,7 +10,9 @@ eyebrow: Where we work
 {%- if featured -%}
 <section class="facility-flagship-section" aria-labelledby="flagship-h">
   <div class="facility-flagship">
-    <img class="facility-flagship__img" src="{{ featured.photo | relative_url }}" alt="Inside {{ featured.name }}" loading="lazy">
+    {%- comment -%} photo_alt (facilities.yml) describes the image; falls back to "Inside {name}". {%- endcomment -%}
+    {%- assign flagship_alt = "Inside " | append: featured.name -%}
+    <img class="facility-flagship__img" src="{{ featured.photo | relative_url }}" alt="{{ featured.photo_alt | default: flagship_alt }}" loading="lazy">
     {%- if featured.funding -%}
     <a class="facility-funder" href="{{ featured.funding.url }}" rel="noopener">
       <span class="facility-funder__note">{{ featured.funding.note }}</span>
@@ -64,7 +66,8 @@ eyebrow: Where we work
   <div class="facility-grid">
     {%- if f.photo -%}
     <figure class="facility-photo">
-      <img src="{{ f.photo | relative_url }}" alt="Inside {{ f.name }}" loading="lazy">
+      {%- assign fac_alt = "Inside " | append: f.name -%}
+      <img src="{{ f.photo | relative_url }}" alt="{{ f.photo_alt | default: fac_alt }}" loading="lazy">
       {%- if f.photo_note %}<figcaption class="facility-photo__note">{{ f.photo_note }}</figcaption>{% endif -%}
     </figure>
     {%- endif -%}

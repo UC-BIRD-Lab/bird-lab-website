@@ -16,6 +16,11 @@
 #  FIELD (optional), shows small discipline tag(s) so the lab's engineering/
 #  biology mix is visible. Comma-separate for more than one, e.g.
 #    field: "Aerospace, Animal Behavior"
+#
+#  SORTING: the team grid lists each role by LAST NAME A–Z. The last name is the
+#  last word of `name` by default (so "Alfonso Martínez-Carmena" → sorts under M).
+#  If that guess is wrong for someone (e.g. a two-word surname with no hyphen),
+#  add a `last:` line with the surname to sort by, e.g.  last: "van Dijk".
 # ─────────────────────────────────────────────────────────────
 
 groups:
@@ -120,7 +125,8 @@ groups:
         start: 2024
         photo: /assets/img/people/cooper-cook.jpg
         email: ctcook@ucdavis.edu
-        note: Morphing aerodynamics.
+        orcid: 0009-0000-5656-4620
+        note: Morphing aerodynamics · Photogrammetry.
       - name: Joshua Booth
         role: PhD Researcher
         pronouns: he/him
@@ -188,6 +194,7 @@ groups:
         role: Undergraduate Researcher
         start: 2026
         field: "Mech + Aero Engineering"
+        photo: /assets/img/people/haelie-tweet.jpg
       - name: Zak Conte
         role: Undergraduate Researcher
         start: 2026

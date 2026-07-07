@@ -136,6 +136,19 @@
     }
   }
 
+  // ---- Wiki sidebar fold (small screens) ----
+  // The sidebar's <details> ships open (no-JS fallback and desktop). Below
+  // 820px it starts collapsed so the article isn't pushed down the page, and
+  // it reopens automatically if the window widens past the breakpoint.
+  var wikiFold = document.querySelector(".wiki-fold");
+  if (wikiFold && window.matchMedia) {
+    var foldMq = window.matchMedia("(max-width: 820px)");
+    function syncWikiFold() { wikiFold.open = !foldMq.matches; }
+    syncWikiFold();
+    if (foldMq.addEventListener) foldMq.addEventListener("change", syncWikiFold);
+    else if (foldMq.addListener) foldMq.addListener(syncWikiFold);
+  }
+
   // ---- Wiki search (filters side nav + jumps) ----
   var wikiSearch = document.getElementById("wiki-search");
   if (wikiSearch) {

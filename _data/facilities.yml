@@ -11,6 +11,9 @@
 #                        speed, or amount); the `label` says what it is.
 #  capabilities:       → remaining qualitative features, shown as chips.
 #  blurb               → optional; kept minimal. Prefer specs + chips over prose.
+#  photo_alt           → alt text describing the photo for screen-reader users.
+#                        Say what the image shows (and note if it is a rendering,
+#                        not a photo). Falls back to "Inside {name}" if omitted.
 # ─────────────────────────────────────────────────────────────
 
 - name: Center for Animal Locomotion and Innovation (CALI)
@@ -23,6 +26,10 @@
   url: https://sites.google.com/ucdavis.edu/cali/home
   url_label: Visit the CALI consortium
   photo: /assets/img/facilities/cali.jpg
+  photo_alt: >-
+    The CALI flight hall: a long, brightly lit room with white curtains
+    lining both walls, motion capture cameras mounted along them, and an
+    open concrete floor leading to a roll-up door.
   funding:
     note: "DURIP support from:"
     name: DEVCOM Army Research Laboratory
@@ -46,6 +53,10 @@
   location: UC Davis Bainer Hall
   photo: /assets/img/facilities/wind-tunnel.jpg
   photo_note: AI rendering based on real photos, to illustrate the setup.
+  photo_alt: >-
+    Rendering of the wind tunnel: a wide blue intake with a mesh screen
+    narrowing into a silver test section with a viewing window, then a
+    long blue tube ending at the fan.
   specs:
     - { value: "165 mph", label: "maximum test-section speed" }
     - { value: "< 0.1%", label: "free-stream turbulence" }
@@ -63,6 +74,9 @@
   location: UC Davis Bainer Hall
   photo: /assets/img/facilities/specimen-room.jpg
   photo_note: AI rendering based on real photos, to illustrate the setup.
+  photo_alt: >-
+    Rendering of the specimen room: five motion capture cameras on
+    tripods encircling a small round table with a laptop.
   specs:
     - { value: "5", label: "OptiTrack Flex13 motion capture cameras" }
     - { value: "1", label: "Dedicated specimen freezer" }

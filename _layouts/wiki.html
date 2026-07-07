@@ -12,6 +12,16 @@ layout: default
 <div class="section">
   <div class="container wiki-layout">
     <aside class="wiki-side">
+      {%- comment -%}
+        The whole sidebar lives in a <details> so it can collapse to a single
+        "Guide menu" button on small screens (where it otherwise pushes the
+        article far down the page). It ships open: with JS off nothing changes,
+        and on desktop the CSS hides the summary so the sidebar looks as it
+        always has. main.js closes it on small screens.
+      {%- endcomment -%}
+      <details class="wiki-fold" open>
+        <summary class="wiki-fold__summary">Guide menu: search &amp; contents</summary>
+        <div class="wiki-fold__body">
       <label class="visually-hidden" for="wiki-search">Search the lab guide</label>
       <input type="search" id="wiki-search" placeholder="Search the guide…" autocomplete="off">
 
@@ -63,6 +73,8 @@ layout: default
           {%- endif -%}
         {%- endfor -%}
       </nav>
+        </div>
+      </details>
     </aside>
 
     <article class="wiki-content">
