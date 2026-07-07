@@ -18,8 +18,14 @@ if ! command -v docker >/dev/null 2>&1; then
   exit 1
 fi
 
-echo "Starting Jekyll in Docker — open http://localhost:4000 (Ctrl+C to stop)…"
+# If a previous run was killed without Ctrl+C, its container can linger and
+# hold port 4000; remove any leftover one so a restart always works.
+docker rm -f birdlab-site >/dev/null 2>&1 || true
+
+echo "Starting Jekyll in Docker: open http://localhost:4000 (Ctrl+C to stop)."
+echo "(The first start after a Docker restart can take a few minutes before any output appears.)"
 exec docker run --rm -it \
+  --name birdlab-site \
   --platform linux/amd64 \
   -v "$PWD:/srv/jekyll" \
   -p 4000:4000 \

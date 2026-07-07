@@ -33,3 +33,7 @@ and to fix the issue.
 
 UC Davis resources: the [Student Disability Center](https://sdc.ucdavis.edu/) and
 the campus [IT Accessibility](https://accessibility.ucdavis.edu/) program.
+
+## How this site is made
+
+This site is a static Jekyll site hosted on GitHub Pages. Its content was written by Dr. Christina Harvey and BIRD Lab members (2022–present), drawn from the lab's own Notion workspace. It was designed, built, and organized with the help of Claude, Anthropic's AI assistant, and some of the wording was drafted with Claude and then edited by the lab. Changes are proposed by BIRD Lab members (sometimes with AI help) through a GitHub review process, and Christina reviews and approves every page before it is published. If you have comments, concerns, or suggestions, please email [{{ site.lab.pi_email }}](mailto:{{ site.lab.pi_email }}).

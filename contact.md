@@ -23,7 +23,7 @@ University of California, Davis · Davis, CA 95616</p>
 <h3>Prospective students &amp; postdocs</h3>
 <p>Start with the Join page that includes current openings, timing, and application details.</p>
 </a>
-<a class="card card--link" href="mailto:{{ site.lab.pi_email }}?subject={{ 'Press enquiry - BIRD Lab (UC Davis)' | uri_escape }}">
+<a class="card card--link" href="mailto:{{ site.lab.pi_email }}?subject={{ 'Press inquiry - BIRD Lab (UC Davis)' | uri_escape }}">
 <h3>Press &amp; media</h3>
 <p>I'm happy to talk about and share our work. Please reach out via email.</p>
 </a>
