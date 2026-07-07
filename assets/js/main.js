@@ -122,17 +122,35 @@
       heroToggle.hidden = true;
     } else {
       setToggleState(!heroVideo.paused);
+      var userPaused = false;   // set only by the visitor's own toggle click
       heroToggle.addEventListener("click", function () {
         if (heroVideo.paused) {
+          userPaused = false;
           heroVideo.play();
           setToggleState(true);
         } else {
+          userPaused = true;
           heroVideo.pause();
           setToggleState(false);
         }
       });
       heroVideo.addEventListener("play", function () { setToggleState(true); });
       heroVideo.addEventListener("pause", function () { setToggleState(false); });
+
+      // Mobile browsers sometimes ignore the autoplay attribute (Low Power
+      // Mode, data saver). Nudge playback once now and once on first touch;
+      // if the browser still refuses, the poster + play button remain the
+      // fallback. Never fights an explicit pause from the visitor.
+      function nudgePlay() {
+        if (!heroVideo.paused || userPaused) return;
+        var p = heroVideo.play();
+        if (p && p.catch) p.catch(function () {});
+      }
+      nudgePlay();
+      document.addEventListener("touchstart", function onFirstTouch() {
+        document.removeEventListener("touchstart", onFirstTouch);
+        nudgePlay();
+      }, { passive: true });
     }
   }
 

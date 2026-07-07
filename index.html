@@ -148,6 +148,9 @@ description: "The BIRD Lab at UC Davis uncovers fundamental principles of avian 
       {%- endfor -%}
     </div>
     <p class="u-mt-14"><a href="{{ '/people/#affiliates' | relative_url }}">Meet our collaborators &rarr;</a></p>
+    <p class="muted u-fs-sm u-mt-10">The BIRD Lab is an affiliate of the
+    <a href="https://ohi.vetmed.ucdavis.edu/">UC Davis One Health Institute</a>
+    through our raptor health and rehabilitation work.</p>
   </div>
 </section>
 
@@ -287,6 +290,16 @@ description: "The BIRD Lab at UC Davis uncovers fundamental principles of avian 
           {%- endfor -%}
         </div>
       </div>
+      {%- if site.lab.instagram -%}
+      <a class="insta-card" href="{{ site.lab.instagram }}" rel="noopener">
+        <span class="insta-card__icon" aria-hidden="true">{% include instagram-icon.html %}</span>
+        <span class="insta-card__body">
+          <span class="insta-card__title">Follow the lab day to day</span>
+          <span class="insta-card__handle">@{{ site.lab.instagram_handle }} on Instagram</span>
+        </span>
+        <span class="insta-card__cta" aria-hidden="true">&rarr;</span>
+      </a>
+      {%- endif -%}
     </div>
     <a class="home-photo u-self-start" href="{{ '/people/' | relative_url }}">
       <img src="{{ '/assets/img/lab/students-CALIopening-2026.jpg' | relative_url }}" alt="The BIRD Lab team at the CALI flight hall, 2026" loading="lazy">

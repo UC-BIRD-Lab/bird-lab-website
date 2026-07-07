@@ -3,6 +3,7 @@ layout: page
 title: Contact
 eyebrow: Get in touch
 prose: true
+description: "Contact the BIRD Lab at UC Davis: email Dr. Christina Harvey about research collaboration, press enquiries, or joining the lab."
 ---
 
 <div class="contact-card">
@@ -15,20 +16,20 @@ University of California, Davis · Davis, CA 95616</p>
 <a class="btn btn--primary contact-card__btn" href="mailto:{{ site.lab.pi_email }}">Email the lab &rarr;</a>
 </div>
 
-## Where to go next
+## How to reach out
 
-<div class="grid grid-3 u-mt-12">
+<div class="grid grid-2 u-mt-12">
 <a class="card card--link" href="{{ '/join/' | relative_url }}">
-<h3>Join the lab</h3>
-<p>Current openings and the best way to introduce yourself, including what to put in a first email.</p>
+<h3>Prospective students &amp; postdocs</h3>
+<p>Start with the Join page that includes current openings, timing, and application details.</p>
 </a>
-<a class="card card--link" href="{{ '/people/' | relative_url }}">
-<h3>Meet the team</h3>
-<p>The researchers behind the work, plus our collaborators and partners.</p>
-</a>
-<a class="card card--link" href="{{ '/news/#in-the-news' | relative_url }}">
+<a class="card card--link" href="mailto:{{ site.lab.pi_email }}?subject={{ 'Press enquiry - BIRD Lab (UC Davis)' | uri_escape }}">
 <h3>Press &amp; media</h3>
-<p>Recent coverage. For enquiries, email with your outlet, topic, and deadline.</p>
+<p>I'm happy to talk about and share our work. Please reach out via email.</p>
+</a>
+<a class="card card--link" href="mailto:{{ site.lab.pi_email }}?subject={{ 'Research collaboration - BIRD Lab (UC Davis)' | uri_escape }}">
+<h3>Collaboration &amp; facility access</h3>
+<p>Curious about working together or about using the facilities (CALI or wind tunnel)? Please reach out via email.</p>
 </a>
 </div>
 
@@ -36,5 +37,6 @@ University of California, Davis · Davis, CA 95616</p>
 <a href="https://www.christinaharvey.ca">personal website</a> ·
 <a href="{{ site.lab.scholar }}">Google Scholar</a> ·
 <a href="https://orcid.org/{{ site.lab.orcid }}">ORCID</a> ·
-<a href="https://mae.ucdavis.edu/people/christina-harvey">UC&nbsp;Davis MAE page</a>
+<a href="https://mae.ucdavis.edu/people/christina-harvey">UC&nbsp;Davis MAE page</a> ·
+<a href="{{ site.lab.instagram }}">Instagram</a>
 </p>

@@ -3,6 +3,7 @@ layout: page
 title: Privacy
 eyebrow: About this site
 prose: true
+description: "How the BIRD Lab website approaches privacy."
 ---
 
 We keep this simple: the site collects as little as possible, and never anything that

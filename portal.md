@@ -3,6 +3,7 @@ layout: page
 title: Member Portal
 eyebrow: For lab members
 prose: true
+description: "The BIRD Lab member portal: our private workspace for lab members, with public lab policies available in the Lab Guide."
 ---
 
 The member portal is our internal **Notion workspace**. It holds private,

@@ -1,0 +1,8 @@
+{%- comment -%} Compact Instagram chip (gradient icon + handle). Renders only
+   when site.lab.instagram is set in _config.yml. {%- endcomment -%}
+{%- if site.lab.instagram -%}
+<a class="insta-pill" href="{{ site.lab.instagram }}" rel="noopener">
+  <span class="insta-pill__icon" aria-hidden="true">{% include instagram-icon.html %}</span>
+  @{{ site.lab.instagram_handle }}
+</a>
+{%- endif -%}

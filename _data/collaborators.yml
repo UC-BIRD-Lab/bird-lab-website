@@ -9,16 +9,16 @@
 # ─────────────────────────────────────────────────────────────
 
 - name: California Raptor Center
-  sub: UC Davis School of Veterinary Medicine
+  sub: Raptor rehabilitation research & home of the CALI flight hall
   photo: /assets/img/partners/crc.jpg
   url: https://crc.vetmed.ucdavis.edu
 
 - name: California Hawking Club
-  sub: Falconry expertise & field access
+  sub: Falconry expertise & access to trained birds in the field
   photo: /assets/img/partners/chc.jpg
   url: https://www.calhawkingclub.org
 
 - name: Museum of Wildlife and Fish Biology
-  sub: UC Davis specimen collections
+  sub: Avian specimens for our morphology studies
   photo: /assets/img/partners/mwfb.jpg
   url: https://mwfb.ucdavis.edu/#about

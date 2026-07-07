@@ -3,6 +3,7 @@ layout: page
 title: Join the Lab
 eyebrow: Get involved
 prose: true
+description: "How to join the BIRD Lab at UC Davis: current openings for undergraduates, graduate students, and postdocs, and what to put in a first email."
 ---
 
 Thank you for being interested in joining our team!

@@ -31,3 +31,13 @@
   short: "CITRIS and the Banatao Institute"
   url: "https://citris-uc.org/"
   logo: /assets/img/partners/citris.png
+
+- name: "UC Davis Center for Companion Animal Health"
+  short: "Center for Companion Animal Health (CCAH)"
+  url: "https://ccah.vetmed.ucdavis.edu/"
+  logo: /assets/img/partners/ccah.png
+
+- name: "UC Davis College of Engineering"
+  short: "UC Davis College of Engineering"
+  url: "https://engineering.ucdavis.edu/next-level-research-awards"
+  logo: /assets/img/partners/ucd-nlr.png
