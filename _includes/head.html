@@ -14,5 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400&display=swap">
-<link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+{%- comment -%} ?v= is the build time, so every deploy busts browser/CDN caches
+   and readers never see a stale stylesheet after a design change. {%- endcomment -%}
+<link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}?v={{ site.time | date: '%s' }}">
 <link rel="alternate" type="application/atom+xml" title="BIRD Lab news" href="{{ '/feed.xml' | relative_url }}">
