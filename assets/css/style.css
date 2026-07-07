@@ -358,7 +358,7 @@ blockquote { border-left: 4px solid var(--c-blue-500); padding-left: 1rem; color
    screen (roughly half an inch trimmed off the bottom on a phone), and the
    footage anchors to the top of the frame so it's the bottom of the shot that
    gets cropped away. */
-@media (max-width: 640px) {
+@media (max-width: 500px) {
   .hero__inner { padding-block: 1.6rem 1.1rem; }
   /* Anchor the footage to the top and zoom it so the lower part of the shot
      (including the cardboard box on the floor) is cropped off on phones.
@@ -371,8 +371,8 @@ blockquote { border-left: 4px solid var(--c-blue-500); padding-left: 1rem; color
        - translateY: nudges the footage UP to show more of the bird flight;
          more negative shows more but eventually reveals the cardboard box, so
          keep it small. */
-    object-position: 62% top;
-    transform: translateY(-8%);
+    object-position: 48% top;
+    transform: translateY(-10%);
   }
   /* Keep the three stats on a single row (they were wrapping 2 + 1). Equal
      flexible columns; labels wrap inside their own column if needed. */
