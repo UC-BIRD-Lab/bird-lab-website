@@ -70,6 +70,9 @@ groups:
         start: 2023
         photo: /assets/img/people/kaleb-bordner.jpg
         email: kkbordner@ucdavis.edu
+        orcid: 0009-0005-9105-1130
+        linkedin: https://www.linkedin.com/in/kaleb-bordner-0b45b78a/
+        github: https://github.com/woodentoken
         note: Bird-informed morphing tail flight dynamics & control.
         awards:
           - "ORAU Fellowship"
