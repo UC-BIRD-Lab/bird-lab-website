@@ -19,6 +19,23 @@ It can also build a _data/media.yml entry (videos, podcasts, radio, 3D models) w
 --media KIND. A media item is a compact row by default; add --featured to give it a
 thumbnail card (YouTube thumbnails are automatic, other cards need an --image).
 
+── Paper announcements ──────────────────────────────────────────────────────────
+Give it a paper's DOI with --paper and it drafts the two things you write by hand
+every time a paper lands: a _data/updates.yml news-timeline entry AND ready-to-post
+LinkedIn + Instagram captions. It reads the paper's title/authors/venue/year from
+your own publications.yml (canonical) and falls back to OpenAlex by DOI if the paper
+isn't synced yet, so this pairs naturally with the monthly "Update publications" PR:
+merge that, then run this on the new DOI.
+
+  * Lab authors are matched against _data/people.yml and written with their full
+    People-page names, so they AUTO-LINK in the timeline (same as any updates entry).
+  * The lead lab author becomes the subject ("Paper led by …"); a Harvey-first paper
+    reads "Paper by Dr. Harvey". Pass --topic "…" for the plain-language hook (else
+    the title is used as a placeholder to tighten).
+  * --append inserts the updates.yml entry under the right year (newest first),
+    targeted-insert so your comments/formatting stay intact. Captions print to the
+    console (or --out FILE); they are never committed to the site.
+
 Examples:
   python scripts/add_press.py "https://news.site/story" --doi 10.1098/rsif.2025.0868 --featured
   python scripts/add_press.py "https://news.site/story"                 # not featured, just print
@@ -27,9 +44,13 @@ Examples:
   python scripts/add_press.py "https://youtu.be/XXXX" --media video --featured --append
   python scripts/add_press.py "https://pod.site/ep" --media podcast --append
   python scripts/add_press.py "https://npr.org/…" --media radio --doi 10.1098/rsif.2025.1082 --append
+  # Paper announcement (news entry + social captions):
+  python scripts/add_press.py --paper 10.1098/rsif.2025.1082 --topic "raptor perching behavior"
+  python scripts/add_press.py --paper 10.1098/rsif.2025.1082 --append > captions.txt
 
 Requires: Python 3.8+ . Pillow is used to resize/compress the image when --featured
-(optional: without it the raw image is saved and you can shrink it later).
+(optional: without it the raw image is saved and you can shrink it later). The --paper
+mode uses PyYAML (already in scripts/requirements.txt) to read your data files.
 """
 from __future__ import annotations
 import argparse
@@ -48,6 +69,10 @@ from html.parser import HTMLParser
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PRESS_YML = os.path.join(REPO_ROOT, "_data", "press.yml")
 MEDIA_YML = os.path.join(REPO_ROOT, "_data", "media.yml")
+UPDATES_YML = os.path.join(REPO_ROOT, "_data", "updates.yml")
+PUBLICATIONS_YML = os.path.join(REPO_ROOT, "_data", "publications.yml")
+PUBLICATIONS_MANUAL_YML = os.path.join(REPO_ROOT, "_data", "publications_manual.yml")
+PEOPLE_YML = os.path.join(REPO_ROOT, "_data", "people.yml")
 IMG_DIR = os.path.join(REPO_ROOT, "assets", "img", "news")
 IMG_MAXW = 1280          # matches the research-figure budget (~1280px)
 IMG_MAX_KB = 140         # nudge JPEG quality down until under this
@@ -306,11 +331,313 @@ def append_to_press(entry_block, year):
     open(PRESS_YML, "w", encoding="utf-8").write("\n".join(lines).rstrip("\n") + "\n")
 
 
+# ── Paper announcements: DOI → updates.yml entry + social captions ────────────
+#
+# This whole section is self-contained so the rest of add_press.py keeps working
+# with zero extra dependencies; PyYAML is imported lazily, only when --paper runs.
+MONTHS = ["", "January", "February", "March", "April", "May", "June", "July",
+          "August", "September", "October", "November", "December"]
+
+
+def _yaml():
+    """Import PyYAML on demand with a friendly message (mirrors update_publications.py)."""
+    try:
+        import yaml
+        return yaml
+    except ImportError:
+        sys.exit("PyYAML is required for --paper: pip install -r scripts/requirements.txt")
+
+
+def deaccent(s):
+    """Fold accents so 'Martínez' matches 'Martinez' across data sources."""
+    import unicodedata
+    return "".join(c for c in unicodedata.normalize("NFKD", s or "")
+                   if not unicodedata.combining(c))
+
+
+def surname_key(author):
+    """The comparable surname from one author token, e.g. 'M. G. Hawkins' → 'hawkins',
+    'C. Harvey (also …poster)' → 'harvey', 'A. Martínez-Carmena' → 'martinez'."""
+    a = re.sub(r"\(.*?\)", "", author or "").strip().strip(".")
+    a = re.split(r"\s+", a)[-1] if a else ""
+    a = deaccent(a).lower()
+    return a.split("-")[0]                      # first part of a hyphenated surname
+
+
+def load_people_map():
+    """Map surname → the name to print (preferring the short alias the timeline uses,
+    e.g. 'Dr. Alfonso Martínez', 'Adam Zhu'), plus the set of Harvey surnames.
+    Covers current members, affiliates, and alumni so any co-author can link."""
+    yaml = _yaml()
+    try:
+        with open(PEOPLE_YML, encoding="utf-8") as fh:
+            data = yaml.safe_load(fh) or {}
+    except FileNotFoundError:
+        return {}, {"harvey"}
+
+    people = {}
+    def add(member):
+        name = (member.get("name") or "").strip()
+        if not name:
+            return
+        aliases = member.get("aliases") or []
+        display = aliases[0].strip() if aliases else name          # timeline style
+        last = (member.get("last") or name).split()[-1]
+        for key in {surname_key(last), surname_key(name)}:
+            if key:
+                people.setdefault(key, display)
+
+    for group in (data.get("groups") or []):
+        for m in (group.get("members") or []):
+            add(m)
+    for bucket in ("affiliates", "alumni"):
+        for m in ((data.get(bucket) or {}).get("members") or []):
+            add(m)
+    return people, {"harvey"}
+
+
+def openalex_by_doi(doi):
+    """Resolve one work from OpenAlex by DOI. Returns a paper dict or None."""
+    url = "https://api.openalex.org/works/https://doi.org/" + urllib.parse.quote(doi)
+    url += "?mailto=harvey@ucdavis.edu"
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "BIRDLab-site (harvey@ucdavis.edu)"})
+        with urllib.request.urlopen(req, timeout=25) as r:
+            w = json.load(r)
+    except Exception as e:
+        print("Note: OpenAlex lookup failed (%s)." % e, file=sys.stderr)
+        return None
+    names = []
+    for a in w.get("authorships") or []:
+        full = ((a.get("author") or {}).get("display_name") or "").strip()
+        if not full:
+            continue
+        parts = full.split()
+        initials = " ".join(p[0].upper() + "." for p in parts[:-1] if p[:1].isalpha())
+        names.append((initials + " " + parts[-1]).strip())
+    venue = ((w.get("primary_location") or {}).get("source") or {}).get("display_name") or ""
+    return {"title": (w.get("title") or "").strip(),
+            "authors": ", ".join(names),
+            "venue": venue.strip(),
+            "year": w.get("publication_year"),
+            "date": w.get("publication_date") or ""}
+
+
+def resolve_paper(doi):
+    """Prefer the site's own committed metadata (canonical), else OpenAlex by DOI."""
+    yaml = _yaml()
+    want = strip_doi(doi).lower()
+
+    def scan(path, key=None):
+        try:
+            with open(path, encoding="utf-8") as fh:
+                data = yaml.safe_load(fh) or {}
+        except FileNotFoundError:
+            return None
+        entries = data.get(key, []) if key else data
+        if isinstance(entries, dict):                 # publications.yml is a bare list
+            entries = []
+        for e in (entries or []):
+            if isinstance(e, dict) and strip_doi(e.get("doi", "")).lower() == want and want:
+                return e
+        return None
+
+    hit = scan(PUBLICATIONS_YML) or scan(PUBLICATIONS_MANUAL_YML, "conference") \
+        or scan(PUBLICATIONS_MANUAL_YML, "journal")
+    if hit:
+        return {"title": (hit.get("title") or "").strip(),
+                "authors": (hit.get("authors") or "").strip(),
+                "venue": (hit.get("venue") or "").strip(),
+                "year": hit.get("year"),
+                "date": str(hit.get("date") or ""),
+                "_source": "publications.yml"}, None
+
+    oa = openalex_by_doi(want)
+    if oa:
+        oa["_source"] = "OpenAlex"
+        return oa, None
+    return None, ("couldn't find DOI %s in publications.yml/publications_manual.yml, "
+                  "and OpenAlex had nothing. Check the DOI, or add the paper first." % want)
+
+
+def month_year(paper):
+    """'July 2026' from the paper's date/year (falls back to the year alone)."""
+    d = (paper.get("date") or "").strip()
+    m = re.match(r"(\d{4})-(\d{2})", d)
+    if m:
+        return "%s %s" % (MONTHS[int(m.group(2))], m.group(1))
+    return str(paper.get("year") or datetime.date.today().year)
+
+
+def build_update_text(paper, people, harvey_keys, topic=None):
+    """Draft the timeline sentence, linking the lead lab author automatically."""
+    authors = paper.get("authors") or ""
+    first = authors.split(",")[0] if authors else ""
+    lead_key = surname_key(first)
+    venue = (paper.get("venue") or "").strip()
+    title = (paper.get("title") or "").strip().rstrip(".")
+
+    if lead_key in harvey_keys:
+        subject = "Paper by Dr. Harvey"
+    elif lead_key in people:
+        subject = "Paper led by %s" % people[lead_key]
+    else:
+        subject = "Paper"                              # external lead author
+    venue_clause = (" in %s" % venue) if venue else ""
+    if topic:
+        return "%s%s on %s." % (subject, venue_clause, topic.strip().rstrip("."))
+    return "%s%s: “%s.”" % (subject, venue_clause, title)   # curly quotes
+
+
+def build_update_entry(date_label, text):
+    """One inline updates.yml event line (matches the file's flow-mapping style)."""
+    safe = text.replace("\\", "\\\\").replace('"', '\\"')
+    return '    - { date: "%s", type: paper, text: "%s" }' % (date_label, safe)
+
+
+def append_to_updates(entry_line, year):
+    """Insert the event as the newest item under `- year: YEAR` (targeted insert;
+    header comments and formatting are preserved). Creates the year block if new."""
+    if not os.path.exists(UPDATES_YML):
+        raise FileNotFoundError(UPDATES_YML)
+    lines = open(UPDATES_YML, encoding="utf-8").read().splitlines()
+    year_at = {}
+    for i, ln in enumerate(lines):
+        m = re.match(r"- year:\s*(\d{4})", ln)
+        if m:
+            year_at[int(m.group(1))] = i
+
+    if year in year_at:
+        j = year_at[year] + 1
+        while j < len(lines) and not re.match(r"\s*events:\s*$", lines[j]):
+            j += 1
+        lines[j + 1:j + 1] = [entry_line]              # newest at top of that year
+    else:
+        block = ["- year: %d" % year, "  events:", entry_line]
+        older = sorted([y for y in year_at if y < year], reverse=True)
+        if older:
+            pos = year_at[older[0]]
+            lines[pos:pos] = block + [""]
+        else:
+            if lines and lines[-1].strip():
+                lines.append("")
+            lines += block
+    open(UPDATES_YML, "w", encoding="utf-8").write("\n".join(lines).rstrip("\n") + "\n")
+
+
+def clean_authors_for_social(authors):
+    """Human-readable author list for captions (drop the '(also … poster)' notes)."""
+    return re.sub(r"\s*\(.*?\)", "", authors or "").strip().rstrip(",")
+
+
+def build_social(paper, doi):
+    """Return (linkedin, instagram) caption drafts. Kept deliberately editable:
+    a bracketed takeaway prompt is left for the one human sentence worth writing."""
+    title = (paper.get("title") or "").strip().rstrip(".")
+    venue = (paper.get("venue") or "").strip()
+    year = paper.get("year") or datetime.date.today().year
+    authors = clean_authors_for_social(paper.get("authors"))
+    link = "https://doi.org/" + strip_doi(doi)
+    venue_line = ("%s (%s)" % (venue, year)) if venue else str(year)
+
+    linkedin = (
+        "\U0001F426 New from the BIRD Lab — our latest paper is out"
+        + ((" in %s" % venue) if venue else "") + ".\n\n"
+        "“" + title + "”\n\n"
+        "[One plain-language sentence on what we found and why it matters.]\n\n"
+        + (("Authors: %s\n" % authors) if authors else "")
+        + "Read it: " + link + "\n\n"
+        "#BioinspiredDesign #BirdFlight #AerospaceEngineering #Biomechanics #UCDavis #BIRDLab"
+    )
+    instagram = (
+        "New paper out \U0001F985\U0001F4C4\n\n"
+        "“" + title + "”\n"
+        + venue_line + "\n\n"
+        "[One friendly line on the finding + why it's cool.]\n"
+        "\U0001F517 Full paper linked in our bio.\n\n"
+        "#birdflight #bioinspired #aerospace #biomechanics #engineering #UCDavis #science #research"
+    )
+    return linkedin, instagram
+
+
+def run_paper(args):
+    """--paper pipeline: draft an updates.yml news entry + LinkedIn/Instagram captions."""
+    doi = strip_doi(args.paper)
+    if not doi:
+        sys.exit("ERROR: --paper needs a DOI (bare or as a doi.org URL).")
+
+    print("Resolving DOI %s ..." % doi, file=sys.stderr)
+    paper, err = resolve_paper(doi)
+    if err:
+        sys.exit("ERROR: " + err)
+
+    # Overrides let you fix anything the metadata got wrong.
+    if args.title:
+        paper["title"] = args.title
+    if args.source:
+        paper["venue"] = args.source
+    if args.year:
+        paper["year"] = args.year
+
+    people, harvey_keys = load_people_map()
+    text = build_update_text(paper, people, harvey_keys, topic=args.topic)
+    date_label = month_year(paper)
+    year = int(re.search(r"\d{4}", date_label).group())
+    entry = build_update_entry(date_label, text)
+    linkedin, instagram = build_social(paper, doi)
+
+    # ── Console summary ──
+    print("\n" + "-" * 66, file=sys.stderr)
+    print("  source   : %s" % paper.get("_source", "?"), file=sys.stderr)
+    print("  title    : %s" % (paper.get("title") or "(!) missing"), file=sys.stderr)
+    print("  venue    : %s" % (paper.get("venue") or "(none)"), file=sys.stderr)
+    print("  authors  : %s" % (paper.get("authors") or "(none)"), file=sys.stderr)
+    print("  date     : %s  (year %d)" % (date_label, year), file=sys.stderr)
+    lead_key = surname_key((paper.get("authors") or "").split(",")[0])
+    who = people.get(lead_key) or ("Dr. Harvey" if lead_key in harvey_keys else "(external lead)")
+    print("  lead link: %s" % who, file=sys.stderr)
+    if not args.topic:
+        print("  ! no --topic given: the title is used as a placeholder — tighten it.",
+              file=sys.stderr)
+    print("-" * 66, file=sys.stderr)
+
+    if args.append:
+        append_to_updates(entry, year)
+        print("Inserted into _data/updates.yml under %d (newest first). Review the diff."
+              % year, file=sys.stderr)
+    else:
+        print("Paste this as the newest event under `- year: %d` in _data/updates.yml:\n"
+              % year, file=sys.stderr)
+        print(entry)
+
+    # Captions go to a file if asked, else to the console. Never committed to the site.
+    social = ("=== LinkedIn ===\n%s\n\n=== Instagram ===\n%s\n" % (linkedin, instagram))
+    if args.out:
+        with open(args.out, "w", encoding="utf-8") as fh:
+            fh.write(social)
+        print("Wrote captions to %s" % args.out, file=sys.stderr)
+    else:
+        print("\n" + "-" * 66, file=sys.stderr)
+        print("Social captions (edit the [bracketed] takeaway, then post):", file=sys.stderr)
+        print("-" * 66, file=sys.stderr)
+        print("\n" + social)
+
+
 # ── Main ──────────────────────────────────────────────────────────────────────
 def main(argv=None):
-    p = argparse.ArgumentParser(description="Build a press.yml entry from a news URL.")
-    p.add_argument("url", help="Article URL")
+    p = argparse.ArgumentParser(
+        description="Draft a press.yml / media.yml entry from a news URL, "
+                    "or (with --paper DOI) a publications news entry + social captions.")
+    p.add_argument("url", nargs="?", help="Article URL (omit when using --paper)")
     p.add_argument("--doi", default="", help="DOI of the paper the story covers (bare or URL)")
+    p.add_argument("--paper", default="", metavar="DOI",
+                   help="Paper-announcement mode: draft a _data/updates.yml news entry and "
+                        "LinkedIn/Instagram captions from this DOI (bare or doi.org URL).")
+    p.add_argument("--topic", default="",
+                   help="[--paper] Plain-language hook for the news entry "
+                        "(e.g. \"raptor perching behavior\"); default falls back to the title.")
+    p.add_argument("--out", default="",
+                   help="[--paper] Write the social captions to this file instead of the console.")
     p.add_argument("--tag", default="", choices=["", "Center", "Award", "Funding", "Profile", "Feature"],
                    help="Reason tag for a story NOT tied to a paper (ignored if --doi is given)")
     p.add_argument("--featured", action="store_true", help="Promote to the big News cards + fetch image")
@@ -324,6 +651,12 @@ def main(argv=None):
     p.add_argument("--append", action="store_true",
                    help="Insert into the data file (else just print). Targets media.yml with --media, else press.yml.")
     args = p.parse_args(argv)
+
+    # Paper-announcement mode is its own pipeline (no news page to scrape).
+    if args.paper:
+        return run_paper(args)
+    if not args.url:
+        p.error("give an article URL, or use --paper DOI for a paper announcement.")
 
     is_media = bool(args.media)
     # A media item only needs an image when it's a featured NON-YouTube card;

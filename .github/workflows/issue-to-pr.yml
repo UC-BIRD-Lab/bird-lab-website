@@ -1,0 +1,106 @@
+name: Issue form to pull request
+
+# Turns a submitted website issue FORM into the matching _data edit and opens a
+# pull request for review. Covers all four forms (the news template, conference
+# paper/talk/poster, add/update a member, and press coverage). You just check the
+# draft and merge — because the PR says "Closes #<issue>", merging also closes it,
+# and the bot comments on the issue with the PR link.
+#
+# It only runs for OPEN issues carrying the `website-update` label (every form adds
+# it), and routes by the second label the form sets (news / publications / people /
+# press). Anything else is ignored.
+on:
+  issues:
+    types: [opened, edited, reopened, labeled]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  draft-change:
+    if: >-
+      github.event.issue.state == 'open' &&
+      contains(github.event.issue.labels.*.name, 'website-update')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r scripts/requirements.txt
+
+      - name: Decide which form this is
+        id: route
+        run: |
+          labels=",$(echo '${{ join(github.event.issue.labels.*.name, ',') }}'),"
+          case "$labels" in
+            *,news,*)         echo "kind=news" >> "$GITHUB_OUTPUT" ;;
+            *,publications,*) echo "kind=conference" >> "$GITHUB_OUTPUT" ;;
+            *,people,*)       echo "kind=person" >> "$GITHUB_OUTPUT" ;;
+            *,press,*)        echo "kind=press" >> "$GITHUB_OUTPUT" ;;
+            *)                echo "kind=" >> "$GITHUB_OUTPUT" ;;
+          esac
+
+      - name: Build the change from the issue
+        id: build
+        if: steps.route.outputs.kind != ''
+        continue-on-error: true
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+        run: |
+          python scripts/issue_to_change.py --kind "${{ steps.route.outputs.kind }}" 2> build-error.txt
+          echo "---"; cat build-error.txt || true
+
+      - name: Open a pull request with the drafted change
+        id: pr
+        if: steps.build.outcome == 'success'
+        uses: peter-evans/create-pull-request@v8
+        with:
+          commit-message: "Website update from #${{ github.event.issue.number }}: ${{ steps.build.outputs.summary }}"
+          branch: bot/issue-${{ github.event.issue.number }}
+          title: "Website update: ${{ steps.build.outputs.summary }}"
+          body: |
+            Drafted from #${{ github.event.issue.number }} into `${{ steps.build.outputs.target }}`.
+
+            Please check the wording (and, for a new person, the group placement and
+            any photo), then merge. Merging this closes the issue.
+
+            Closes #${{ github.event.issue.number }}
+          labels: |
+            website-update
+            automation
+
+      - name: Comment with the PR link
+        if: steps.pr.outputs.pull-request-number
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.issue.number,
+              body: `🪶 Drafted this into \`${{ steps.build.outputs.target }}\`: ${{ steps.pr.outputs.pull-request-url }}\n\nA maintainer just needs to review and merge — that will close this issue.`
+            });
+
+      - name: Comment if it couldn't be drafted
+        if: steps.build.outcome == 'failure'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            let detail = '';
+            try { detail = fs.readFileSync('build-error.txt', 'utf8'); } catch (e) {}
+            const body = "⚠️ I couldn't auto-draft this submission — a maintainer will "
+              + "add it by hand. Details:\n\n```\n" + (detail || "see the Actions log") + "\n```";
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.issue.number,
+              body
+            });

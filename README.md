@@ -6,6 +6,7 @@ The public website for the **Bio-Informed Research & Design (BIRD) Lab** at UC D
 > - [CONTENT-GUIDE.md](CONTENT-GUIDE.md) (edit content)
 > - [CONTRIBUTING.md](CONTRIBUTING.md) (submit updates)
 > - [MAINTENANCE.md](MAINTENANCE.md) (keep it running: publish, preview, fixes)
+> - [AUTOMATION.md](AUTOMATION.md) (the robots, in plain English: what they do & how to change them)
 > - [ARCHITECTURE.md](ARCHITECTURE.md) (why it's built this way)
 
 ---
@@ -53,9 +54,9 @@ On recent macOS this can fail on the `eventmachine` gem: see the fix in
 │   └── navigation.yml      top menu
 ├── _layouts/  _includes/ ← page templates (rarely touched)
 ├── assets/              ← CSS, JS, logo, images
-├── scripts/             ← publications sync · press-entry helper · image tools
+├── scripts/             ← publications sync · press/paper helper · link check · image tools
 ├── CONTRIBUTING.md      ← how lab members submit updates + delegation
-└── .github/             ← workflows (deploy · publications · checks) + issue forms
+└── .github/             ← workflows (deploy · publications · checks · link-rot · images · issue→PR) + issue forms
 ```
 
 **Rules of thumb:** 

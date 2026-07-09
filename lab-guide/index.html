@@ -15,7 +15,7 @@ title: Lab Guide
 {%- assign start_pages = site.guide | where: "category", featured_cat | sort: "order" -%}
 {%- assign section_count = order.size | minus: 1 -%}
 
-<section class="section">
+<section class="section guide-hub-section">
   <div class="container">
     <div class="guide-hub-top">
     <div class="guide-hub-top__main">
@@ -57,8 +57,28 @@ title: Lab Guide
     {%- endif -%}
     {%- endif -%}
 
-    {%- comment -%} Feature the role start-guides up top; they're dropped from the
-      category loop below so nothing renders twice. {%- endcomment -%}
+    {%- comment -%} Search first, so the quickest way to find a page is the top
+      thing a returning member sees. The chips and role start-guides follow. {%- endcomment -%}
+    <div class="guide-search">
+      <label class="visually-hidden" for="guide-search">Search the guide</label>
+      <span class="guide-search__icon" aria-hidden="true">🔍</span>
+      <input type="search" id="guide-search" placeholder="Search the guide…" autocomplete="off" aria-describedby="guide-search-hint">
+    </div>
+    <p id="guide-search-hint" class="muted guide-hint">Pages with your word in the <strong>title</strong> come first, then pages that mention it in the text or related terms.</p>
+    <p id="guide-noresults" class="muted guide-hint" hidden aria-live="polite">No guide pages match that yet. Try a shorter or different word.</p>
+
+    <nav class="guide-cats" aria-label="Jump to a section">
+      <a class="guide-cat-chip" href="#start-here">Start here</a>
+      {%- for cat in order -%}
+      {%- unless cat == featured_cat -%}
+      {%- assign pages = site.guide | where: "category", cat -%}
+      {%- if pages.size > 0 %}<a class="guide-cat-chip" href="#{{ cat | slugify }}">{{ cat }}</a>{% endif -%}
+      {%- endunless -%}
+      {%- endfor -%}
+    </nav>
+
+    {%- comment -%} Role start-guides. Dropped from the category loop below so
+      nothing renders twice. {%- endcomment -%}
     {%- if start_pages.size > 0 -%}
     <div class="guide-start" id="start-here">
       <h2>Start here</h2>
@@ -77,24 +97,6 @@ title: Lab Guide
       </div>
     </div>
     {%- endif -%}
-
-    <div class="guide-search">
-      <label class="visually-hidden" for="guide-search">Search the guide</label>
-      <span class="guide-search__icon" aria-hidden="true">🔍</span>
-      <input type="search" id="guide-search" placeholder="Search the guide…" autocomplete="off" aria-describedby="guide-search-hint">
-    </div>
-    <p id="guide-search-hint" class="muted guide-hint">Pages with your word in the <strong>title</strong> come first, then pages that mention it in the text or related terms.</p>
-    <p id="guide-noresults" class="muted guide-hint" hidden aria-live="polite">No guide pages match that yet. Try a shorter or different word.</p>
-
-    <nav class="guide-cats" aria-label="Jump to a section">
-      <a class="guide-cat-chip" href="#start-here">Start here</a>
-      {%- for cat in order -%}
-      {%- unless cat == featured_cat -%}
-      {%- assign pages = site.guide | where: "category", cat -%}
-      {%- if pages.size > 0 %}<a class="guide-cat-chip" href="#{{ cat | slugify }}">{{ cat }}</a>{% endif -%}
-      {%- endunless -%}
-      {%- endfor -%}
-    </nav>
     </div><!-- /.guide-hub-top__main -->
 
     <aside class="guide-hub-top__side" aria-labelledby="journey-title">

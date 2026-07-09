@@ -44,6 +44,10 @@ Add a block under the right group's `members:` list. Only `name` and `role` are 
 - **Contact links become icons** automatically. Add any of `email`, `website`,
   `scholar`, `orcid`, `linkedin`, `github` and each shows as a small icon button:
   no wording needed. This works the same on the PI's featured block.
+- **Leave personal contact links off undergraduate entries.** As a privacy
+  convention we omit `email`, `linkedin`, `orcid`, `scholar`, `website`, and
+  `github` for undergraduates, listing them only for grad students, postdocs, and
+  the PI; undergraduate enquiries go through the lab contact address.
 - **`awards:`** is a list. The card shows a single 🏆 with the awards stacked
   beside it, so two or three honors stay tidy (no repeated trophies).
 - **`aliases:`** lists other name forms (a nickname, or "Dr. Rivera") that should

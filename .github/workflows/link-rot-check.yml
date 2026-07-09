@@ -1,0 +1,48 @@
+name: Link rot check
+
+# Once a year, verify every OUTBOUND link the data files depend on still works:
+# paper DOIs, "In the news" press & media URLs, and the data/code/preprint/
+# open-access links attached to papers (_data/publications.yml, publications_manual.yml,
+# pub_links.yml, press.yml, media.yml). These point at publishers and news sites that
+# quietly move or delete pages; the internal Site checks can't see that.
+#
+# Only genuinely dead links (HTTP 404/410 or an unreachable host) open an issue;
+# publisher/news bot-blocks (403/429) are reported as "couldn't verify", not failures.
+# Run it any time from the Actions tab ("Run workflow").
+on:
+  schedule:
+    - cron: "0 8 6 1 *"   # once a year: January 6, 08:00 UTC (offset from the guide sweep)
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check-outbound-links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r scripts/requirements.txt
+
+      - name: Check DOIs, press, and resource links
+        id: check
+        continue-on-error: true   # a failure here means "broken links found"; the issue is the alert
+        run: python scripts/check_links.py --out link-report.md
+
+      - name: Open an issue listing the broken links
+        if: steps.check.outcome == 'failure'
+        uses: peter-evans/create-issue-from-file@v6
+        with:
+          title: "Broken outbound links (annual check)"
+          content-filepath: ./link-report.md
+          labels: |
+            link-rot
+            publications

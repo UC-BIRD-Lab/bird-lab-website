@@ -137,8 +137,13 @@ description: "Journal articles, conference papers, and open data and code from t
         {%- endif -%}
         {%- if rich.award -%} · <span class="pub-award"><span aria-hidden="true">🏆</span> {{ rich.award }}</span>{%- endif -%}
       </p>
-      {%- if rich.data or rich.code -%}
+      {%- comment -%} Free-to-read copy: a hand-set pdf wins, else the auto open-access
+         URL synced from OpenAlex; a preprint (e.g. ResearchGate) shows alongside. {%- endcomment -%}
+      {%- assign oa_link = rich.pdf | default: pub.oa_url -%}
+      {%- if oa_link or rich.preprint or rich.data or rich.code -%}
       <p class="pub__extras">
+        {%- if oa_link %}<a class="pub-resource" href="{{ oa_link }}" rel="noopener"><span aria-hidden="true">🔓</span> Open access</a>{% endif -%}
+        {%- if rich.preprint %}<a class="pub-resource" href="{{ rich.preprint }}" rel="noopener"><span aria-hidden="true">📄</span> Preprint</a>{% endif -%}
         {%- if rich.data %}<a class="pub-resource" href="{{ rich.data }}" rel="noopener"><span aria-hidden="true">📊</span> Data</a>{% endif -%}
         {%- if rich.code %}<a class="pub-resource" href="{{ rich.code }}" rel="noopener"><span aria-hidden="true">💻</span> Code</a>{% endif -%}
       </p>

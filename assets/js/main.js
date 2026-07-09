@@ -57,8 +57,12 @@
     // band. Empty ones hide while the visitor is searching.
     var sections = Array.prototype.slice.call(document.querySelectorAll(".guide-start, .guide-cat"));
     var guideNoResults = document.getElementById("guide-noresults");
+    // The hub grid: while searching we collapse the journey panel and category
+    // chips (both are navigation, not results) so matches sit right under the box.
+    var guideHub = guideSearch.closest(".guide-hub-top");
     guideSearch.addEventListener("input", function () {
       var q = guideSearch.value.toLowerCase().trim();
+      if (guideHub) guideHub.classList.toggle("is-searching", !!q);
       cards.forEach(function (c) {
         var h = c.querySelector("h3");
         var kw = (c.getAttribute("data-keywords") || "").toLowerCase();

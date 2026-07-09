@@ -53,8 +53,7 @@ through AggieExpense.
 
 <aside class="marginnote marginnote--warn" markdown="1">
 **Keep every receipt** unless Christina has confirmed in writing that you don't
-need to.
-No receipt, no reimbursement.
+need to. UC reimbursement generally can't proceed without one.
 </aside>
 
 Photograph each receipt the moment you get it. For how to submit receipts and

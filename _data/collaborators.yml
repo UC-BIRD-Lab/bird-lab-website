@@ -9,16 +9,21 @@
 # ─────────────────────────────────────────────────────────────
 
 - name: California Raptor Center
-  sub: Raptor rehabilitation research & home of the CALI flight hall
+  sub: Raptor rehabilitation center.
   photo: /assets/img/partners/crc.jpg
   url: https://crc.vetmed.ucdavis.edu
 
 - name: California Hawking Club
-  sub: Falconry expertise & access to trained birds in the field
+  sub: Licensed general and master falconers. 
   photo: /assets/img/partners/chc.jpg
   url: https://www.calhawkingclub.org
 
 - name: Museum of Wildlife and Fish Biology
-  sub: Avian specimens for our morphology studies
+  sub: Registered and certified vertebrate museum.
   photo: /assets/img/partners/mwfb.jpg
-  url: https://mwfb.ucdavis.edu/#about
+  url: https://mwfb.ucdavis.edu
+
+- name: UC Davis One Health Institute
+  sub: Institute at the interface of animals, people, plants, and the environment.
+  photo: /assets/img/partners/ohi.jpg
+  url: https://ohi.vetmed.ucdavis.edu

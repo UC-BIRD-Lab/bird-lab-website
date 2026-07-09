@@ -27,17 +27,20 @@ Reviewers, including Christina, are not always right, and the paper is yours to
 defend.
 </aside>
 
-The project lead who contributes the largest share (≥50% across
-conception/design, data, analysis, and writing) is first author; comparable
-contributions are listed as co-first with an equal-contribution note. Christina is
-generally last (supervising) author on lab-led work. Lead PhD students may serve as
-corresponding author if they can respond to editor/reviewer/media email within two
-business days during active review.
+By default, the project lead who contributes the largest share across
+conception/design, data, analysis, and writing is first author (roughly half or
+more is a useful rule of thumb); comparable contributions are listed as co-first
+with an equal-contribution note. Christina is generally last (supervising) author
+on lab-led work. These are our normal practices, agreed in writing early and
+applied case by case. Lead PhD students may serve as corresponding author if they
+can respond to editor/reviewer/media email within two business days during active
+review.
 
 ## Eligibility
 
-All four are required, per [ICMJE](https://www.icmje.org/recommendations/browse/roles-and-responsibilities/defining-the-role-of-authors-and-contributors.html):
-substantial contributions to conception/design or data; drafting or critical
+We ask for all four of the [ICMJE](https://www.icmje.org/recommendations/browse/roles-and-responsibilities/defining-the-role-of-authors-and-contributors.html)
+criteria. ICMJE isn't a journal in our field, but its standard is a useful guide we
+like: substantial contributions to conception/design or data; drafting or critical
 revision; final approval; and accountability for the work. Proofreading,
 brainstorming, and routine technical help normally earn acknowledgements, not
 authorship.

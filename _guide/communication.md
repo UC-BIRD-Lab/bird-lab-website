@@ -35,10 +35,10 @@ Communication in this lab is guided by three principles: communicate early, comm
 <div class="callout callout--warn" markdown="1">
 **Give co-authors time to review.** Christina and your co-authors need enough lead
 time to give a manuscript or abstract meaningful feedback. If work arrives too late
-for that, Christina reserves the right to hold it back from submission, or to
-withdraw conference attendance. This protects the quality of the work and everyone
-whose name is on it. When you give reasonable notice, she commits to doing the same
-in return.
+for co-authors to review it meaningfully, the lab may defer the submission or
+conference presentation so it gets the review it needs. This protects the quality
+of the work and everyone whose name is on it. When you give reasonable notice,
+Christina commits to the same in return.
 </div>
 
 ### What you can expect from Christina

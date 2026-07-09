@@ -12,6 +12,14 @@
 #     doi:    the paper's DOI, e.g. "10.1098/rsif.2025.0868"   (required to match)
 #     data:   link to the dataset (FigShare, Dryad, Zenodo…)
 #     code:   link to the code (a GitHub repo)
+#     preprint: link to a free preprint/author copy (ResearchGate, arXiv, bioRxiv,
+#               an institutional repository…). Shows a "Preprint" pill. Use this for
+#               the copy you posted yourself.
+#     pdf:    link to a free open-access PDF of the *published* version. Shows an
+#               "Open access" pill. You rarely need this by hand: when a paper is
+#               open access, the sync bot auto-fills `oa_url` in publications.yml and
+#               the same pill appears automatically. Set `pdf:` only to override that
+#               auto link (a `pdf:` here always wins over the auto `oa_url`).
 #     image:  a SMALL figure, add only for MAJOR papers, or the list gets busy
 #     kind:   for a JOURNAL article, its sub-type, "review" or "commentary".
 #             Untagged journal articles read "Research article". Changes only the

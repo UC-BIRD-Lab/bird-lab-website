@@ -16,7 +16,8 @@ to the **Web Content Accessibility Guidelines (WCAG) 2.1, Level AA**.
 - Text and background colors chosen to meet AA contrast ratios.
 - Meaningful alternative text for informative images; decorative graphics are hidden from screen readers.
 - Respect for the operating-system "reduce motion" setting, including a control to pause background video.
-- Captions/labels on interactive controls, and content that remains usable with JavaScript disabled.
+- Captions/labels on interactive controls. Page content remains readable with JavaScript disabled, though some conveniences (search, filtering, and the mobile menu) require it.
+- Automated WCAG 2.1 AA scans (pa11y-ci) run on every page each time the site changes. The site was last fully audited in July 2026.
 
 ## Known limitations
 

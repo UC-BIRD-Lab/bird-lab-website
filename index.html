@@ -131,10 +131,7 @@ description: "The BIRD Lab at UC Davis uncovers fundamental principles of avian 
       </a>
       {%- endfor -%}
     </div>
-    <p class="u-mt-14"><a href="{{ '/people/#affiliates' | relative_url }}">Meet our collaborators &rarr;</a></p>
-    <p class="muted u-fs-sm u-mt-10">The BIRD Lab is an affiliate of the
-    <a href="https://ohi.vetmed.ucdavis.edu/">UC Davis One Health Institute</a>
-    through our raptor health and rehabilitation work.</p>
+    <p class="u-mt-14">All listed partners are dedicated to education, outreach, conservation, and research.</p>
   </div>
 </section>
 
@@ -300,7 +297,7 @@ description: "The BIRD Lab at UC Davis uncovers fundamental principles of avian 
       {%- for f in site.data.funders -%}
       <a class="partner" href="{{ f.url }}"{% if f.url contains '://' %} rel="noopener"{% endif %}>
         {%- if f.logo -%}
-          <img src="{{ f.logo | relative_url }}" alt="{{ f.name }}" loading="lazy">
+          <img src="{{ f.logo | relative_url }}" alt="{% unless f.short %}{{ f.name }}{% endunless %}" loading="lazy">
         {%- else -%}
           <span class="pname">{{ f.name }}</span>
         {%- endif -%}

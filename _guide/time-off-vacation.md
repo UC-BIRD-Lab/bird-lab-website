@@ -10,14 +10,16 @@ reviewed: 2026-07-03
 
 You're encouraged to take vacation throughout the year.
 
-Members are strongly encouraged to take a **minimum of 15
-vacation days per calendar year**; most members take three to four weeks. If you're not taking time off, we'll probably encourage you to schedule a staycation to recharge.
+We strongly encourage substantial time off; **most members take three to four
+weeks a year**. Your formal leave accrual follows your UC Davis appointment and any
+applicable union contract (see HR). The lab's stance is simple: use your time. If
+you're not taking any, we'll probably encourage you to schedule a staycation to recharge.
 
 <aside class="marginnote" markdown="1">
 **Why vacation matters.** Regular time off is linked to lower stress, less burnout, and
-better long-term health. Rest also sharpens your
-focus and creativity when you return. See
-[why taking vacation could save your life](https://www.forbes.com/sites/carolinecastrillon/2021/05/23/why-taking-vacation-time-could-save-your-life/).
+better long-term health; a [9-year mortality study](https://pubmed.ncbi.nlm.nih.gov/11020090/)
+even associated more frequent vacations with lower cardiovascular death. Rest also
+sharpens your focus and creativity when you return.
 </aside>
 
 The main expectation is simple: **log your time off** so everyone knows when you'll be unavailable.
@@ -31,7 +33,7 @@ We use the Vacation Tracker Slack app to request and record time off. The first 
 3. Click **Send request**
 4. Christina approves it in Slack, and it's stored automatically for reference
 
-Vacation requests are rarely denied. If a requested time conflicts with a major deadline, conference, or experimental campaign, Christina will work with you to find an alternative that meets both your needs and the lab's commitments.
+Vacation requests are approved in nearly all cases. If a request overlaps a major deadline, conference, or experimental campaign, Christina will work with you to find timing that meets both your needs and the lab's commitments.
 
 ## Sick days
 

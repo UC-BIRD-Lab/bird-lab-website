@@ -1,0 +1,52 @@
+name: Optimize images
+
+# When images land in assets/img/ (a push to main that touches them, or a manual
+# run), compress any that are oversized and, if anything shrank, open a pull request
+# with the smaller files. A human reviews and merges — nothing is republished
+# without that review, same as the publications bot.
+#
+# Why a PR and not an auto-commit: it keeps the "bot proposes, human approves" flow,
+# and lets you eyeball that a compressed photo still looks right before it ships.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "assets/img/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  compress:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install Pillow
+        run: pip install Pillow
+
+      - name: Compress oversized images
+        run: python scripts/optimize_images.py
+
+      - name: Open a pull request if anything shrank
+        uses: peter-evans/create-pull-request@v8
+        with:
+          commit-message: "Compress oversized images"
+          branch: bot/optimize-images
+          title: "Compress oversized images"
+          body: |
+            Automated image compression: one or more images in `assets/img/` were
+            over the size/width budget and have been shrunk in place.
+
+            Please glance at the compressed versions to confirm they still look right,
+            then merge. (Budget: max 1600px wide; ~300 KB JPEG / ~600 KB PNG.)
+          labels: |
+            images
+            automation

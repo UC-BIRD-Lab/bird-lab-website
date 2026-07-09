@@ -110,17 +110,17 @@ key takeaways, and the summary or comparative figure that carries the story, and
 honest notes about titles set too small or a section that carried too many words.
 
 <figure class="figure" markdown="1">
-![Conference poster titled "Gliding gulls manipulate their elbow to modulate aerodynamic trade-offs," with handwritten annotations: title font possibly too small, images used to catch attention, declarative section headers, a data panel flagged as possibly overwhelming, a summary comparative figure, and room left for a full citation.](/assets/img/guide/poster-example-gulls.jpg)
+![Annotated conference poster: "Gliding gulls manipulate their elbow to modulate aerodynamic trade-offs."](/assets/img/guide/poster-example-gulls.jpg)
 <figcaption>Images pull people in and declarative headers state each result, but the title may be set too small and one panel risks overwhelming the reader.</figcaption>
 </figure>
 
 <figure class="figure" markdown="1">
-![Conference poster titled "Static longitudinal stability of four avian species' wings," annotated as probably at a maximum for words, with the key takeaways highlighted at the top of a section and space left for a full citation.](/assets/img/guide/poster-example-four-species.jpg)
+![Annotated conference poster: "Static longitudinal stability of four avian species' wings."](/assets/img/guide/poster-example-four-species.jpg)
 <figcaption>The key takeaways are highlighted up front, though the text is near the upper limit of what a poster should carry.</figcaption>
 </figure>
 
 <figure class="figure" markdown="1">
-![Conference poster titled "Longitudinal dynamic stability of a gliding gull," annotated with light shading used to define sections, a note questioning the all-caps headers, and logos placed along the bottom.](/assets/img/guide/poster-example-dynamic-stability.jpg)
+![Annotated conference poster: "Longitudinal dynamic stability of a gliding gull."](/assets/img/guide/poster-example-dynamic-stability.jpg)
 <figcaption>Light shading separates the sections cleanly and logos sit along the bottom, but the all-caps headers are harder to read than sentence case.</figcaption>
 </figure>
 

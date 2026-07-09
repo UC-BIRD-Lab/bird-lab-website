@@ -7,6 +7,7 @@
 
 <p class="req-group-label">Everyone must complete</p>
 <table class="req-table">
+  <thead class="visually-hidden"><tr><th scope="col">Requirement</th><th scope="col">Who</th></tr></thead>
   <tbody>
   {%- for r in reqs -%}{%- if r.who == "Everyone" -%}
     <tr>
@@ -19,6 +20,7 @@
 
 <p class="req-group-label">Only if it applies to you</p>
 <table class="req-table">
+  <thead class="visually-hidden"><tr><th scope="col">Requirement</th><th scope="col">Who</th></tr></thead>
   <tbody>
   {%- for r in reqs -%}{%- unless r.who == "Everyone" -%}
     <tr>

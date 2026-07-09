@@ -32,7 +32,10 @@ Do these once a month. None of them require the command line.
    CONTENT-GUIDE → *Videos, podcasts & 3D models*).
 3. **Add notable milestones.** Awards, talks, funding, new members, graduations →
    add a one-line entry to the top of the current year in `_data/updates.yml`.
-   Member names link themselves automatically.
+   Member names link themselves automatically. *Easiest:* file the **📣 Add a news
+   milestone** issue form — the [issue-to-pr Action](.github/workflows/issue-to-pr.yml)
+   drafts the entry and opens a PR automatically; you just merge it (which closes the
+   issue). Prefer the paper helper for a new paper: `python scripts/add_press.py --paper <doi>`.
 4. **Update People** (`_data/people.yml`):
    - **Add** a new member, or **promote** someone by changing their `role:` (the bird badge updates itself).
    - **Retire** someone: cut their whole block from `groups:` and paste it under `alumni:`, then add a `now:` line. Their `start:` (year joined) and any `linkedin:` carry over, and a LinkedIn icon appears beside their name in the alumni table.
@@ -189,6 +192,15 @@ request adding any new articles to `_data/publications.yml`. You review and merg
 
 - **It's safe:** the bot only *adds* articles with a new DOI (and fills in a missing
   publication `date`); it never overwrites text you've edited, so your corrections are safe.
+- **Open-access links are automatic too:** when a paper is open access, the sync fills a
+  missing `oa_url:` from OpenAlex and an **Open access** button appears on the paper. To
+  point at a *specific* free copy instead (e.g. your **ResearchGate preprint**), add
+  `preprint:` (shows a **Preprint** button) or `pdf:` (overrides the auto link) for that
+  DOI in `_data/pub_links.yml`. See the field notes at the top of that file.
+- **Announcing a paper:** after the new-articles PR merges, run
+  `python scripts/add_press.py --paper <doi> --topic "plain-language hook"` to draft the
+  `_data/updates.yml` news entry (lab authors auto-link) plus LinkedIn/Instagram captions.
+  Add `--append` to insert the news entry; the captions print for you to post.
 - **Ordering by month:** each entry stores a `date:` (`YYYY-MM-DD`) so the list sorts
   correctly *within* a year, not just by year. The sync backfills this onto older entries
   the next time it runs: to update them right now, run
@@ -221,7 +233,8 @@ this the moment a paper is accepted.
   `_data/openings.yml` (undergrad, graduate, or postdoc).
 - **Each term / as people move on:** review **alumni** destinations and add where people landed.
 - **As the team changes:** refresh **photos** and the lab **group photo**.
-- **Yearly:** confirm **funders** and any external links (guides, forms) still work. (The [guide-link-check Action](.github/workflows/guide-link-check.yml) already sweeps the lab guide's external links once a year and files an issue for any that break.)
+- **Yearly:** confirm **funders** and any external links (guides, forms) still work. (Two Actions do most of this for you: [guide-link-check](.github/workflows/guide-link-check.yml) sweeps the lab guide's external links each July, and [link-rot-check](.github/workflows/link-rot-check.yml) verifies every paper **DOI**, **press/media** URL, and per-paper **data/code/preprint** link each January, filing an issue only for links that are genuinely dead. You can run either any time from **Actions → Run workflow**, or locally with `python scripts/check_links.py`.)
+- **Images stay light automatically:** when an image is pushed to `assets/img/`, the [optimize-images Action](.github/workflows/optimize-images.yml) compresses anything oversized (max 1600 px wide; ~300 KB JPEG / ~600 KB PNG) and opens a PR with the smaller files for you to glance at and merge. Run it on the whole folder any time with `python scripts/optimize_images.py` (add `--check` to only list oversized images).
 - **When convenient:** merge Dependabot's **dependency-bump** PRs (they clear
   deprecation warnings). Because `main` is protected, merge them yourself; you're
   on the bypass list. Do them one at a time.

@@ -56,10 +56,10 @@ update on the lab's funding, major initiatives, and plans for the year ahead.
 Ask anytime about your appointment, support, or future funding. All salaries are overseen by MAE financial officers and follow UC Davis union agreements.
 
 <aside class="marginnote" markdown="1">
-**PhD funding goal.** Christina aims to support PhD researchers at 50% during the
-academic year (the maximum permitted) and 50% over summer, with tuition and fees
-covered, from grants, fellowships, TAships, and other sources. A goal, not a
-guarantee; it depends on available funding.
+**PhD funding.** Christina works to secure the fullest funding available for PhD
+researchers, from grants, fellowships, TAships, and other sources, aiming to cover
+salary, tuition, and fees. Appointments follow UC Davis policy and union
+agreements. Ask anytime about your current and future support.
 </aside>
 
 | Role | Funding |
@@ -68,6 +68,9 @@ guarantee; it depends on available funding.
 | MSc | Not guaranteed; depends on available support |
 | PhD | Paid |
 | Postdoc | Paid |
+
+Appointments and rates follow UC Davis policy and union agreements. This table
+shows how support typically works in the lab, not a guaranteed rate.
 
 All researchers are encouraged to apply for internal and external research
 funding to support their own professional development.

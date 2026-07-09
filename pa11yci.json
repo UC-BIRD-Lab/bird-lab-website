@@ -3,7 +3,11 @@
     "standard": "WCAG2AA",
     "timeout": 60000,
     "chromeLaunchConfig": {
-      "args": ["--no-sandbox", "--disable-setuid-sandbox", "--disable-dev-shm-usage"]
+      "args": [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-dev-shm-usage"
+      ]
     }
   },
   "urls": [
@@ -12,6 +16,51 @@
     "http://localhost:4000/people/",
     "http://localhost:4000/publications/",
     "http://localhost:4000/join/",
-    "http://localhost:4000/lab-guide/"
+    "http://localhost:4000/lab-guide/",
+    "http://localhost:4000/lab-guide/animal-care-ethics/",
+    "http://localhost:4000/lab-guide/authorship-policy/",
+    "http://localhost:4000/lab-guide/before-you-submit/",
+    "http://localhost:4000/lab-guide/career-planning/",
+    "http://localhost:4000/lab-guide/code/",
+    "http://localhost:4000/lab-guide/communication/",
+    "http://localhost:4000/lab-guide/conferences/",
+    "http://localhost:4000/lab-guide/data-analysis/",
+    "http://localhost:4000/lab-guide/data-management/",
+    "http://localhost:4000/lab-guide/discussion-guidelines/",
+    "http://localhost:4000/lab-guide/dissertation-graduation/",
+    "http://localhost:4000/lab-guide/figures/",
+    "http://localhost:4000/lab-guide/first-drafts/",
+    "http://localhost:4000/lab-guide/funding-applications/",
+    "http://localhost:4000/lab-guide/goal-setting/",
+    "http://localhost:4000/lab-guide/graduate-students/",
+    "http://localhost:4000/lab-guide/journal-club/",
+    "http://localhost:4000/lab-guide/lab-operations-roles/",
+    "http://localhost:4000/lab-guide/lab-safety/",
+    "http://localhost:4000/lab-guide/leaving-the-lab/",
+    "http://localhost:4000/lab-guide/literature-reviews/",
+    "http://localhost:4000/lab-guide/logos-branding/",
+    "http://localhost:4000/lab-guide/meetings/",
+    "http://localhost:4000/lab-guide/mentoring/",
+    "http://localhost:4000/lab-guide/paper-revisions/",
+    "http://localhost:4000/lab-guide/peer-review/",
+    "http://localhost:4000/lab-guide/postdocs/",
+    "http://localhost:4000/lab-guide/posters/",
+    "http://localhost:4000/lab-guide/presentations/",
+    "http://localhost:4000/lab-guide/professional-presence/",
+    "http://localhost:4000/lab-guide/recommendation-letters/",
+    "http://localhost:4000/lab-guide/research-hypotheses/",
+    "http://localhost:4000/lab-guide/support-resources/",
+    "http://localhost:4000/lab-guide/time-off-vacation/",
+    "http://localhost:4000/lab-guide/travel/",
+    "http://localhost:4000/lab-guide/undergraduates/",
+    "http://localhost:4000/lab-guide/using-ai/",
+    "http://localhost:4000/lab-guide/work-expectations/",
+    "http://localhost:4000/facilities/",
+    "http://localhost:4000/news/",
+    "http://localhost:4000/contact/",
+    "http://localhost:4000/accessibility/",
+    "http://localhost:4000/privacy/",
+    "http://localhost:4000/portal/",
+    "http://localhost:4000/404.html"
   ]
 }

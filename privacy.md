@@ -20,8 +20,8 @@ a privacy-friendly analytics tool. It records only **aggregate, anonymous** page
 visits: which pages are viewed, rough visit counts, and general referrer or
 country information. It does **not** use cookies, does **not** store IP addresses
 or other data that could identify you, and does **not** track you across other
-websites. Because no personal data is collected, there is nothing to opt out of,
-and no consent banner is required under the GDPR/ePrivacy rules.
+websites. Because we collect no personal data and set no cookies, there is nothing
+to opt out of.
 
 If your browser sends a **Do Not Track** signal, or you use an ad/analytics
 blocker, that is respected: the site works exactly the same either way.

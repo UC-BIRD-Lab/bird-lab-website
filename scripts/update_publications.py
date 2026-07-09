@@ -89,8 +89,12 @@ HEADER = """\
 #  Anything with a DOI syncs here; conference talks and posters WITHOUT a DOI
 #  live in publications_manual.yml.
 #
-#  Fields: title, authors, venue, year, date (YYYY-MM-DD), type, doi (URL)
+#  Fields: title, authors, venue, year, date (YYYY-MM-DD), type, doi (URL),
+#          oa_url (a free open-access copy, when OpenAlex knows one)
 #  `date` is used to sort within a year (the page still groups by `year`).
+#  `oa_url` is auto-filled when a paper is open access and left blank otherwise;
+#  to point at a specific copy (e.g. your ResearchGate preprint), set `preprint:`
+#  or `pdf:` for that DOI in _data/pub_links.yml — those win over this.
 #  Keep newest first: this file is written sorted by date, newest first.
 # ────────────────────────────────────────────────────────────
 """
@@ -106,7 +110,8 @@ def fetch_works() -> list[dict]:
             "per-page": "200",
             "cursor": cursor,
             "mailto": MAILTO,
-            "select": "title,publication_year,publication_date,doi,type,authorships,primary_location",
+            "select": ("title,publication_year,publication_date,doi,type,authorships,"
+                       "primary_location,open_access,best_oa_location"),
         }
         url = base + "?" + urllib.parse.urlencode(params)
         try:
@@ -132,6 +137,17 @@ def fmt_authors(authorships: list[dict]) -> str:
         initials = " ".join(p[0].upper() + "." for p in parts[:-1] if p[0].isalpha())
         names.append(f"{initials} {last}".strip())
     return ", ".join(names)
+
+
+def oa_url_from_work(work: dict) -> str:
+    """A free, open-access full-text URL for this work, if OpenAlex knows one.
+    Prefers a direct PDF, then the OA landing page. Returns "" when not OA, so we
+    only ever surface a genuinely free copy (never a paywalled publisher page)."""
+    oa = work.get("open_access") or {}
+    if not oa.get("is_oa"):
+        return ""
+    best = work.get("best_oa_location") or {}
+    return (best.get("pdf_url") or best.get("landing_page_url") or oa.get("oa_url") or "").strip()
 
 
 def norm_doi(doi: str | None) -> str:
@@ -254,6 +270,7 @@ def to_entry(work: dict) -> dict | None:
         "date": (work.get("publication_date") or "").strip(),
         "type": pub_type,
         "doi": doi if doi.startswith("http") else f"https://doi.org/{norm_doi(doi)}",
+        "oa_url": oa_url_from_work(work),
     }
 
 
@@ -274,6 +291,8 @@ def dump(entries: list[dict]) -> str:
         lines.append(f"  type: {e['type']}")
         if e.get("doi"):
             lines.append(f"  doi: {dq(e['doi'])}")
+        if e.get("oa_url"):
+            lines.append(f"  oa_url: {dq(e['oa_url'])}")
         lines.append("")
     return "\n".join(lines).rstrip() + "\n"
 
@@ -303,6 +322,9 @@ def main() -> int:
     # DOI -> publication_date, so we can backfill dates onto existing entries.
     date_by_doi = {norm_doi(w.get("doi")): w["publication_date"]
                    for w in works if w.get("doi") and w.get("publication_date")}
+    # DOI -> open-access URL, likewise backfilled onto existing entries.
+    oa_by_doi = {norm_doi(w.get("doi")): oa_url_from_work(w)
+                 for w in works if w.get("doi") and oa_url_from_work(w)}
 
     # Backfill: add a `date` to any existing entry that lacks one (non-destructive:
     # we only fill an empty field, never change an existing value).
@@ -313,6 +335,17 @@ def main() -> int:
             if d:
                 e["date"] = d
                 backfilled += 1
+
+    # Same for `oa_url`: fill it in when a paper has become open access, but never
+    # overwrite one you've set by hand. To override the auto copy for one paper,
+    # add `preprint:`/`pdf:` for its DOI in _data/pub_links.yml (those render first).
+    oa_filled = 0
+    for e in existing:
+        if not e.get("oa_url"):
+            u = oa_by_doi.get(norm_doi(e.get("doi")))
+            if u:
+                e["oa_url"] = u
+                oa_filled += 1
 
     new = []
     for w in works:
@@ -345,8 +378,8 @@ def main() -> int:
         for e in removed:
             print(f"  - {norm_doi(e.get('doi'))}  {e.get('title')}")
 
-    if not new and not backfilled and not removed:
-        print("Up to date: no new articles, and every entry already has a date.")
+    if not new and not backfilled and not oa_filled and not removed:
+        print("Up to date: no new articles, dates and open-access links already set.")
         return 0
 
     combined = existing + new
@@ -356,6 +389,8 @@ def main() -> int:
 
     if backfilled:
         print(f"Backfilled publication dates on {backfilled} existing entry(ies).")
+    if oa_filled:
+        print(f"Backfilled open-access links on {oa_filled} existing entry(ies).")
     if new:
         print(f"Added {len(new)} new article(s):")
         for e in new:

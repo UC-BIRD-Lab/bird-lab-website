@@ -13,7 +13,9 @@ reviewed: 2026-07-05
 </aside>
 
 Good software practices make research reproducible, collaborative, and easier to
-maintain. As the lab evolves, so will these recommendations.
+maintain. As the lab evolves, so will these recommendations. Tools are named as
+practical suggestions, not endorsements; equivalent alternatives are fine, and any
+tool that stores lab data should follow UC Davis data-security guidance.
 
 ## Version control
 

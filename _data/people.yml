@@ -135,9 +135,13 @@ groups:
         photo: /assets/img/people/joshua-booth.jpg
         email: jmbooth@ucdavis.edu
         note: Maneuverability & agility in morphing-wing dynamics.
-#  - id: msc
-#    title: Masters students  
-#    members:
+  # Master's students. Kept here (empty) on purpose so a submitted "MSc Student"
+  # auto-files into it. While empty it shows nothing on the site; members appear
+  # as soon as one is added. Leave the `members:` line in place.
+  - id: msc
+    title: Master's Students
+    members:
+
   - id: undergrad
     title: Undergraduate Researchers
     members:
@@ -147,7 +151,6 @@ groups:
         pronouns: she/her
         field: "Mech + Aero Engineering"
         photo: /assets/img/people/ava-lewis.jpg
-        email: alulewis@ucdavis.edu
         awards:
           - "AIAA Rising Star in Aerospace"
       - name: Narihide Fujita
@@ -156,16 +159,12 @@ groups:
         pronouns: he/him
         field: "Mech + Aero Engineering"
         photo: /assets/img/people/narihide-fujita.jpg
-        email: ntfujita@ucdavis.edu
-        linkedin: https://www.linkedin.com/in/narihidefujita
       - name: Haotian Zhang
         role: Undergraduate Researcher
         start: 2026
         pronouns: he/him
         field: "Computer Science"
         photo: /assets/img/people/haotian-zhang.jpg
-        email: dhtzhang@ucdavis.edu
-        linkedin: https://www.linkedin.com/in/haotian-zhang-32b153350
       - name: Ryuya Iwase
         role: Undergraduate Researcher
         start: 2026
@@ -183,7 +182,6 @@ groups:
         pronouns: he/him
         field: "Mech + Aero Engineering"
         photo: /assets/img/people/prabhat-karthikeyan.jpg
-        email: pkarthikeyan@ucdavis.edu
       - name: Haelie Tweet
         role: Undergraduate Researcher
         start: 2026
@@ -220,6 +218,14 @@ groups:
         pronouns: he/him
         field: "Mechanical Engineering"
         photo: /assets/img/people/adam-halford.jpg
+
+  # Visiting researchers (non-undergraduate). Kept here (empty) on purpose so a
+  # submitted "Visiting Researcher" auto-files into it. While empty it shows
+  # nothing; members appear once added. (Visiting UNDERGRADS go in the undergrad
+  # group above — both get the 🕊️ badge from their role text either way.)
+  - id: visiting
+    title: Visiting Researchers
+    members:
 
 # Individual collaborators and affiliated researchers outside the core group.
 # (Partner *organizations*, CRC, CHC, the museum, live in collaborators.yml

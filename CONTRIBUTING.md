@@ -20,6 +20,13 @@ That's it. The submission lands as a tidy GitHub issue for a maintainer to apply
 You only need a free GitHub account. (Journal articles aren't here: they update
 themselves from OpenAlex.)
 
+> **🤖 These forms now apply themselves.** When you submit any of the four forms
+> above, a bot immediately drafts the matching change (news milestone, conference
+> paper/talk/poster, new/updated member, or press item), opens a pull request, and
+> comments on your issue with the link. A maintainer just checks it and merges —
+> merging closes your issue. Nothing to copy by hand. If a required field is missing
+> or a role has no group yet, the bot comments to say so instead.
+
 ## 2. The direct way: edit the file (a little GitHub comfort)
 
 Edit the relevant `_data/*.yml` file on github.com (pencil icon ✏️), then
@@ -44,8 +51,8 @@ the **top** of the list, fill in the submitted values, commit.
         start: 2026
         pronouns: they/them
         field: "Mechanical & Aerospace Engineering"
-        email: jdoe@ucdavis.edu
-        linkedin: https://www.linkedin.com/in/jane-doe
+        email: jdoe@ucdavis.edu           # personal contact links (email, linkedin,
+        linkedin: https://www.linkedin.com/in/jane-doe  # orcid, etc.): omit for undergraduates (privacy)
         note: One short line about their project.
         # photo: /assets/img/people/jane-doe.jpg   # after adding the image
 ```

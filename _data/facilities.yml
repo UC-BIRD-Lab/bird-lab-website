@@ -27,9 +27,8 @@
   url_label: Visit the CALI consortium
   photo: /assets/img/facilities/cali.jpg
   photo_alt: >-
-    The CALI flight hall: a long, brightly lit room with white curtains
-    lining both walls, motion capture cameras mounted along them, and an
-    open concrete floor leading to a roll-up door.
+    The CALI flight hall: a long bright room lined with white curtains
+    and motion capture cameras.
   funding:
     note: "DURIP support from:"
     name: DEVCOM Army Research Laboratory
@@ -54,9 +53,8 @@
   photo: /assets/img/facilities/wind-tunnel.jpg
   photo_note: AI rendering based on real photos, to illustrate the setup.
   photo_alt: >-
-    Rendering of the wind tunnel: a wide blue intake with a mesh screen
-    narrowing into a silver test section with a viewing window, then a
-    long blue tube ending at the fan.
+    Rendering of the wind tunnel: a blue intake narrowing into a silver
+    test section, then a tube to the fan.
   specs:
     - { value: "165 mph", label: "maximum test-section speed" }
     - { value: "< 0.1%", label: "free-stream turbulence" }

@@ -85,9 +85,11 @@ layout: default
       <p class="guide-edit">
         <span class="guide-edit__icon" aria-hidden="true">✏️</span>
         Spot something to improve? Anyone in the lab can edit this guide.
-        <a href="https://github.com/UC-BIRD-Lab/bird-lab-website/edit/main/_guide/{{ page.path | remove: '_guide/' }}">Edit this page</a> ·
-        <a href="https://github.com/UC-BIRD-Lab/bird-lab-website/issues/new/choose">suggest a change</a> ·
-        <a href="https://github.com/UC-BIRD-Lab/bird-lab-website/blob/main/CONTRIBUTING.md">how edits work</a>
+        <span class="guide-edit__links">
+          <a href="https://github.com/UC-BIRD-Lab/bird-lab-website/edit/main/_guide/{{ page.path | remove: '_guide/' }}">Edit this page</a>
+          <a href="https://github.com/UC-BIRD-Lab/bird-lab-website/issues/new/choose">suggest a change</a>
+          <a href="https://github.com/UC-BIRD-Lab/bird-lab-website/blob/main/CONTRIBUTING.md">how edits work</a>
+        </span>
       </p>
 
       {%- if page.last_modified_at %}

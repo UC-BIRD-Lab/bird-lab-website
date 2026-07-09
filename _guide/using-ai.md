@@ -10,7 +10,7 @@ reviewed: 2026-07-05
 
 The use of artificial intelligence (AI), in particular Large Language Models (LLMs) is changing the world. There are lots of wonderful attributes, but also some important pitfalls that require scientists to be direct and clear whenever it is used to maintain high quality and reproducible science. 
 
-The following rules and guidelines surrounding the use of AI in our research were developed by the lab.
+The following rules and guidelines surrounding the use of AI in our research were developed by the lab. Tools are named as practical suggestions, not endorsements; equivalent alternatives are fine, and any tool that stores lab data should follow UC Davis data-security guidance.
 
 <div class="callout callout--stop" markdown="1">
 **Protect Sensitive Information:** Do not use GenAI tools with sensitive systems and data. Do not provide any text or other inputs to large language models or generative AI that might contain sensitive data, including identified or de-identified student information, publications/grants in review, personnel data, personnel conduct information, patient data, confidential financial data, confidential research information, or otherwise sensitive information. 

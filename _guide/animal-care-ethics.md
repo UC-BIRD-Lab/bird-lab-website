@@ -39,7 +39,7 @@ See
 ## Working with live birds
 
 <aside class="marginnote marginnote--warn" markdown="1">
-**Speak up, always.** If you ever have a welfare concern, raise it immediately.
+**Speak up, always.** If you ever have a welfare concern, raise it immediately. For anonymous reporting, please refer to the [UC Davis IACUC Reporting Procedures](https://research.ucdavis.edu/wp-content/uploads/IACUC-14.pdf).
 </aside>
 
 - **Welfare comes first, always.** A bird's well-being outweighs any single data point.

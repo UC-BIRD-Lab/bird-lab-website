@@ -26,7 +26,7 @@ one as something you personally vouch for.
 <div class="callout callout--stop" markdown="1" id="non-negotiables">
 **Lab policy: the non-negotiables**
 
-- Christina has the draft ≥2 weeks before any external deadline (she reserves the right to pull late submissions).
+- Christina has the draft ≥2 weeks before any external deadline (drafts that arrive too late for co-author review may be deferred to a later submission window).
 - No submission without explicit approval from Christina *and* all co-authors.
 - ≥2 labmate pre-reviews before the draft reaches Christina (post in #phone-a-friend; see [giving and receiving feedback]({{ '/lab-guide/communication/' | relative_url }}#giving-and-receiving-feedback)).
 - Reference managers required (BibTeX / Zotero / EndNote); no manually typed references.
@@ -243,7 +243,7 @@ in your sleep.
 
 The core principles hold for both; what changes is strategy.
 
-| | Journal article | Conference paper |
+| Aspect | Journal article | Conference paper |
 | --- | --- | --- |
 | **Goal** | The complete, definitive account | A solid, citable checkpoint |
 | **What to include** | Strongest, fully validated results | Boring-but-bulletproof results; hold exciting findings back |

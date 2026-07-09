@@ -49,7 +49,7 @@ matches your work or workspace. Complete each item in the Safety Hub.
 - Full-length pants.
 
 Additional equipment may be required depending on what you're using. No food or
-drink is allowed in the main wind tunnel room (Room 1402).
+drink is allowed in the main wind tunnel room.
 
 ## Access levels
 
