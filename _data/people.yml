@@ -70,10 +70,6 @@ groups:
         start: 2023
         photo: /assets/img/people/kaleb-bordner.jpg
         email: kkbordner@ucdavis.edu
-        scholar: https://scholar.google.com/citations?user=8-F5ePIAAAAJ&hl=en&authuser=1
-        orcid: 0009-0005-9105-1130
-        linkedin: https://www.linkedin.com/in/kaleb-bordner-0b45b78a/
-        github: https://github.com/woodentoken
         note: Bird-informed morphing tail flight dynamics & control.
         awards:
           - "ORAU Fellowship"
@@ -173,6 +169,7 @@ groups:
       - name: Ryuya Iwase
         role: Undergraduate Researcher
         start: 2026
+        pronouns: he/him
         field: "Mech + Aero Engineering"
         photo: /assets/img/people/ryuya-iwase.jpg
       - name: Wyatt Liu
@@ -190,16 +187,19 @@ groups:
       - name: Haelie Tweet
         role: Undergraduate Researcher
         start: 2026
+        pronouns: she/her
         field: "Mech + Aero Engineering"
         photo: /assets/img/people/haelie-tweet.jpg
       - name: Zak Conte
         role: Undergraduate Researcher
         start: 2026
+        pronouns: he/him
         field: "Mech + Aero Engineering"
         photo: /assets/img/people/zak-conte.jpg
       - name: Ananya Bansal
         role: Undergraduate Researcher
         start: 2026
+        pronouns: she/her
         field: "Mech + Aero Engineering"
         photo: /assets/img/people/ananya-bansal.jpg
       - name: Elliot Crowder

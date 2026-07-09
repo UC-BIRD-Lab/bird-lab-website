@@ -5,11 +5,23 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
   - package-ecosystem: "bundler"
     directory: "/"
     schedule:
       interval: "weekly"
+    groups:
+      ruby-gems:
+        patterns:
+          - "*"
   - package-ecosystem: "pip"
     directory: "/scripts"
     schedule:
       interval: "weekly"
+    groups:
+      python-packages:
+        patterns:
+          - "*"
