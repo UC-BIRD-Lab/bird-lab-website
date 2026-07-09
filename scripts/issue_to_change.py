@@ -313,10 +313,14 @@ def insert_person(gid: str, block_lines: list[str]):
                if re.match(r"\s*- id:\s*%s\s*$" % re.escape(gid), ln)), None)
     if gi is None:
         raise SystemExit("ERROR: group id '%s' not found in people.yml" % gid)
+    # Accept both a block `members:` and an empty-list `members: []` (used to keep
+    # empty groups build-safe). For the latter, turn it into a block header first.
     mi = next((j for j in range(gi + 1, len(lines))
-               if re.match(r"\s*members:\s*$", lines[j])), None)
+               if re.match(r"\s*members:\s*(\[\s*\])?\s*$", lines[j])), None)
     if mi is None:
         raise SystemExit("ERROR: no 'members:' under group '%s'" % gid)
+    indent = re.match(r"(\s*)members:", lines[mi]).group(1)
+    lines[mi] = indent + "members:"          # normalize `members: []` → `members:`
     lines[mi + 1:mi + 1] = block_lines
     open(PEOPLE, "w", encoding="utf-8").write("\n".join(lines).rstrip("\n") + "\n")
 

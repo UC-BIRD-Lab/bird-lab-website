@@ -137,10 +137,12 @@ groups:
         note: Maneuverability & agility in morphing-wing dynamics.
   # Master's students. Kept here (empty) on purpose so a submitted "MSc Student"
   # auto-files into it. While empty it shows nothing on the site; members appear
-  # as soon as one is added. Leave the `members:` line in place.
+  # as soon as one is added. Keep `members: []` (an empty list) while empty — the
+  # `[]` matters so the site build stays happy; the automation swaps it for a real
+  # list when it adds the first person.
   - id: msc
     title: Master's Students
-    members:
+    members: []
 
   - id: undergrad
     title: Undergraduate Researchers
@@ -223,9 +225,10 @@ groups:
   # submitted "Visiting Researcher" auto-files into it. While empty it shows
   # nothing; members appear once added. (Visiting UNDERGRADS go in the undergrad
   # group above — both get the 🕊️ badge from their role text either way.)
+  # Keep `members: []` (an empty list) while empty so the site build stays happy.
   - id: visiting
     title: Visiting Researchers
-    members:
+    members: []
 
 # Individual collaborators and affiliated researchers outside the core group.
 # (Partner *organizations*, CRC, CHC, the museum, live in collaborators.yml
