@@ -1,22 +1,22 @@
 # BIRD Lab website
 
-The public website for the **Bio-Informed Research & Design (BIRD) Lab** at UC
-Davis: built as a static [Jekyll](https://jekyllrb.com/) site, hosted free on
-**GitHub Pages**, and designed so that non-technical lab members can keep it
-current by editing plain text files.
+The public website for the **Bio-Informed Research & Design (BIRD) Lab** at UC Davis: built as a static [Jekyll](https://jekyllrb.com/) site, hosted free on **GitHub Pages**, and designed so that non-technical lab members can keep it current by editing plain text files.
 
 > **New here? Read these in order:**
-> [CONTENT-GUIDE.md](CONTENT-GUIDE.md) (edit content) ·
-> [CONTRIBUTING.md](CONTRIBUTING.md) (submit updates) ·
-> [MAINTENANCE.md](MAINTENANCE.md) (keep it running: publish, preview, fixes) ·
-> [ARCHITECTURE.md](ARCHITECTURE.md) (why it's built this way)
+>
+>- [CONTENT-GUIDE.md](CONTENT-GUIDE.md) (edit content)
+>
+>- [CONTRIBUTING.md](CONTRIBUTING.md) (submit updates)
+>
+>- [MAINTENANCE.md](MAINTENANCE.md) (keep it running: publish, preview, fixes)
+>
+>- [ARCHITECTURE.md](ARCHITECTURE.md) (why it's built this way)
 
 ---
 
 ## Quick start (run it on your computer)
 
-You only need this to preview changes locally. Editing through GitHub's website
-(see [CONTENT-GUIDE.md](CONTENT-GUIDE.md)) needs no setup at all.
+You only need this to preview changes locally. Editing through GitHub's website (see [CONTENT-GUIDE.md](CONTENT-GUIDE.md)) needs no setup at all.
 
 **Easiest (recommended):** install [Docker Desktop](https://www.docker.com/products/docker-desktop/), then:
 ```bash
@@ -62,23 +62,21 @@ On recent macOS this can fail on the `eventmachine` gem: see the fix in
 └── .github/             ← workflows (deploy · publications · checks) + issue forms
 ```
 
-**Rule of thumb:** content lives in `_data/*.yml` and the `_guide/*.md` /
-`*.md` pages. Design lives in `assets/` and `_layouts/`. You can do almost all
-day-to-day updates without touching the design.
+**Rule of thumb:** 
+- content lives in `_data/*.yml` and the `_guide/*.md` / `*.md` pages. 
+- Design lives in `assets/` and `_layouts/`. You can do almost all day-to-day updates without touching the design.
 
 ---
 
 ## How it's built (in brief)
 
-Static **Jekyll** site on **GitHub Pages**: content in Markdown + YAML, no runtime
-services, three GitHub Actions (deploy · publications sync · link + accessibility
-check) plus Dependabot. Journal articles and DOI-bearing conference papers sync
-monthly from **OpenAlex** by the PI's **ORCID** and open a pull request for
-review; DOI-less talks and posters and everything else are hand-curated in
-`_data/`. The design prioritizes **maintainability → accessibility (WCAG 2.1
-AA) → scientific communication → automation → design**, in that order, so where
-they traded off the higher priority won (e.g. plain editable data files over a
-headless CMS).
+Static **Jekyll** site on **GitHub Pages**: 
+
+- Content in Markdown + YAML, no runtime services, three GitHub Actions (deploy · publications sync · link + accessibility check) plus Dependabot.
+
+- Journal articles and DOI-bearing conference papers sync monthly from **OpenAlex** by the PI's **ORCID** and open a pull request for review; DOI-less talks and posters and everything else are hand-curated in `_data/`. 
+
+- The design prioritizes **maintainability → accessibility (WCAG 2.1AA) → scientific communication → automation → design**, in that order, so where they traded off the higher priority won (e.g. plain editable data files over a headless CMS).
 
 The decisions and trade-offs behind all of this are in
 [ARCHITECTURE.md](ARCHITECTURE.md).
