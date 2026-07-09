@@ -13,10 +13,18 @@ description: >-
 # Site address. `url` is the ORIGIN only (no path, no trailing slash).
 # Leave `baseurl` EMPTY, the deploy workflow fills in the project path
 # ("/bird-lab-website") automatically at build time, and an empty baseurl keeps
-# the Site-checks link test passing. When you move to the custom domain, just
-# change `url` to "https://birdlab.ucdavis.edu".
+# the Site-checks link test passing. For a future custom-domain move, see the
+# migration notes under "Google Search Console verification" below.
 url: "https://uc-bird-lab.github.io"
 baseurl: ""
+
+# ── Google Search Console verification ───────────────────────
+# jekyll-seo-tag reads this key and emits
+#   <meta name="google-site-verification" content="...">
+# on every page, including the homepage GSC checks.
+#
+# GSC Token
+google_site_verification: googleca92eec17a1c9a14.html
 
 lab:
   full_name: "Bio-Informed Research & Design Lab"
