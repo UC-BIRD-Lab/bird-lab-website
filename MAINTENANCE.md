@@ -27,7 +27,9 @@ Do these once a month. None of them require the command line.
    and prints a paste-ready block (add `--append` to insert it for you). Include the
    paper's `doi:` and the story shows up as the "In the news" badge on Publications.
    Prefer to do it by hand? Template and all flags are in CONTENT-GUIDE → *Add press
-   coverage*.
+   coverage*. The same helper adds a **video, podcast, or radio interview** to the
+   "Watch & listen" strip — just add `--media video|podcast|radio|model` (see
+   CONTENT-GUIDE → *Videos, podcasts & 3D models*).
 3. **Add notable milestones.** Awards, talks, funding, new members, graduations →
    add a one-line entry to the top of the current year in `_data/updates.yml`.
    Member names link themselves automatically.

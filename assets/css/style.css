@@ -443,16 +443,27 @@ blockquote { border-left: 4px solid var(--c-blue-500); padding-left: 1rem; color
    slate (#34567f, ~4.8:1). Hero eyebrow keeps its light inline color. */
 .eyebrow { color: var(--c-blue-700); }
 
-/* Research — mission as a soft highlighted panel (no quote bar) */
+/* Research — mission as a centered, boxless editorial statement.
+   No card: just an eyebrow, the statement in the display serif at a
+   comfortable measure, and a single short rule as the only ornament. */
 .mission-statement {
-  margin: .5rem 0 2.4rem; padding: clamp(1.5rem, 4vw, 2.5rem) clamp(1.5rem, 4vw, 2.6rem);
-  background: linear-gradient(135deg, var(--c-sky), var(--c-sky-2));
-  border: 1px solid var(--c-line); border-radius: 18px;
+  text-align: center;
+  padding-block: clamp(2.5rem, 6vw, 4.5rem);
+  margin: 0;
 }
+.mission-statement .eyebrow { margin: 0; }
 .mission-statement__text {
   font-family: var(--font-display); font-weight: 500; color: var(--c-navy);
-  font-size: clamp(1.4rem, 1rem + 1.5vw, 2.05rem); line-height: 1.28; max-width: none; margin: .4rem 0 0;
+  font-size: clamp(1.5rem, 1rem + 1.8vw, 2.15rem); line-height: 1.38;
+  letter-spacing: -0.01em; max-width: 38ch; margin: .9rem auto 0;
+  text-wrap: balance;
 }
+.mission-statement__rule {
+  display: block; width: 44px; height: 3px; margin: 1.6rem auto 0;
+  background: var(--c-gold);
+}
+/* Emphasis: Spectral's true italic in a softer slate — flags the two domains
+   (animal flight / engineered systems) without shouting. */
 .mission-statement em { color: var(--c-blue-600); font-style: italic; }
 
 /* Research — value cards (icon inline with the title, like the home cards) */
@@ -900,7 +911,7 @@ a.card--link h3 { color: var(--c-navy); }
 
 /* Signature idea — condensed two-column: intro text left, card stack right */
 .framework-section {
-  display: grid; grid-template-columns: 5fr 7fr;
+  display: grid; grid-template-columns: 6fr 5fr;
   gap: clamp(1.5rem, 4vw, 3.2rem); align-items: start;
 }
 .framework-section .framework-flow { margin-top: 0; }
@@ -1346,6 +1357,12 @@ a.card--link h3 { color: var(--c-navy); }
   display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
   gap: var(--gap); margin-top: 1.4rem;
 }
+/* Wrapper so a video card can carry a "Paper"/reason chip as a badge on the
+   thumbnail without nesting a second anchor inside the card link. */
+.media-card { position: relative; display: flex; flex-direction: column; }
+.media-card__foot { position: absolute; top: .6rem; left: .6rem; z-index: 2; display: flex; }
+.media-card__foot .news-press__doi,
+.media-card__foot .news-press__tag { box-shadow: 0 1px 5px rgba(4, 51, 82, .3); }
 .media-item {
   display: flex; flex-direction: column; text-decoration: none; color: var(--c-navy);
   background: #fff; border: 1px solid var(--c-line); border-radius: 14px; overflow: hidden;
@@ -1369,9 +1386,16 @@ a.card--link h3 { color: var(--c-navy); }
 /* Compact rows for media without a thumbnail (podcasts, 3D models): same
    pattern as the press-coverage rows, so nothing looks like an empty card. */
 .media-lines { margin-top: 1.2rem; }
+/* Row wraps the link + an optional "Paper"/reason chip as siblings, so the chip
+   is its own link (anchors can't nest) — same structure as the press rows. */
+.media-line-row {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
+  border-bottom: 1px solid var(--c-line);
+}
 .media-line {
+  flex: 1 1 auto; min-width: 0;
   display: flex; align-items: baseline; gap: .7rem; flex-wrap: wrap;
-  padding: .6rem .2rem; border-bottom: 1px solid var(--c-line);
+  padding: .6rem .2rem;
   text-decoration: none; transition: padding-left .15s ease;
 }
 .media-line:hover, .media-line:focus-visible { padding-left: .5rem; }
@@ -1877,6 +1901,7 @@ a.rlist__title:hover, a.rlist__title:focus-visible { text-decoration: underline;
 .u-mt-15 { margin-top: 1.5rem; }
 .u-mt-16 { margin-top: 1.6rem; }
 .u-mt-18 { margin-top: 1.8rem; }
+.u-mt-24 { margin-top: 2.4rem; }
 .u-mt-fluid { margin-top: clamp(2.5rem, 6vw, 4rem); }
 
 .u-my-15 { margin: 1.5rem 0; }

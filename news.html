@@ -103,13 +103,18 @@ description: "Milestones, press coverage, videos, and podcasts featuring the BIR
 <section aria-labelledby="media-h">
   <p class="eyebrow">Watch &amp; listen</p>
   <h2 id="media-h">Videos, podcasts &amp; interactive media</h2>
-  {%- comment -%} YouTube links get a real thumbnail, so they earn a card in the
-     grid. Podcasts, 3D models, and anything else without a thumbnail render as
-     compact rows instead, so there are no half-empty cards. {%- endcomment -%}
+  {%- comment -%} Only FEATURED items with a thumbnail earn a big card: a YouTube
+     link (thumbnail is automatic) or any item with its own `image:`. Everything
+     else — non-featured videos, podcasts, radio, 3D models — renders as a compact
+     row, so the strip stays tidy and nothing looks like a half-empty card. {%- endcomment -%}
   {%- assign vid_items = "" | split: "" -%}
   {%- assign line_items = "" | split: "" -%}
   {%- for m in site.data.media -%}
-    {%- if m.url contains "youtube.com" or m.url contains "youtu.be" -%}
+    {%- assign is_yt = false -%}
+    {%- if m.url contains "youtube.com" or m.url contains "youtu.be" -%}{%- assign is_yt = true -%}{%- endif -%}
+    {%- assign has_thumb = false -%}
+    {%- if is_yt or m.image -%}{%- assign has_thumb = true -%}{%- endif -%}
+    {%- if m.featured and has_thumb -%}
       {%- assign vid_items = vid_items | push: m -%}
     {%- else -%}
       {%- assign line_items = line_items | push: m -%}
@@ -119,18 +124,25 @@ description: "Milestones, press coverage, videos, and podcasts featuring the BIR
   {%- if vid_items.size > 0 -%}
   <div class="media-grid">
     {%- for m in vid_items -%}
-    <a class="media-item" href="{{ m.url }}" rel="noopener">
-      <span class="media-item__thumb">
-        {%- assign yid = m.url | split: "v=" | last | split: "&" | first -%}
-        <img src="https://img.youtube.com/vi/{{ yid }}/hqdefault.jpg" alt="" loading="lazy">
-        <span class="media-item__play" aria-hidden="true">▶</span>
-      </span>
-      <span class="media-item__body">
-        <span class="media-item__kind">Video</span>
-        <span class="media-item__title">{{ m.title }}</span>
-        {%- if m.source or m.year %}<span class="media-item__meta">{{ m.source }}{% if m.source and m.year %} · {% endif %}{{ m.year }}</span>{% endif -%}
-      </span>
-    </a>
+    <div class="media-card">
+      <a class="media-item" href="{{ m.url }}" rel="noopener">
+        <span class="media-item__thumb">
+          {%- if m.url contains "youtu.be/" -%}{%- assign yid = m.url | split: "youtu.be/" | last | split: "?" | first -%}
+          {%- elsif m.url contains "youtube.com" -%}{%- assign yid = m.url | split: "v=" | last | split: "&" | first -%}
+          {%- else -%}{%- assign yid = "" -%}{%- endif -%}
+          {%- if yid != "" -%}<img src="https://img.youtube.com/vi/{{ yid }}/hqdefault.jpg" alt="" loading="lazy">
+          {%- elsif m.image contains '://' -%}<img src="{{ m.image }}" alt="" loading="lazy">
+          {%- else -%}<img src="{{ m.image | relative_url }}" alt="" loading="lazy">{%- endif -%}
+          {%- if m.kind == "video" or m.kind == nil -%}<span class="media-item__play" aria-hidden="true">▶</span>{%- endif -%}
+        </span>
+        <span class="media-item__body">
+          <span class="media-item__kind">{% if m.kind == "podcast" %}Podcast{% elsif m.kind == "radio" %}Radio{% elsif m.kind == "model" %}3D model{% else %}Video{% endif %}</span>
+          <span class="media-item__title">{{ m.title }}</span>
+          {%- if m.source or m.year %}<span class="media-item__meta">{{ m.source }}{% if m.source and m.year %} · {% endif %}{{ m.year }}</span>{% endif -%}
+        </span>
+      </a>
+      {%- if m.doi or m.tag -%}<div class="media-card__foot">{% include media-chip.html m=m %}</div>{%- endif -%}
+    </div>
     {%- endfor -%}
   </div>
   {%- endif -%}
@@ -138,13 +150,18 @@ description: "Milestones, press coverage, videos, and podcasts featuring the BIR
   {%- if line_items.size > 0 -%}
   <div class="media-lines">
     {%- for m in line_items -%}
-    <a class="media-line" href="{{ m.url }}" rel="noopener">
-      <span class="media-line__kind"><span aria-hidden="true">{% if m.kind == "podcast" %}🎧{% elsif m.kind == "model" %}🧊{% else %}▶{% endif %}</span> {% if m.kind == "podcast" %}Podcast{% elsif m.kind == "model" %}3D model{% else %}Video{% endif %}</span>
-      <span class="media-line__title">{{ m.title }}</span>
-      {%- if m.source or m.year %}<span class="media-line__meta">{{ m.source }}{% if m.source and m.year %} · {% endif %}{{ m.year }}</span>{% endif -%}
-    </a>
+    <div class="media-line-row">
+      <a class="media-line" href="{{ m.url }}" rel="noopener">
+        <span class="media-line__kind"><span aria-hidden="true">{% if m.kind == "podcast" %}🎧{% elsif m.kind == "radio" %}📻{% elsif m.kind == "model" %}🧊{% else %}▶{% endif %}</span> {% if m.kind == "podcast" %}Podcast{% elsif m.kind == "radio" %}Radio{% elsif m.kind == "model" %}3D model{% else %}Video{% endif %}</span>
+        <span class="media-line__title">{{ m.title }}</span>
+        {%- if m.source or m.year %}<span class="media-line__meta">{{ m.source }}{% if m.source and m.year %} · {% endif %}{{ m.year }}</span>{% endif -%}
+      </a>
+      {% include media-chip.html m=m %}
+    </div>
     {%- endfor -%}
   </div>
   {%- endif -%}
 </section>
 {%- endif -%}
+
+<p class="muted u-fs-sm u-mt-24"><strong>A note on accuracy.</strong> We're grateful for the care most reporters take, and clear, accurate science communication matters to us. Even so, we can't control how every story or interview frames our research, and findings are occasionally simplified or overstated. We stand behind the claims in our peer-reviewed papers &mdash; not necessarily the wording of the coverage about them. For precise results and their limits, please return to the original paper (linked wherever available above) or contact its corresponding author.</p>

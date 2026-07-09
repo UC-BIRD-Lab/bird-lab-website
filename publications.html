@@ -27,10 +27,13 @@ description: "Journal articles, conference papers, and open data and code from t
 {%- assign all = journals | concat: conf -%}
 {%- assign years = all | map: "year" | uniq | sort | reverse -%}
 
-{%- comment -%} Flatten all press items once, so each paper can show how many
-   news stories reference its DOI (see the "In the news" badge below). {%- endcomment -%}
+{%- comment -%} Flatten all coverage once, so each paper can show how many pieces
+   reference its DOI (the "In the news" badge below). Written press is grouped by
+   year; media (videos/podcasts/radio) is a flat list — include both. Items without
+   a doi simply never match. {%- endcomment -%}
 {%- assign all_press = "" | split: "" -%}
 {%- for yr in site.data.press -%}{%- assign all_press = all_press | concat: yr.items -%}{%- endfor -%}
+{%- if site.data.media -%}{%- assign all_press = all_press | concat: site.data.media -%}{%- endif -%}
 
 {%- comment -%}
   Roster of current lab members + alumni (NOT affiliates), built from people.yml so

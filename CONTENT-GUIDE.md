@@ -206,11 +206,33 @@ reason tag instead of a DOI, e.g. `--tag Center` (choices: `Center`, `Award`,
 
 ### Videos, podcasts & 3D models: `_data/media.yml`
 
-Non-article coverage (talks, podcast episodes, an interactive model) lives here and
-shows in the **"Watch & listen"** strip on the News page: as link-out cards, not
+Non-article coverage (talks, podcast episodes, a radio interview, an interactive model)
+lives here and shows in the **"Watch & listen"** strip on the News page: link-outs, not
 embeds, so the page stays fast and cookie-free. Each entry has `title`, `kind`
-(`video` / `podcast` / `model`), `source`, `year`, `url`. For a YouTube link the
-thumbnail is generated automatically; podcasts and models get an icon tile.
+(`video` / `podcast` / `radio` / `model`), `source`, `year`, `url`.
+
+By default every item — videos included — renders as a **compact row**. To promote one to
+a **thumbnail card**, add `featured: true`. A card needs a thumbnail source: a YouTube link
+(the thumbnail is automatic) or an `image:` path for a non-YouTube card. Feature just a few
+highlights so the strip stays tidy.
+
+Two optional fields, mirroring the press archive, let a media item point back to its
+source: add `doi: "10.xxxx/…"` for a blue **📄 Paper** link to the peer-reviewed article,
+or `tag: "Award"` for a reason chip (`Center` · `Award` · `Funding` · `Profile` ·
+`Feature`). An item shows at most one chip; `doi` wins if both are set.
+
+**Adding one with the script.** `scripts/add_press.py` can build a media entry for you —
+same tool as the press archive, with `--media KIND`:
+
+```bash
+python scripts/add_press.py "https://youtu.be/XXXX" --media video --featured --append
+python scripts/add_press.py "https://pod.site/ep"  --media podcast --append
+python scripts/add_press.py "https://npr.org/…"    --media radio --doi 10.1098/rsif.2025.1082 --append
+```
+
+It reads the title/outlet/year from the page and inserts the entry at the top of
+`media.yml` (newest first). Drop `--append` to just preview the block. Without `--media`
+the same command targets `press.yml`, exactly as before.
 
 ---
 

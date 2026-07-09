@@ -15,10 +15,18 @@ SAFE by design (same spirit as update_publications.py):
     header comments and hand-formatting stay intact.
   * If the page is missing a field, it warns and leaves that field blank to fill in.
 
+It can also build a _data/media.yml entry (videos, podcasts, radio, 3D models) with
+--media KIND. A media item is a compact row by default; add --featured to give it a
+thumbnail card (YouTube thumbnails are automatic, other cards need an --image).
+
 Examples:
   python scripts/add_press.py "https://news.site/story" --doi 10.1098/rsif.2025.0868 --featured
   python scripts/add_press.py "https://news.site/story"                 # not featured, just print
   python scripts/add_press.py "https://news.site/story" --featured --append
+  # Media (Watch & listen strip):
+  python scripts/add_press.py "https://youtu.be/XXXX" --media video --featured --append
+  python scripts/add_press.py "https://pod.site/ep" --media podcast --append
+  python scripts/add_press.py "https://npr.org/…" --media radio --doi 10.1098/rsif.2025.1082 --append
 
 Requires: Python 3.8+ . Pillow is used to resize/compress the image when --featured
 (optional: without it the raw image is saved and you can shrink it later).
@@ -39,6 +47,7 @@ from html.parser import HTMLParser
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PRESS_YML = os.path.join(REPO_ROOT, "_data", "press.yml")
+MEDIA_YML = os.path.join(REPO_ROOT, "_data", "media.yml")
 IMG_DIR = os.path.join(REPO_ROOT, "assets", "img", "news")
 IMG_MAXW = 1280          # matches the research-figure budget (~1280px)
 IMG_MAX_KB = 140         # nudge JPEG quality down until under this
@@ -238,6 +247,36 @@ def build_entry(f, indent="      "):
     return "\n".join(lines)
 
 
+def build_media_entry(f):
+    """Return the YAML lines for one _data/media.yml item (a flat top-level list)."""
+    lines = ["- title: " + yaml_dq(f["title"]),
+             "  kind: " + (f.get("kind") or "video"),
+             "  source: " + yaml_dq(f["source"]),
+             "  year: %s" % f["year"],
+             "  url: " + yaml_dq(f["url"])]
+    if f.get("doi"):
+        lines.append("  doi: " + yaml_dq(f["doi"]))
+    elif f.get("tag"):
+        lines.append("  tag: " + f["tag"])
+    if f.get("featured"):
+        lines.append("  featured: true")
+        if f.get("image"):
+            lines.append("  image: " + f["image"])
+    return "\n".join(lines)
+
+
+def append_to_media(entry_block):
+    """Insert one item at the TOP of media.yml (newest first), just after the
+    header comment block. Targeted text insert — header/formatting preserved."""
+    if not os.path.exists(MEDIA_YML):
+        raise FileNotFoundError(MEDIA_YML)
+    lines = open(MEDIA_YML, encoding="utf-8").read().splitlines()
+    first = next((i for i, ln in enumerate(lines) if ln.startswith("- ")), len(lines))
+    block = entry_block.splitlines() + [""]
+    lines[first:first] = block
+    open(MEDIA_YML, "w", encoding="utf-8").write("\n".join(lines).rstrip("\n") + "\n")
+
+
 def append_to_press(entry_block, year):
     if not os.path.exists(PRESS_YML):
         raise FileNotFoundError(PRESS_YML)
@@ -279,11 +318,20 @@ def main(argv=None):
     p.add_argument("--source", help="Override the outlet name")
     p.add_argument("--title", help="Override the headline")
     p.add_argument("--image", help="Override image URL or local /assets path (implies --featured)")
-    p.add_argument("--append", action="store_true", help="Insert into _data/press.yml (else just print)")
+    p.add_argument("--media", default="", choices=["", "video", "podcast", "radio", "model"],
+                   help="Build a _data/media.yml entry of this kind instead of a press entry "
+                        "(video / podcast / radio / model). --featured gives it a thumbnail card.")
+    p.add_argument("--append", action="store_true",
+                   help="Insert into the data file (else just print). Targets media.yml with --media, else press.yml.")
     args = p.parse_args(argv)
 
+    is_media = bool(args.media)
+    # A media item only needs an image when it's a featured NON-YouTube card;
+    # YouTube cards get their thumbnail automatically, so don't force-fetch one.
+    yt = ("youtube.com" in args.url) or ("youtu.be" in args.url)
     if args.image:
         args.featured = True
+    want_image = args.featured and not (is_media and yt)
 
     print("Fetching %s ..." % args.url, file=sys.stderr)
     page, fetch_err = None, None
@@ -297,13 +345,13 @@ def main(argv=None):
     m = MetaParser()
     if page:
         m.feed(page)
-    elif args.source and args.title and (args.image or not args.featured):
+    elif args.source and args.title and (args.image or not want_image):
         # Site blocked us, but you supplied the essentials by hand: carry on.
         print("Note: couldn't fetch the page (%s); using the values you passed."
               % fetch_err, file=sys.stderr)
     else:
         need = '--source "Outlet" --title "Headline"'
-        if args.featured:
+        if want_image:
             need += " --image <image-url>"
         sys.exit(
             "ERROR: couldn't fetch the article (%s).\n"
@@ -337,7 +385,8 @@ def main(argv=None):
     # A tag only applies to stories without a DOI (doi shows a "Paper" pill instead).
     tag = "" if doi else args.tag
     fields = {"title": title, "source": source, "url": args.url,
-              "author": author, "doi": doi, "tag": tag, "featured": args.featured}
+              "author": author, "doi": doi, "tag": tag, "featured": args.featured,
+              "kind": args.media, "year": year}
 
     warnings = []
     if not title:
@@ -345,7 +394,7 @@ def main(argv=None):
     if not source:
         warnings.append("no outlet name found: fill in `source:` (or pass --source).")
 
-    if args.featured:
+    if want_image:
         img_ref = args.image
         if img_ref and img_ref.startswith("/assets/"):
             fields["image"] = img_ref            # already a local path; trust it
@@ -365,13 +414,15 @@ def main(argv=None):
                 except Exception as e:
                     warnings.append("could not download the image (%s): add `image:` by hand." % e)
 
-    entry = build_entry(fields)
+    entry = build_media_entry(fields) if is_media else build_entry(fields)
 
     # ── Console summary + the paste-ready block ──
     print("\n" + "-" * 66, file=sys.stderr)
+    print("  target   : %s" % ("media.yml (%s)" % args.media if is_media else "press.yml"), file=sys.stderr)
     print("  source   : %s" % (source or "(!) missing"), file=sys.stderr)
     print("  title    : %s" % (title or "(!) missing"), file=sys.stderr)
-    print("  author   : %s" % (author or "(none found)"), file=sys.stderr)
+    if not is_media:
+        print("  author   : %s" % (author or "(none found)"), file=sys.stderr)
     print("  year     : %s" % year, file=sys.stderr)
     print("  doi      : %s" % (doi or "(none)"), file=sys.stderr)
     print("  tag      : %s" % (tag or "(none)"), file=sys.stderr)
@@ -383,9 +434,17 @@ def main(argv=None):
     print("-" * 66, file=sys.stderr)
 
     if args.append:
-        append_to_press(entry, year)
-        print("Inserted into _data/press.yml under %d. Review the diff before committing."
-              % year, file=sys.stderr)
+        if is_media:
+            append_to_media(entry)
+            print("Inserted at the top of _data/media.yml. Review the diff before committing.",
+                  file=sys.stderr)
+        else:
+            append_to_press(entry, year)
+            print("Inserted into _data/press.yml under %d. Review the diff before committing."
+                  % year, file=sys.stderr)
+    elif is_media:
+        print("Paste this at the top of _data/media.yml (newest first):\n", file=sys.stderr)
+        print(entry)   # to stdout so it's easy to copy/redirect
     else:
         print("Paste this under `- year: %d` (items:) in _data/press.yml:\n" % year,
               file=sys.stderr)

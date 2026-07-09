@@ -37,7 +37,7 @@ glance before you reach out.
 {%- if ug.open %}<span class="status status--active">{{ ug.open_note }}</span>{% else %}<span class="status status--paused">{{ ug.closed_note }}</span>{% endif %}
 <h3>Undergraduates</h3>
 <p>One or two junior/senior students each quarter at UC&nbsp;Davis. <strong>All majors welcome.</strong></p>
-<p>Most positions start unfunded; strong researchers may be paid if funding allows, and I'll help you apply for your own funding (URC, CITRIS).</p>
+<p>Most positions start unfunded; strong researchers may be paid if funding allows, and I'll help you apply for your own funding (URC, CITRIS, etc.).</p>
 <a class="btn btn--primary" href="{{ site.undergrad_form_url }}">Start the interest form &rarr;</a>
 </div>
 {%- assign grad = site.data.openings.graduate -%}
@@ -57,7 +57,7 @@ glance before you reach out.
 </div>
 </div>
 
-<p class="muted u-fs-sm"><strong>Undergraduates, volunteer or for credit:</strong> Volunteering runs about 8 hours a week; come with evidence that you're already doing well in your coursework, so research adds to your progress rather than pulling your grades down. You can also take EME or EAE 199 with me, where your number of credits is set by the hours you commit and you give a short presentation at the end of the quarter. I usually take 199 students on from current volunteers, so volunteering is the normal first step.</p>
+<p class="muted u-fs-sm"><strong>Undergraduates usually volunteer or sign up for credit.</strong> We request that volunteers make a 8 hour/week average commitment. Volunteers must come prepared to demonstrate strong coursework progress, so that research adds to your progress rather than pulling grades down. You may also take EME or EAE 199 with written permission. The number of 199 credits is set by the hours committed. 199 students must give a short presentation at the end of the quarter. 199 students are usually previous lab volunteers, so volunteering is the normal first step.</p>
 
 <p class="muted u-fs-sm"><strong>Funding your own spot?</strong> Browse our <a href="{{ '/lab-guide/funding-applications/' | relative_url }}">curated list of fellowships &amp; scholarships</a>, with options for undergraduates, graduate students, and postdocs.</p>
 

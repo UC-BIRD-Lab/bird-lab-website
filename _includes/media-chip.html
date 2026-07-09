@@ -1,0 +1,19 @@
+{%- comment -%}
+  Small chip for a media item, mirroring the press-archive rows.
+  Pass a media entry as `m`. Optional fields on that entry:
+    doi: "10.xxxx/…"   → a blue "📄 Paper" link to the peer-reviewed source
+    tag: "Award"        → a reason chip (Center · Award · Funding · Profile · Feature)
+  A row/card shows at most one chip; `doi` wins if both are set.
+{%- endcomment -%}
+{%- if include.m.doi -%}<a class="news-press__doi" href="https://doi.org/{{ include.m.doi }}" rel="noopener" title="Read the peer-reviewed paper behind this coverage"><span aria-hidden="true">📄</span> Paper</a>
+{%- elsif include.m.tag -%}
+  {%- case include.m.tag -%}
+    {%- when "Center" -%}{%- assign tag_emoji = "🏛️" -%}
+    {%- when "Award" -%}{%- assign tag_emoji = "🏆" -%}
+    {%- when "Funding" -%}{%- assign tag_emoji = "💰" -%}
+    {%- when "Profile" -%}{%- assign tag_emoji = "👤" -%}
+    {%- when "Feature" -%}{%- assign tag_emoji = "📰" -%}
+    {%- else -%}{%- assign tag_emoji = "" -%}
+  {%- endcase -%}
+  <span class="news-press__tag" data-tag="{{ include.m.tag }}" title="Why this is highlighted">{% if tag_emoji != "" %}<span aria-hidden="true">{{ tag_emoji }}</span> {% endif %}{{ include.m.tag }}</span>
+{%- endif -%}
