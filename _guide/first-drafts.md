@@ -243,7 +243,7 @@ in your sleep.
 
 The core principles hold for both; what changes is strategy.
 
-| | Journal article | Conference paper |
+| Aspect | Journal article | Conference paper |
 | --- | --- | --- |
 | **Goal** | The complete, definitive account | A solid, citable checkpoint |
 | **What to include** | Strongest, fully validated results | Boring-but-bulletproof results; hold exciting findings back |
