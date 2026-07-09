@@ -23,8 +23,7 @@ baseurl: ""
 #   <meta name="google-site-verification" content="...">
 # on every page, including the homepage GSC checks.
 #
-# GSC Token
-google_site_verification: googleca92eec17a1c9a14.html
+google_site_verification: L8d8KgsD07pwppyU9Jw4QpHmSsM_XuosM8-dVuAPsHw
 
 lab:
   full_name: "Bio-Informed Research & Design Lab"
