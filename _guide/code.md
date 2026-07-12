@@ -105,12 +105,10 @@ single documented, tested module that every project imports, rather than rewriti
 **None of the three existing routines is a reference implementation.** Do not port one into a new
 project and assume it is correct.
 
-What the routine must compute, the assumptions behind it, and the known-answer tests it has to
-pass before you trust it all live on one page:
-[Data analysis]({{ '/lab-guide/data-analysis/' | relative_url }}#error-and-uncertainty). That page
-is the single source of truth for the method. Write the code against it, and test the code against
-the cases in
-[Prove your implementation]({{ '/lab-guide/data-analysis/' | relative_url }}#prove-your-implementation).
+The method, its assumptions, and its citations live on one page:
+[Data analysis]({{ '/lab-guide/data-analysis/' | relative_url }}#error-and-uncertainty). That page is
+the single source of truth. Write the code against it, and validate against a case whose answer you
+already know before you trust it on real data.
 </div>
 
 Grounded in our own repositories:
