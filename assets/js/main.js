@@ -171,6 +171,34 @@
     else if (foldMq.addListener) foldMq.addListener(syncWikiFold);
   }
 
+  // ---- Print: expand every collapsed <details> ----
+  // CSS cannot reliably force a closed <details> to render, so a printed guide
+  // page would silently drop whatever is inside a fold. Open them all before the
+  // print dialog and restore each one's original state afterwards.
+  var printOpened = [];
+  function expandFoldsForPrint() {
+    printOpened = [];
+    document.querySelectorAll("details:not([open])").forEach(function (d) {
+      printOpened.push(d);
+      d.open = true;
+    });
+  }
+  function restoreFoldsAfterPrint() {
+    printOpened.forEach(function (d) { d.open = false; });
+    printOpened = [];
+  }
+  window.addEventListener("beforeprint", expandFoldsForPrint);
+  window.addEventListener("afterprint", restoreFoldsAfterPrint);
+  // Safari fires no beforeprint/afterprint, so drive it off the print media query.
+  if (window.matchMedia) {
+    var printMq = window.matchMedia("print");
+    var onPrintChange = function (mq) {
+      if (mq.matches) expandFoldsForPrint(); else restoreFoldsAfterPrint();
+    };
+    if (printMq.addEventListener) printMq.addEventListener("change", onPrintChange);
+    else if (printMq.addListener) printMq.addListener(onPrintChange);
+  }
+
   // ---- Wiki search (filters side nav + jumps) ----
   var wikiSearch = document.getElementById("wiki-search");
   if (wikiSearch) {

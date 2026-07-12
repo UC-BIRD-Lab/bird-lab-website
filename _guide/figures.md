@@ -5,7 +5,8 @@ order: 4
 summary: The lab's figure standards, a self-diagnosis checklist, and tools and palettes.
 keywords: [figures, plots, graphics, illustrator, ggplot, visualization, charts, color]
 icon: "🎨"
-reviewed: 2026-07-05
+reviewed: 2026-07-11
+math: true
 ---
 
 <aside class="marginnote" markdown="1">
@@ -105,12 +106,25 @@ axis share its range. Define what error bars represent. No 3D charts for 2D data
 
 Two ways to quantify integrity:
 
-- **Lie factor** = size of effect shown in the graphic ÷ size of effect shown in the data. A value far from 1 means the graphic exaggerates (or hides) the real effect. Heatmaps are a common offender: a color scale can invent a difference the data don't support. See [how a heat map can fool you](https://tywkiwdbi.blogspot.com/2013/02/how-you-can-be-fooled-by-heat-map.html?m=0).
-- **Data-to-ink ratio** = ink used to convey data ÷ total ink used in the graphic. Ink that isn't carrying information is noise. Cut the chart junk; spend ink deliberately to raise the signal. See [this data-ink ratio explainer](https://medium.com/@vaniv7397/data-ink-ratio-fcad209ef425).
+**Lie factor.** How much the graphic exaggerates or hides the real effect:
+
+$$\text{lie factor} = \frac{\text{size of effect shown in the graphic}}{\text{size of effect shown in the data}}$$
+
+An honest figure has $$\text{lie factor} \approx 1$$; anything far from 1 misleads. Heatmaps are a
+common offender: a color scale can invent a difference the data don't support. See
+[how a heat map can fool you](https://tywkiwdbi.blogspot.com/2013/02/how-you-can-be-fooled-by-heat-map.html?m=0).
+
+**Data-to-ink ratio.** What fraction of the graphic is actually carrying information:
+
+$$\text{data-to-ink} = \frac{\text{ink used to convey data}}{\text{total ink used in the graphic}}$$
+
+Ink that isn't carrying information is noise, so push this ratio toward 1. Cut the chart junk;
+spend ink deliberately to raise the signal. See
+[this data-ink ratio explainer](https://medium.com/@vaniv7397/data-ink-ratio-fcad209ef425).
 
 > *Example:*
 > ❌ A bar chart of group means with no error bars, y-axis from 9.8 to 10.1.
-> ✅ A strip plot of all data points overlaid with mean ± 95% CI; full y-axis range from 0.
+> ✅ A strip plot of all data points overlaid with $$\bar{x} \pm \text{95\% CI}$$; full y-axis range from 0.
 
 ### 5 · Use color intentionally, consistently, and accessibly
 

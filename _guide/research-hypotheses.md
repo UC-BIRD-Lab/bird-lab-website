@@ -5,7 +5,8 @@ order: 2
 summary: How to write clear, testable hypotheses for your thesis or project.
 keywords: [hypothesis, research question, prediction, testable, aims, hypotheses]
 icon: "💡"
-reviewed: 2026-07-05
+reviewed: 2026-07-11
+math: true
 ---
 
 A research hypothesis is a **concise, testable statement** about how a system
@@ -75,7 +76,7 @@ wrong? If not, it's probably not a hypothesis yet.
    literature and prior data.
 3. **List plausible explanations.** Morphology, aerodynamics, control, sensing,
    environment, task demands.
-4. **Write competing hypotheses.** H₀ (null), then H₁, H₂ as alternative
+4. **Write competing hypotheses.** $$H_0$$ (null), then $$H_1$$, $$H_2$$ as alternative
    mechanisms or relationships.
 5. **Derive discriminating predictions.** For each, "if this is true, we should
    see ___," focusing on predictions that *differ* across hypotheses.
@@ -103,16 +104,25 @@ A competing-hypotheses example based on
 **Question:** which traits best predict variation in flight behavior across bird
 species? Framed as competing hypotheses:
 
-- **H₀ (null):** flight behavior is not meaningfully associated with the measured
+- **$$H_0$$ (null):** flight behavior is not meaningfully associated with the measured
   traits; classification accuracy is similar to shuffled data.
-- **H₁ (wing shape):** static wing shape is the main predictor, and shape-based
+- **$$H_1$$ (wing shape):** static wing shape is the main predictor, and shape-based
   models classify behavior better than chance.
-- **H₂ (range of motion):** wing range of motion is the main predictor, and
+- **$$H_2$$ (range of motion):** wing range of motion is the main predictor, and
   ROM-based models outperform shape- and mass-based models.
-- **H₃ (body mass):** body mass is the main predictor, and mass-based models show
+- **$$H_3$$ (body mass):** body mass is the main predictor, and mass-based models show
   the highest accuracy.
 
 Each hypothesis implies different predictions about classification accuracy, how
-each trait compares against a shuffled null, and relative importance. If ROM-based
-models beat shape- and mass-based models and their shuffled controls, that
-supports H₂ over H₁ and H₃.
+each trait compares against a shuffled null, and relative importance. Writing those
+predictions as comparisons between classification accuracies $$a$$ makes explicit what
+each hypothesis stakes itself on, and therefore what would falsify it:
+
+$$H_0:\ a_\text{shape} \approx a_\text{ROM} \approx a_\text{mass} \approx a_\text{shuffled}
+\qquad
+H_2:\ a_\text{ROM} > \max\left(a_\text{shape},\, a_\text{mass}\right) > a_\text{shuffled}$$
+
+If ROM-based models beat shape- and mass-based models and their shuffled controls, that
+supports $$H_2$$ over $$H_1$$ and $$H_3$$. Note that the null is a claim about the *shuffled*
+baseline, not about zero accuracy: a classifier can look accurate simply because some behaviors
+are more common than others, which is exactly what the shuffled comparison controls for.

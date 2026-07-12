@@ -5,7 +5,8 @@ order: 7
 summary: "Designing and delivering a clear, audience-appropriate talk: signal-to-noise, slide design, delivery, timing, practice, and Q&A."
 keywords: [presentation, talk, slides, public speaking, conference talk, delivery, Q and A]
 icon: "🎤"
-reviewed: 2026-07-05
+reviewed: 2026-07-11
+math: true
 ---
 
 <aside class="marginnote" markdown="1">
@@ -109,8 +110,13 @@ expected.
 - Say out loud what every axis and key means; if the audience has to read it, they aren't listening to you.
 - Avoid tables where you can; emphasize the one line that matters if you can't.
 - Run two quick integrity checks (concepts from Edward Tufte; the full treatment lives in [Figures]({{ '/lab-guide/figures/' | relative_url }})):
-  - **Lie factor** = size of effect shown in the graphic ÷ size of effect shown in the data. Far from 1 means the graphic misleads. See [how a heat map can fool you](https://tywkiwdbi.blogspot.com/2013/02/how-you-can-be-fooled-by-heat-map.html?m=0).
-  - **Data-to-ink ratio** = ink used to convey data ÷ total ink used in the graphic. Ink that isn't information is noise; cut the chart junk. See [this data-ink ratio explainer](https://medium.com/@vaniv7397/data-ink-ratio-fcad209ef425).
+  - **Lie factor**, which should sit near 1. Far from 1 means the graphic misleads; see [how a heat map can fool you](https://tywkiwdbi.blogspot.com/2013/02/how-you-can-be-fooled-by-heat-map.html?m=0).
+
+    $$\text{lie factor} = \frac{\text{size of effect shown in the graphic}}{\text{size of effect shown in the data}} \approx 1$$
+
+  - **Data-to-ink ratio**, which you push toward 1. Ink that isn't information is noise; cut the chart junk. See [this data-ink ratio explainer](https://medium.com/@vaniv7397/data-ink-ratio-fcad209ef425).
+
+    $$\text{data-to-ink} = \frac{\text{ink used to convey data}}{\text{total ink used in the graphic}} \longrightarrow 1$$
 - Use color consistently and intentionally, and check it against color blindness, which is common. An [accessible-palette generator](https://venngage.com/tools/accessible-color-palette-generator) helps.
 
 ### Cite everything you didn't make

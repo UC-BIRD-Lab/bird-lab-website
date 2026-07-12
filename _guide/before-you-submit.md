@@ -22,7 +22,7 @@ the rush before a deadline.
 - Give people time. Christina and your co-authors need enough lead time to give real feedback; work that arrives too late can be held back. See [Communication]({{ '/lab-guide/communication/' | relative_url }}).
 - Christina has the draft at least two weeks before any external deadline.
 - Explicit approval from Christina *and* all co-authors before anything is submitted.
-- At least two labmate pre-reviews first (post in #phone-a-friend).
+- At least two labmate pre-reviews first (post in **#phone-a-friend** on the lab Slack).
 - Disclose honestly: funding, conflicts, data and image permissions, [AI use]({{ '/lab-guide/using-ai/' | relative_url }}), and ethics approvals.
 - Every number traces to its source in an annotated script.
 {: .checklist}

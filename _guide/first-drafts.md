@@ -5,7 +5,8 @@ order: 2
 summary: Core principles, checklists, and authorship policy for manuscripts, preprints, and conference papers.
 keywords: [writing, manuscript, paper, draft, authorship, preprint, publishing]
 icon: "✍️"
-reviewed: 2026-07-05
+reviewed: 2026-07-11
+math: true
 ---
 
 <aside class="marginnote" markdown="1">
@@ -23,12 +24,21 @@ anyone's style, but to write like an independent researcher whose argument stand
 on its own. Every claim carries your name and your co-authors' names; treat each
 one as something you personally vouch for.
 
+<aside class="marginnote" markdown="1">
+**Why "#phone-a-friend"?** It's the channel in the lab's private Slack workspace
+where you post work-in-progress and request peer review (ask Christina or your
+mentor if you're not in it yet). Routing drafts through peers isn't just about catching
+errors early. Giving feedback trains you to read critically (a skill you'll need
+as a reviewer), and receiving it in a low-stakes setting builds the thick skin
+peer review demands. Both get easier with practice.
+</aside>
+
 <div class="callout callout--stop" markdown="1" id="non-negotiables">
 **Lab policy: the non-negotiables**
 
 - Christina has the draft ≥2 weeks before any external deadline (drafts that arrive too late for co-author review may be deferred to a later submission window).
 - No submission without explicit approval from Christina *and* all co-authors.
-- ≥2 labmate pre-reviews before the draft reaches Christina (post in #phone-a-friend; see [giving and receiving feedback]({{ '/lab-guide/communication/' | relative_url }}#giving-and-receiving-feedback)).
+- ≥2 labmate pre-reviews before the draft reaches Christina (post in **#phone-a-friend** on the lab Slack; see [giving and receiving feedback]({{ '/lab-guide/communication/' | relative_url }}#giving-and-receiving-feedback)).
 - Reference managers required (BibTeX / Zotero / EndNote); no manually typed references.
 - Data and code are made public on publication, except where privacy, ethics, legal, proprietary, or collaborator constraints require otherwise; raise these early.
 
@@ -108,13 +118,22 @@ and how it was tested?
 </aside>
 
 "Improved" means nothing without
-*compared to what, by how much, on what metric.* Always report sample size (*n*),
-the test used, the test statistic, the exact *p*-value, and what the error bars
+*compared to what, by how much, on what metric.* Always report sample size ($$n$$),
+the test used, the test statistic, the exact $$p$$-value, and what the error bars
 represent, plus effect size, confidence intervals, and inclusion/exclusion
 criteria where appropriate. Reproducibility is a *writing* requirement: report
 provenance, software versions, mesh/calibration details, and environmental
 conditions. See [Data analysis]({{ '/lab-guide/data-analysis/' | relative_url }}) for
 how we quantify and report uncertainty.
+
+A result that satisfies this principle carries all of it in one place, e.g.
+
+$$\bar{x} = 12.4 \pm 0.8~\text{W}\ (U,\ k=2,\ \text{95\% coverage}),\qquad
+t(7) = 3.42,\quad p = 0.011,\quad d = 1.21$$
+
+The value, its uncertainty and what that uncertainty means, the test, the statistic with its
+degrees of freedom, the exact $$p$$, and the effect size. Report $$p = 0.011$$, not
+$$p < 0.05$$; a threshold hides the number a reader needs.
 
 <div class="callout callout--warn" markdown="1">
 **Lab requirement:** maintain an annotated script that traces every number in the
@@ -184,7 +203,11 @@ Interface
 work always contains an abstraction gap (a wind-tunnel model is not a flying
 animal; a CFD simulation is not a wind tunnel). Name it first. Be precise about
 which kind of uncertainty your error bars represent: biological variation,
-measurement noise, or numerical/model error.
+measurement noise, or numerical/model error. These are different quantities and a reader cannot
+tell them apart from the bar alone. A combined measurement uncertainty
+$$u_c = \sqrt{u_A^2 + u_B^2}$$ is not the same thing as the biological spread across individuals,
+and neither is the fluctuation of an unsteady flow; say in the caption which one you plotted. See
+[Data analysis]({{ '/lab-guide/data-analysis/' | relative_url }}#error-and-uncertainty).
 
 ### 11 · Label bio-inspiration by its evidence, not its appeal
 
@@ -286,14 +309,14 @@ clearing it yourself saves a full review cycle.
 - Every paragraph has one job; its first sentence says what.
 - Claims proportional to evidence; observation, inference, and uncertainty are distinguishable.
 - Each "bio-inspired" claim reports source organism, level of mimicry, and strength of evidence.
-- Results quantified: *n*, test, statistic, exact *p*, error-bar meaning.
+- Results quantified: $$n$$, test, statistic, exact $$p$$, error-bar meaning.
 - Conclusion lands the existing argument and adds no new idea.
 - Figures stand on their own and are each referenced; run the [figure checklist]({{ '/lab-guide/figures/' | relative_url }}).
 - Load-bearing terms defined or cut; empty intensifiers removed; every "this" has a noun.
 - Units, spelling, hyphenation, and notation consistent; every number internally consistent.
 - An annotated script traces every number to its source.
 - Venue requirements and all disclosures met.
-- ≥2 labmate pre-reviews done; Christina has the draft ≥2 weeks before the deadline; all co-authors approved.
+- ≥2 labmate pre-reviews done via **#phone-a-friend** on the lab Slack; Christina has the draft ≥2 weeks before the deadline; all co-authors approved.
 {: .checklist}
 
 ## Authorship
@@ -315,11 +338,12 @@ covers responding to reviewers and what to do once the paper is published.
 4. Review the journal's "Information for Authors" page.
 5. Outline by drafting a topic sentence per major paragraph.
 6. Write the main-text draft; complete the checklist above.
-7. Choose a declarative, short title.
-8. Write the abstract ([Nature summary-paragraph style](https://www.nature.com/documents/nature-summary-paragraph.pdf)).
-9. Send the full draft to reviewers one at a time (repeat 2 to 3 times).
-10. Send the updated draft to the last author.
-11. Upload supporting data/code to [FigShare](https://figshare.com); reserve a DOI for the collection (don't publish yet).
-12. Draft the cover letter; send to the last author for approval.
-13. Re-read everything calmly.
-14. Submit (do this with Christina the first time).
+7. Post the draft in **#phone-a-friend** on the lab Slack and collect ≥2 labmate pre-reviews; revise before it goes any further.
+8. Choose a declarative, short title.
+9. Write the abstract ([Nature summary-paragraph style](https://www.nature.com/documents/nature-summary-paragraph.pdf)).
+10. Send the full draft to reviewers one at a time (repeat 2 to 3 times).
+11. Send the updated draft to the last author.
+12. Upload supporting data/code to [FigShare](https://figshare.com); reserve a DOI for the collection (don't publish yet).
+13. Draft the cover letter; send to the last author for approval.
+14. Re-read everything calmly.
+15. Submit (do this with Christina the first time).
