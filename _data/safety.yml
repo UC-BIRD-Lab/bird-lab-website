@@ -32,12 +32,12 @@ requirements:
     note: Complete relevant Slack Workflow, in-person walkthrough with your assigned trainer
 
   # ---- Activity and site add-ons ----
-  - name: Hand and Power Tool Safety (LMS)
-    who: All experimental researchers
-    link: https://safetyservices.ucdavis.edu/training/hand-and-power-tool-safety
-  - name: Ladder Safety (LMS)
-    who: CALI and wind tunnel researchers
-    link: https://safetyservices.ucdavis.edu/training/ladder-safety
+  # - name: Hand and Power Tool Safety (LMS)
+  #  who: All experimental researchers
+  #  link: Training from Senior Lab Members
+  # - name: Ladder Safety (LMS)
+  #  who: CALI and wind tunnel researchers
+  #  link: https://safetyservices.ucdavis.edu/training/ladder-safety
   - name: Electrical Safety Awareness (LMS)
     who: Wind tunnel researchers
     link: https://safetyservices.ucdavis.edu/training/electrical-safety
@@ -51,7 +51,7 @@ requirements:
   # ---- Live animals at CALI ----
   - name: ACU 101 course
     who: CALI researchers
-    link: https://research.ucdavis.edu/policiescompliance/animal-care-use/training-classes/animal-care-and-use-101-retraining-quiz/
+    link: https://research.ucdavis.edu/research-support/animal-care-use/training-classes/animal-care-and-use-101-acu101-course/
     note: Re-take the refresher every 3 years
   - name: Care and Use of Birds, Owls and Raptors
     who: CALI researchers

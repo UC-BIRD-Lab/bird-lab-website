@@ -29,8 +29,11 @@ her attention. If you need a **confidential** resource, several are listed below
 </div>
 
 ## Get support
-
+<aside class="marginnote" markdown="1">
+Please note that the embedded Community Counselor is confidential; other staff may not be confidential
+</aside>
 Counseling through Student Health and Counseling Services (SHCS) and Aggie Mental Health is for registered students (undergraduate and graduate). Postdocs and other employees use ASAP for counseling; CARE and the Ombuds serve everyone.
+
 
 - [Student Health and Counseling Services (SHCS)](https://shcs.ucdavis.edu/): registered students. Confidential counseling (sexual harassment/violence and discrimination).
 - [Academic and Staff Assistance Program (ASAP)](https://www.hr.ucdavis.edu/departments/asap): employees and academic appointees, including postdocs, GSRs and TAs. Confidential counseling.
@@ -40,6 +43,7 @@ Counseling through Student Health and Counseling Services (SHCS) and Aggie Menta
 - [Women's Resources and Research Center](https://wrrc.ucdavis.edu/)
 - [Student Disability Center](https://sdc.ucdavis.edu/): students. Accommodation requests (employees use Disability Management Services).
 - [Student communities and groups](https://studentaffairs.ucdavis.edu/student-life/communities/identity)
+- [UC Davis Student Safety](https://www.ucdavis.edu/about/student-safety)
 
 ## Reporting resources
 
