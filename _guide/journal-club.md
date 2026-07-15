@@ -8,7 +8,7 @@ icon: "📖"
 reviewed: 2026-07-05
 ---
 
-Our goal is to hold a space to discuss the interaction between biology and
+Our goal is to meet to discuss papers at the interaction between biology and
 engineering in aerodynamics and aircraft design. Topics range from flight
 dynamics and aerodynamics to animal behavior and biomechanics. Most importantly,
 journal club is an avenue to comfortably and regularly discuss science.
@@ -20,12 +20,12 @@ follow our [discussion guidelines]({{ '/lab-guide/discussion-guidelines/' | rela
 
 ## Format
 
-- We meet every two weeks in 155 Hutchinson Hall (a hybrid option is available).
+- Meetings occur every two weeks with different rhythms between the summer and academic year.
 - We take turns explaining the key takeaways of each figure, followed by general
   discussion (the [Figures]({{ '/lab-guide/figures/' | relative_url }}) principles
   are a good lens).
 - Come prepared to share your thoughts, questions, and ideas after reading the
-  selected paper.
+  selected paper. If you are new to reading the literature, please refer to the guide on how to [review the literature]({{ '/lab-guide/literature-reviews/' | relative_url }}).
 - We alternate who suggests the article and leads the discussion. The leader
   suggests their article at least one week in advance and keeps the discussion
   flowing and on track.
