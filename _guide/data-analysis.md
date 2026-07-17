@@ -183,15 +183,12 @@ $$u_A$$ is the Type A uncertainty, which is used to compute the combined uncerta
 
 ### Step 3. If the autocorrelation rings, bootstrap instead
 
-A ringing autocorrelation, or a short record, gives $$N_\text{eff}$$ no reliable answer. Use a **block bootstrap** ([Künsch 1989](https://doi.org/10.1214/aos/1176347265); brought to fluids by
-[Theunissen et al. 2008](https://doi.org/10.1007/s00348-007-0421-0)).
+A ringing autocorrelation, or a short record, gives $$N_\text{eff}$$ that can be sensitive to truncation. Use a **dependent circular block bootstrap** ([Künsch 1989](https://doi.org/10.1214/aos/1176347265); brought to fluids by
+[Theunissen et al. 2008](https://doi.org/10.1007/s00348-007-0418-8)).
 
-Cut the record into sections long enough to hold the correlation. Draw blocks at random with replacement, concatenate into a new dataset, then take its mean. Repeat a few thousand times. The middle 95% of those means **is** your confidence interval. The correlation survives inside each block, so it is never measured.  In R, `boot::tsboot`.
+Cut the record into overlapping sections. Choose the block length to retain the relevant temporal characteristics while remaining substantially shorter than the full record (see [Theunissen et al. 2008](https://doi.org/10.1007/s00348-007-0418-8) for a suggested procedure). Block-length selection is a recognized central difficulty of dependent bootstrapping, and may require a specific sensitivity study. Draw blocks at random with replacement, concatenate into a new dataset, then take its mean. Repeat a few thousand times. In R, `boot::tsboot`.
 
-**To feed the budget in Step 5**, use the standard deviation of the bootstrap means as $$u_A$$.
-
-Requires one setting choice, the block length: see
-[Politis & White 2004](https://doi.org/10.1081/ETC-120028836).
+The empirical 2.5th and 97.5th percentiles of the bootstrap estimates provide a percentile 95% confidence interval. The standard deviation of the bootstrap estimates provides an estimate of the standard error and may be used as the Type A standard uncertainty, ($$u_A$$), associated with finite-duration sampling. **To feed the budget in Step 5**, use the standard deviation of the bootstrap means as $$u_A$$.
 
 <div class="callout" markdown="1">
 **Run both and compare.** They should agree where the autocorrelation is well behaved.
