@@ -29,10 +29,10 @@ On taking critique well, see
 3. Write your responses. This first draft can be honest (and perhaps a tad grumpy).
 4. Re-write your responses so they don't come across as excuses or as lecturing the reviewers, even if you think they're wrong.
 
-<div class="callout callout--warn" markdown="1">
-Whether the reviewer is right or wrong is usually irrelevant. Approach it as:
-"if they thought that, someone else might too, so at the very least my wording was unclear and should be amended."
-</div>
+  <div class="callout callout--warn" markdown="1">
+  Whether the reviewer is right or wrong is usually irrelevant. Approach it as:
+  "if they thought that, someone else might too, so at the very least my wording was     unclear and should be amended."
+  </div>
 
 5. Review again to make sure responses are solution-oriented and positive.
 6. For every comment, make at least some adjustment to the text. For major comments, make two or more changes (even minor rewording).
