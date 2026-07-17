@@ -5,7 +5,7 @@ order: 2
 summary: Core principles, checklists, and authorship policy for manuscripts, preprints, and conference papers.
 keywords: [writing, manuscript, paper, draft, authorship, preprint, publishing]
 icon: "✍️"
-reviewed: 2026-07-11
+reviewed: 2026-07-17
 math: true
 ---
 
@@ -120,8 +120,9 @@ and how it was tested?
 "Improved" means nothing without
 *compared to what, by how much, on what metric.* Always report sample size ($$n$$),
 the test used, the test statistic, the exact $$p$$-value, and what the error bars
-represent, plus effect size, confidence intervals, and inclusion/exclusion
-criteria where appropriate. Reproducibility is a *writing* requirement: report
+represent, plus effect size, confidence intervals, randomization/blinding,
+number of replicates, and inclusion/exclusion criteria (with reasons) where
+appropriate. Reproducibility is a *writing* requirement: report
 provenance, software versions, mesh/calibration details, and environmental
 conditions. See [Data analysis]({{ '/lab-guide/data-analysis/' | relative_url }}) for
 how we quantify and report uncertainty.
@@ -151,8 +152,9 @@ Load-bearing words must carry their
 exact meaning, consistently across sections: *significant* (only statistical, name
 the test), *robust* (to what?), *converged* (what, to what value, under what
 condition?), *improved* (vs. what, by how much, on what metric?). Cut *very,
-obviously, extremely, actually*. Every "this" needs a following noun. Define
-acronyms at first use.
+obviously, extremely, actually*; prefer *use* over *utilize*. Every "this" needs
+a following noun. Define acronyms at first use, and don't introduce one the
+reader will meet only once or twice; spell it out instead.
 
 ### 7 · Write directly
 
@@ -277,6 +279,7 @@ The core principles hold for both; what changes is strategy.
 **Null and underperformance results count.** A clean negative result, honestly
 reported, is exactly what a conference paper is for. *Rule of thumb: Journal = your
 best work, fully defended. Conference = your safest work, cleanly presented.*
+Some conference venues are a good place for major results ; if you think yours qualifies, discuss it with Christina.
 
 ## Protecting your name (and your co-authors')
 
@@ -309,15 +312,56 @@ clearing it yourself saves a full review cycle.
 - Every paragraph has one job; its first sentence says what.
 - Claims proportional to evidence; observation, inference, and uncertainty are distinguishable.
 - Each "bio-inspired" claim reports source organism, level of mimicry, and strength of evidence.
-- Results quantified: $$n$$, test, statistic, exact $$p$$, error-bar meaning.
+- Results quantified: $$n$$, test, statistic (including the associated $$F$$-statistic where relevant), exact $$p$$, error-bar meaning.
+- Equations are part of a sentence, properly punctuated, and referenced as needed; LaTeX formatting used where appropriate; every variable introduced in the text is in mathematical font (or italics).
 - Conclusion lands the existing argument and adds no new idea.
 - Figures stand on their own and are each referenced; run the [figure checklist]({{ '/lab-guide/figures/' | relative_url }}).
-- Load-bearing terms defined or cut; empty intensifiers removed; every "this" has a noun.
-- Units, spelling, hyphenation, and notation consistent; every number internally consistent.
-- An annotated script traces every number to its source.
-- Venue requirements and all disclosures met.
+- Empty intensifiers removed.
+- Gender-neutral language throughout.
+- Every "this" has a noun.
+- Every term (especially measurement terms) means the same thing in every section.
+- Units, spelling (US *or* UK, not a mix), hyphenation, and notation consistent
+- Every number is internally consistent and can be traced back to its source; see [Code]({{ '/lab-guide/code/' | relative_url }}).
+- Venue requirements (template, length, formatting) and all disclosures met; ask Christina for the proper funding language.
+- *Conference paper?* The headline result is one you'd defend anywhere, it doesn't need to be life-changing.
 - ≥2 labmate pre-reviews done via **#phone-a-friend** on the lab Slack; Christina has the draft ≥2 weeks before the deadline; all co-authors approved.
 {: .checklist}
+
+## Signs your draft will come back
+
+The first four are **major**: they affect whether the argument holds. The rest are
+style-level: clean them up, but don't mistake them for the hard part.
+
+<div class="callout callout--warn" markdown="1">
+**Major — fix before sending**
+
+- Claims broader than the evidence supports.
+- Missing or incomplete statistical reporting.
+- A takeaway that drifts or changes between sections.
+- Weak or delayed motivation; the reader doesn't know why the work matters.
+</div>
+
+<div class="callout" markdown="1">
+**Style-level — clean up, but don't over-invest**
+
+- Jargon-heavy or review-style openings.
+- Paragraphs that don't logically flow, or pack in multiple, disorganized ideas.
+- Passive description of figures instead of engagement with the data.
+- Inconsistent terminology, units, or notation.
+- Repeated ideas that don't advance the argument.
+</div>
+
+## When you revise your own draft
+
+Read each paragraph and ask: what is the main point here, and did I say it
+*directly*? Did I explain why it matters and support it with evidence? Could an informed reader understand it on the first pass? Is this paragraph doing too much?
+
+Then apply the fix:
+
+- Feels like a literature review: tighten it to only the most relevant sections.
+- Feels like a string of facts: add synthesis and interpretation.
+- Feels vague: make the claim more specific and quantified.
+- Could be removed without changing the argument: remove it.
 
 ## Authorship
 
@@ -343,7 +387,11 @@ covers responding to reviewers and what to do once the paper is published.
 9. Write the abstract ([Nature summary-paragraph style](https://www.nature.com/documents/nature-summary-paragraph.pdf)).
 10. Send the full draft to reviewers one at a time (repeat 2 to 3 times).
 11. Send the updated draft to the last author.
-12. Upload supporting data/code to [FigShare](https://figshare.com); reserve a DOI for the collection (don't publish yet).
-13. Draft the cover letter; send to the last author for approval.
+12. Upload supporting materials to [FigShare](https://figshare.com): create an item for each set of files (data, code, photos, etc.), add the items to a new collection, and reserve a DOI for the collection. Don't click publish yet, for the items or the collection. List the DOI, along with any associated GitHub repository, in the paper's data-availability section.
+13. Draft the cover letter. From the FigShare collection, click "Manage" → "Get private link" and paste the link into the cover-letter draft. Send to the last author for final approval.
 14. Re-read everything calmly.
 15. Submit (do this with Christina the first time).
+
+<aside class="marginnote" markdown="1">
+📌 [Never on a Sunday! Is there a best day for submitting an article for publication?](https://blogs.lse.ac.uk/impactofsocialsciences/2019/01/29/never-on-a-sunday-is-there-a-best-day-for-submitting-an-article-for-publication/)
+</aside>

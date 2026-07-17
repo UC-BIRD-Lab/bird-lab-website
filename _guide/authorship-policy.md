@@ -5,7 +5,7 @@ order: 3
 summary: Who earns authorship, how order is decided, and how we agree it up front.
 keywords: [authorship, author order, ICMJE, corresponding author, credit, contribution, first author]
 icon: "🖋️"
-reviewed: 2026-07-06
+reviewed: 2026-07-17
 ---
 
 <aside class="marginnote" markdown="1">
@@ -34,19 +34,37 @@ with an equal-contribution note. Christina is generally last (supervising) autho
 on lab-led work. These are our normal practices, agreed in writing early and
 applied case by case. Lead PhD students may serve as corresponding author if they
 can respond to editor/reviewer/media email within two business days during active
-review.
+review and manage revisions and press inquiries; confirm with Christina.
 
 ## Eligibility
 
-We ask for all four of the [ICMJE](https://www.icmje.org/recommendations/browse/roles-and-responsibilities/defining-the-role-of-authors-and-contributors.html)
-criteria. ICMJE isn't a journal in our field, but its standard is a useful guide we
-like: substantial contributions to conception/design or data; drafting or critical
-revision; final approval; and accountability for the work. Proofreading,
-brainstorming, and routine technical help normally earn acknowledgements, not
-authorship.
+We use the four [ICMJE](https://www.icmje.org/recommendations/browse/roles-and-responsibilities/defining-the-role-of-authors-and-contributors.html)
+criteria as a helpful guide for expectations. In general, authors complete/agree to all four of the below items: 
+- substantial contributions to conception/design or data; 
+- drafting or critical revision; 
+- final approval; and 
+- accountability for the work. 
+
+Proofreading, brainstorming, and routine technical help normally earn acknowledgements, not
+authorship; these are things lab members provide each other without any
+expectation of authorship.
 
 ## Order
 
 Order reflects relative contribution at submission. We create an authorship
 plan at project start, revisit it at milestones, and finalize it before submission.
-AI systems are not authors. Raise any questions with Christina early.
+Middle-author order reflects relative contribution; ties may be alphabetical. For
+equal first authorship or equal supervision, include footnotes as the journal
+allows.
+
+## AI tools
+
+AI systems are not authors. Disclose tool use in Acknowledgements or Methods per
+journal guidance; see [Using AI]({{ '/lab-guide/using-ai/' | relative_url }}).
+
+## Disagreements, changes, and collaborations
+
+Raise questions with Christina early. If contributions change materially, we may
+adjust authorship or order with documented consensus; Christina has final say for
+lab-led papers. For projects with external groups, include Christina in all
+authorship discussions from the outset so expectations are aligned.
