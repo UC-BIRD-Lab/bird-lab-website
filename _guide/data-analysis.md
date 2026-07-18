@@ -43,7 +43,7 @@ Christina strongly recommends all students get comfortable analyzing data in R.
 ## Error and uncertainty
 
 <div class="callout" markdown="1">
-**The whole thing, at a glance.** Work down this list. Each number is a step below, and the steps say why. We follow the [GUM](https://www.bipm.org/documents/20126/2071204/JCGM_100_2008_E.pdf).
+**At a glance:** Work down this list. Each number is a step below that provides more detail. Throughout, we follow the [GUM](https://www.bipm.org/documents/20126/2071204/JCGM_100_2008_E.pdf).
 
 1. Cut each run down to the settled, stationary window.
 2. Plot and visualize the autocorrelation. Estimate $$N_\text{eff}$$, then
@@ -56,7 +56,7 @@ Christina strongly recommends all students get comfortable analyzing data in R.
 8. Replicate runs, and cross-check against something independent.
 </div>
 
-### Three quantities, three jobs
+### Three key quantities
 
 <div class="callout callout--stop" markdown="1">
 **The fluctuation, $$s_\text{corr}$$.** How much the signal moves. Buffeting is physics, not error. Its own band, labelled as the fluctuation.
@@ -127,7 +127,7 @@ Plot the raw trace. Keep the settled window. Its mean is the value you report.
 **You are not trimming your data.** You are choosing how many autocorrelation values go into one sum. The "cut" is the upper limit of a summation.
 </aside>
 
-**b. Plot the autocorrelation. Decide where to truncate the sum.** The only judgment call here. Every real autocorrelation wobbles across zero once it decays. That jitter is estimation noise. Judge whether the negative part is only jitter.
+**b. Plot the autocorrelation. Decide where to truncate the sum.** The only judgment call here. Every real autocorrelation wobbles across zero once it decays. 
 
 <aside class="marginnote marginnote--warn" markdown="1">
 **Never sum every lag of a single record.** With the record's own mean subtracted, the sum of *all* the values is exactly $$-\tfrac{1}{2}$$ for any data, so the denominator collapses to zero ([Percival 1993](https://doi.org/10.1080/00031305.1993.10475997)).
@@ -135,8 +135,8 @@ Plot the raw trace. Keep the settled window. Its mean is the value you report.
 **Start the sum at lag 1, never lag 0.** Routines hand you lag 0 first and it is always exactly one. Including it is the most common bug here, and it is silent.
 </aside>
 
-- **Decays, negative part small and brief.** Cut-off at the first zero crossing. The standard single-record choice ([Smith et al. 2018](https://doi.org/10.1088/1361-6501/aae91d)).
-- **Persistently negative, swinging back on a period.** Do not pick a cutoff,
+- **Decays, negative part small and brief.** One heuristic commonly used is to cut-off the record at the first zero crossing ([Smith et al. 2018](https://doi.org/10.1088/1361-6501/aae91d)).
+- **Persistently negative or swinging back on a period.** Do not pick a cutoff,
   [bootstrap](#step-3-if-the-autocorrelation-rings-bootstrap-instead). The zero crossing overestimates $$T_u$$ here (Smith et al.), and a truncated sum can even go negative, making $$N_\text{eff}$$ meaningless.
 
 <div class="callout" markdown="1">
@@ -183,27 +183,24 @@ $$u_A$$ is the Type A uncertainty, which is used to compute the combined uncerta
 
 ### Step 3. If the autocorrelation rings, bootstrap instead
 
-A ringing autocorrelation, or a short record, can make $$N_\text{eff}$$ sensitive to truncation. Instead, use a **dependent circular block bootstrap** ([Künsch 1989](https://doi.org/10.1214/aos/1176347265) and applied to time-resolved PIV by
+A ringing autocorrelation, or a short record, can make $$N_\text{eff}$$ sensitive to truncation and thus fragile. One way to address this issue is to use a **dependent circular block bootstrap** ([Künsch 1989](https://doi.org/10.1214/aos/1176347265) and applied to time-resolved PIV by
 [Theunissen et al. 2008](https://doi.org/10.1007/s00348-007-0418-8)). To do this, complete the following steps:
 
 - Wrap the record and then cut into overlapping sections or "blocks". 
 - Block-length selection is a recognized central difficulty of dependent bootstrapping, and may require a specific sensitivity study. We need to choose the block length to retain the relevant temporal characteristics while still remaining substantially shorter than the full record (see [Theunissen et al. 2008](https://doi.org/10.1007/s00348-007-0418-8) for a suggested automatic procedure). 
-- Draw blocks at random with replacement, concatenate into a new dataset until a dataset roughly the length of the original data set is formed, then take its mean. 
+- Draw blocks at random with replacement, concatenate into a new dataset until the new dataset is roughly the length of the original data set is formed. Finally, take and save the mean of the newly formed dataset. 
 - Repeat a few thousand times. Use enough bootstrap replicates to confirm convergence of the bootstrap mean and standard deviation; a few thousand is often sufficient, but check that the interval is stable with increasing replicate count.
 - The standard deviation of the bootstrap estimates provides an estimate of the standard error and may be used as the Type A standard uncertainty, ($$u_A$$), associated with finite-duration sampling. Note that the empirical 2.5th and 97.5th percentiles of the bootstrap estimates provide a percentile 95% confidence interval in a converged test.
 
-<div class="callout" markdown="1">
+<aside class="callout" markdown="1">
 To do this in R, `boot::tsboot` can implement fixed-length circular block resampling using `sim = "fixed"`, a supplied block length `l`, and `endcorr = TRUE`. However, it does not implement the automatic block-length calculation directly.
-</div>
+</aside>
 
 <div class="callout" markdown="1">
 **Run both and compare.** They should agree where the autocorrelation is well behaved.
-Large disagreement can mean the record is diagnostic and should be further investigated.
+Large disagreements should be further investigated.
 </div>
 
-<aside class="marginnote marginnote--stop" markdown="1">
-**A term you cannot measure is not a term you may set to zero.** Setting a calibration uncertainty to zero in code claims, in print, that the instrument is perfect. Knowingly leave a systematic effect uncorrected and the GUM requires you to carry it as an uncertainty (Note to 6.3.1, and F.2.4.5).
-</aside>
 
 ### Step 4. Build a Type B budget
 
@@ -221,16 +218,20 @@ To turn a specification into a standard uncertainty use the
 | Bounds $$\pm a$$, middle values likelier | Triangular | $$a/\sqrt{6}$$ | 4.3.9 |
 | Digital readout, resolution $$q$$ | Rectangular | $$q/\sqrt{12}$$ | F.2.2.1 |
 
+<aside class="marginnote marginnote--stop" markdown="1">
+**A term you cannot measure is not a term you may set to zero.** Setting a calibration uncertainty to zero in code claims, in print, that the instrument is perfect. Knowingly leave a systematic effect uncorrected and the GUM requires you to carry it as an uncertainty (Note to 6.3.1, and F.2.4.5).
+</aside>
+
 <aside class="marginnote" markdown="1">
 **The two rows people get wrong.**
 
-**Angle of attack.** Not encoder resolution. Tunnels are typically quoted at around 0.1 degrees of flow angularity (Barlow, Rae & Pope, sec. 3.3), orders of magnitude above an encoder step, and AoA feeds the stability slopes directly.
+**Angle of attack.** Not encoder resolution, but true error in obtaining the commanded angle. Tunnels are typically quoted at around 0.1 degrees of flow angularity (Barlow, Rae & Pope, sec. 3.3), which is orders of magnitude above an encoder step.
 
 **Balance calibration.** Routinely one of the largest systematic terms in any force measurement
 ([NASA](https://ntrs.nasa.gov/api/citations/20160009122/downloads/20160009122.pdf)).
 </aside>
 
-Fill in the budget before you write any propagation code. **Mark each row shared or not**: that is what decides whether it goes on the error bar or in the text.
+Fill in the budget before you write any propagation code. **Fill in each row shared or not**. If the item shared across all measurements it should be reported in the text rather than displayed as error bars.
 
 | Source | | Comes from | Shared? |
 |---|---|---|---|
@@ -239,21 +240,17 @@ Fill in the budget before you write any propagation code. **Mark each row shared
 | Flow angularity | B | Tunnel calibration, ~0.1° | **Shared** |
 | Moment arm | B | Machining tolerance | **Shared** |
 | Wall and blockage | B | Left uncorrected, bounded by model sizing (details below) | **Shared** |
-| Reference area, chord | B | 3D scan or CAD repeatability | Shared *within* a configuration. **Not** shared between them, so it stays in any comparison of wings |
+| Reference area, chord | B | 3D scan or CAD repeatability | Shared *within* a configuration. Not shared between them. |
 | Set-point repeatability | B | Replicate runs (Step 8) | Per point |
 | Atmospheric pressure | B | Barometer, one reading per run | Per run |
 | Air temperature | B | Thermometer, one reading per run | Per run |
 | Channel means | A | Step 2 | Per point |
 {: .table-budget}
 
-**A or B is decided by how you got the number**, not by what it is. Read it once off an instrument and
-it is Type B, from that instrument's spec. Log it as a time series and average it, and it is Type A,
-from Step 2. The same thermometer can give you either.
+**A or B is decided by how you acquired the number**. Read it once off an instrument spec and
+it is Type B. Log it as a time series and average it, and it is Type A (Step 2/3). The same thermometer can give you either.
 
-**Do not sum anything yet.** Your job in this step is to make sure every row exists, as a standard
-uncertainty, in the units of the result. Do not add newtons to degrees: the sensitivity factors that
-convert them are handled by the packages in Step 6. Step 5 then sums the rows in two groups, shared
-and per-point, following the last column.
+**Do not sum anything yet.** Your job in this step is to make sure every row exists, as a standard uncertainty, in the units of the result. Do not add newtons to degrees: the sensitivity factors that convert them are handled by the propagation packages. 
 
 <details class="guide-details" markdown="1">
 <summary>Worked example: our ATI Mini40 load cell</summary>
@@ -270,7 +267,7 @@ The certificate quotes **"Measurement Uncertainty (95% confidence level, percent
 | Tz | 4 N·m | 1.25% FS | 0.050 N·m | **0.026 N·m** |
 
 <div class="callout callout--stop" markdown="1">
-**Percent of full scale, not percent of reading.** $$u$$ is a fixed number of newtons no matter how small your load is. On the 80 N axes that is **0.61 N, permanently.**
+**Percent of full scale, not percent of reading.** $$u$$ is a fixed number of newtons no matter how small your load is. On the 80 N axes that is 0.61 N, permanently.
 
 A gliding bird wing makes lift of order a few newtons. So the balance alone contributes:
 | If lift is | $$u_B$$ as a fraction of your signal |
@@ -280,7 +277,7 @@ A gliding bird wing makes lift of order a few newtons. So the balance alone cont
 | 5 N | 12% |
 | 10 N | 6% |
 
-On a low-load run this single term can outweigh every Type A term put together. **Never let lift land on Fz**: the 240 N range carries 1.84 N. Mount so the aerodynamic forces sit on the 80 N axes.
+On a low-load run this single term can outweigh every Type A term put together. **Never let lift be measured with $$F_z$$**: the 240 N range carries 1.84 N. Mount so the aerodynamic forces sit on the 80 N axes.
 </div>
 
 **No temperature compensation, and no mounting error.** The certificate is issued at 22.2 ± 1.1 °C and conditions its accuracy on loads being "correctly aligned to the transducer origin". Thermal drift and mount alignment are *additional* Type B terms that you own.
@@ -290,16 +287,12 @@ On a low-load run this single term can outweigh every Type A term put together. 
 <summary>Why we do not apply wall and blockage corrections</summary>
 
 The standard corrections (Barlow, Rae & Pope, ch. 10) are derived for conventional shapes. A morphing bird wing is not one, so the model error they import is plausibly larger than the effect they remove.
-We attack the problem at the source: small model, low blockage ratio, reflection-plane mount.
-
-**Not correcting is not the same as claiming the effect is zero.** State your solid blockage ratio in the paper, bound the residual effect, and enter it as a Type B term. The GUM requires this (Note to 6.3.1, and F.2.4.5), and it is what makes the decision defensible to a reviewer.
-</details>
+We address the problem by minimizing the potential effects through using small models relative to the tunnel size and low blockage ratios. These should still be discussed in the supplemental methods of a paper.
 
 ### Step 5. Assemble the budget, in two parts
 
 Everything adds in quadrature
-([GUM](https://www.bipm.org/documents/20126/2071204/JCGM_100_2008_E.pdf), 5.1.2), but the shared rows
-and the per-point rows are summed separately. This is what makes the three quantities above come out.
+([GUM](https://www.bipm.org/documents/20126/2071204/JCGM_100_2008_E.pdf), 5.1.2), but the shared rows and the per-point rows are summed separately. 
 
 $$u_\text{point} = \sqrt{u_A^2 + \sum_i u_{B,i}^2}
 \qquad\qquad
@@ -315,14 +308,14 @@ $$u_c = \sqrt{u_\text{point}^2 + u_\text{shared}^2}$$
 ([GUM](https://www.bipm.org/documents/20126/2071204/JCGM_100_2008_E.pdf), 5.1.2).
 </aside>
 
-### Step 6. Propagate, then expand to about 95%
+### Step 6. Propagate, then expand your chosen coverage factor (usually 95%)
 
-Do not hand-write a propagation formula. Carry the uncertainty inside the numbers, with R
+Do not hand-write a propagation formula, it is too easy to make silly errors. Carry the uncertainty automatically with R
 [`errors`](https://cran.r-project.org/package=errors) or Python
-[`uncertainties`](https://uncertainties.readthedocs.io/). Push it through the calibration matrix, density, airspeed, the coefficients, and the stability metrics.
+[`uncertainties`](https://uncertainties.readthedocs.io/).
 
 <div class="callout" markdown="1">
-**The packages need to know how your data is correlated.** They propagate correlation through an *expression*, so one airspeed feeding many coefficients is automatic. Correlations *between separate measured inputs* are not: declare them with `correl()` / `covar()` in R ([Ucar et al. 2018](https://journal.r-project.org/articles/RJ-2018-075/RJ-2018-075.pdf)) or `correlated_values()` in Python. Undeclared means silently assumed independent. Your load-cell channels are read at the same instant, so they are correlated. Those off-diagonal terms can *increase or decrease* your final variance (Barlow, Rae & Pope, sec. 12.2).
+**The packages need to know how your data is correlated.** They propagate correlation through an *expression*, so one airspeed feeding many coefficients is automatic. Correlations *between separate measured inputs* are not: declare them with `correl()` / `covar()` in R ([Ucar et al. 2018](https://journal.r-project.org/articles/RJ-2018-075/RJ-2018-075.pdf)) or `correlated_values()` in Python. Undeclared means you've assumed independence of the data. Your load-cell channels are read at the same instant, so they are correlated. Those off-diagonal terms can *increase or decrease* your final variance (Barlow, Rae & Pope, sec. 12.2).
 </div>
 
 Then expand to 95%: $$U = k\,u$$. **State $$k$$ and the confidence level.**
@@ -348,7 +341,7 @@ $$\nu_\text{eff} \approx (n_\text{rep} - 1)\left(\frac{u_\text{point}}{u_\text{r
 </div>
 
 <details class="guide-details" markdown="1">
-<summary>Why $$k$$ is 1.96 nearly everywhere, and where it is not</summary>
+<summary> $$k$$ is 1.96 nearly everywhere, and where it is not</summary>
 
 $$k$$ is the Student-$$t$$ value at the Welch-Satterthwaite degrees of freedom
 ([GUM](https://www.bipm.org/documents/20126/2071204/JCGM_100_2008_E.pdf), Eqn. G.2b):
@@ -356,19 +349,12 @@ $$k$$ is the Student-$$t$$ value at the Welch-Satterthwaite degrees of freedom
 $$\nu_\text{eff} = \frac{u^4}{\sum_i u_i^4/\nu_i}$$
 
 **$$\nu$$ is not how big an uncertainty is. It is how well you know that uncertainty.** A term
-estimated from data wobbles: fewer samples, poorer estimate, larger $$t$$, wider bar. That is the
-entire job of $$\nu$$.
+estimated from data wobbles: fewer samples, poorer estimate, larger $$t$$, wider bar. 
 
-**Certificates: $$\nu = \infty$$.** You read the number off a document, so it has no scatter (GUM
-G.4.3), and it drops out of the sum. For the ATI, $$\nu = \infty$$ says *"I am certain the uncertainty
-is 0.61 N."* It does not say 0.61 N is small. Every certificate term is **shared**, which is why
+For known items like certificates: $$\nu = \infty$$. You read the number off a document, so it has no scatter (GUM G.4.3), and it drops out of the sum. For the ATI, $$\nu = \infty$$ essentially says "I am certain the uncertainty is 0.61 N." It does not say 0.61 N is small. Every certificate term is **shared** in wind tunnel measurements (or usually), this is why
 $$u_\text{shared}$$ and $$u_c$$ always give 1.96.
 
-**Type A: $$\nu$$ is huge, so it drops out too.** Zięba's
-$$\nu_\text{eff} \approx N/(1+2\sum_j \hat\rho_j^2) - 1$$ (Eqn. 30) is **not** $$N_\text{eff}-1$$,
-because $$\sum\hat\rho_j^2$$ is far smaller than $$\sum\hat\rho_j$$. A 180,000-sample record at
-$$a = 0.9$$ has $$N_\text{eff} \approx 9{,}500$$ but $$\nu \approx 19{,}000$$. You never need to
-compute it.
+**Type A: $$\nu$$ is huge, so it drops out too.** Zięba's paper shows that a 180,000-sample record at $$a = 0.9$$ has $$N_\text{eff} \approx 9{,}500$$ but $$\nu \approx 19{,}000$$. That is so high we can ignore it.
 
 **Replicates: $$\nu = n_\text{rep} - 1$$, and this is the only $$\nu$$ that matters.** Three runs gives
 $$\nu = 2$$ and $$t = 4.30$$. It is a per-point term, so it sits inside the error bar, and everything
@@ -385,10 +371,9 @@ $$\nu = 2$$ and roughly doubles your uncertainty on a guess.
 
 ### Step 7. Uncertainty of experimentally computed slopes
 
-**Know what `confint()` on an OLS fit does and does not capture.** It captures the scatter of the points about the line, and that is often a reasonable error bar. What it cannot see: uncertainty on the x-axis, and errors shared across the sweep. When those terms matter, the fit's interval under-reports.
+**OLS fits through `confint()`.** Fits capture the scatter of the points about the line, and that is often a reasonable error bar. However, if there is notable uncertainty on the x-axis, and or errors shared across the sweep, the fit's interval can under report. 
 
-To include them, propagate the slope by Monte Carlo. Draw the shared terms **once per synthetic sweep**, the per-point terms **once per point**, refit, take the spread of the slopes. If the two intervals agree, the fit's was fine all along ([JCGM 101](https://www.bipm.org/documents/20126/2071204/JCGM_101_2008_E.pdf);
-[AIAA G-160-2025](https://arc.aiaa.org/doi/book/10.2514/4.107450)). 
+One way to include it can be to propagate the slope by a Monte Carlo analysis. To do this, randomly estimate all the points within the uncertainty range (both shared and per point) to model the possible range of the data. Then refit a slope and report the standard deviation spread of these estimated slopes as the uncertainty.  
 
 ### Step 8. Replicate, then cross-check
 
