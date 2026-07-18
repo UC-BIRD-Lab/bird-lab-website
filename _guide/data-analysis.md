@@ -183,16 +183,22 @@ $$u_A$$ is the Type A uncertainty, which is used to compute the combined uncerta
 
 ### Step 3. If the autocorrelation rings, bootstrap instead
 
-A ringing autocorrelation, or a short record, gives $$N_\text{eff}$$ that can be sensitive to truncation. Use a **dependent circular block bootstrap** ([Künsch 1989](https://doi.org/10.1214/aos/1176347265); brought to fluids by
-[Theunissen et al. 2008](https://doi.org/10.1007/s00348-007-0418-8)).
+A ringing autocorrelation, or a short record, can make $$N_\text{eff}$$ sensitive to truncation. Instead, use a **dependent circular block bootstrap** ([Künsch 1989](https://doi.org/10.1214/aos/1176347265) and applied to time-resolved PIV by
+[Theunissen et al. 2008](https://doi.org/10.1007/s00348-007-0418-8)). To do this, complete the following steps:
 
-Cut the record into overlapping sections. Choose the block length to retain the relevant temporal characteristics while remaining substantially shorter than the full record (see [Theunissen et al. 2008](https://doi.org/10.1007/s00348-007-0418-8) for a suggested procedure). Block-length selection is a recognized central difficulty of dependent bootstrapping, and may require a specific sensitivity study. Draw blocks at random with replacement, concatenate into a new dataset, then take its mean. Repeat a few thousand times. In R, `boot::tsboot`.
+- Wrap the record and then cut into overlapping sections or "blocks". 
+- Block-length selection is a recognized central difficulty of dependent bootstrapping, and may require a specific sensitivity study. We need to choose the block length to retain the relevant temporal characteristics while still remaining substantially shorter than the full record (see [Theunissen et al. 2008](https://doi.org/10.1007/s00348-007-0418-8) for a suggested automatic procedure). 
+- Draw blocks at random with replacement, concatenate into a new dataset until a dataset roughly the length of the original data set is formed, then take its mean. 
+- Repeat a few thousand times. Use enough bootstrap replicates to confirm convergence of the bootstrap mean and standard deviation; a few thousand is often sufficient, but check that the interval is stable with increasing replicate count.
+- The standard deviation of the bootstrap estimates provides an estimate of the standard error and may be used as the Type A standard uncertainty, ($$u_A$$), associated with finite-duration sampling. Note that the empirical 2.5th and 97.5th percentiles of the bootstrap estimates provide a percentile 95% confidence interval in a converged test.
 
-The empirical 2.5th and 97.5th percentiles of the bootstrap estimates provide a percentile 95% confidence interval. The standard deviation of the bootstrap estimates provides an estimate of the standard error and may be used as the Type A standard uncertainty, ($$u_A$$), associated with finite-duration sampling. **To feed the budget in Step 5**, use the standard deviation of the bootstrap means as $$u_A$$.
+<div class="callout" markdown="1">
+To do this in R, `boot::tsboot` can implement fixed-length circular block resampling using `sim = "fixed"`, a supplied block length `l`, and `endcorr = TRUE`. However, it does not implement the automatic block-length calculation directly.
+</div>
 
 <div class="callout" markdown="1">
 **Run both and compare.** They should agree where the autocorrelation is well behaved.
-Bad disagreement usually means the record is not stationary.
+Large disagreement can mean the record is diagnostic and should be further investigated.
 </div>
 
 <aside class="marginnote marginnote--stop" markdown="1">
