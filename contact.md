@@ -25,7 +25,7 @@ University of California, Davis · Davis, CA 95616</p>
 </a>
 <a class="card card--link" href="mailto:{{ site.lab.pi_email }}?subject={{ 'Press inquiry - BIRD Lab (UC Davis)' | uri_escape }}">
 <h3>Press &amp; media</h3>
-<p>I'm happy to talk about and share our work. Please reach out via email.</p>
+<p>We're happy to talk about and share our work. Please reach out via email.</p>
 </a>
 <a class="card card--link" href="mailto:{{ site.lab.pi_email }}?subject={{ 'Research collaboration - BIRD Lab (UC Davis)' | uri_escape }}">
 <h3>Collaboration &amp; facility access</h3>

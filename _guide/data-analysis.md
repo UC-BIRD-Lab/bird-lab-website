@@ -288,6 +288,7 @@ On a low-load run this single term can outweigh every Type A term put together. 
 
 The standard corrections (Barlow, Rae & Pope, ch. 10) are derived for conventional shapes. A morphing bird wing is not one, so the model error they import is plausibly larger than the effect they remove.
 We address the problem by minimizing the potential effects through using small models relative to the tunnel size and low blockage ratios. These should still be discussed in the supplemental methods of a paper.
+</details>
 
 ### Step 5. Assemble the budget, in two parts
 
