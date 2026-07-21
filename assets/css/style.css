@@ -632,11 +632,13 @@ blockquote { border-left: 4px solid var(--c-blue-500); padding-left: 1rem; color
 .channel-table td:nth-child(2), .channel-table th:nth-child(2) { width: 14%; }
 /* Leave notice table: balance the four columns so none gets crushed. Length,
    notice, and how-to-report stay compact; "Before you go" takes the remainder. */
-.leave-table td:nth-child(1), .leave-table th:nth-child(1) { width: 17%; }
+   .leave-table td:nth-child(1), .leave-table th:nth-child(1) { width: 17%; }
 .leave-table td:nth-child(2), .leave-table th:nth-child(2) { width: 20%; }
 .leave-table td:nth-child(3), .leave-table th:nth-child(3) { width: 21%; }
 /* Safety recurring schedule: keep the cadence column tight. */
 .sched-table td:last-child, .sched-table th:last-child { width: 26%; white-space: nowrap; }
+/* Small muted note under the leave table, styled like a figcaption. */
+.table-note { font-size: var(--step--1); color: var(--c-muted); margin-top: -0.4rem; line-height: 1.4; }
 
 /* Checklist: a plain markdown list tagged {: .checklist} renders each item with
    an empty check box. The box is drawn in CSS, so non-technical editors just
@@ -2022,3 +2024,45 @@ a.rlist__title:hover, a.rlist__title:focus-visible { text-decoration: underline;
   .callout { border: 1px solid #999 !important; border-left-width: 4px !important; }
   a { color: #000; text-decoration: underline; }
 }
+
+/* ---------- Announcement bar (one-off notices; driven by _data/announcement.yml) ----------
+   Sits just below the sticky header on every page and scrolls away with the
+   content. Colours reuse the navy/on-navy pairing from the hero and footer,
+   and the green pill matches .status--active, both already WCAG AA. */
+.announce { background: var(--c-navy); color: var(--c-on-navy); border-bottom: 1px solid var(--c-blue-700); }
+.announce__inner { display: flex; align-items: center; gap: .8rem; padding-block: .6rem; }
+.announce__text { margin: 0; font-size: var(--step--1); line-height: 1.5; }
+.announce__pill {
+  display: inline-block; background: #e6f3ea; color: #2e6b43;
+  font-size: .72rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+  border-radius: 999px; padding: .1rem .55rem; margin-right: .35rem; vertical-align: middle;
+}
+.announce__link { color: #fff; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; margin-left: .25rem; }
+.announce__link:hover { color: var(--c-sky); }
+.announce__close {
+  margin-left: auto; flex: none; background: none; border: 0; cursor: pointer;
+  color: var(--c-on-navy); padding: .4rem; border-radius: 6px; line-height: 0;
+}
+.announce__close:hover { background: var(--c-blue-700); color: #fff; }
+.announce__close svg { width: 15px; height: 15px; }
+
+/* Join — featured one-off opening (anchor target of the announcement bar) */
+.opening-featured {
+  display: grid; grid-template-columns: 1fr auto; gap: 1.2rem 1.8rem; align-items: start;
+  margin-top: 1.5rem; padding: 1.5rem 1.6rem;
+  background: var(--c-paper); border: 1px solid var(--c-line); border-top: 3px solid var(--c-blue-600);
+  border-radius: var(--radius); box-shadow: var(--shadow);
+  scroll-margin-top: calc(var(--header-h) + 1rem);
+}
+.opening-featured .status { margin-bottom: .2rem; }
+.opening-featured h3 { margin: .35rem 0 .5rem; font-size: var(--step-1); }
+.opening-featured p { margin-bottom: .8rem; }
+.opening-featured__deadline { font-weight: 600; color: var(--c-navy); }
+.opening-featured__flyer { margin: 0; max-width: 250px; }
+.opening-featured__flyer img { width: 100%; height: auto; border: 1px solid var(--c-line); border-radius: 8px; box-shadow: var(--shadow); }
+.opening-featured__flyer figcaption { font-size: var(--step--1); color: var(--c-muted); margin-top: .4rem; text-align: center; }
+@media (max-width: 700px) {
+  .opening-featured { grid-template-columns: 1fr; }
+  .opening-featured__flyer { max-width: 320px; margin-inline: auto; }
+}
+@media print { .announce { display: none !important; } }

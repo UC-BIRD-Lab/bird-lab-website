@@ -1,0 +1,42 @@
+{%- comment -%}
+  Slim site-wide announcement bar, rendered just below the header on every
+  page (wired up in _layouts/default.html). All content and the on/off
+  switch live in _data/announcement.yml; edit that file, not this one.
+
+  Two safety nets keep an expired notice off the live site:
+    1. Build-time: if the build runs after `deadline` (inclusive), the bar
+       is not rendered at all.
+    2. Client-side: main.js compares data-deadline against the visitor's
+       clock and removes the bar if the deadline has passed, covering the
+       window between the deadline and the next site rebuild (the site only
+       rebuilds on push, so this net matters).
+
+  The bar works without JavaScript (it simply can't be dismissed), matching
+  the site's progressive-enhancement rule.
+{%- endcomment -%}
+{%- assign a = site.data.announcement -%}
+{%- if a.enabled -%}
+{%- assign show = true -%}
+{%- if a.deadline -%}
+  {%- comment -%} Deadline day itself still shows: hide from the following midnight. {%- endcomment -%}
+  {%- assign end_ts = a.deadline | date: "%s" | plus: 86400 -%}
+  {%- assign now_ts = site.time | date: "%s" | plus: 0 -%}
+  {%- if now_ts >= end_ts -%}{%- assign show = false -%}{%- endif -%}
+{%- endif -%}
+{%- if show -%}
+<div class="announce" role="region" aria-label="Announcement"{% if a.deadline %} data-deadline="{{ a.deadline | date: '%Y-%m-%d' }}"{% endif %}>
+  <div class="container announce__inner">
+    <p class="announce__text">
+      {%- if a.label %}<span class="announce__pill">{{ a.label }}</span> {% endif -%}
+      {{ a.text }}
+      <a class="announce__link" href="{{ a.url | relative_url }}">{{ a.cta }} &rarr;</a>
+    </p>
+    <button type="button" class="announce__close" aria-label="Dismiss announcement">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+        <line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/>
+      </svg>
+    </button>
+  </div>
+</div>
+{%- endif -%}
+{%- endif -%}

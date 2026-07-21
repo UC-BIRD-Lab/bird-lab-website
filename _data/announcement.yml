@@ -1,0 +1,27 @@
+# ─────────────────────────────────────────────────────────────
+#  ANNOUNCEMENT BAR: drives the slim site-wide banner shown under the
+#  header (see _includes/announcement-banner.html). Meant for one-off,
+#  time-limited notices: a job posting, an event, a big deadline.
+#
+#  TO TAKE IT DOWN, change one line:
+#     enabled: false
+#
+#  It also retires itself automatically after `deadline` (inclusive):
+#    - at build time, the include skips rendering it, and
+#    - in the browser, main.js hides it even if the site hasn't been
+#      rebuilt since the deadline passed. An expired notice can never
+#      linger on the live site.
+#
+#  Visitors can dismiss the bar for their visit (X button); the
+#  dismissal is remembered for the browser session only, keyed by the
+#  deadline, so a future announcement with a new deadline shows again.
+#
+#  `url` is a site-relative path (baseurl is added automatically).
+# ─────────────────────────────────────────────────────────────
+
+enabled: true
+label: "Now hiring"
+text: "We're looking for a Social Media Coordinator — a paid, part-time position (~4 hours/month)."
+cta: "Learn more & apply"
+url: "/join/#social-media-coordinator"
+deadline: 2026-09-30

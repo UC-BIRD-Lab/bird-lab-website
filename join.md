@@ -31,6 +31,29 @@ glance before you reach out.
 
 ## Openings right now
 
+{%- comment -%} One-off featured position. When the search closes, delete this
+   block (through the closing </div> above the openings grid) and set
+   enabled: false in _data/announcement.yml to retire the site-wide bar too.
+   The flyer image only renders if the file exists, so the page never shows
+   a broken image. {%- endcomment -%}
+{%- assign smc_flyer = site.static_files | where: "path", "/assets/img/join/social-media-coordinator-flyer.png" | first %}
+<div class="opening-featured" id="social-media-coordinator">
+<div>
+<span class="status status--active">Now hiring</span>
+<h3>Social Media Coordinator</h3>
+<p>A <strong>paid, part-time position</strong> supervised by Dr.&nbsp;Harvey and graduate student Alex Fillman. You'll produce high-quality, informative posts that share the lab's biological and engineering insights — about <strong>4 hours of focused time per month</strong>, with monthly supervisor check-ins and support for our annual innovation-fair presentations.</p>
+<p>We're looking for a student from a <strong>design or artistic background</strong>: curious and eager to learn, experienced with social-media content creation, and able to work independently while integrating feedback. In return, expect regular feedback and support, insight into how biology and engineering interact in research, and professional skill development in research, science communication, and teamwork.</p>
+<p class="opening-featured__deadline">Applications are due by September 30, 2026. Top applicants will be contacted for interviews the following week.</p>
+<a class="btn btn--primary" href="https://forms.gle/G9ivAiD9EXggaPoB9">Apply now &rarr;</a>
+</div>
+{%- if smc_flyer %}
+<figure class="opening-featured__flyer">
+<a href="{{ smc_flyer.path | relative_url }}"><img src="{{ smc_flyer.path | relative_url }}" alt="Social Media Coordinator recruitment flyer. All details are in the text on this page." loading="lazy"></a>
+<figcaption>View the full flyer</figcaption>
+</figure>
+{% endif -%}
+</div>
+
 <div class="grid grid-3 openings">
 {%- assign ug = site.data.openings.undergrad -%}
 <div class="card">

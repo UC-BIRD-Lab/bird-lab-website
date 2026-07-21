@@ -16,6 +16,7 @@
 
 - year: 2026
   events:
+    - { date: "July 2026", type: people, text: "We're hiring! Applications for our paid, part-time Social Media Coordinator position are open until September 30 — details on the Join page." }
     - { date: "July 2026", type: people, text: "Welcome to Adam Halford who joins us from West Point Academy, as an intern for the month of July." }
     - { date: "July 2026", type: funding, text: "The lab received a CITRIS Seed Funding Program award in collaboration with Dr. Grace Gu (UC Berkeley) and Dr. Zhaodan Kong (UC Davis)." }
     - { date: "June 2026", type: funding, text: "The lab received an NSF CAREER Award to investigate lateral maneuvering in raptors." }

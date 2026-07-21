@@ -286,3 +286,36 @@
   live.setAttribute("aria-live", "polite");
   article.appendChild(live);
 })();
+
+/* ---- Announcement bar (see _includes/announcement-banner.html) ----
+   Progressive enhancement on top of the build-time deadline gate:
+   1) removes the bar client-side once the deadline has passed (the site only
+      rebuilds on push, so this covers the gap until the next build), and
+   2) lets visitors dismiss it for the rest of their browser session.
+   The dismissal key includes the deadline, so a future announcement with a
+   new deadline shows again. */
+(function () {
+  "use strict";
+  var bar = document.querySelector(".announce");
+  if (!bar) return;
+
+  var deadline = bar.getAttribute("data-deadline") || "";
+  if (deadline) {
+    // Visible through the deadline day itself (local midnight after it).
+    var end = new Date(deadline + "T23:59:59");
+    if (!isNaN(end.getTime()) && new Date() > end) { bar.remove(); return; }
+  }
+
+  var key = "birdlab-announce-dismissed-" + (deadline || "current");
+  try {
+    if (sessionStorage.getItem(key) === "1") { bar.remove(); return; }
+  } catch (e) { /* private mode; bar just stays dismissible per page */ }
+
+  var close = bar.querySelector(".announce__close");
+  if (close) {
+    close.addEventListener("click", function () {
+      try { sessionStorage.setItem(key, "1"); } catch (e) {}
+      bar.remove();
+    });
+  }
+})();

@@ -5,7 +5,7 @@ order: 1
 summary: Work hours, flexibility, compensation, and how we manage projects and deadlines.
 keywords: [hours, workload, compensation, pay, salary, deadlines, expectations, full-time, part-time, project management]
 icon: "💼"
-reviewed: 2026-07-03
+reviewed: 2026-07-21
 ---
 What we expect around time, pay, and managing your projects, and what you can
 expect from the lab in return.
@@ -20,7 +20,7 @@ Refer to [Communicating in the lab]({{ '/lab-guide/communication/' | relative_ur
 | Role | Time commitment |
 |---|---|
 | Undergraduate | Part-time (we request ~8 hrs/week as a volunteer; more with EME/EAE 199 units or by interest, as agreed) |
-| Graduate (MSc & PhD) | Full-time (~40 hrs/week, incl. coursework) |
+| Graduate (MSc & PhD) | Full-time (roughly 40 hrs/week with variable time split between GSR, TA, and coursework) |
 | Postdoc | Full-time (40 hrs/week) |
 
 Hours vary week to week with classes, experiments, conferences, and deadlines.
@@ -39,8 +39,7 @@ tools like [Toggl Track](https://toggl.com/track/) help.
 
 **For everyone:**
 
-- **Flexible hours.** No fixed expectations about when or how long you're in the
-  office, as long as the work gets done and your project is progressing.
+- **Flexible hours.** Unless outlined in your contract and discussed in advance there are no fixed expectations about when or how long you're in the office, as long as the work gets done and your project is progressing in a timely manner. 
 - **Progress over hours.** We judge progress by the quality and consistency of
   your work and your growth, not hours in the office.
 - **No weekend work expected.** See [Time off & vacation]({{ '/lab-guide/time-off-vacation/' | relative_url }})
@@ -66,7 +65,7 @@ agreements. Ask anytime about your current and future support.
 |---|---|
 | Undergraduate | Not guaranteed; possible after a one-quarter trial when funds allow |
 | MSc | Not guaranteed; depends on available support |
-| PhD | Paid |
+| PhD | Paid (varible split between GSR, TA, and fellowships) |
 | Postdoc | Paid |
 
 Appointments and rates follow UC Davis policy and union agreements. This table
