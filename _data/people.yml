@@ -118,8 +118,9 @@ groups:
         start: 2024
         photo: /assets/img/people/faiza-alvi.jpg
         email: falvi@ucdavis.edu
+        orcid: 0000-0001-9396-1668
         linkedin: https://www.linkedin.com/in/faizaalvi/
-        note: Avian airfoil geometry.
+        note: Avian airfoil geometry and aerodynamics.
         awards:
           - "Cota-Robles Fellowship"
       - name: Cooper Cook
