@@ -26,7 +26,8 @@ If your project involves animals, complete the required training early; see [Ani
 **3. Install core tools and set up data backups.**
 
 - Set up [UC Davis Microsoft 365](https://iet.ucdavis.edu/content/free-microsoft-office-365-now-available-all-uc-davis-students), a synced Google Calendar, and the Box Desktop App.
-- Request an external hard drive (email Christina).
+- Submit a purchase request on Slack for an external hard drive.
+- Request the one-time authorization link for the lab's time-off request app. This app helps us know who is in the office and can only set your own Slack status; it can't read your messages, files, or channels. See the [Time off & vacation]({{ '/lab-guide/time-off-vacation/' | relative_url }}) page for details.
 - Set up your backups and version control as described in [Data management]({{ '/lab-guide/data-management/' | relative_url }}).
 {: .checklist}
 

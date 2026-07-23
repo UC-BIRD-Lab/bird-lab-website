@@ -5,7 +5,7 @@ order: 4
 summary: How to request leave, sick days, and notice guidelines. Rest is encouraged.
 keywords: [PTO, leave, time off, sick days, holiday, staycation, days off, out of office, rest, illness, sick]
 icon: "🌴"
-reviewed: 2026-07-21
+reviewed: 2026-07-22
 ---
 <aside class="marginnote" markdown="1">
 **Why vacation matters.** Regular time off is linked to lower stress, less burnout, and
@@ -21,24 +21,31 @@ Note that this protocol is only for internal lab reference. Please abide by the 
 </div>
 
 GSR appointments and postdocs have formal leave amounts as specified by their contract, and other "time off" can be scheduled through shifting your work hours for under 100% positions. 
-For example, a 50% GSR position in the summer could request to work all of their hours in the first part of the month and then take off the second half of the month without using their formal leave. Hour-shifting arrangements need to be discussed in person with Christina in advance. 
+For example, a 50% GSR position in the summer could request to work all of their hours in the first part of the month and then take off the second half of the month without using their formal leave. Hour-shifting arrangements that are longer than 1-2 days need to be discussed in person with Christina in advance. 
 
-The main lab expectation is that whether it is formal leave or a shifting of hours that you **log your time off** as specified below (in addition to contract requirements) so that everyone knows when you'll be unavailable.
+The main lab expectation is that whether it is formal leave or a shifting of hours that you **log your time off** as specified below (in addition to contract requirements) so that Christina can track coverage and your status reflects when you're away.
 
 ## How to request time off
 
-We use the Vacation Tracker Slack app to request and record time off. The first time you submit a request, click **Enable** when prompted so the app can automatically set and clear your "Out of Office" Slack status.
+We use a custom Time-Off Request Slack workflow with the BIRD Lab Leave Bot to request and record time off for Christina, graduate students and post-doctoral fellows. Before your first request, you'll receive a private authorization link at onboarding; if you never got one, ask Christina. After that, you just run the workflow.
 
-1. In Slack, type `/vacation`
-2. Select your leave type, start date, and end date (reason optional)
-3. Click **Send request**
-4. Christina approves it in Slack, and it's stored automatically for reference
+1. In Slack, navigate to the "Time-Off Request" workflow and run it.
+2. Select your leave type, first and last date, add a short handoff note and submit.
+3. Christina will then review. Once Christina approves, your Slack status will update automatically on those dates and clear at the end of your last day.
 
-Vacation requests are approved in nearly all cases. If a request overlaps a major deadline, conference, or experimental campaign, Christina will work with you to find timing that meets both your needs and the lab's commitments.
+Vacation requests are approved in nearly all cases. If a request overlaps a major deadline, conference, or experimental campaign, Christina will work with you to find timing that meets both your needs and the lab's commitments. Note that you never need to request weekends or UC Davis holidays.
+
+| Type of Leave | When to use it | Your Slack status shows |
+|---|---|---|
+| Formal Leave | Vacation / personal time off | 📅 Out of office |
+| Sick Day | You're unwell and resting | 📅 Out of office (generic, for privacy) |
+| Working from Home | Working, just remote | 🏠 Working from home |
+| Hours Shifted | Partial (<100%) appointments taking off shifted hours | 🕐 Out of office — shifted hours |
+{: .leave-table}
 
 ## Sick days
 
-If you're sick, please stay home and focus on recovering. Let Christina know as soon as you can by submitting a `/vacation` request and selecting "Sick Day" as the Leave Type.
+If you're sick, please stay home and focus on recovering. Let Christina know as soon as you can by submitting a workflow request and selecting "Sick Day" as the Leave Type.
 
 - **Rest fully.** Logging off completely is always okay.
 - **Only if you genuinely feel up to it**, light reading or planning is fine, but never expected.
@@ -48,12 +55,11 @@ If you're sick, please stay home and focus on recovering. Let Christina know as 
 
 | Length of leave | Suggested notice | How to report | Before you go |
 | --- | --- | --- | --- |
-| Sick | As soon as practical | `/vacation` - Type: Sick Day | Request support as needed |
-| Under 1 week | At least 1 day in advance | `/vacation` - Type: Formal Leave or Hours Shifted | Request support as needed |
-| 1 to 2 weeks | About 1 month in advance | `/vacation` - Type: Formal Leave or Hours Shifted  | Quick handoff (contacts, tasks needing coverage) and an out-of-office reply |
-| More than 2 weeks | Two or more months in advance | Email to Christina + `/vacation` - Type: Formal Leave or Hours Shifted | A full handoff plan, agreed with Christina |
+| Sick | As soon as practical | Run workflow - Type: Sick Day | Request support as needed |
+| Under 1 week | At least 1 day in advance | Run workflow - Type: Formal Leave or Hours Shifted | Request support as needed |
+| 1 to 2 weeks | About 1 month in advance | Run workflow - Type: Formal Leave, or Hours Shifted (hour-shifting requires advance discussion).  | Quick handoff (contacts, tasks needing coverage) and an out-of-office reply |
+| More than 2 weeks | Two or more months in advance | Email to Christina + Run workflow - Type: Formal Leave or Hours Shifted | A full handoff plan, agreed with Christina |
 {: .leave-table}
-For any `/vacation` request, accept the app's prompt so it automatically sets and clears your Slack status while you're away.
-{: .table-note}
 
-For extended medical or parental leave, talk with Christina as early as possible. These arrangements are coordinated through UC Davis HR rather than the Slack app.
+
+For extended medical or parental leave, talk with Christina as early as possible. These arrangements are coordinated through UC Davis HR rather than the Slack workflow.
