@@ -17,7 +17,7 @@ sharpens your focus and creativity when you return.
 You're encouraged to take vacation throughout the year. Most members take three to four weeks a year, cumulatively. Your formal leave accrual follows your UC Davis appointment and any applicable union contract (see HR). The lab's stance is simple: use your time. If you're not using your time off, we'll probably encourage you to schedule at least a staycation to recharge.
 
 <div class="callout callout--warn" markdown="1">
-GSRs and postdocs are covered by collective bargaining agreements; the policies in those contracts or appointment letters govern. This page is only for internal lab transparency and communication. Please always abide by the Time Reporting System (TRS) policy outlined in your contract. 
+GSRs and postdocs are covered by collective bargaining agreements; the policies in those contracts or appointment letters govern. This page is only for time-off communication policies for internal lab transparency. Please always abide by the Time Reporting System (TRS) policy outlined in your contract. 
 </div>
 
 Beyond formal leave, "hours shifting" lets you rearrange when you work your paid hours. This covers two situations: appointments below full time for the given term (your appointment letter states your percentage; ask Christina if you're unsure whether this applies to you), and compressed schedules at any percentage, e.g., 9/80s (80 hours over nine days, with every other Friday off) or 4/10s (four 10-hour days, with one weekday off each week).
@@ -34,6 +34,13 @@ We use a custom Time-Off Request Slack workflow with the BIRD Lab Leave Bot to r
 3. Christina will then review. Once Christina approves, your Slack status will update automatically on those dates and clear at the end of your last day.
 
 Requests are approved in nearly all cases. If a request overlaps a major deadline, conference, or experimental campaign, Christina will work with you to find timing that meets both your needs and the lab's commitments. Note that you never need to request weekends or UC Davis holidays.
+
+*Logging is only to convey availability.* Your request should cover only the days (or half days) that you're actually unavailable or out of the office. This may differ from what you report in TRS (TRS follows your contract's rules; this tracker just tells the lab when they can/can't reach you). 
+
+Some examples:
+- An evening flight after a mostly normal workday isn't time off. Start your request the next day (a note in the reason field like "flying out the evening before" is welcome but unnecessary).
+- Leaving around midday to travel? That's a half-day request.
+- Half days are the smallest unit. Stepping out for an hour or two needs no request at all, though you're welcome to log an Hours Shifted half day if you'd like it visible. If you've already put in a full day of work, you do not need to submit anything.
 
 If your plans change: run the "Time-Off Request - Cancel or Change Dates" workflow (or message Christina) to update the tracker.
 
