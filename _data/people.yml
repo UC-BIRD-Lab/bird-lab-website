@@ -181,8 +181,9 @@ groups:
       - name: Wyatt Liu
         role: Undergraduate Researcher
         start: 2026
-        field: "Mech + Aero Engineering"
+        field: "Mechanical and Aerospace Engineering"
         photo: /assets/img/people/wyatt-liu.png
+        pronouns: he/him
       - name: Prabhat Karthikeyan
         role: Undergraduate Researcher
         start: 2026
