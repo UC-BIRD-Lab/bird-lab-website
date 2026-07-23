@@ -50,7 +50,7 @@ If your plans change: run the "Time-Off Request - Cancel or Change Dates" workfl
 | Sick Day | You're unwell and resting | 📅 Out of office (generic for privacy) |
 | Work Travel | Conferences, lectures, trainings, etc. | ✈️ Traveling for work |
 | Working from Home | Working, just remote | 🏠 Working from home |
-| Hours Shifted | Below-full-time appointments shifting paid hours, or compressed schedules (9/80s, 4/10s) — see above | 🕐 Out of office — shifted hours |
+| Hours Shifted | Below-full-time appointments shifting paid hours, or compressed schedules | 🕐 Out of office — shifted hours |
 {: .leave-table}
 
 ## Sick days
