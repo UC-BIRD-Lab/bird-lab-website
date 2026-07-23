@@ -21,31 +21,34 @@ Note that this protocol is only for internal lab reference. Please abide by the 
 </div>
 
 GSR appointments and postdocs have formal leave amounts as specified by their contract, and other "time off" can be scheduled through shifting your work hours for under 100% positions. 
-For example, a 50% GSR position in the summer could request to work all of their hours in the first part of the month and then take off the second half of the month without using their formal leave. Hour-shifting arrangements that are longer than 1-2 days need to be discussed in person with Christina in advance. 
+For example, a 50% GSR position in the summer could request to work all of their hours in the first part of the month and then take off the second half of the month without using their formal leave. Hour-shifting arrangements that are longer than 1 day per week need to be discussed in person with Christina in advance. 
 
-The main lab expectation is that whether it is formal leave or a shifting of hours that you **log your time off** as specified below (in addition to contract requirements) so that Christina can track coverage and your status reflects when you're away.
+The main lab expectation is that you *log your time away*, whether it is formal leave, sick days, shifted hours, work travel, or working from home days as specified below, in alignment with your specific contract requirements. This system allows Christina to track coverage for CALI and the wind tunnel, and ensures your labmates know when you're out of office through automatic status adjustments.
 
 ## How to request time off
 
 We use a custom Time-Off Request Slack workflow with the BIRD Lab Leave Bot to request and record time off for Christina, graduate students and post-doctoral fellows. Before your first request, you'll receive a private authorization link at onboarding; if you never got one, ask Christina. After that, you just run the workflow.
 
 1. In Slack, navigate to the "Time-Off Request" workflow and run it.
-2. Select your leave type, first and last date, add a short handoff note and submit.
+2. Select your leave type, first and last day, duration (full or half day), a brief reason, and a short handoff note.
 3. Christina will then review. Once Christina approves, your Slack status will update automatically on those dates and clear at the end of your last day.
 
-Vacation requests are approved in nearly all cases. If a request overlaps a major deadline, conference, or experimental campaign, Christina will work with you to find timing that meets both your needs and the lab's commitments. Note that you never need to request weekends or UC Davis holidays.
+Requests are approved in nearly all cases. If a request overlaps a major deadline, conference, or experimental campaign, Christina will work with you to find timing that meets both your needs and the lab's commitments. Note that you never need to request weekends or UC Davis holidays.
+
+If your plans change: run the "Time-off Request - Cancel or Change Dates" workflow (or message Christina) to update the tracker.
 
 | Type of Leave | When to use it | Your Slack status shows |
 |---|---|---|
 | Formal Leave | Vacation / personal time off | 📅 Out of office |
-| Sick Day | You're unwell and resting | 📅 Out of office (generic, for privacy) |
+| Sick Day | You're unwell and resting | 📅 Out of office (generic for privacy) |
+| Work Travel | Conferences, lectures, trainings, etc. | ✈️ Traveling for work |
 | Working from Home | Working, just remote | 🏠 Working from home |
 | Hours Shifted | Partial (<100%) appointments taking off shifted hours | 🕐 Out of office — shifted hours |
 {: .leave-table}
 
 ## Sick days
 
-If you're sick, please stay home and focus on recovering. Let Christina know as soon as you can by submitting a workflow request and selecting "Sick Day" as the Leave Type.
+If you're sick, please stay home and focus on recovering. Sick days go through the same workflow; however same-day or after-the-fact submission is totally fine. Just let Christina know as soon as you reasonably can by submitting a workflow request and selecting "Sick Day" as the Leave Type. 
 
 - **Rest fully.** Logging off completely is always okay.
 - **Only if you genuinely feel up to it**, light reading or planning is fine, but never expected.
@@ -56,9 +59,11 @@ If you're sick, please stay home and focus on recovering. Let Christina know as 
 | Length of leave | Suggested notice | How to report | Before you go |
 | --- | --- | --- | --- |
 | Sick | As soon as practical | Run workflow - Type: Sick Day | Request support as needed |
-| Under 1 week | At least 1 day in advance | Run workflow - Type: Formal Leave or Hours Shifted | Request support as needed |
-| 1 to 2 weeks | About 1 month in advance | Run workflow - Type: Formal Leave, or Hours Shifted (hour-shifting requires advance discussion).  | Quick handoff (contacts, tasks needing coverage) and an out-of-office reply |
-| More than 2 weeks | Two or more months in advance | Email to Christina + Run workflow - Type: Formal Leave or Hours Shifted | A full handoff plan, agreed with Christina |
+| Work from Home | By that morning | Run workflow - Type: Working from Home | No support should be needed if this is the request |
+| Work Travel | After travel is booked | Run workflow - Type: Work Travel | Request support as needed |
+| Formal Leave/Hours Shifted: Under 1 week | At least 1 day in advance | Run workflow - Type: Formal Leave or Hours Shifted | Request support as needed |
+| Formal Leave/Hours Shifted: 1 to 2 weeks | One month or more in advance | Email to Christina + Run workflow - Type: Formal Leave, or Hours Shifted (hour-shifting requires advance discussion)  | Quick handoff (contacts, tasks needing coverage) and an out-of-office reply |
+| Formal Leave: More than 2 weeks | Two or more months in advance | Email to Christina + Run workflow - Type: Formal Leave | A full handoff plan, agreed with Christina |
 {: .leave-table}
 
 
