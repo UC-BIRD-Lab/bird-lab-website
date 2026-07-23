@@ -20,8 +20,8 @@ You're encouraged to take vacation throughout the year. Most members take three 
 GSRs and postdocs are covered by collective bargaining agreements; the policies in those contracts or appointment letters govern. This page is only for internal lab transparency and communication. Please always abide by the Time Reporting System (TRS) policy outlined in your contract. 
 </div>
 
-GSR appointments and postdocs have formal leave amounts as specified by their contract, and other "time off" can be scheduled through shifting your work hours in a pay period if your paid appointment is below full time for the given term (your appointment letter states your percentage; ask Christina if you're unsure whether this applies to you).
-Hour-shifting arrangements that are longer than 1 day per week need to be discussed in person with Christina in advance. 
+Beyond formal leave, "hours shifting" lets you rearrange when you work your paid hours. This covers two situations: appointments below full time for the given term (your appointment letter states your percentage; ask Christina if you're unsure whether this applies to you), and compressed schedules at any percentage, e.g., 9/80s (80 hours over nine days, with every other Friday off) or 4/10s (four 10-hour days, with one weekday off each week).
+If you'd like a standing compressed schedule, discuss and get approval from Christina once, then simply log the off-days as they come. Hour-shifting arrangements longer than 1 day per week need to be discussed in person with Christina in advance.
 
 The main lab expectation is that you *log your time away*, whether it is formal leave, sick days, shifted hours, work travel, or working from home days as specified below, in alignment with your specific contract requirements. This system allows Christina to track coverage for CALI and the wind tunnel, and ensures your labmates know when you're out of office through automatic status adjustments.
 
@@ -43,7 +43,7 @@ If your plans change: run the "Time-Off Request - Cancel or Change Dates" workfl
 | Sick Day | You're unwell and resting | 📅 Out of office (generic for privacy) |
 | Work Travel | Conferences, lectures, trainings, etc. | ✈️ Traveling for work |
 | Working from Home | Working, just remote | 🏠 Working from home |
-| Hours Shifted | Appointments below full time for the term | 🕐 Out of office — shifted hours |
+| Hours Shifted | Below-full-time appointments shifting paid hours, or compressed schedules (9/80s, 4/10s) — see above | 🕐 Out of office — shifted hours |
 {: .leave-table}
 
 ## Sick days
@@ -62,9 +62,8 @@ If you're sick, please stay home and focus on recovering. Sick days go through t
 | Work from Home | By that morning | Run workflow - Type: Working from Home | No support should be needed if this is the request |
 | Work Travel | After travel is booked | Run workflow - Type: Work Travel | Request support as needed |
 | Formal Leave/Hours Shifted: Under 1 week | At least 1 day in advance | Run workflow - Type: Formal Leave or Hours Shifted | Request support as needed |
-| Formal Leave/Hours Shifted: 1 to 2 weeks | One month or more in advance | Email to Christina + Run workflow - Type: Formal Leave, or Hours Shifted (hour-shifting requires advance discussion)  | Quick handoff (contacts, tasks needing coverage) and an out-of-office reply |
+| Formal Leave/Hours Shifted: 1 to 2 weeks | One month or more in advance | Email to Christina + Run workflow - Type: Formal Leave, or Hours Shifted (hour-shifting requires advance discussion) | Quick handoff (contacts, tasks needing coverage) and an out-of-office reply |
 | Formal Leave: More than 2 weeks | Two or more months in advance | Email to Christina + Run workflow - Type: Formal Leave | A full handoff plan, agreed with Christina |
 {: .leave-table}
-
 
 For extended medical or parental leave, talk with Christina as early as possible. These arrangements are coordinated through UC Davis HR rather than the Slack workflow.
