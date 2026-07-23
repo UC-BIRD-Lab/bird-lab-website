@@ -10,6 +10,10 @@ One script handles all four forms (routed by --kind):
   --kind news         📣 Add a news milestone   → _data/updates.yml
   --kind conference   📄 Add a conference paper → _data/publications_manual.yml
   --kind person       ➕ Add/update a member    → _data/people.yml
+                        (a name already on the People page is UPDATED in place —
+                        only the fields filled in are touched, photo/awards kept —
+                        so members can fix pronouns, links, notes, … via the form;
+                        an unknown name is inserted into its role group as before)
   --kind press        📰 Add press coverage     → _data/press.yml
 
 It reads the issue body GitHub's issue FORMS produce (each field is a
@@ -204,6 +208,11 @@ def build_person(f: dict) -> int:
     links = field(f, "Links (optional)", "Links")
     home = field(f, "Home institution (visiting members only)", "Home institution")
 
+    # The form is "add OR update": if the name is already on the People page
+    # (active groups only — never alumni/affiliates), we update that entry in
+    # place instead of inserting a duplicate.
+    existing = find_person(name) if name else None
+
     problems = []
     if not name:
         problems.append("missing **Full name**.")
@@ -212,7 +221,7 @@ def build_person(f: dict) -> int:
     if start is None:
         problems.append("missing or unparseable **Year you joined**.")
     gid = ROLE_GROUP.get(role.lower())
-    if role and gid is None:
+    if role and gid is None and existing is None:
         problems.append("role %r has no active group on the People page yet; a "
                         "maintainer needs to place this person by hand." % role)
     if problems:
@@ -237,6 +246,33 @@ def build_person(f: dict) -> int:
             orcid = m.group() if m else t
         elif "." in t:
             website = as_url(t)
+
+    if existing is not None:
+        # UPDATE in place: only the fields the form filled in are touched;
+        # everything else (photo, awards, aliases, scholar, …) is left alone.
+        updates = {"role": role_text, "start": "%d" % start}
+        if pronouns:
+            updates["pronouns"] = pronouns
+        if fld:
+            updates["field"] = dq(fld)
+        if email and role.lower() not in NO_EMAIL_ROLES:  # privacy: no undergrad email
+            updates["email"] = email
+        if linkedin:
+            updates["linkedin"] = linkedin
+        if website:
+            updates["website"] = website
+        if orcid:
+            updates["orcid"] = orcid
+        if note:
+            updates["note"] = dq(note)
+        changed = update_person(existing, updates)
+        if changed:
+            print("updated %s: %s" % (existing, ", ".join(changed)))
+        else:
+            print("no changes — %s already matches the submission" % existing)
+        emit("person update: %s (%s)" % (existing, ", ".join(changed) or "no change"),
+             "_data/people.yml")
+        return 0
 
     lines = ["      - name: " + name,
              "        role: " + role_text,
@@ -304,6 +340,104 @@ def insert_under_key(path: str, key_line: str, block_lines: list[str]):
     else:
         raise SystemExit("ERROR: couldn't find '%s' in %s" % (key_line, path))
     open(path, "w", encoding="utf-8").write("\n".join(lines).rstrip("\n") + "\n")
+
+
+def _people_lines() -> list[str]:
+    return open(PEOPLE, encoding="utf-8").read().splitlines()
+
+
+def _active_section_end(lines: list[str]) -> int:
+    """Index where the active `groups:` section ends (alumni/affiliates start).
+    Updates never touch alumni or affiliates — retiring someone stays by-hand."""
+    return next((i for i, ln in enumerate(lines)
+                 if re.match(r"^(affiliates|alumni):", ln)), len(lines))
+
+
+def _entry_span(lines: list[str], i: int, stop: int) -> int:
+    """Given the index of a `- name:` line, return the index just past the last
+    line of that member's block (fields are the more-indented lines below)."""
+    entry_indent = len(lines[i]) - len(lines[i].lstrip())
+    j = i + 1
+    while j < stop:
+        ln = lines[j]
+        if ln.strip() and (len(ln) - len(ln.lstrip())) <= entry_indent:
+            break
+        j += 1
+    return j
+
+
+def find_person(name: str) -> str | None:
+    """Return the canonical `name:` of an ACTIVE member matching `name`
+    (exact, case-insensitive; aliases count too), or None if not found."""
+    lines = _people_lines()
+    stop = _active_section_end(lines)
+    target = name.strip().lower()
+    for i in range(stop):
+        m = re.match(r"^\s*- name:\s*(.+?)\s*$", lines[i])
+        if not m:
+            continue
+        canonical = m.group(1).strip().strip('"')
+        if canonical.lower() == target:
+            return canonical
+        for j in range(i + 1, _entry_span(lines, i, stop)):
+            a = re.match(r"^\s*aliases:\s*\[(.*)\]\s*$", lines[j])
+            if a and target in [s.strip().strip('"\'').lower()
+                                for s in a.group(1).split(",")]:
+                return canonical
+    return None
+
+
+def update_person(name: str, updates: dict) -> list[str]:
+    """Update an active member's entry in place: replace each key's line if the
+    field exists, append it to the entry if not. Formatting, comments, and any
+    fields not in `updates` (photo, awards, …) are preserved. Returns the list
+    of keys that actually changed."""
+    lines = _people_lines()
+    stop = _active_section_end(lines)
+    target = name.strip().lower()
+    i = next((k for k in range(stop)
+              if re.match(r"^\s*- name:\s*(.+?)\s*$", lines[k])
+              and re.match(r"^\s*- name:\s*(.+?)\s*$", lines[k])
+                    .group(1).strip().strip('"').lower() == target), None)
+    if i is None:
+        raise SystemExit("ERROR: '%s' not found in people.yml for update" % name)
+    end = _entry_span(lines, i, stop)
+    first_field = next((ln for ln in lines[i + 1:end]
+                        if ln.strip() and not ln.lstrip().startswith("#")), None)
+    indent = " " * (len(first_field) - len(first_field.lstrip())) if first_field \
+        else " " * ((len(lines[i]) - len(lines[i].lstrip())) + 2)
+
+    changed = []
+    for key, val in updates.items():
+        new_line = "%s%s: %s" % (indent, key, val)
+        j = next((k for k in range(i + 1, end)
+                  if re.match(r"^\s*%s:(\s|$)" % re.escape(key), lines[k])), None)
+        if j is not None:
+            # A folded/literal scalar (e.g. `note: >-`) continues on deeper
+            # lines; replace the whole thing so no orphan lines remain.
+            k = j + 1
+            if re.search(r":\s*[>|]", lines[j]):
+                key_ind = len(lines[j]) - len(lines[j].lstrip())
+                while k < end and (not lines[k].strip() or
+                                   (len(lines[k]) - len(lines[k].lstrip())) > key_ind):
+                    k += 1
+            if lines[j:k] != [new_line]:
+                lines[j:k] = [new_line]
+                end -= (k - j) - 1
+                changed.append(key)
+        else:
+            # New field: append after the entry's last real line (before any
+            # trailing comments, e.g. the "# photo: …" hint).
+            at = end
+            while at - 1 > i and (not lines[at - 1].strip()
+                                  or lines[at - 1].lstrip().startswith("#")):
+                at -= 1
+            lines[at:at] = [new_line]
+            end += 1
+            changed.append(key)
+    if changed:
+        open(PEOPLE, "w", encoding="utf-8").write("\n".join(lines).rstrip("\n") + "\n")
+    return changed
 
 
 def insert_person(gid: str, block_lines: list[str]):
