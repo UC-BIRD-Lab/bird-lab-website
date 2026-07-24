@@ -74,7 +74,9 @@ equipment:
   - label: Reconstruction
     value: "2 × custom high-performance workstations"
   - label: Animal housing
-    value: "4 attached mews, with security and monitoring systems"
+    value: "4 attached mews"
+  - label: Hall
+    value: "70ft × 20ft hall, with security and monitoring systems"
   - label: Site
     value: "California Raptor Center, UC Davis"
 
