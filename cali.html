@@ -233,9 +233,6 @@ image:
   <img class="section-bg" src="{{ cali.hero_photo | relative_url }}" alt="" aria-hidden="true" loading="eager">
   <div class="container">
     <p class="eyebrow eyebrow--on-dark">Center for Animal Locomotion &amp; Innovation</p>
-    {%- comment -%} The eyebrow above already spells the name out, and the
-       page title carries it for search and link previews, so the h1 stays
-       short rather than repeating it for screen-reader users. {%- endcomment -%}
     <h1>CALI</h1>
     <p class="lead">Harnessing animal locomotion to advance technology, health, and conservation.</p>
     <div class="hero__cta">
@@ -333,11 +330,6 @@ image:
         <h2 id="facility-h">Locomotion-focused imaging facility</h2>
         <p>A shared, staff-operated flight hall for high-resolution motion capture and high-speed
         imaging </p>
-        <div class="spec-grid spec-grid--compact">
-          {%- for s in cali.specs -%}
-          <div class="spec"><span class="spec__value">{{ s.value }}</span><span class="spec__label">{{ s.label }}</span></div>
-          {%- endfor -%}
-        </div>
         <ul class="facility-features u-mt-12">
           {%- for c in cali.capabilities -%}<li>{{ c }}</li>{%- endfor -%}
         </ul>
