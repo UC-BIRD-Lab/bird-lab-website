@@ -1,72 +1,57 @@
 # ─────────────────────────────────────────────────────────────
 #  CALI — Center for Animal Locomotion and Innovation
 #
-#  Self-contained data for the /cali/ section. This file plus
-#  cali_rates.yml, cali_gallery.yml, and cali.html are the movable
-#  "CALI unit": if CALI ever spins out to its own site as the
-#  consortium grows, these move together with minimal rework.
+#  DATA ONLY. Everything in this file is a LIST or a REUSED VALUE:
+#  people, equipment, partners, image paths, the contact address.
 #
-#  Wording is drawn from the CALI site, kept short and warm.
-#  Equipment `specs:` are the single source of truth (also shown as
-#  the Facilities teaser), so the headline numbers live in ONE place.
+#  The page's sentences live in cali.html, next to the markup that
+#  shows them — so changing a word is a normal edit to a paragraph,
+#  not a hunt through YAML block scalars. Add something here only if
+#  it repeats, is a list, or is used in more than one place.
+#
+#  This file plus cali_rates.yml, cali_gallery.yml, and cali.html are
+#  the movable "CALI unit": if CALI ever spins out to its own site,
+#  these move together with minimal rework.
 #
 #  YAML rules: two-space indents, a space after every colon.
 # ─────────────────────────────────────────────────────────────
 
 name: Center for Animal Locomotion and Innovation
 
-# Hero line.
-mission_tagline: >-
-  Harnessing animal locomotion to advance technology, health, and conservation.
-
-# One-line statement (in Christina's words).
-statement: Animal locomotion links biomechanics, robotics, health, and conservation.
-
-# Three research focus areas (verbatim from the CALI home page).
-focus_areas:
-  - title: Measure & Model Locomotion
-    text: >-
-      Track and simulate locomotion to reveal how animals generate forces and
-      moments to control movement.
-    image: /assets/img/cali/differenced_image.gif
-    image_alt: A high-speed difference image tracing a bird's motion in the flight hall.
-  - title: Restore & Enhance Movement
-    text: >-
-      Translate insights into rehabilitation strategies and bio-inspired
-      assistive technologies.
-    image: /assets/img/cali/rehab_release.jpg
-    image_alt: A rehabilitated raptor at the moment of release.
-  - title: Predict & Protect in the Wild
-    text: >-
-      Use movement data to guide conservation decisions in changing environments.
-    image: /assets/img/cali/wild_raptor.jpg
-    image_alt: A wild raptor in flight against the sky.
-
+# Used in six places on the page, so it lives here — change it once
+# and every "email us" link follows. (If CALI ever moves to a shared
+# inbox such as cali@ucdavis.edu, this is the only edit needed.)
 contact_email: harvey@ucdavis.edu
 
-# Images.
+# ── IMAGES ────────────────────────────────────────────────────
+# Paths only; the alt text sits with each <img> in cali.html.
 hero_photo: /assets/img/cali/cali-peregrine.jpg
 facility_photo: /assets/img/cali/cali-cameras-upclose.jpg
-facility_photo_alt: >-
-  Close-up of the OptiTrack motion-capture cameras lining the CALI flight hall.
-# Backdrop for the "Join the Initiative" call-to-action band.
+# Backdrop for the closing call-to-action band.
 team_photo: /assets/img/cali/cali-team.jpg
 
-# Funding credit (DURIP). Reused as the Facilities teaser badge.
+# Funding credit (DURIP), shown as a badge on the facility photo.
+# NOTE: _data/facilities.yml carries its own copy of this for the
+# Facilities-page teaser — if the wording or the amount changes,
+# change it in both places.
 funding:
-  note: "DURIP support from:"
+  note: "$2.9M DURIP from:"
   name: DEVCOM Army Research Laboratory
   logo: /assets/img/partners/arl.png
   url: https://www.arl.army.mil/
 
-# A shared, staff-operated facility. Staff run the cameras for every session.
-facility_line: >-
-  A shared, staff-operated flight hall for high-resolution motion capture and
-  high-speed imaging. Our staff run every session, so you can focus on your study.
-
-# Equipment — SINGLE SOURCE OF TRUTH (also the Facilities teaser).
+# ── EQUIPMENT ─────────────────────────────────────────────────
+# `specs` are the four headline number tiles; `equipment` is the
+# detail table beneath them. Model names use the vendors' own
+# spelling so they are searchable.
+#
+# Frame rates and accuracies are the MANUFACTURERS' published
+# figures. What a given experiment achieves depends on lens,
+# resolution, capture volume, and lighting, so treat them as the
+# ceiling rather than a promise. Correct any that don't match the
+# hall's real configuration.
 specs:
-  - { value: "44", label: "OptiTrack Versa 120x motion-capture cameras" }
+  - { value: "44", label: "OptiTrack VersaX 120 motion-capture cameras" }
   - { value: "9", label: "high-speed Phantom cameras" }
   - { value: "4", label: "attached bird mews" }
   - { value: "2", label: "high-performance workstations" }
@@ -77,21 +62,100 @@ capabilities:
   - Controlled-environment hall
   - Daylight-balanced lighting
 
-# Leadership & collaborators.
-leadership:
-  - name: Dr. Christina Harvey
-    role: Co-Director
-    dept: Mechanical & Aerospace Engineering
-    photo: /assets/img/people/christina-harvey.jpg
-  - name: Dr. Michelle Hawkins
-    role: Co-Director
-    dept: Medicine & Epidemiology
-    photo: /assets/img/people/michelle-hawkins.jpg
+# `also:` is optional — a second line under the same row label.
+equipment:
+  - label: Motion capture
+    value: "44 × OptiTrack VersaX 120 — 12.6 MP (4096 × 3072), 300 Hz, ±0.1 mm 3D accuracy"
+  - label: Reference video
+    value: "4 × OptiTrack Prime Color — 1920 × 1080, 250 fps"
+  - label: High-speed imaging
+    value: "8 × Phantom VEO 440L — 4 MP (2560 × 1600), up to 1,100 fps at full resolution"
+    also: "1 × Phantom VEO-E 340L — 4 MP (2560 × 1600), up to 800 fps at full resolution"
+  - label: Reconstruction
+    value: "2 × custom high-performance workstations"
+  - label: Animal housing
+    value: "4 attached mews, with security and monitoring systems"
+  - label: Site
+    value: "California Raptor Center, UC Davis"
 
-advisors:
-  - { name: Dr. Hugues Beaufrère, dept: Medicine & Epidemiology, photo: /assets/img/cali/beaufrere.jpg }
-  - { name: Dr. Stacey Combes, dept: Neurobiology, Physiology & Behavior, photo: /assets/img/cali/combes.jpg }
-  - { name: Dr. Sergey Stavisky, dept: Neurological Surgery, photo: /assets/img/cali/stavisky.jpg }
+# ── TEAM ──────────────────────────────────────────────────────
+# To ADD A PERSON: copy one block under `team:` and fill it in.
+#   name        required
+#   group       which heading they appear under — must match a name
+#               in team_groups below
+#   institution short affiliation shown under the name (e.g. UC Davis, Oxford) —
+#               this is what makes the consortium's multi-institution reach show
+#   discipline  a short field shown as a colored tag (the transdisciplinary mix).
+#               Colored styles exist for: Engineering, Veterinary Medicine,
+#               Biology, Zoology, Neuroscience, Animation. A new discipline still
+#               shows as a neutral tag — add a color in cali.html if you like.
+#   photo       optional headshot (square JPG in assets/img/cali/ or people/);
+#               no photo = a clean initials circle
+#   website     optional — if set, their whole card links to it
+#
+# team_groups sets the heading order. The one-line description under
+# each heading is in cali.html — if you add a group here, add its line
+# there too (the page falls back to no description if you don't).
+team_groups:
+  - Directors
+  - Advisors
+  - Affiliates
+
+team:
+  - name: Dr. Christina Harvey
+    group: Directors
+    institution: UC Davis
+    discipline: Engineering
+    photo: /assets/img/people/christina-harvey.jpg
+    website: https://mae.ucdavis.edu/people/christina-harvey
+  - name: Dr. Michelle Hawkins
+    group: Directors
+    institution: UC Davis
+    discipline: Veterinary Medicine
+    photo: /assets/img/people/michelle-hawkins.jpg
+    website: https://ohi.vetmed.ucdavis.edu/people/michelle-hawkins
+  - name: Dr. Hugues Beaufrère
+    group: Advisors
+    institution: UC Davis
+    discipline: Veterinary Medicine
+    photo: /assets/img/cali/beaufrere.jpg
+    website: https://www.vetmed.ucdavis.edu/faculty/hugues-h-beaufrere
+  - name: Dr. Stacey Combes
+    group: Advisors
+    institution: UC Davis
+    discipline: Biology
+    photo: /assets/img/cali/combes.jpg
+    website: https://combeslab.faculty.ucdavis.edu
+  - name: Dr. Sergey Stavisky
+    group: Advisors
+    institution: UC Davis
+    discipline: Neuroscience
+    photo: /assets/img/cali/stavisky.jpg
+    website: https://neuroprosthetics.science
+  - name: Dr. Kevin Haughn
+    group: Affiliates
+    institution: Rose-Hulman Institute of Technology
+    discipline: Engineering
+    photo: /assets/img/people/kevin-haughn.jpg
+    website: https://haughn-morph-lab.github.io/morph-lab.github.io/
+  - name: Dr. Lydia France
+    group: Affiliates
+    institution: University of Oxford
+    discipline: Zoology
+    photo: /assets/img/people/lydia-france.jpg
+    website: https://lydiafrance.github.io/LydiaFrance/
+  - name: Juan Sebastian Niño Florez
+    group: Affiliates
+    institution: "Freelance"
+    discipline: Animation
+    photo: /assets/img/people/seb-nino-florez.jpg
+    website: https://www.imdb.com/name/nm6695637/
+  - name: Dr. Chris Clark
+    group: Affiliates
+    institution: UC Riverside
+    discipline: Biology
+    photo: /assets/img/cali/clark.jpeg
+    website: https://animalaeroacoustics.ucr.edu/
 
 # Collaborating organizations. Logos live in assets/img/partners/.
 partners:
@@ -101,12 +165,3 @@ partners:
   - name: California Raptor Center
     photo: /assets/img/partners/crc.jpg
     url: https://crc.vetmed.ucdavis.edu
-
-# Get involved (from the CALI "Join the Initiative" page).
-join_heading: Join the Initiative
-join_intro: >-
-  We're building a campus-wide community around animal locomotion and
-  locomotion-inspired solutions.
-join_cta: >-
-  Join as a Founding Affiliate, propose a working group, or share a grant idea.
-  We're looking forward to working with you.

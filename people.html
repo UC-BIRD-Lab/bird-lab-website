@@ -145,6 +145,7 @@ description: "Meet the BIRD Lab team at UC Davis: our PI, postdoctoral scholars,
 </section>
 {%- endif -%}
 
+{%- if site.data.people.affiliates.members and site.data.people.affiliates.members.size > 0 -%}
 <section class="people-group" id="affiliates">
   <h2>{{ site.data.people.affiliates.title }}</h2>
   <div class="grid grid-3">
@@ -153,6 +154,7 @@ description: "Meet the BIRD Lab team at UC Davis: our PI, postdoctoral scholars,
     {%- endfor -%}
   </div>
 </section>
+{%- endif -%}
 
 <section class="people-group" id="alumni">
   <h2>{{ site.data.people.alumni.title }}</h2>

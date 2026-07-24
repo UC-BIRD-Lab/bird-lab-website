@@ -1,83 +1,231 @@
 ---
 layout: default
-title: CALI
-description: "The Center for Animal Locomotion and Innovation (CALI) at UC Davis: harnessing animal locomotion to advance technology, health, and conservation. A shared, staff-operated motion-capture and high-speed imaging facility — capabilities, recharge rates, and how to get involved."
+title: "Center for Animal Locomotion & Innovation (CALI)"
+body_class: cali
+description: "The Center for Animal Locomotion and Innovation (CALI) at UC Davis: harnessing animal locomotion to advance technology, health, and conservation. A shared, staff-operated motion-capture and high-speed imaging facility. Capabilities, recharge rates, and how to get involved."
+image:
+  path: /assets/img/cali/og-cali.png
+  width: 1200
+  height: 630
 ---
 
+{%- comment -%}
+ _data/cali.yml holds lists and reused values (people,
+  equipment, partners, image paths, the contact address), and
+  _data/cali_rates.yml holds the approved rate schedule.
+{%- endcomment -%}
 {%- assign cali = site.data.cali -%}
 {%- assign rates = site.data.cali_rates -%}
-{%- assign gallery = site.data.cali_gallery -%}
 
 {%- comment -%}
   CALI-specific styling, scoped under the body's `.page--cali` class and built on
   the site's design tokens, so the section stays visually consistent and can move
   with the /cali/ pages if CALI ever spins out to its own site.
+
+  NOTE: this block lives in the page body, which means it beats
+  assets/css/style.css in the cascade automatically. Keep CALI overrides here
+  rather than in the site stylesheet — it is what makes the CALI unit movable.
 {%- endcomment -%}
 <style>
+  /* CALI's signature accent — a warm gold that distinguishes the consortium
+     from the lab's blue. Change this one value to re-tint the whole section. */
+  .page--cali { --cali-accent: #c0912e; }
+
   .page--cali .hero > .container { padding-block: clamp(3rem, 8vw, 5.5rem); max-width: 62rem; }
   .page--cali .hero .lead { max-width: 40ch; }
 
-  .page--cali .cali-subnav { border-bottom: 1px solid var(--c-line); background: #fff; position: sticky; top: 0; z-index: 20; }
+  /* In-page nav. It must stick BELOW the site header (which is sticky at
+     top:0, z-index:100) — parking it at top:0 hides it underneath. Same
+     pattern as .people-header. */
+  .page--cali .cali-subnav { border-bottom: 1px solid var(--c-line); background: rgba(255,255,255,.96); backdrop-filter: saturate(150%) blur(10px); position: sticky; top: var(--header-h); z-index: 90; }
   .page--cali .cali-subnav .container { display: flex; flex-wrap: wrap; gap: .4rem 1.4rem; padding-block: .8rem; }
   .page--cali .cali-subnav a { font-size: var(--step--1); font-weight: 600; color: var(--c-blue-700); text-decoration: none; }
   .page--cali .cali-subnav a:hover, .page--cali .cali-subnav a:focus-visible { text-decoration: underline; }
+  /* Anchor jumps must clear the site header AND the sub-nav. This has to
+     target [id] (the site's own mechanism) — scroll-padding-top only works on
+     the actual scrolling element, so setting it on the body class does nothing.
+     The bar is ~3.15rem on one line and ~4.9rem once the links wrap to two,
+     which happens just above 600px; each value adds a little breathing room. */
+  .page--cali [id] { scroll-margin-top: calc(var(--header-h) + 3.9rem); }
+  @media (max-width: 620px) { .page--cali [id] { scroll-margin-top: calc(var(--header-h) + 5.6rem); } }
 
-  /* Focus-area cards: image on top, short verbatim line below. */
+  /* Focus-area cards: image or silent loop on top, short verbatim line below. */
   .page--cali .cali-focus { overflow: hidden; padding: 0; }
   .page--cali .cali-focus__img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; display: block; background: var(--c-sky-2); }
+  .page--cali .cali-focus__still { display: none; }
   .page--cali .cali-focus__body { padding: 1.1rem 1.2rem 1.3rem; }
   .page--cali .cali-focus__body h3 { margin: 0 0 .35rem; font-size: var(--step-1); }
+  /* Motion that can't be paused is a WCAG 2.2.2 problem, so readers who ask
+     for less motion get the poster frame instead of the loop. */
+  @media (prefers-reduced-motion: reduce) {
+    .page--cali .cali-focus__video { display: none; }
+    .page--cali .cali-focus__still { display: block; }
+  }
+
   .page--cali .cali-statement { font-size: var(--step-2); line-height: 1.25; max-width: 34rem; margin-inline: auto; color: var(--c-navy); text-align: center; }
-  .page--cali .cali-mission { max-width: 60ch; margin-inline: auto; text-align: center; }
+  .page--cali .cali-founding { max-width: 62ch; margin-inline: auto; }
 
-  .page--cali .cali-cat { border-top: 3px solid var(--c-gold); }
-  .page--cali .cali-cat h3 { margin: .1rem 0 .2rem; }
-  .page--cali .cali-cat__label { font-size: var(--step--1); font-weight: 600; color: var(--c-blue-700); }
-
-  /* People cards with photos. */
-  .page--cali .cali-people { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.2rem; margin: 0; padding: 0; list-style: none; }
-  .page--cali .cali-person { display: flex; flex-direction: column; align-items: center; text-align: center; }
-  .page--cali .cali-person__photo { width: 104px; height: 104px; border-radius: 50%; object-fit: cover; margin-bottom: .6rem; background: var(--c-sky-2); }
-  .page--cali .cali-person__name { font-weight: 700; }
-  .page--cali .cali-person__meta { color: var(--c-muted); font-size: var(--step--1); }
+  /* Team: uniform cards, each group centered as its own row. */
+  .page--cali .cali-group-h { font-size: var(--step-0); font-weight: 700; }
+  .page--cali .cali-group-blurb { max-width: 46ch; margin-inline: auto; }
+  .page--cali .cali-people { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin: 0 auto; padding: 0; list-style: none; max-width: 980px; }
+  .page--cali .cali-people > li { display: flex; }
+  .page--cali .cali-person { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; text-align: center; width: 200px; background: #fff; border: 1px solid var(--c-line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.4rem 1rem 1.2rem; transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease; }
+  .page--cali .cali-person__photo { width: 92px; height: 92px; border-radius: 50%; object-fit: cover; margin-bottom: .7rem; background: var(--c-sky-2); }
+  .page--cali .cali-person__photo--initials { display: flex; align-items: center; justify-content: center; background: var(--c-sky); color: var(--c-blue-700); font-weight: 700; font-size: var(--step-1); }
+  .page--cali .cali-person__name { font-weight: 700; line-height: 1.2; }
+  /* Pushed to the bottom so a two-line name doesn't knock the affiliation
+     out of line with the cards beside it. */
+  .page--cali .cali-person__meta { color: var(--c-muted); font-size: var(--step--1); margin-top: auto; padding-top: .3rem; }
+  .page--cali a.cali-person--link { text-decoration: none; color: inherit; }
+  .page--cali a.cali-person--link:hover, .page--cali a.cali-person--link:focus-visible { transform: translateY(-3px); box-shadow: var(--shadow-lg); border-color: var(--c-blue-500); }
+  .page--cali a.cali-person--link:hover .cali-person__name { text-decoration: underline; }
+  /* Featured first group (Directors): larger card + gold accent. */
+  .page--cali .cali-people--lead .cali-person { width: 244px; border-top: 3px solid var(--cali-accent); padding-top: 1.5rem; }
+  .page--cali .cali-people--lead .cali-person__photo { width: 120px; height: 120px; }
 
   /* Using CALI: words on the left, table pushed to the right. */
-  .page--cali .cali-access { display: grid; grid-template-columns: minmax(240px, 320px) 1fr; gap: clamp(1.5rem, 4vw, 3rem); align-items: start; }
+  .page--cali .cali-access { display: grid; grid-template-columns: minmax(230px, 300px) 1fr; gap: clamp(1.5rem, 4vw, 3rem); align-items: start; }
   .page--cali .cali-access__intro h2 { margin-top: 0; }
   @media (max-width: 820px) { .page--cali .cali-access { grid-template-columns: 1fr; } }
 
-  /* Rate table: builds on the site's base table styles. */
-  .page--cali .rate-scroll { overflow-x: auto; }
+  /* Rate + equipment tables. Both sit in a white card so they read as one
+     crisp object on the tinted section, with a navy header row and a tinted
+     service column giving the grid its structure. The wrapper's overflow is
+     what rounds the corners, since border-collapse ignores border-radius. */
+  .page--cali .rate-scroll { overflow-x: auto; background: #fff; border: 1px solid var(--c-line); border-radius: var(--radius); box-shadow: var(--shadow); }
   .page--cali .rate-scroll:focus-visible { outline: 3px solid var(--c-blue-500); outline-offset: 2px; }
-  .page--cali .rate-table { min-width: 620px; margin-top: 0; }
+  /* The table fills its column and lets its own content set the column widths.
+     Fixed 20% money columns plus nowrap headers used to force it wider than
+     the space available, which is what clipped the Industry rate. */
+  .page--cali .rate-table { width: 100%; margin: 0; background: #fff; }
   .page--cali .rate-table caption { text-align: left; font-size: var(--step--1); color: var(--c-muted); padding-bottom: .6rem; }
-  .page--cali .rate-table thead th { white-space: nowrap; }
+  /* Headers wrap to two lines when the column gets tight, rather than
+     forcing the table wider than its column. */
+  .page--cali .rate-table thead th {
+    white-space: normal; background: var(--c-navy); color: #fff;
+    font-weight: 600; letter-spacing: .01em; border-bottom: 0;
+    padding-block: .8rem; vertical-align: bottom;
+  }
+  /* Service column: tinted, so the eye has a fixed left edge to read across from. */
+  .page--cali .rate-table th[scope="row"] {
+    background: var(--c-sky); color: var(--c-navy); padding-right: .8rem; vertical-align: top;
+  }
+  .page--cali .rate-table td { background: #fff; }
+  .page--cali .rate-tier { display: none; }   /* shown only in the phone card layout below */
+  /* Breathing room against the card's edges, so nothing kisses the border. */
+  .page--cali .rate-table th:first-child, .page--cali .rate-table td:first-child { padding-left: 1.1rem; }
+  .page--cali .rate-table th:last-child,  .page--cali .rate-table td:last-child  { padding-right: 1.1rem; }
+  .page--cali .rate-table tbody tr:last-child th,
+  .page--cali .rate-table tbody tr:last-child td { border-bottom: 0; }
+  .page--cali .rate-table tbody tr:hover td { background: var(--c-sky-2); }
   .page--cali .rate-table .svc-desc { display: block; font-weight: 400; font-size: var(--step--1); color: var(--c-muted); }
-  /* Right-align the money columns so decimals line up; balance column widths. */
+  /* Right-align the money columns so decimals line up. */
   .page--cali .rate-table thead th:not(:first-child),
-  .page--cali .rate-table td { text-align: right; width: 20%; }
+  .page--cali .rate-table td { text-align: right; }
   .page--cali .rate-table td { font-variant-numeric: tabular-nums; white-space: nowrap; }
-  .page--cali .rate-table th[scope="row"] { padding-right: 1.5rem; }
 
-  .page--cali .cali-visit__who { margin: 0; font-weight: 700; }
-  .page--cali .cali-visit__meta { color: var(--c-muted); font-size: var(--step--1); margin: .1rem 0 .5rem; }
-  .page--cali .cali-visit__what { margin: 0; }
-  .page--cali .cali-visit__img { width: 100%; height: auto; border-radius: var(--radius-sm); display: block; margin-bottom: .8rem; }
+  /* On a phone a four-column table hides two of the three rates off-screen,
+     so each service becomes its own card. The thead stays in the DOM
+     (clipped, not display:none) so screen readers keep the column
+     associations; each cell repeats its tier label from data-tier. */
+  @media (max-width: 620px) {
+    .page--cali .rate-scroll { overflow: visible; background: none; border: 0; border-radius: 0; box-shadow: none; }
+    .page--cali .rate-table { width: 100%; border-collapse: separate; border-spacing: 0; }
+    .page--cali .rate-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+    .page--cali .rate-table tr { display: block; background: #fff; border: 1px solid var(--c-line); border-radius: var(--radius-sm); padding: .9rem 1rem; }
+    .page--cali .rate-table tr + tr { margin-top: .8rem; }
+    .page--cali .rate-table { background: none; }
+    .page--cali .rate-table th[scope="row"] { display: block; width: auto; padding: 0 0 .5rem; border: 0; background: none; color: var(--c-navy); text-align: left; }
+    .page--cali .rate-table tbody tr:hover td { background: none; }
+    .page--cali .rate-table td { display: flex; justify-content: space-between; gap: 1rem; width: auto; text-align: right; padding: .35rem 0; border: 0; border-top: 1px solid var(--c-line); white-space: normal; }
+    .page--cali .rate-tier { display: block; font-weight: 600; color: var(--c-ink-soft); text-align: left; }
+  }
 
-  /* Get-involved call-to-action band: team photo backdrop, text kept readable. */
-  .page--cali .cali-cta .field-band__img { object-position: center 42%; }
+  /* Equipment detail table. Shares .rate-table's chrome but reads as prose,
+     so it overrides the money-column alignment — these rules must stay AFTER
+     the .rate-table rules above, since they have the same specificity. */
+  .page--cali .cali-equip-wrap { background: #fff; border: 1px solid var(--c-line); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; margin-top: .6rem; }
+  .page--cali .cali-equip { width: 100%; margin: 0; }
+  .page--cali .cali-equip td { text-align: left; width: auto; white-space: normal; font-variant-numeric: normal; }
+  .page--cali .cali-equip th[scope="row"] { white-space: nowrap; vertical-align: top; padding-right: 1.2rem; background: var(--c-sky); color: var(--c-navy); }
+  .page--cali .cali-equip tbody tr:last-child th,
+  .page--cali .cali-equip tbody tr:last-child td { border-bottom: 0; }
+  .page--cali .cali-equip__also { display: block; margin-top: .3rem; }
+  @media (max-width: 620px) {
+    .page--cali .cali-equip th[scope="row"] { display: block; padding: .6rem .8rem .2rem; }
+    .page--cali .cali-equip td { display: block; padding: .2rem .8rem .7rem; }
+  }
+
+  /* Discipline tag — small, colored, shows the transdisciplinary mix at a glance. */
+  .page--cali .disc { display: inline-block; margin: .1rem 0 .35rem; padding: .2rem .66rem; border-radius: 999px; font-size: .74rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; background: var(--c-sky); color: var(--c-blue-700); }
+  .page--cali .disc--engineering { background: #e4ecfb; color: #22406b; }
+  .page--cali .disc--veterinary-medicine { background: #e2f1e8; color: #1c5f34; }
+  .page--cali .disc--biology { background: #dcefee; color: #0f5a63; }
+  .page--cali .disc--zoology { background: #dcefee; color: #0f5a63; }
+  .page--cali .disc--neuroscience { background: #ebe3f6; color: #543681; }
+  .page--cali .disc--animation { background: #f8ebd6; color: #7d5210; }
+
+  /* CALI identifier: a gold keyline under each centered section label — a
+     lightweight, CSS-only signature until a bespoke logo is ready. */
+  .page--cali .eyebrow.center { padding-bottom: .6rem; }
+  .page--cali .eyebrow.center::after { content: ""; display: block; width: 42px; height: 3px; border-radius: 2px; background: var(--cali-accent); margin: .55rem auto 0; }
+
+  /* Milestones + news, side by side. */
+  .page--cali .cali-progress { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 3.5rem); max-width: 940px; margin: 1.6rem auto 0; align-items: start; }
+  .page--cali .cali-progress h3 { margin: 0 0 .3rem; }
+  @media (max-width: 760px) { .page--cali .cali-progress { grid-template-columns: 1fr; } }
+  .page--cali .cali-news { list-style: none; margin: 1rem 0 0; padding: 0; }
+  .page--cali .cali-news li { padding: .7rem 0; border-bottom: 1px solid var(--c-line); }
+  .page--cali .cali-news li:first-child { padding-top: 0; }
+  .page--cali .cali-news a { font-weight: 600; text-decoration: none; color: var(--c-blue-700); }
+  .page--cali .cali-news a:hover, .page--cali .cali-news a:focus-visible { text-decoration: underline; }
+  .page--cali .cali-news__src { display: block; color: var(--c-muted); font-size: var(--step--1); margin-top: .1rem; }
+  /* Milestones are short and are the credibility story (the 2024 award and
+     groundbreaking included) — show them all. News grows without bound, so
+     cap that one only, and fade the cut so it reads as "there's more"
+     rather than as a slice through a headline. */
+  .page--cali .cali-scroll { padding: 0 .6rem 0 .8rem; }
+  .page--cali .cali-scroll--news { max-height: 26rem; overflow-y: auto; -webkit-mask-image: linear-gradient(180deg, #000 88%, transparent 100%); mask-image: linear-gradient(180deg, #000 88%, transparent 100%); }
+  .page--cali .cali-scroll--news:focus-visible { outline: 3px solid var(--c-blue-500); outline-offset: 3px; border-radius: 4px; }
+  @media (max-width: 760px) { .page--cali .cali-scroll--news { max-height: none; overflow: visible; -webkit-mask-image: none; mask-image: none; } }
+
+  /* Milestones timeline (mirrors the home-page news feel). */
+  .page--cali .cali-timeline { max-width: none; margin: 1rem 0 0; padding: 0 0 0 1.6rem; border-left: 2px solid var(--c-line); list-style: none; }
+  .page--cali .cali-timeline li { position: relative; padding: 0 0 1.3rem; }
+  .page--cali .cali-timeline li:last-child { padding-bottom: 0; }
+  .page--cali .cali-timeline li::before { content: ""; position: absolute; left: calc(-1.6rem - 6px); top: .3rem; width: 12px; height: 12px; border-radius: 50%; background: var(--c-blue-500); border: 2px solid #fff; box-shadow: 0 0 0 1px var(--c-line); }
+  .page--cali .cali-timeline__date { font-weight: 700; color: var(--c-navy); }
+  .page--cali .cali-timeline__text { color: var(--c-ink-soft); }
+
+  /* Get-involved call-to-action band: team photo backdrop, kept short.
+     The overlay is deliberately lighter than the site default's lower stop
+     only where the caption sits — this photograph is bright, and a flat
+     dark wash erases fifteen faces. */
+  .page--cali .cali-cta .field-band__img { object-position: center 38%; height: clamp(300px, 38vw, 460px); }
   .page--cali .cali-cta .field-band__line { max-width: 32ch; line-height: 1.28; }
-  .page--cali .cali-cta .field-band__overlay { background: linear-gradient(180deg, rgba(11,22,45,.55), rgba(11,22,45,.82)); }
+  .page--cali .cali-cta .field-band__overlay { background: linear-gradient(180deg, rgba(11,22,45,.30) 0%, rgba(11,22,45,.26) 42%, rgba(11,22,45,.80) 100%); }
 
   /* Tidy 2x2 spec tiles inside the facility column. */
   .page--cali .facility-body .spec-grid { grid-template-columns: repeat(2, 1fr); }
 
-  /* Center visiting-team cards instead of left-stranding a single one. */
-  .page--cali .cali-visitgrid { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--gap); }
-  .page--cali .cali-visitgrid > .card { flex: 0 1 380px; }
+  /* Funder badge, lower-right of the facility photo. Pin the logo size so the
+     big-photo `.facility-photo img` rule doesn't stretch it. */
+  .page--cali .facility-photo { position: relative; }
+  .page--cali .facility-photo .facility-funder { top: auto; bottom: clamp(.8rem, 2vw, 1.3rem); }
+  .page--cali .facility-photo .facility-funder img { width: auto; height: 30px; max-width: 170px; aspect-ratio: auto; object-fit: contain; border: 0; border-radius: 0; box-shadow: none; background: none; }
 
   .page--cali .cali-join { text-align: center; }
   .page--cali .cali-join .lead { max-width: 46ch; margin-inline: auto; }
+  .page--cali .cali-ways { max-width: 920px; margin-inline: auto; grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 680px) { .page--cali .cali-ways { grid-template-columns: 1fr; } }
+  .page--cali .cali-ways .card h3 { margin: 0 0 .3rem; font-size: var(--step-1); }
+  .page--cali .cali-ways .card a:not(.btn) { text-decoration: underline; }
+  .page--cali .cali-ways .card { display: flex; flex-direction: column; }
+  .page--cali .cali-ways .card > p:last-child { margin-top: auto; }
+
+  /* Onward links, so the page isn't a dead end. */
+  .page--cali .cali-onward { max-width: 74ch; margin-inline: auto; }
 </style>
 
 <!-- Hero -->
@@ -85,40 +233,106 @@ description: "The Center for Animal Locomotion and Innovation (CALI) at UC Davis
   <img class="section-bg" src="{{ cali.hero_photo | relative_url }}" alt="" aria-hidden="true" loading="eager">
   <div class="container">
     <p class="eyebrow eyebrow--on-dark">Center for Animal Locomotion &amp; Innovation</p>
+    {%- comment -%} The eyebrow above already spells the name out, and the
+       page title carries it for search and link previews, so the h1 stays
+       short rather than repeating it for screen-reader users. {%- endcomment -%}
     <h1>CALI</h1>
-    <p class="lead">{{ cali.mission_tagline }}</p>
+    <p class="lead">Harnessing animal locomotion to advance technology, health, and conservation.</p>
     <div class="hero__cta">
-      <a class="btn btn--light" href="#access">See rates &amp; access</a>
-      <a class="btn btn--ghost btn--on-dark" href="#get-involved">Get involved</a>
+      <a class="btn btn--light" href="#get-involved">Get involved</a>
+      <a class="btn btn--ghost btn--on-dark" href="#access">See rates &amp; access</a>
     </div>
   </div>
 </section>
 
-<!-- In-page navigation -->
+<!-- In-page navigation. Labels match the headings they land on, so a jump
+     always feels like it arrived somewhere. -->
 <nav class="cali-subnav" aria-label="On this page">
   <div class="container">
+    <a href="#about">The consortium</a>
     <a href="#facility">The facility</a>
-    <a href="#focus">What we do</a>
-    <a href="#visitors">Visiting teams</a>
+    <a href="#milestones">Our story</a>
     <a href="#team">Team</a>
     <a href="#access">Using CALI</a>
     <a href="#get-involved">Get involved</a>
   </div>
 </nav>
 
-<!-- 1. The facility (lead with the capability) -->
+<!-- 1. The consortium: what CALI is for, where it is right now, what we study -->
+<section class="section section--tint" id="about" aria-labelledby="about-h">
+  <div class="container center">
+    <h2 id="about-h" class="eyebrow center">The consortium</h2>
+    <p class="lead prose u-mt-10 u-mi-auto">CALI is a transdisciplinary research consortium and shared facility at UC&nbsp;Davis. Founded in 2026, we bring together engineering, veterinary medicine, and biology to study how animals move. </p>
+      <p class="muted u-fs-sm u-mt-12">We're in our founding phase: expanding our research network, identifying shared priorities, and building teams for collaborative proposals.</p>
+    
+    <p class="cali-statement u-mt-16">Animal locomotion links biomechanics, robotics, health, and conservation.</p>
+    
+
+
+
+
+    {%- comment -%} Three research focus areas. Each card is plain markup, so the
+       heading, the sentence, and the picture's alt text are all edited here.
+       A card can carry a still <img> or a short silent <video> loop; prefer video
+       over an animated GIF, which can't be paused (WCAG 2.2.2). To convert one:
+         ffmpeg -i clip.gif -movflags faststart -pix_fmt yuv420p \
+           -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" clip.mp4
+         ffmpeg -i clip.gif -vframes 1 clip-poster.jpg {%- endcomment -%}
+    <div class="grid grid-3 u-mt-16">
+      <div class="card cali-focus">
+        {%- comment -%} tabindex="-1": a silent decorative loop with no controls
+           should not be a keyboard stop — there is nothing there to operate.
+           The still below it is what readers who ask for reduced motion see. {%- endcomment -%}
+        <video class="cali-focus__img cali-focus__video" autoplay muted loop playsinline tabindex="-1"
+               poster="{{ '/assets/img/cali/differenced_image-poster.jpg' | relative_url }}"
+               aria-label="A high-speed difference image tracing a bird's motion in the flight hall.">
+          <source src="{{ '/assets/img/cali/differenced_image.mp4' | relative_url }}" type="video/mp4">
+        </video>
+        <img class="cali-focus__img cali-focus__still" src="{{ '/assets/img/cali/differenced_image-poster.jpg' | relative_url }}"
+             alt="A high-speed difference image tracing a bird's motion in the flight hall." loading="lazy">
+        <div class="cali-focus__body">
+          <h3>Measure &amp; Model Locomotion</h3>
+          <p>Track and simulate locomotion to reveal how animals generate forces and moments to control movement.</p>
+        </div>
+      </div>
+      <div class="card cali-focus">
+        <img class="cali-focus__img" src="{{ '/assets/img/cali/rehab_release.jpg' | relative_url }}"
+             alt="A rehabilitated raptor at the moment of release." loading="lazy">
+        <div class="cali-focus__body">
+          <h3>Restore &amp; Enhance Movement</h3>
+          <p>Translate insights into rehabilitation strategies and bio-inspired assistive technologies.</p>
+        </div>
+      </div>
+      <div class="card cali-focus">
+        <img class="cali-focus__img" src="{{ '/assets/img/cali/wild_raptor.jpg' | relative_url }}"
+             alt="A wild raptor in flight against the sky." loading="lazy">
+        <div class="cali-focus__body">
+          <h3>Predict &amp; Protect in the Wild</h3>
+          <p>Use movement data to guide conservation decisions in changing environments.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. The facility (the capability that makes it credible) -->
 <section class="section" id="facility" aria-labelledby="facility-h">
   <div class="container">
     <div class="facility-grid">
       <figure class="facility-photo">
-        <img src="{{ cali.facility_photo | relative_url }}" alt="{{ cali.facility_photo_alt }}" loading="lazy">
+        <img src="{{ cali.facility_photo | relative_url }}"
+             alt="Close-up of the OptiTrack motion-capture cameras lining the CALI flight hall." loading="lazy">
         {%- if cali.funding -%}
-        <figcaption class="facility-photo__note">{{ cali.funding.note }} {{ cali.funding.name }}.</figcaption>
+        <a class="facility-funder" href="{{ cali.funding.url }}" rel="noopener">
+          <span class="facility-funder__note">{{ cali.funding.note }}</span>
+          <img src="{{ cali.funding.logo | relative_url }}" alt="{{ cali.funding.name }}">
+        </a>
         {%- endif -%}
       </figure>
       <div class="facility-body">
-        <h2 id="facility-h">A world-class flight hall</h2>
-        <p>{{ cali.facility_line }}</p>
+        <h2 id="facility-h">Locomotion-focused imaging facility</h2>
+        <p>A shared, staff-operated flight hall for high-resolution motion capture and high-speed
+        imaging </p>
         <div class="spec-grid spec-grid--compact">
           {%- for s in cali.specs -%}
           <div class="spec"><span class="spec__value">{{ s.value }}</span><span class="spec__label">{{ s.label }}</span></div>
@@ -129,76 +343,114 @@ description: "The Center for Animal Locomotion and Innovation (CALI) at UC Davis
         </ul>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- 2. What we do (the vision, with images) -->
-<section class="section section--tint" id="focus" aria-labelledby="focus-h">
-  <div class="container">
-    <h2 id="focus-h" class="eyebrow center">What we do</h2>
-    <p class="cali-statement u-mt-12">{{ cali.statement }}</p>
-    <div class="grid grid-3 u-mt-16">
-      {%- for f in cali.focus_areas -%}
-      <div class="card cali-focus">
-        {%- if f.image -%}<img class="cali-focus__img" src="{{ f.image | relative_url }}" alt="{{ f.image_alt }}" loading="lazy">{%- endif -%}
-        <div class="cali-focus__body">
-          <h3>{{ f.title }}</h3>
-          <p>{{ f.text }}</p>
-        </div>
-      </div>
-      {%- endfor -%}
+    {%- if cali.equipment -%}
+    <h3 class="u-mt-16">Equipment</h3>
+    <div class="cali-equip-wrap">
+    <table class="rate-table cali-equip">
+      <caption class="visually-hidden">CALI equipment, by category.</caption>
+      <tbody>
+        {%- for row in cali.equipment -%}
+        <tr>
+          <th scope="row">{{ row.label }}</th>
+          <td>{{ row.value }}{% if row.also %}<span class="cali-equip__also">{{ row.also }}</span>{% endif %}</td>
+        </tr>
+        {%- endfor -%}
+      </tbody>
+    </table>
     </div>
-  </div>
-</section>
-
-<!-- 3. Visiting teams (proof it's active) -->
-<section class="section" id="visitors" aria-labelledby="visitors-h">
-  <div class="container">
-    <h2 id="visitors-h" class="eyebrow center">Visiting teams</h2>
-    <p class="center u-mt-10">Teams already bringing their questions to CALI.</p>
-    {%- if gallery and gallery.size > 0 -%}
-    <div class="cali-visitgrid u-mt-15">
-      {%- for v in gallery -%}
-      <article class="card">
-        {%- if v.photo and v.photo_alt -%}
-        <img class="cali-visit__img" src="{{ v.photo | relative_url }}" alt="{{ v.photo_alt }}" loading="lazy">
-        {%- endif -%}
-        <p class="cali-visit__who">{{ v.who }}{% if v.external %} <span class="pill">Visiting team</span>{% endif %}</p>
-        <p class="cali-visit__meta">{% if v.org %}{{ v.org }}{% endif %}{% if v.org and v.when %} &middot; {% endif %}{% if v.when %}{{ v.when }}{% endif %}</p>
-        <p class="cali-visit__what">{{ v.what }}</p>
-      </article>
-      {%- endfor -%}
-    </div>
-    {%- else -%}
-    <p class="center muted">Our first visiting teams will appear here soon.</p>
     {%- endif -%}
   </div>
 </section>
 
+<!-- 3. Our story: milestones + in the news (the consortium's trajectory) -->
+<section class="section section--tint" id="milestones" aria-labelledby="milestones-h">
+  <div class="container">
+    <h2 id="milestones-h" class="eyebrow center">Our story</h2>
+    <div class="cali-progress">
+      <div>
+        <h3>Milestones</h3>
+        {%- if site.data.cali_milestones -%}
+        <div class="cali-scroll">
+          <ol class="cali-timeline">
+            {%- for m in site.data.cali_milestones -%}
+            <li>
+              <span class="cali-timeline__date">{{ m.date }}</span>
+              <p class="cali-timeline__text u-m0">{{ m.text }}</p>
+            </li>
+            {%- endfor -%}
+          </ol>
+        </div>
+        {%- endif -%}
+      </div>
+      <div>
+        <h3>In the news</h3>
+        {%- comment -%} CALI coverage = press items tagged "Center" (the existing
+           tag from the CONTENT-GUIDE). Tag a story `Center` in press.yml — or with
+           add_press.py --tag Center — and it appears here automatically. {%- endcomment -%}
+        <div class="cali-scroll cali-scroll--news" tabindex="0" role="region" aria-label="CALI news coverage">
+          <ul class="cali-news">
+            {%- for yr in site.data.press -%}
+            {%- for item in yr.items -%}
+            {%- if item.tag == "Center" -%}
+            <li>
+              <a href="{{ item.url }}" rel="noopener">{{ item.title }}</a>
+              <span class="cali-news__src">{{ item.source }}{% if yr.year %} · {{ yr.year }}{% endif %}</span>
+            </li>
+            {%- endif -%}
+            {%- endfor -%}
+            {%- endfor -%}
+          </ul>
+        </div>
+        <p class="u-mt-12"><a class="btn btn--ghost btn--sm" href="{{ '/news/#in-the-news' | relative_url }}">All coverage &rarr;</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- 4. Team & partners (credibility) -->
-<section class="section section--tint" id="team" aria-labelledby="team-h">
+<section class="section" id="team" aria-labelledby="team-h">
   <div class="container">
     <h2 id="team-h" class="eyebrow center">Team</h2>
-    <p class="center u-mt-10">Co-directors and advisors leading the consortium.</p>
-    <ul class="cali-people u-mt-15">
-      {%- for p in cali.leadership -%}
-      <li class="cali-person">
-        {%- if p.photo %}<img class="cali-person__photo" src="{{ p.photo | relative_url }}" alt="{{ p.name }}" loading="lazy">{% endif -%}
-        <span class="cali-person__name">{{ p.name }}</span>
-        <span class="cali-person__meta">{{ p.role }}<br>{{ p.dept }}</span>
-      </li>
-      {%- endfor -%}
-      {%- for p in cali.advisors -%}
-      <li class="cali-person">
-        {%- if p.photo %}<img class="cali-person__photo" src="{{ p.photo | relative_url }}" alt="{{ p.name }}" loading="lazy">{% endif -%}
-        <span class="cali-person__name">{{ p.name }}</span>
-        <span class="cali-person__meta">{{ p.dept }}</span>
+    <p class="center u-mt-10">Engineers, veterinarians, and biologists across various institutions.</p>
+    {%- for g in cali.team_groups -%}
+    {%- assign members = cali.team | where: "group", g -%}
+    {%- if members and members.size > 0 -%}
+    <h3 class="center cali-group-h u-mt-16">{{ g }}</h3>
+    {%- comment -%} One line under each heading, so a reader can tell an Advisor from
+       an Affiliate. Group names come from _data/cali.yml; their descriptions are
+       here. A group with no line below simply doesn't get one. {%- endcomment -%}
+    {%- case g -%}
+    {%- when "Advisors" -%}
+    <p class="center muted u-fs-sm cali-group-blurb">Helping us figure out how the consortium will work.</p>
+    {%- when "Affiliates" -%}
+    <p class="center muted u-fs-sm cali-group-blurb">Research partners who've used the space, or will be working with us.</p>
+    {%- endcase -%}
+    <ul class="cali-people{% if forloop.first %} cali-people--lead{% endif %} u-mt-11">
+      {%- for p in members -%}
+      {%- assign nm = p.name | remove: "Dr. " | split: " " -%}
+      {%- capture initials -%}{{ nm.first | slice: 0 }}{{ nm.last | slice: 0 }}{%- endcapture -%}
+      <li>
+        {%- if p.website -%}<a class="cali-person cali-person--link" href="{{ p.website }}" rel="noopener">{%- else -%}<div class="cali-person">{%- endif -%}
+          {%- if p.photo -%}
+          {%- comment -%} alt is empty on purpose: the name is right below, so
+             describing the photo again makes screen readers say it twice. {%- endcomment -%}
+          <img class="cali-person__photo" src="{{ p.photo | relative_url }}" alt="" loading="lazy">
+          {%- else -%}
+          <span class="cali-person__photo cali-person__photo--initials" aria-hidden="true">{{ initials }}</span>
+          {%- endif -%}
+          <span class="cali-person__name">{{ p.name }}</span>
+          {%- if p.discipline and p.discipline != "" -%}<span class="disc disc--{{ p.discipline | slugify }}">{{ p.discipline }}</span>{%- endif -%}
+          {%- if p.institution and p.institution != "" -%}<span class="cali-person__meta">{{ p.institution }}</span>{%- endif -%}
+        {%- if p.website -%}</a>{%- else -%}</div>{%- endif -%}
       </li>
       {%- endfor -%}
     </ul>
+    {%- endif -%}
+    {%- endfor -%}
 
     {%- if cali.partners -%}
-    <p class="center u-mt-16"><strong>In partnership with</strong></p>
+    <h3 class="center cali-group-h u-mt-16">In partnership with</h3>
     <div class="partner-orgs u-mt-11">
       {%- for org in cali.partners -%}
       <a class="partner-org" href="{{ org.url }}" rel="noopener">
@@ -213,16 +465,16 @@ description: "The Center for Animal Locomotion and Innovation (CALI) at UC Davis
 </section>
 
 <!-- 5. Using CALI: rates & access (the practical answers) -->
-<section class="section" id="access" aria-labelledby="access-h">
+<section class="section section--tint" id="access" aria-labelledby="access-h">
   <div class="container">
     <div class="cali-access">
       <div class="cali-access__intro">
         <h2 id="access-h">Using CALI</h2>
-        <p>CALI is a UC Davis recharge facility, open to UC Davis researchers and approved external
-        collaborators. Staff operate every session; rates are <strong>{{ rates.unit }}</strong> and set by user type.</p>
-        <p class="muted u-fs-sm">Effective {{ rates.effective }}, approved by {{ rates.approved_by }}; subject to change.
-        To confirm a category or request a quote, email
-        <a href="mailto:{{ cali.contact_email }}?subject={{ 'CALI access & rate enquiry' | uri_escape }}">{{ cali.contact_email }}</a>.</p>
+        <p>CALI is a UC Davis recharge facility. Staff operate every session; rates are <strong>{{ rates.unit }}</strong> and set by user type.</p>
+        <p class="u-mt-12">
+          <a class="btn btn--primary" href="mailto:{{ cali.contact_email }}?subject={{ 'CALI rate quote request' | uri_escape }}">Request a quote &rarr;</a>
+        </p>
+        <p class="muted u-fs-sm u-mt-12">Effective {{ rates.effective }}, approved by {{ rates.approved_by }}; subject to change.</p>
       </div>
       <div class="rate-scroll" role="region" aria-label="CALI recharge rate schedule" tabindex="0">
         <table class="rate-table">
@@ -239,8 +491,13 @@ description: "The Center for Animal Locomotion and Innovation (CALI) at UC Davis
             {%- for svc in rates.services -%}
             <tr>
               <th scope="row">{{ svc.name }}<span class="svc-desc">{{ svc.desc }}</span></th>
+              {%- comment -%} The tier label is repeated in each cell for the phone
+                 card layout, where the header row is visually hidden. It is
+                 aria-hidden because the <thead> is still in the DOM and still
+                 associates the column header — without this, a screen reader
+                 announces the tier twice. {%- endcomment -%}
               {%- for t in rates.tiers -%}
-              <td>${{ svc.rates[t.id] }}</td>
+              <td><span class="rate-tier" aria-hidden="true">{{ t.label }}</span>${{ svc.rates[t.id] }}</td>
               {%- endfor -%}
             </tr>
             {%- endfor -%}
@@ -251,16 +508,57 @@ description: "The Center for Animal Locomotion and Innovation (CALI) at UC Davis
   </div>
 </section>
 
-<!-- 6. Get involved (the ask) -->
-<section class="field-band cali-cta" id="get-involved" aria-labelledby="get-involved-h">
+<!-- 6. Get involved: concrete ways to take part -->
+<section class="section" id="get-involved" aria-labelledby="getinv-h">
+  <div class="container center">
+    <h2 id="getinv-h" class="eyebrow center">Get involved</h2>
+    <p class="lead prose u-mt-10 u-mi-auto">Work with CALI's flight hall and team. Three ways in:</p>
+    <div class="grid grid-3 cali-ways u-mt-16">
+      <div class="card">
+        <h3>Use the facility</h3>
+        <p>Book the flight hall and imaging systems as a recharge user.</p>
+        <p class="u-mt-11 u-mb0"><a class="btn btn--ghost btn--sm" href="#access">See rates &rarr;</a></p>
+      </div>
+      <div class="card">
+        <h3>Collaborate</h3>
+        <p>Co-develop a study or bring CALI into a grant proposal.</p>
+        <p class="u-mt-11 u-mb0"><a class="btn btn--ghost btn--sm" href="mailto:{{ cali.contact_email }}?subject={{ 'CALI research collaboration' | uri_escape }}">Start a conversation &rarr;</a></p>
+      </div>
+      <div class="card">
+        <h3>Become an affiliate</h3>
+        <p>Join us as a founding affiliate to help guide CALI's future.</p>
+        <p class="u-mt-11 u-mb0"><a class="btn btn--ghost btn--sm" href="mailto:{{ cali.contact_email }}?subject={{ 'Becoming a CALI founding affiliate' | uri_escape }}">Get in touch &rarr;</a></p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Closing invitation -->
+<section class="field-band cali-cta" aria-labelledby="join-h">
   <img class="field-band__img" src="{{ cali.team_photo | relative_url }}" alt="" aria-hidden="true" loading="lazy">
   <div class="field-band__overlay"></div>
   <div class="container field-band__caption">
-    <p class="eyebrow eyebrow--on-dark">{{ cali.join_heading }}</p>
-    <h2 class="field-band__line" id="get-involved-h">{{ cali.join_intro }}</h2>
-    <p class="u-mt-11">{{ cali.join_cta }}</p>
+    <p class="eyebrow eyebrow--on-dark">Join the Consortium</p>
+    <h2 class="field-band__line" id="join-h">We're building a transdisciplinary community for animal locomotion.</h2>
     <div class="hero__cta u-mt-12">
-      <a class="btn btn--light" href="mailto:{{ cali.contact_email }}?subject={{ 'Getting involved with CALI' | uri_escape }}">Contact Dr. Christina Harvey</a>
+      <a class="btn btn--light" href="mailto:{{ cali.contact_email }}?subject={{ 'Getting involved with CALI' | uri_escape }}">Email us</a>
     </div>
   </div>
 </section>
+
+{%- comment -%} CALI's own structured data. The site-wide schema.html describes
+   the BIRD Lab; this describes the center as its own entity, which is both
+   good SEO now and the machine-readable half of a future spin-out. {%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ResearchOrganization",
+  "name": "{{ cali.name }}",
+  "alternateName": "CALI",
+  "url": "{{ '/cali/' | absolute_url }}",
+  "description": "Harnessing animal locomotion to advance technology, health, and conservation.",
+  "parentOrganization": { "@type": "CollegeOrUniversity", "name": "{{ site.lab.institution }}" },
+  "funder": { "@type": "Organization", "name": "{{ cali.funding.name }}", "url": "{{ cali.funding.url }}" }
+}
+</script>
