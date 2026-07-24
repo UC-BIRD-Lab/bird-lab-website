@@ -1,4 +1,8 @@
 # Primary navigation. Order = display order. `cta: true` styles the pill button.
+# Contact lives in the footer (not the top bar). The logo also returns Home;
+# the explicit "Home" link makes that obvious to first-time visitors.
+- title: Home
+  url: /
 - title: Research
   url: /research/
 - title: People
@@ -7,14 +11,14 @@
   url: /publications/
 - title: Facilities
   url: /facilities/
+- title: CALI
+  url: /cali/
 - title: Lab Guide
   url: /lab-guide/
 - title: News
   url: /news/
 - title: Join
   url: /join/
-- title: Contact
-  url: /contact/
 - title: Member Portal
   url: /portal/
   cta: true

@@ -29,16 +29,9 @@ description: "Tour the BIRD Lab facilities: the CALI flight hall with motion cap
       {%- endif -%}
       <div class="hero__cta">
         {%- if featured.url %}<a class="btn btn--light" href="{{ featured.url }}">{{ featured.url_label | default: "Learn more" }}</a>{% endif -%}
-        <a class="btn btn--ghost btn--on-dark" href="{{ '/contact/' | relative_url }}">Visit or collaborate</a>
       </div>
     </div>
   </div>
-
-  {%- if featured.blurb -%}
-  <div class="facility-flagship-copy prose">
-    <p>{{ featured.blurb }}</p>
-  </div>
-  {%- endif -%}
 
   {%- if featured.specs -%}
   <div class="spec-grid">

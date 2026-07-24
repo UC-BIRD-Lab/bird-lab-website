@@ -1,0 +1,266 @@
+---
+layout: default
+title: CALI
+description: "The Center for Animal Locomotion and Innovation (CALI) at UC Davis: harnessing animal locomotion to advance technology, health, and conservation. A shared, staff-operated motion-capture and high-speed imaging facility — capabilities, recharge rates, and how to get involved."
+---
+
+{%- assign cali = site.data.cali -%}
+{%- assign rates = site.data.cali_rates -%}
+{%- assign gallery = site.data.cali_gallery -%}
+
+{%- comment -%}
+  CALI-specific styling, scoped under the body's `.page--cali` class and built on
+  the site's design tokens, so the section stays visually consistent and can move
+  with the /cali/ pages if CALI ever spins out to its own site.
+{%- endcomment -%}
+<style>
+  .page--cali .hero > .container { padding-block: clamp(3rem, 8vw, 5.5rem); max-width: 62rem; }
+  .page--cali .hero .lead { max-width: 40ch; }
+
+  .page--cali .cali-subnav { border-bottom: 1px solid var(--c-line); background: #fff; position: sticky; top: 0; z-index: 20; }
+  .page--cali .cali-subnav .container { display: flex; flex-wrap: wrap; gap: .4rem 1.4rem; padding-block: .8rem; }
+  .page--cali .cali-subnav a { font-size: var(--step--1); font-weight: 600; color: var(--c-blue-700); text-decoration: none; }
+  .page--cali .cali-subnav a:hover, .page--cali .cali-subnav a:focus-visible { text-decoration: underline; }
+
+  /* Focus-area cards: image on top, short verbatim line below. */
+  .page--cali .cali-focus { overflow: hidden; padding: 0; }
+  .page--cali .cali-focus__img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; display: block; background: var(--c-sky-2); }
+  .page--cali .cali-focus__body { padding: 1.1rem 1.2rem 1.3rem; }
+  .page--cali .cali-focus__body h3 { margin: 0 0 .35rem; font-size: var(--step-1); }
+  .page--cali .cali-statement { font-size: var(--step-2); line-height: 1.25; max-width: 34rem; margin-inline: auto; color: var(--c-navy); text-align: center; }
+  .page--cali .cali-mission { max-width: 60ch; margin-inline: auto; text-align: center; }
+
+  .page--cali .cali-cat { border-top: 3px solid var(--c-gold); }
+  .page--cali .cali-cat h3 { margin: .1rem 0 .2rem; }
+  .page--cali .cali-cat__label { font-size: var(--step--1); font-weight: 600; color: var(--c-blue-700); }
+
+  /* People cards with photos. */
+  .page--cali .cali-people { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.2rem; margin: 0; padding: 0; list-style: none; }
+  .page--cali .cali-person { display: flex; flex-direction: column; align-items: center; text-align: center; }
+  .page--cali .cali-person__photo { width: 104px; height: 104px; border-radius: 50%; object-fit: cover; margin-bottom: .6rem; background: var(--c-sky-2); }
+  .page--cali .cali-person__name { font-weight: 700; }
+  .page--cali .cali-person__meta { color: var(--c-muted); font-size: var(--step--1); }
+
+  /* Using CALI: words on the left, table pushed to the right. */
+  .page--cali .cali-access { display: grid; grid-template-columns: minmax(240px, 320px) 1fr; gap: clamp(1.5rem, 4vw, 3rem); align-items: start; }
+  .page--cali .cali-access__intro h2 { margin-top: 0; }
+  @media (max-width: 820px) { .page--cali .cali-access { grid-template-columns: 1fr; } }
+
+  /* Rate table: builds on the site's base table styles. */
+  .page--cali .rate-scroll { overflow-x: auto; }
+  .page--cali .rate-scroll:focus-visible { outline: 3px solid var(--c-blue-500); outline-offset: 2px; }
+  .page--cali .rate-table { min-width: 620px; margin-top: 0; }
+  .page--cali .rate-table caption { text-align: left; font-size: var(--step--1); color: var(--c-muted); padding-bottom: .6rem; }
+  .page--cali .rate-table thead th { white-space: nowrap; }
+  .page--cali .rate-table .svc-desc { display: block; font-weight: 400; font-size: var(--step--1); color: var(--c-muted); }
+  /* Right-align the money columns so decimals line up; balance column widths. */
+  .page--cali .rate-table thead th:not(:first-child),
+  .page--cali .rate-table td { text-align: right; width: 20%; }
+  .page--cali .rate-table td { font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .page--cali .rate-table th[scope="row"] { padding-right: 1.5rem; }
+
+  .page--cali .cali-visit__who { margin: 0; font-weight: 700; }
+  .page--cali .cali-visit__meta { color: var(--c-muted); font-size: var(--step--1); margin: .1rem 0 .5rem; }
+  .page--cali .cali-visit__what { margin: 0; }
+  .page--cali .cali-visit__img { width: 100%; height: auto; border-radius: var(--radius-sm); display: block; margin-bottom: .8rem; }
+
+  /* Get-involved call-to-action band: team photo backdrop, text kept readable. */
+  .page--cali .cali-cta .field-band__img { object-position: center 42%; }
+  .page--cali .cali-cta .field-band__line { max-width: 32ch; line-height: 1.28; }
+  .page--cali .cali-cta .field-band__overlay { background: linear-gradient(180deg, rgba(11,22,45,.55), rgba(11,22,45,.82)); }
+
+  /* Tidy 2x2 spec tiles inside the facility column. */
+  .page--cali .facility-body .spec-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* Center visiting-team cards instead of left-stranding a single one. */
+  .page--cali .cali-visitgrid { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--gap); }
+  .page--cali .cali-visitgrid > .card { flex: 0 1 380px; }
+
+  .page--cali .cali-join { text-align: center; }
+  .page--cali .cali-join .lead { max-width: 46ch; margin-inline: auto; }
+</style>
+
+<!-- Hero -->
+<section class="hero">
+  <img class="section-bg" src="{{ cali.hero_photo | relative_url }}" alt="" aria-hidden="true" loading="eager">
+  <div class="container">
+    <p class="eyebrow eyebrow--on-dark">Center for Animal Locomotion &amp; Innovation</p>
+    <h1>CALI</h1>
+    <p class="lead">{{ cali.mission_tagline }}</p>
+    <div class="hero__cta">
+      <a class="btn btn--light" href="#access">See rates &amp; access</a>
+      <a class="btn btn--ghost btn--on-dark" href="#get-involved">Get involved</a>
+    </div>
+  </div>
+</section>
+
+<!-- In-page navigation -->
+<nav class="cali-subnav" aria-label="On this page">
+  <div class="container">
+    <a href="#facility">The facility</a>
+    <a href="#focus">What we do</a>
+    <a href="#visitors">Visiting teams</a>
+    <a href="#team">Team</a>
+    <a href="#access">Using CALI</a>
+    <a href="#get-involved">Get involved</a>
+  </div>
+</nav>
+
+<!-- 1. The facility (lead with the capability) -->
+<section class="section" id="facility" aria-labelledby="facility-h">
+  <div class="container">
+    <div class="facility-grid">
+      <figure class="facility-photo">
+        <img src="{{ cali.facility_photo | relative_url }}" alt="{{ cali.facility_photo_alt }}" loading="lazy">
+        {%- if cali.funding -%}
+        <figcaption class="facility-photo__note">{{ cali.funding.note }} {{ cali.funding.name }}.</figcaption>
+        {%- endif -%}
+      </figure>
+      <div class="facility-body">
+        <h2 id="facility-h">A world-class flight hall</h2>
+        <p>{{ cali.facility_line }}</p>
+        <div class="spec-grid spec-grid--compact">
+          {%- for s in cali.specs -%}
+          <div class="spec"><span class="spec__value">{{ s.value }}</span><span class="spec__label">{{ s.label }}</span></div>
+          {%- endfor -%}
+        </div>
+        <ul class="facility-features u-mt-12">
+          {%- for c in cali.capabilities -%}<li>{{ c }}</li>{%- endfor -%}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. What we do (the vision, with images) -->
+<section class="section section--tint" id="focus" aria-labelledby="focus-h">
+  <div class="container">
+    <h2 id="focus-h" class="eyebrow center">What we do</h2>
+    <p class="cali-statement u-mt-12">{{ cali.statement }}</p>
+    <div class="grid grid-3 u-mt-16">
+      {%- for f in cali.focus_areas -%}
+      <div class="card cali-focus">
+        {%- if f.image -%}<img class="cali-focus__img" src="{{ f.image | relative_url }}" alt="{{ f.image_alt }}" loading="lazy">{%- endif -%}
+        <div class="cali-focus__body">
+          <h3>{{ f.title }}</h3>
+          <p>{{ f.text }}</p>
+        </div>
+      </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<!-- 3. Visiting teams (proof it's active) -->
+<section class="section" id="visitors" aria-labelledby="visitors-h">
+  <div class="container">
+    <h2 id="visitors-h" class="eyebrow center">Visiting teams</h2>
+    <p class="center u-mt-10">Teams already bringing their questions to CALI.</p>
+    {%- if gallery and gallery.size > 0 -%}
+    <div class="cali-visitgrid u-mt-15">
+      {%- for v in gallery -%}
+      <article class="card">
+        {%- if v.photo and v.photo_alt -%}
+        <img class="cali-visit__img" src="{{ v.photo | relative_url }}" alt="{{ v.photo_alt }}" loading="lazy">
+        {%- endif -%}
+        <p class="cali-visit__who">{{ v.who }}{% if v.external %} <span class="pill">Visiting team</span>{% endif %}</p>
+        <p class="cali-visit__meta">{% if v.org %}{{ v.org }}{% endif %}{% if v.org and v.when %} &middot; {% endif %}{% if v.when %}{{ v.when }}{% endif %}</p>
+        <p class="cali-visit__what">{{ v.what }}</p>
+      </article>
+      {%- endfor -%}
+    </div>
+    {%- else -%}
+    <p class="center muted">Our first visiting teams will appear here soon.</p>
+    {%- endif -%}
+  </div>
+</section>
+
+<!-- 4. Team & partners (credibility) -->
+<section class="section section--tint" id="team" aria-labelledby="team-h">
+  <div class="container">
+    <h2 id="team-h" class="eyebrow center">Team</h2>
+    <p class="center u-mt-10">Co-directors and advisors leading the consortium.</p>
+    <ul class="cali-people u-mt-15">
+      {%- for p in cali.leadership -%}
+      <li class="cali-person">
+        {%- if p.photo %}<img class="cali-person__photo" src="{{ p.photo | relative_url }}" alt="{{ p.name }}" loading="lazy">{% endif -%}
+        <span class="cali-person__name">{{ p.name }}</span>
+        <span class="cali-person__meta">{{ p.role }}<br>{{ p.dept }}</span>
+      </li>
+      {%- endfor -%}
+      {%- for p in cali.advisors -%}
+      <li class="cali-person">
+        {%- if p.photo %}<img class="cali-person__photo" src="{{ p.photo | relative_url }}" alt="{{ p.name }}" loading="lazy">{% endif -%}
+        <span class="cali-person__name">{{ p.name }}</span>
+        <span class="cali-person__meta">{{ p.dept }}</span>
+      </li>
+      {%- endfor -%}
+    </ul>
+
+    {%- if cali.partners -%}
+    <p class="center u-mt-16"><strong>In partnership with</strong></p>
+    <div class="partner-orgs u-mt-11">
+      {%- for org in cali.partners -%}
+      <a class="partner-org" href="{{ org.url }}" rel="noopener">
+        {%- if org.photo %}<img src="{{ org.photo | relative_url }}" alt="" loading="lazy">{% endif -%}
+        <span class="partner-org__name">{{ org.name }}</span>
+        {%- if org.sub %}<span class="partner-org__sub">{{ org.sub }}</span>{% endif -%}
+      </a>
+      {%- endfor -%}
+    </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<!-- 5. Using CALI: rates & access (the practical answers) -->
+<section class="section" id="access" aria-labelledby="access-h">
+  <div class="container">
+    <div class="cali-access">
+      <div class="cali-access__intro">
+        <h2 id="access-h">Using CALI</h2>
+        <p>CALI is a UC Davis recharge facility, open to UC Davis researchers and approved external
+        collaborators. Staff operate every session; rates are <strong>{{ rates.unit }}</strong> and set by user type.</p>
+        <p class="muted u-fs-sm">Effective {{ rates.effective }}, approved by {{ rates.approved_by }}; subject to change.
+        To confirm a category or request a quote, email
+        <a href="mailto:{{ cali.contact_email }}?subject={{ 'CALI access & rate enquiry' | uri_escape }}">{{ cali.contact_email }}</a>.</p>
+      </div>
+      <div class="rate-scroll" role="region" aria-label="CALI recharge rate schedule" tabindex="0">
+        <table class="rate-table">
+          <caption class="visually-hidden">CALI recharge rates, {{ rates.unit }}, effective {{ rates.effective }}.</caption>
+          <thead>
+            <tr>
+              <th scope="col">Service</th>
+              {%- for t in rates.tiers -%}
+              <th scope="col">{{ t.label }}</th>
+              {%- endfor -%}
+            </tr>
+          </thead>
+          <tbody>
+            {%- for svc in rates.services -%}
+            <tr>
+              <th scope="row">{{ svc.name }}<span class="svc-desc">{{ svc.desc }}</span></th>
+              {%- for t in rates.tiers -%}
+              <td>${{ svc.rates[t.id] }}</td>
+              {%- endfor -%}
+            </tr>
+            {%- endfor -%}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. Get involved (the ask) -->
+<section class="field-band cali-cta" id="get-involved" aria-labelledby="get-involved-h">
+  <img class="field-band__img" src="{{ cali.team_photo | relative_url }}" alt="" aria-hidden="true" loading="lazy">
+  <div class="field-band__overlay"></div>
+  <div class="container field-band__caption">
+    <p class="eyebrow eyebrow--on-dark">{{ cali.join_heading }}</p>
+    <h2 class="field-band__line" id="get-involved-h">{{ cali.join_intro }}</h2>
+    <p class="u-mt-11">{{ cali.join_cta }}</p>
+    <div class="hero__cta u-mt-12">
+      <a class="btn btn--light" href="mailto:{{ cali.contact_email }}?subject={{ 'Getting involved with CALI' | uri_escape }}">Contact Dr. Christina Harvey</a>
+    </div>
+  </div>
+</section>

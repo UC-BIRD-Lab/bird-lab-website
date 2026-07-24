@@ -1,0 +1,27 @@
+# ─────────────────────────────────────────────────────────────
+#  CALI visiting teams & past users
+#
+#  A friendly record of who has used CALI and what they came to study.
+#  Add newest first. Only `who`, `what`, and `when` are required.
+#
+#  Add a photo (optional): put an optimized JPG in
+#  assets/img/cali/ and set `photo:` + `photo_alt:` (alt text is
+#  REQUIRED whenever there is a photo, so screen-reader users get a
+#  description). No photo = a clean text card.
+#
+#    - who: Dr. Ada Lovelace & team
+#      org: UC Berkeley
+#      when: August 2026
+#      what: Studied hovering flight in hummingbirds.
+#      external: true            # optional; marks a visiting (non-UC-Davis) team
+#      photo: /assets/img/cali/lovelace-team.jpg   # optional
+#      photo_alt: The Lovelace team beside the flight hall cameras.  # required with a photo
+# ─────────────────────────────────────────────────────────────
+
+- who: Dr. Chris Clark & team
+  org: UC Riverside
+  when: July 2026
+  what: >-
+    Flew barn owls in the flight hall to study silent flight — CALI's first
+    external visiting team.
+  external: true

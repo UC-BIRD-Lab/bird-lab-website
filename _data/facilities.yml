@@ -14,6 +14,12 @@
 #  photo_alt           → alt text describing the photo for screen-reader users.
 #                        Say what the image shows (and note if it is a rendering,
 #                        not a photo). Falls back to "Inside {name}" if omitted.
+#
+#  NOTE ON CALI: the flagship block below is intentionally a short TEASER. CALI
+#  has its own section at /cali/, which owns the full equipment specs, services,
+#  recharge rates, team, and access details (single source of truth in
+#  _data/cali.yml). Keep this block brief and let the button link into /cali/ so
+#  the two pages never repeat — and never drift out of sync.
 # ─────────────────────────────────────────────────────────────
 
 - name: Center for Animal Locomotion and Innovation (CALI)
@@ -23,8 +29,8 @@
     translating it into robotics and rehabilitation metrics.
   partner: Co-directed with Dr. Michelle Hawkins
   location: California Raptor Center, UC Davis
-  url: https://sites.google.com/ucdavis.edu/cali/home
-  url_label: Visit the CALI consortium
+  url: /cali/
+  url_label: Explore the CALI facility
   photo: /assets/img/facilities/cali.jpg
   photo_alt: >-
     The CALI flight hall: a long bright room lined with white curtains
@@ -34,16 +40,11 @@
     name: DEVCOM Army Research Laboratory
     logo: /assets/img/partners/arl.png
     url: https://www.arl.army.mil/
-  specs:
-    - { value: "44", label: "OptiTrack Versa 120x motion capture cameras" }
-    - { value: "9", label: "high-speed Phantom cameras" }
-    - { value: "4", label: "attached bird mews" }
-    - { value: "2", label: "high-performance workstations" }
-  capabilities:
-    - Sub-millisecond, sub-millimeter tracking
-    - High-speed 3D reconstruction
-    - Controlled-environment flight hall
-    - Daylight-balanced lighting for live birds
+  blurb: >-
+    Our flagship facility is a staff-operated, shared research and training space
+    for high-resolution motion capture and high-speed imaging. The full CALI
+    section covers the equipment, services, recharge rates, and how to get
+    involved.
 
 - name: UC Davis Aeronautical Wind Tunnel
   tagline: >-

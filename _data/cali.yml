@@ -1,0 +1,112 @@
+# ─────────────────────────────────────────────────────────────
+#  CALI — Center for Animal Locomotion and Innovation
+#
+#  Self-contained data for the /cali/ section. This file plus
+#  cali_rates.yml, cali_gallery.yml, and cali.html are the movable
+#  "CALI unit": if CALI ever spins out to its own site as the
+#  consortium grows, these move together with minimal rework.
+#
+#  Wording is drawn from the CALI site, kept short and warm.
+#  Equipment `specs:` are the single source of truth (also shown as
+#  the Facilities teaser), so the headline numbers live in ONE place.
+#
+#  YAML rules: two-space indents, a space after every colon.
+# ─────────────────────────────────────────────────────────────
+
+name: Center for Animal Locomotion and Innovation
+
+# Hero line.
+mission_tagline: >-
+  Harnessing animal locomotion to advance technology, health, and conservation.
+
+# One-line statement (in Christina's words).
+statement: Animal locomotion links biomechanics, robotics, health, and conservation.
+
+# Three research focus areas (verbatim from the CALI home page).
+focus_areas:
+  - title: Measure & Model Locomotion
+    text: >-
+      Track and simulate locomotion to reveal how animals generate forces and
+      moments to control movement.
+    image: /assets/img/cali/differenced_image.gif
+    image_alt: A high-speed difference image tracing a bird's motion in the flight hall.
+  - title: Restore & Enhance Movement
+    text: >-
+      Translate insights into rehabilitation strategies and bio-inspired
+      assistive technologies.
+    image: /assets/img/cali/rehab_release.jpg
+    image_alt: A rehabilitated raptor at the moment of release.
+  - title: Predict & Protect in the Wild
+    text: >-
+      Use movement data to guide conservation decisions in changing environments.
+    image: /assets/img/cali/wild_raptor.jpg
+    image_alt: A wild raptor in flight against the sky.
+
+contact_email: harvey@ucdavis.edu
+
+# Images.
+hero_photo: /assets/img/cali/cali-peregrine.jpg
+facility_photo: /assets/img/cali/cali-cameras-upclose.jpg
+facility_photo_alt: >-
+  Close-up of the OptiTrack motion-capture cameras lining the CALI flight hall.
+# Backdrop for the "Join the Initiative" call-to-action band.
+team_photo: /assets/img/cali/cali-team.jpg
+
+# Funding credit (DURIP). Reused as the Facilities teaser badge.
+funding:
+  note: "DURIP support from:"
+  name: DEVCOM Army Research Laboratory
+  logo: /assets/img/partners/arl.png
+  url: https://www.arl.army.mil/
+
+# A shared, staff-operated facility. Staff run the cameras for every session.
+facility_line: >-
+  A shared, staff-operated flight hall for high-resolution motion capture and
+  high-speed imaging. Our staff run every session, so you can focus on your study.
+
+# Equipment — SINGLE SOURCE OF TRUTH (also the Facilities teaser).
+specs:
+  - { value: "44", label: "OptiTrack Versa 120x motion-capture cameras" }
+  - { value: "9", label: "high-speed Phantom cameras" }
+  - { value: "4", label: "attached bird mews" }
+  - { value: "2", label: "high-performance workstations" }
+
+capabilities:
+  - 3D motion capture + high-speed imaging
+  - Sub-millimeter tracking
+  - Controlled-environment hall
+  - Daylight-balanced lighting
+
+# Leadership & collaborators.
+leadership:
+  - name: Dr. Christina Harvey
+    role: Co-Director
+    dept: Mechanical & Aerospace Engineering
+    photo: /assets/img/people/christina-harvey.jpg
+  - name: Dr. Michelle Hawkins
+    role: Co-Director
+    dept: Medicine & Epidemiology
+    photo: /assets/img/people/michelle-hawkins.jpg
+
+advisors:
+  - { name: Dr. Hugues Beaufrère, dept: Medicine & Epidemiology, photo: /assets/img/cali/beaufrere.jpg }
+  - { name: Dr. Stacey Combes, dept: Neurobiology, Physiology & Behavior, photo: /assets/img/cali/combes.jpg }
+  - { name: Dr. Sergey Stavisky, dept: Neurological Surgery, photo: /assets/img/cali/stavisky.jpg }
+
+# Collaborating organizations. Logos live in assets/img/partners/.
+partners:
+  - name: California Hawking Club
+    photo: /assets/img/partners/chc.jpg
+    url: https://www.calhawkingclub.org
+  - name: California Raptor Center
+    photo: /assets/img/partners/crc.jpg
+    url: https://crc.vetmed.ucdavis.edu
+
+# Get involved (from the CALI "Join the Initiative" page).
+join_heading: Join the Initiative
+join_intro: >-
+  We're building a campus-wide community around animal locomotion and
+  locomotion-inspired solutions.
+join_cta: >-
+  Join as a Founding Affiliate, propose a working group, or share a grant idea.
+  We're looking forward to working with you.

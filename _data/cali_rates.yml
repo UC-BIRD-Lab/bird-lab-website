@@ -1,0 +1,54 @@
+# ─────────────────────────────────────────────────────────────
+#  CALI recharge rates — public rate schedule
+#
+#  Presented in the standard UC Davis core-facility convention: one
+#  accessible table, three tiers by user affiliation (UC internal →
+#  non-UC / non-profit → private industry), an effective date and
+#  approving office. See other UC Davis cores (e.g. CMGI, AMCaT).
+#
+#  ── HOW TO UPDATE WHEN NEW RATES ARE APPROVED ──
+#  This is the ONLY file you edit for a rate change:
+#    1. Update `effective:` and (if needed) `approved_by:`.
+#    2. Change the three amounts on each service line.
+#  Type each amount EXACTLY as it should appear, in quotes, with the
+#  comma and cents but no dollar sign — e.g. "1,377.04" (the page adds
+#  the "$"). Keeping the display value here means the printed rate is
+#  always exactly what was approved, with no rounding or formatting
+#  surprises.
+#
+#  ── HOW THE TIERS MAP TO THE APPROVED RATE SCHEDULE ──
+#    internal  = Base Rate 1  (internal recharge, includes subsidies)
+#    academic  = External Rate 3
+#    industry  = External Rate 4
+#  Confirm the tier wording fits your customers.
+# ─────────────────────────────────────────────────────────────
+
+effective: "July 1, 2026"
+approved_by: "UC Davis Finance — Costing Policy & Analysis (CPA)"
+unit: "per day"
+
+# Column definitions (order = display order, left to right after the
+# service column).
+tiers:
+  - id: internal
+    label: "UC Davis & UC"
+  - id: academic
+    label: "Non-UC & non-profit"
+  - id: industry
+    label: "Industry"
+
+# One row per service. `fte` is the assigned personnel level (context, not
+# shown in the public table). Each rate is the exact display string.
+services:
+  - name: CALI-Basic
+    desc: Non-animal studies
+    fte: "0.40"
+    rates: { internal: "908.94", academic: "1,377.04", industry: "1,513.38" }
+  - name: CALI-Animal
+    desc: Live-animal, trainer-supported
+    fte: "0.70"
+    rates: { internal: "2,620.05", academic: "3,969.37", industry: "4,362.38" }
+  - name: CALI-Owner
+    desc: Owner-provided animals (MOU)
+    fte: "0.40"
+    rates: { internal: "924.71", academic: "1,400.93", industry: "1,539.64" }
