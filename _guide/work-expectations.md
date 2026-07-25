@@ -65,7 +65,7 @@ agreements. Ask anytime about your current and future support.
 |---|---|
 | Undergraduate | Not guaranteed; possible after a one-quarter trial when funds allow |
 | MSc | Not guaranteed; depends on available support |
-| PhD | Paid (varible split between GSR, TA, and fellowships) |
+| PhD | Paid (variable split between GSR, TA, and fellowships) |
 | Postdoc | Paid |
 
 Appointments and rates follow UC Davis policy and union agreements. This table

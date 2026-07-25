@@ -14,12 +14,8 @@ description: "Tour the BIRD Lab facilities: the CALI flight hall with motion cap
     {%- comment -%} photo_alt (facilities.yml) describes the image; falls back to "Inside {name}". {%- endcomment -%}
     {%- assign flagship_alt = "Inside " | append: featured.name -%}
     <img class="facility-flagship__img" src="{{ featured.photo | relative_url }}" alt="{{ featured.photo_alt | default: flagship_alt }}" loading="lazy">
-    {%- if featured.funding -%}
-    <a class="facility-funder" href="{{ featured.funding.url }}" rel="noopener">
-      <span class="facility-funder__note">{{ featured.funding.note }}</span>
-      <img src="{{ featured.funding.logo | relative_url }}" alt="{{ featured.funding.name }}">
-    </a>
-    {%- endif -%}
+    {%- assign fund = featured.funding | default: site.data[featured.funding_key].funding -%}
+    {% include funder-badge.html fund=fund %}
     <div class="facility-flagship__body">
       <p class="eyebrow facility-flagship__kicker">Flagship facility</p>
       <h2 id="flagship-h" class="facility-flagship__title">{{ featured.name }}</h2>

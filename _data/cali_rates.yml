@@ -37,18 +37,14 @@ tiers:
   - id: industry
     label: "Industry"
 
-# One row per service. `fte` is the assigned personnel level (context, not
-# shown in the public table). Each rate is the exact display string.
+# One row per service. Each rate is the exact display string.
 services:
   - name: CALI-Basic
     desc: Non-animal studies
-    fte: "0.40"
     rates: { internal: "908.94", academic: "1,377.04", industry: "1,513.38" }
   - name: CALI-Animal
     desc: Live-animal, trainer-supported
-    fte: "0.70"
     rates: { internal: "2,620.05", academic: "3,969.37", industry: "4,362.38" }
   - name: CALI-Owner
     desc: Owner-provided animals (MOU)
-    fte: "0.40"
     rates: { internal: "924.71", academic: "1,400.93", industry: "1,539.64" }

@@ -77,9 +77,7 @@ send time doesn't mean she expects a late-night reply.
 {: .channel-table}
 
 <div class="callout callout--stop" markdown="1">
-In an **emergency**, call Christina directly. If she doesn't pick up, send a text
-with the details. (Members have her number; contact info is in the
-[member portal]({{ '/portal/' | relative_url }}).)
+In an **emergency**, call 911 (if appropriate) and Christina directly. If she doesn't pick up, please leave a message or send a text with the details. (Members have her number; contact info is in the [member portal]({{ '/portal/' | relative_url }}).)
 </div>
 
 

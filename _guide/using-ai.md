@@ -13,14 +13,14 @@ The use of artificial intelligence (AI), in particular Large Language Models (LL
 The following rules and guidelines surrounding the use of AI in our research were developed by the lab. Tools are named as practical suggestions, not endorsements; equivalent alternatives are fine, and any tool that stores lab data should follow UC Davis data-security guidance.
 
 <div class="callout callout--stop" markdown="1">
-**Protect Sensitive Information:** Do not use GenAI tools with sensitive systems and data. Do not provide any text or other inputs to large language models or generative AI that might contain sensitive data, including identified or de-identified student information, publications/grants in review, personnel data, personnel conduct information, patient data, confidential financial data, confidential research information, or otherwise sensitive information. 
+**Protect Sensitive Information:** Do not use GenAI tools with sensitive systems and data. Do not provide any text or other inputs to large language models or generative AI that might contain sensitive data, including identified or de-identified student information, other's publications/grants that are not public or owned by you, personnel data, personnel conduct information, patient data, confidential financial data, confidential research information, or otherwise sensitive information. 
 </div>
 
 ## Appropriate uses
 
 - Code writing and debugging (e.g., with GitHub Copilot).
 - Improving plots in R or Python.
-- Editing an existing draft's spelling, grammar, logical flow, and sentence structure (see [First drafts]({{ '/lab-guide/first-drafts/' | relative_url }})).
+- Editing an existing draft's spelling, grammar, logical flow, and sentence structure (see [First drafts]({{ '/lab-guide/first-drafts/' | relative_url }})). This can include abstracts, papers, and your own grants/fellowships. You must always have explicit permission if you are not the owner.
 - Brainstorming ideas (as long as you do not limit this to only AI brainstorming).
 
 ## Inappropriate uses

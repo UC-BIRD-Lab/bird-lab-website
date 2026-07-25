@@ -58,7 +58,7 @@ Don’t underestimate the importance of being confident and believing in yoursel
 ## General tips
 
 <aside class="marginnote marginnote--warn" markdown="1">
-Never use AI to draft scientific text, it'll add em dashes everywhere and the risk that it plagiarizes others is way too high to be worth it.
+Never use AI for first drafts, it'll add em dashes everywhere and the risk that it plagiarizes others is way too high to be worth it.
 </aside>
 
 - **Check the application details early.** Requirements are often hidden in the
@@ -71,5 +71,5 @@ Never use AI to draft scientific text, it'll add em dashes everywhere and the ri
   - **Results**
   - **Discussion**
 - **Get multiple reviewers.** Review panels are made of many people usually. You can't make everyone happy, but you can try! Have several people read and edit your application, and give them a specific list of what the granting agency is looking for.
-- **Use AI appropriately.** Christina likes to use AI tools as pre-reviewers. They can check for typos and grammar, and ensure that your logical flow is sound and paragraphs are clear and understandable. See [Using AI]({{ '/lab-guide/using-ai/' | relative_url }}) for the lab's full policy.
+- **Use AI appropriately.** Rather than having AI draft prose, Christina prefers to use AI tools as "pre-reviewers". She uses prompts to request checks for typos and grammar, and ensure that the logical flow is sound and paragraphs are clear and understandable. See [Using AI]({{ '/lab-guide/using-ai/' | relative_url }}) for the lab's full policy.
 

@@ -10,7 +10,9 @@ image:
 ---
 
 {%- comment -%}
- _data/cali.yml holds lists and reused values (people,
+  THE WORDS ON THIS PAGE ARE IN THIS FILE, not in a data file. To reword
+  anything, edit the paragraph in the markup below and commit — that is the
+  whole process. _data/cali.yml holds only lists and reused values (people,
   equipment, partners, image paths, the contact address), and
   _data/cali_rates.yml holds the approved rate schedule.
 {%- endcomment -%}
@@ -233,6 +235,9 @@ image:
   <img class="section-bg" src="{{ cali.hero_photo | relative_url }}" alt="" aria-hidden="true" loading="eager">
   <div class="container">
     <p class="eyebrow eyebrow--on-dark">Center for Animal Locomotion &amp; Innovation</p>
+    {%- comment -%} The eyebrow above already spells the name out, and the
+       page title carries it for search and link previews, so the h1 stays
+       short rather than repeating it for screen-reader users. {%- endcomment -%}
     <h1>CALI</h1>
     <p class="lead">Harnessing animal locomotion to advance technology, health, and conservation.</p>
     <div class="hero__cta">
@@ -259,14 +264,19 @@ image:
 <section class="section section--tint" id="about" aria-labelledby="about-h">
   <div class="container center">
     <h2 id="about-h" class="eyebrow center">The consortium</h2>
-    <p class="lead prose u-mt-10 u-mi-auto">CALI is a transdisciplinary research consortium and shared facility at UC&nbsp;Davis. Founded in 2026, we bring together engineering, veterinary medicine, and biology to study how animals move. </p>
-      <p class="muted u-fs-sm u-mt-12">We're in our founding phase: expanding our research network, identifying shared priorities, and building teams for collaborative proposals.</p>
-    
+    <p class="lead prose u-mt-10 u-mi-auto">CALI is a transdisciplinary research consortium and shared
+    facility at UC&nbsp;Davis. Founded in 2026, we bring together engineering, veterinary medicine, and
+    biology to study how animals move. We're growing into a multi-institution network.</p>
+
+    {%- comment -%} Keep this honest and current. Being visibly early is the reason
+       someone gets in touch — a reader who sees a shape still forming has a reason
+       to email; a reader who sees a finished institution has none. Rewrite it as the
+       consortium takes shape, and retire it once membership means something specific. {%- endcomment -%}
+    <p class="cali-founding u-mt-12">We're in our founding phase — expanding our research network,
+    identifying shared priorities, and building teams for collaborative proposals, training, and a new
+    peer mentoring program.</p>
+
     <p class="cali-statement u-mt-16">Animal locomotion links biomechanics, robotics, health, and conservation.</p>
-    
-
-
-
 
     {%- comment -%} Three research focus areas. Each card is plain markup, so the
        heading, the sentence, and the picture's alt text are all edited here.
@@ -319,17 +329,17 @@ image:
       <figure class="facility-photo">
         <img src="{{ cali.facility_photo | relative_url }}"
              alt="Close-up of the OptiTrack motion-capture cameras lining the CALI flight hall." loading="lazy">
-        {%- if cali.funding -%}
-        <a class="facility-funder" href="{{ cali.funding.url }}" rel="noopener">
-          <span class="facility-funder__note">{{ cali.funding.note }}</span>
-          <img src="{{ cali.funding.logo | relative_url }}" alt="{{ cali.funding.name }}">
-        </a>
-        {%- endif -%}
+        {% include funder-badge.html fund=cali.funding %}
       </figure>
       <div class="facility-body">
         <h2 id="facility-h">Locomotion-focused imaging facility</h2>
         <p>A shared, staff-operated flight hall for high-resolution motion capture and high-speed
-        imaging </p>
+        imaging, at the California Raptor Center on the UC&nbsp;Davis campus.</p>
+        <div class="spec-grid spec-grid--compact">
+          {%- for s in cali.specs -%}
+          <div class="spec"><span class="spec__value">{{ s.value }}</span><span class="spec__label">{{ s.label }}</span></div>
+          {%- endfor -%}
+        </div>
         <ul class="facility-features u-mt-12">
           {%- for c in cali.capabilities -%}<li>{{ c }}</li>{%- endfor -%}
         </ul>
@@ -513,16 +523,20 @@ image:
       </div>
       <div class="card">
         <h3>Collaborate</h3>
-        <p>Co-develop a study or bring CALI into a grant proposal.</p>
+        <p>Co-develop a study, start a working group, or bring CALI into a grant proposal.</p>
         <p class="u-mt-11 u-mb0"><a class="btn btn--ghost btn--sm" href="mailto:{{ cali.contact_email }}?subject={{ 'CALI research collaboration' | uri_escape }}">Start a conversation &rarr;</a></p>
       </div>
       <div class="card">
-        <h3>Become an affiliate</h3>
-        <p>Join us as a founding affiliate to help guide CALI's future.</p>
+        <h3>Become a founding affiliate</h3>
+        <p>We're still working out how the consortium runs. Founding affiliates help decide.</p>
         <p class="u-mt-11 u-mb0"><a class="btn btn--ghost btn--sm" href="mailto:{{ cali.contact_email }}?subject={{ 'Becoming a CALI founding affiliate' | uri_escape }}">Get in touch &rarr;</a></p>
       </div>
     </div>
 
+    <p class="muted u-mt-16 cali-onward">CALI is part of the <a href="{{ '/' | relative_url }}">BIRD Lab</a> at UC&nbsp;Davis ·
+    <a href="{{ '/facilities/' | relative_url }}">Our other facilities</a> ·
+    <a href="{{ '/research/' | relative_url }}">Research</a> ·
+    <a href="{{ '/contact/' | relative_url }}">Contact</a></p>
   </div>
 </section>
 

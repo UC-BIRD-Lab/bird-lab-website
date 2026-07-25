@@ -1,0 +1,8 @@
+{%- comment -%} Funding credit badge, shown in a corner of a facility photo.
+   Usage: {% include funder-badge.html fund=<object with note, name, logo, url> %} {%- endcomment -%}
+{%- if include.fund -%}
+<a class="facility-funder" href="{{ include.fund.url }}" rel="noopener">
+  <span class="facility-funder__note">{{ include.fund.note }}</span>
+  <img src="{{ include.fund.logo | relative_url }}" alt="{{ include.fund.name }}">
+</a>
+{%- endif -%}

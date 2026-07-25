@@ -56,7 +56,7 @@ and goals this year.
 ## The workflow
 
 <aside class="marginnote" markdown="1">
-**Logging time away.** Record conference days in the Vacation Tracker with the conference name as the reason. They don't count against your vacation allowance unless you extend for personal time. See [Time off & vacation]({{ '/lab-guide/time-off-vacation/' | relative_url }}) for how to log it.
+**Logging time away.** Report days away with the conference name as the reason. Conference/travel days don't count against formal leave. A fun approach is often to extend with formal leave before or after a conference for some vacation time. See [Time off & vacation]({{ '/lab-guide/time-off-vacation/' | relative_url }}) for how to log both the conference days and any added vacation time.
 </aside>
 
 1. **Plan and get approval** *(before submitting or booking).* Send Christina the conference name, dates, and location; what you're submitting (poster/talk/paper); a rough budget; and whether you'll apply for travel awards (recommended). **Don't book flights or hotels until you get a written "yes."**

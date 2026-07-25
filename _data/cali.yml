@@ -30,12 +30,10 @@ facility_photo: /assets/img/cali/cali-cameras-upclose.jpg
 # Backdrop for the closing call-to-action band.
 team_photo: /assets/img/cali/cali-team.jpg
 
-# Funding credit (DURIP), shown as a badge on the facility photo.
-# NOTE: _data/facilities.yml carries its own copy of this for the
-# Facilities-page teaser — if the wording or the amount changes,
-# change it in both places.
+# Funding credit badge. The Facilities page reads this same block via
+# `funding_key: cali` in _data/facilities.yml — edit it here only.
 funding:
-  note: "$2.9M DURIP from:"
+  note: "DURIP support from:"
   name: DEVCOM Army Research Laboratory
   logo: /assets/img/partners/arl.png
   url: https://www.arl.army.mil/
@@ -65,20 +63,16 @@ capabilities:
 # `also:` is optional — a second line under the same row label.
 equipment:
   - label: Motion capture
-    value: "44 × OptiTrack VersaX 120 — 12.6 MP (4096 × 3072), 300 fps"
+    value: "44 × OptiTrack VersaX 120 — 12.6 MP (4096 × 3072), 300 Hz, ±0.1 mm 3D accuracy"
   - label: Reference video
-    value: "4 × OptiTrack Prime Color — 2 MP (1920 × 1080), 250 fps"
+    value: "4 × OptiTrack Prime Color — 1920 × 1080, 250 fps"
   - label: High-speed imaging
-    value: "8 × Phantom VEO 440L — 4 MP (2560 × 1600), 1,100 fps at full resolution"
-    also: "1 × Phantom VEO-E 340L — 4 MP (2560 × 1600), 800 fps at full resolution"
-  - label: Lighting
-    value: "14 × GSVITEC MultiLED MX — 50,000 lumen, controlled by GX8"
+    value: "8 × Phantom VEO 440L — 4 MP (2560 × 1600), up to 1,100 fps at full resolution"
+    also: "1 × Phantom VEO-E 340L — 4 MP (2560 × 1600), up to 800 fps at full resolution"
   - label: Reconstruction
     value: "2 × custom high-performance workstations"
   - label: Animal housing
-    value: "4 attached mews"
-  - label: Hall
-    value: "70ft × 20ft hall, with security and monitoring systems"
+    value: "4 attached mews, with security and monitoring systems"
   - label: Site
     value: "California Raptor Center, UC Davis"
 
