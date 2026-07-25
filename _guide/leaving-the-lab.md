@@ -57,8 +57,7 @@ to pass on what you wish you'd known.
 
 ## Graduate students: thesis & handoff
 
-- **File your thesis or dissertation** (see
-  [Dissertation & graduation]({{ '/lab-guide/dissertation-graduation/' | relative_url }})).
+- **File your thesis or dissertation.**
 - **Use the lab's LaTeX thesis template** (in the member portal), and confirm it
   still meets UC Davis's current formatting requirements.
 - **Settle authorship** and who will carry any unfinished manuscripts forward (see
