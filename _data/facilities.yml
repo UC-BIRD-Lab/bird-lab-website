@@ -8,14 +8,35 @@
 #                        flagship photo ({ note, name, logo, url }).
 #  funding_key:        → use another data file's `funding:` block instead of
 #                        repeating it here, e.g. `cali` reads _data/cali.yml.
-#  specs:              → big-number tiles (the headline capabilities). Each is
-#                        { value, label }. Keep `value` short (a number, size,
-#                        speed, or amount); the `label` says what it is.
-#  capabilities:       → remaining qualitative features, shown as chips.
-#  blurb               → optional; kept minimal. Prefer specs + chips over prose.
+#  capabilities:       → short plain-language chips: what a visitor can DO here.
+#  equipment:          → the detail table under the chips: what it is done WITH.
+#                        Each row is { label, value }, plus an optional `also:`
+#                        for a second line under the same label. Omit the whole
+#                        key and no table renders.
+#
+#                        When a row covers two DISTINCT things — a second
+#                        instrument, a different measurement — put the second on
+#                        `also:` rather than joining them with a semicolon. Save
+#                        commas for facts about the same thing (one camera's
+#                        resolution and frame rate, one balance's load limits).
+#  specs:              → big-number tiles. Available, but deliberately UNUSED on
+#                        this page: the tiles restated whatever the chips and the
+#                        table already said, and three layers of the same facts
+#                        read as padding. Reach for them only if a facility has a
+#                        headline number that genuinely belongs nowhere else.
+#  blurb               → optional; one or two sentences at most.
 #  photo_alt           → alt text describing the photo for screen-reader users.
 #                        Say what the image shows (and note if it is a rendering,
 #                        not a photo). Falls back to "Inside {name}" if omitted.
+#
+#  THE HOUSE PATTERN (matches the CALI facility section, and every facility here
+#  should follow it): chips for the capabilities in words, then an equipment
+#  table for the numbers. A chip never repeats a figure from the table. Label
+#  rows by what a visitor can MEASURE rather than by what hardware exists, and
+#  leave out anything a facility of that kind would obviously have. Anyone who
+#  needs more than the table detail is meant to email us — the contact note at
+#  the foot of the page is the release valve, which is what lets these blocks
+#  stay short.
 #
 #  NOTE ON CALI: the flagship block below is intentionally a short TEASER. CALI
 #  has its own section at /cali/, which owns the full equipment specs, services,
@@ -46,7 +67,8 @@
 
 - name: UC Davis Aeronautical Wind Tunnel
   tagline: >-
-    Precision aerodynamic testing of airfoils, morphing wings, and small UAVs.
+    Low-turbulence aerodynamic testing of airfoils, morphing wings,
+    and bird-scale models.
   partner: Co-directed with Dr. Camli Badrya
   location: UC Davis Bainer Hall
   photo: /assets/img/facilities/wind-tunnel.jpg
@@ -54,16 +76,35 @@
   photo_alt: >-
     Rendering of the wind tunnel: a blue intake narrowing into a silver
     test section, then a tube to the fan.
-  specs:
-    - { value: "165 mph", label: "maximum test-section speed" }
-    - { value: "< 0.1%", label: "free-stream turbulence" }
-    - { value: "48 × 33.6 in", label: "closed test section" }
   capabilities:
-    - Six-component force & moment balance
-    - 2D-2C Particle Image Velocimetry (PIV) system
-    - Two axis traverse system
-    - Bambu Lab 3D printer
-
+    - Force, moment & surface-pressure measurement
+    - Particle Image Velocimetry
+    - Gust & dynamic-inflow testing
+    - Bird-scale speeds and force/torque measurements
+  equipment:
+    - label: Test section
+      value: "4 × 2.8 × 12 ft (W × H × L)"
+      also: "5-165 mph (2.2–73.8 m/s)"
+    - label: Flow quality
+      value: "Turbulence below 0.1%"
+      also: "Angularity within ±0.2°, velocity uniformity ±0.75% across the interior 80%"
+    - label: Forces
+      value: "AEROLAB external balance — lift ±300 lb, drag ±50 lb, side force ±150 lb, moments to ±70 ft·lb"
+      also: "ATI Mini40 six-axis — Fx, Fy ±80 N, Fz ±240 N, torques ±4 N·m"
+    - label: Model support
+      value: "Two 36-in floor turntables with 3 DOF model positioning, α ±35°, β ±45°"
+    - label: Pressures
+      value: "32-channel PSI ESP-32HD scanner, 625 scans/s, expandable to 256 channels"
+    - label: PIV 2D-2C
+      value: "Laser: Dual-cavity Nd:YAG laser — 200 mJ/pulse, 532 nm, 15 Hz"
+      also: "Camera: FlowSense FCX 5M-260 — 5 MP at 262 fps"
+    - label: Wake & drag
+      value: "Automated two-axis traverse"
+      also: "Momentum-deficit drag to 1–2% uncertainty"
+    - label: Unsteady
+      value: "Programmable speed ramps to 2.1 m/s² for gust-response and dynamic-inflow testing"
+    - label: Models
+      value: "In-house carbon-fiber-capable 3-D printing"
 
 - name: Specimen-focused Motion Capture Room
   tagline: >-
@@ -74,9 +115,12 @@
   photo_alt: >-
     Rendering of the specimen room: five motion capture cameras on
     tripods encircling a small round table with a laptop.
-  specs:
-    - { value: "5", label: "OptiTrack Flex13 motion capture cameras" }
-    - { value: "1", label: "Dedicated specimen freezer" }
   capabilities:
     - Specimen range-of-motion capture
     - Morphological measurement
+  equipment:
+    - label: Motion capture
+      value: "5 × OptiTrack Flex 13 — 1.3 MP (1280 × 1024), 120 fps, sub-0.5 mm tracking"
+    - label: Specimen storage
+      value: "21 cu ft glass-door freezer, manual defrost"
+      also: "Standard refrigerator"

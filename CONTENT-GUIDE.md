@@ -320,8 +320,29 @@ long paragraphs.
   capabilities:                      # short qualitative chips
     - Sub-millisecond, sub-millimeter tracking
     - Daylight-balanced lighting for live birds
+  equipment:                         # optional detail table under the chips
+    - label: Motion capture
+      value: "44 × OptiTrack VersaX 120 — 12.6 MP, 300 fps"
+      also: "Second line under the same label (optional)"
 ```
 
+- **`equipment:`**: the detail table under the chips. Each row is a `label` (the
+  category) and a `value` (the detail), plus an optional `also:` for a second
+  line under the same label. Leave it off and no table renders. Use the vendors'
+  own spelling for model names so they are searchable.
+- **The house pattern is chips, then a table** — the same shape as the CALI
+  facility section. Chips say what a visitor can *do* here, in words; the table
+  says what it is done *with*, in numbers. A chip never repeats a figure from
+  the table. Keep rows to one line, label them by what a visitor can *measure*
+  rather than by what hardware exists, and leave out anything a facility of that
+  kind would obviously have.
+- **`specs:` (the big-number tiles) are deliberately unused on this page.** They
+  restated whatever the chips and the table already said, and three layers of
+  the same facts read as padding. Reach for them only if a facility has a
+  headline number that genuinely belongs nowhere else.
+- **Short is the point.** Anyone who needs more than the table gives is meant to
+  email us; the contact note at the foot of the page is what lets these blocks
+  stay brief.
 - **`featured:`**: set on exactly one facility. Its `photo` becomes the flagship band; a real photo works best (not the AI renderings).
 - **`photo_note:`**: a small italic caption under the image (used to mark the wind-tunnel/specimen renderings as AI-based). Leave it off for real photos.
 - **`funding:`**: shows a small "thanks to…" logo badge in the top corner of the flagship photo. Logos live in `assets/img/partners/`.
