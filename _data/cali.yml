@@ -63,16 +63,20 @@ capabilities:
 # `also:` is optional — a second line under the same row label.
 equipment:
   - label: Motion capture
-    value: "44 × OptiTrack VersaX 120 — 12.6 MP (4096 × 3072), 300 Hz, ±0.1 mm 3D accuracy"
+    value: "44 × OptiTrack VersaX 120 — 12.6 MP (4096 × 3072), 300 fps"
   - label: Reference video
-    value: "4 × OptiTrack Prime Color — 1920 × 1080, 250 fps"
+    value: "4 × OptiTrack Prime Color — 2 MP (1920 × 1080), 250 fps"
   - label: High-speed imaging
-    value: "8 × Phantom VEO 440L — 4 MP (2560 × 1600), up to 1,100 fps at full resolution"
-    also: "1 × Phantom VEO-E 340L — 4 MP (2560 × 1600), up to 800 fps at full resolution"
+    value: "8 × Phantom VEO 440L — 4 MP (2560 × 1600), 1,100 fps at full resolution"
+    also: "1 × Phantom VEO-E 340L — 4 MP (2560 × 1600), 800 fps at full resolution"
+  - label: Lighting
+    value: "14 × GSVITEC MultiLED MX — 50,000 lumen, controlled by GX8"
   - label: Reconstruction
     value: "2 × custom high-performance workstations"
   - label: Animal housing
-    value: "4 attached mews, with security and monitoring systems"
+    value: "4 attached mews"
+  - label: Hall
+    value: "70ft × 20ft hall, with security and monitoring systems"
   - label: Site
     value: "California Raptor Center, UC Davis"
 
