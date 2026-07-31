@@ -3,6 +3,7 @@ title: Paper revisions
 category: Writing & Dissemination
 order: 5
 summary: How to respond to reviewer comments, and what to do once a paper is published.
+description: "How to respond to reviewers constructively, and what to do once the paper is published."
 keywords: [revisions, reviewer comments, response to reviewers, resubmission, rebuttal]
 icon: "✏️"
 reviewed: 2026-07-05

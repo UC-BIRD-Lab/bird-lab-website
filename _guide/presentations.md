@@ -3,6 +3,7 @@ title: Presentations
 category: Writing & Dissemination
 order: 7
 summary: "Designing and delivering a clear, audience-appropriate talk: signal-to-noise, slide design, delivery, timing, practice, and Q&A."
+description: "Planning a talk for the audience in front of you, building slides that carry it, and handling the questions after."
 keywords: [presentation, talk, slides, public speaking, conference talk, delivery, Q and A]
 icon: "🎤"
 reviewed: 2026-07-11

@@ -3,6 +3,7 @@ title: Literature reviews
 category: Research Workflow
 order: 1
 summary: How to read and organize the literature without getting overwhelmed.
+description: "How to read and organise the literature, and the one habit we ask everyone to keep."
 keywords: [literature, papers, reading, references, lit review, sources, Zotero, citations]
 icon: "📚"
 reviewed: 2026-07-05

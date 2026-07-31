@@ -3,6 +3,7 @@ title: Postdocs
 category: Getting Started
 order: 3
 summary: A first-weeks checklist for incoming postdoctoral scholars.
+description: "What to arrange in your first weeks as a postdoc, and what the lab expects after that."
 keywords: [onboarding, new postdoc, first weeks, orientation, getting started, checklist]
 icon: "🔬"
 reviewed: 2026-07-05

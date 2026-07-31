@@ -3,6 +3,7 @@ title: Travel
 category: Working in the Lab
 order: 7
 summary: Policy for booking and reimbursing travel for official lab purposes.
+description: "Booking flights and hotels for lab travel, registering the trip, and claiming reimbursement."
 keywords: [travel, flights, hotel, reimbursement, booking, trip, per diem, T and E card]
 icon: "✈️"
 reviewed: 2026-07-03

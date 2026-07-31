@@ -3,6 +3,7 @@ title: Before you submit
 category: Writing & Dissemination
 order: 1
 summary: "One pre-flight checklist to run before anything leaves the lab: papers, abstracts, posters, talks, grants, and travel."
+description: "A final check to run before a paper, abstract, poster, talk, or grant leaves the lab."
 keywords: [checklist, submit, submission, deadline, approval, pre-flight, before submitting, review]
 icon: "🚀"
 reviewed: 2026-07-06

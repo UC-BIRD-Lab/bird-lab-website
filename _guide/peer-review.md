@@ -3,6 +3,7 @@ title: Peer review
 category: Writing & Dissemination
 order: 9
 summary: How to peer-review a paper critically, constructively, and ethically.
+description: "How to review someone else's paper carefully, constructively, and on time."
 keywords: [peer review, reviewing, referee, journal review, critique]
 icon: "🧐"
 reviewed: 2026-07-05

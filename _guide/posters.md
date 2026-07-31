@@ -3,6 +3,7 @@ title: Posters
 category: Writing & Dissemination
 order: 6
 summary: "Designing a clear, audience-appropriate conference poster: layout grids, declarative titles, legible text, figures, color, and printing."
+description: "How to design a poster people stop for, with annotated examples from the lab's own."
 keywords: [poster, conference poster, printing, layout, design]
 icon: "🖼️"
 reviewed: 2026-07-05
@@ -110,17 +111,17 @@ key takeaways, and the summary or comparative figure that carries the story, and
 honest notes about titles set too small or a section that carried too many words.
 
 <figure class="figure" markdown="1">
-![Annotated conference poster: "Gliding gulls manipulate their elbow to modulate aerodynamic trade-offs."](/assets/img/guide/poster-example-gulls.jpg)
+![Annotated conference poster: "Gliding gulls manipulate their elbow to modulate aerodynamic trade-offs."]({{ '/assets/img/guide/poster-example-gulls.jpg' | relative_url }})
 <figcaption>Images pull people in and declarative headers state each result, but the title may be set too small and one panel risks overwhelming the reader.</figcaption>
 </figure>
 
 <figure class="figure" markdown="1">
-![Annotated conference poster: "Static longitudinal stability of four avian species' wings."](/assets/img/guide/poster-example-four-species.jpg)
+![Annotated conference poster: "Static longitudinal stability of four avian species' wings."]({{ '/assets/img/guide/poster-example-four-species.jpg' | relative_url }})
 <figcaption>The key takeaways are highlighted up front, though the text is near the upper limit of what a poster should carry.</figcaption>
 </figure>
 
 <figure class="figure" markdown="1">
-![Annotated conference poster: "Longitudinal dynamic stability of a gliding gull."](/assets/img/guide/poster-example-dynamic-stability.jpg)
+![Annotated conference poster: "Longitudinal dynamic stability of a gliding gull."]({{ '/assets/img/guide/poster-example-dynamic-stability.jpg' | relative_url }})
 <figcaption>Light shading separates the sections cleanly and logos sit along the bottom, but the all-caps headers are harder to read than sentence case.</figcaption>
 </figure>
 

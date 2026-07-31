@@ -3,6 +3,7 @@ title: Conferences
 category: Professional Development
 order: 2
 summary: Eligibility, funding, choosing a conference, and the full approval-to-share-back workflow.
+description: "Who is eligible, how travel is funded, how to choose a meeting, and the steps from approval to sharing what you learned."
 keywords: [conference, travel, abstract, networking, presenting, funding]
 icon: "🎟️"
 reviewed: 2026-07-05

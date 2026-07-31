@@ -3,6 +3,7 @@ title: Research hypotheses
 category: Research Workflow
 order: 2
 summary: How to write clear, testable hypotheses for your thesis or project.
+description: "What separates a testable hypothesis from a research question, worked through with examples."
 keywords: [hypothesis, research question, prediction, testable, aims, hypotheses]
 icon: "💡"
 reviewed: 2026-07-11

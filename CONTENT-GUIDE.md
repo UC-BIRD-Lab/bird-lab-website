@@ -370,11 +370,23 @@ title: My new page
 category: Working in the Lab
 order: 4
 summary: One sentence shown on the Lab Guide hub.
+description: One sentence shown in link previews (Slack, email, search results).
 reviewed: 2026-07-03   # date you last checked the page (see "Keeping pages fresh")
 ---
 
 Your content here. Use ## for section headings.
 ```
+**Always write a `description:`.** It is the sentence people see when the page
+is shared in Slack or email, or found in a search result, and it is often the
+only thing they read before deciding whether to click. If you leave it out,
+Jekyll falls back to whatever the first block of the page happens to be, which
+is frequently a margin note or a jump-links bar and reads as nonsense out of
+context. Keep it to one plain sentence (roughly 100-160 characters), describe
+what the page actually helps someone do, and write it about the lab rather than
+about a named person so it stays accurate as people come and go. `summary:` and
+`description:` are separate on purpose: `summary` is the lead paragraph a reader
+sees once they are already on the page, `description` has to stand alone.
+
 `category` must be one of the categories listed in `guide_order:` in
 `_config.yml`: that list is the single source of truth for the category names
 and their sidebar order. `order` sets the position within that category. To add a

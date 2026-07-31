@@ -3,6 +3,7 @@ title: Data management
 category: Research Workflow
 order: 4
 summary: Data hygiene, backups, file naming, and version control expectations.
+description: "Naming files, backing them up, and archiving data so the work can be rerun years from now."
 keywords: [data management, backup, file naming, storage, Box, organization, data hygiene]
 icon: "🗄️"
 reviewed: 2026-07-05

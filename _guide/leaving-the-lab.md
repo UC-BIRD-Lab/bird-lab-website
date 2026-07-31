@@ -3,6 +3,7 @@ title: Leaving the lab
 category: Professional Development
 order: 7
 summary: The steps to wrap up and hand off your work when you graduate or move on.
+description: "How to hand off data, equipment, and unfinished work when you graduate or move on."
 keywords: [offboarding, leaving, graduation, departure, handover, exit, alumni]
 icon: "👋"
 reviewed: 2026-07-05

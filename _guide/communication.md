@@ -3,6 +3,7 @@ title: Communication
 category: Communication & Culture
 order: 1
 summary: How to reach Christina and each other, plus giving and receiving feedback and resolving conflict.
+description: "Which channel to use, how quickly to expect a reply, and how we give feedback and work through disagreement."
 keywords: [communication, email, Slack, feedback, conflict, channels, contacting Christina]
 icon: "💬"
 reviewed: 2026-07-05

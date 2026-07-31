@@ -3,6 +3,7 @@ title: Data analysis
 category: Research Workflow
 order: 6
 summary: "A staged approach to analysis: clean, explore, quantify, and report with uncertainty."
+description: "Cleaning, exploring, and quantifying your results, and reporting uncertainty honestly."
 keywords: [analysis, statistics, R, uncertainty, error, plots, quantify, stats, wind tunnel, GUM, autocorrelation, error propagation, effective sample size, Zieba, Type A, Type B, bootstrap, static margin]
 icon: "📊"
 reviewed: 2026-07-11

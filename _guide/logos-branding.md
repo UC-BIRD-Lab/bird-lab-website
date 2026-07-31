@@ -3,6 +3,7 @@ title: Logos & branding
 category: Writing & Dissemination
 order: 8
 summary: The lab logos, the colour palette, where the master files live, and how it all sits within UC Davis branding.
+description: "The lab's logos and colours, where the master files live, and how they sit alongside UC Davis branding."
 keywords: [logo, brand, branding, UC Davis logo, colors, color palette, slides, identity, assets, wordmark]
 icon: "🏷️"
 reviewed: 2026-07-05

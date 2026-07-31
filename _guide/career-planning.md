@@ -3,6 +3,7 @@ title: Career planning & job search
 category: Professional Development
 order: 4
 summary: Planning your path across academia, industry, or government, and running the job search when it's time.
+description: "Academia, industry, and government are all supported paths here. How to prepare for the one you want, and how to run the search."
 keywords: [career, job search, industry, academia, postdoc, CV, resume, cover letter, interview, career planning]
 icon: "🧭"
 reviewed: 2026-07-05

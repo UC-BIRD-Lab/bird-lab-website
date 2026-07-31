@@ -3,6 +3,7 @@ title: Undergraduates
 category: Getting Started
 order: 1
 summary: A first-quarter checklist for new undergraduate researchers joining the lab.
+description: "What the first quarter in the lab looks like, from building access to your first research goals."
 keywords: [onboarding, new undergraduate, first quarter, orientation, getting started, checklist]
 icon: "🌱"
 reviewed: 2026-07-05

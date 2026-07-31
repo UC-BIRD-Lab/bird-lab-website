@@ -3,6 +3,7 @@ title: Professional presence
 category: Professional Development
 order: 3
 summary: The profiles that make your work findable and correctly attributed to you, for both academic and industry paths.
+description: "The few profiles worth keeping current so your work is findable and correctly attributed to you."
 keywords: [ORCID, Google Scholar, ResearchGate, GitHub, LinkedIn, portfolio, online presence, CV, visibility, discoverability]
 icon: "🌐"
 reviewed: 2026-07-05

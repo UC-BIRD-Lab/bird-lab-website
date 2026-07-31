@@ -3,6 +3,7 @@ title: Graduate students
 category: Getting Started
 order: 2
 summary: A first-year checklist for new graduate students, from onboarding to the preliminary exam.
+description: "What the first year looks like, from setting up accounts and access to sitting the preliminary exam."
 keywords: [onboarding, new graduate student, first year, orientation, getting started, checklist, PhD]
 icon: "🎓"
 reviewed: 2026-07-05

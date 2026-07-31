@@ -3,6 +3,7 @@ title: Figures
 category: Writing & Dissemination
 order: 4
 summary: The lab's figure standards, a self-diagnosis checklist, and tools and palettes.
+description: "Why a figure has to stand on its own, how to tell when yours doesn't, and the tools and palettes we use."
 keywords: [figures, plots, graphics, illustrator, ggplot, visualization, charts, color]
 icon: "🎨"
 reviewed: 2026-07-11

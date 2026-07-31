@@ -3,6 +3,7 @@ title: Using AI
 category: Research Workflow
 order: 7
 summary: The lab's rules and guidelines for using generative AI responsibly in research.
+description: "Where generative AI is appropriate in our research, where it isn't, and what must be disclosed."
 keywords: [AI, ChatGPT, LLM, generative AI, machine learning, copilot, Claude, Gemini]
 icon: "🤖"
 reviewed: 2026-07-05

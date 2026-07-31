@@ -3,6 +3,7 @@ title: Code
 category: Research Workflow
 order: 5
 summary: Version control, coding style, documentation, and dependency management.
+description: "How we use GitHub, what we expect of documentation and style, and how to keep dependencies from breaking later."
 keywords: [coding, software, programming, git, version control, python, R, repository, github]
 icon: "💻"
 reviewed: 2026-07-05

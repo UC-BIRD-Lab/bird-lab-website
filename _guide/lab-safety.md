@@ -3,6 +3,7 @@ title: Lab safety
 category: Working in the Lab
 order: 2
 summary: Lab safety culture, PPE, required trainings, and facility-specific requirements.
+description: "Required safety training, protective equipment, access levels, and incident reporting."
 keywords: [safety, PPE, training, hazard, lab safety, injury, inspection, protective equipment, safety hub, onboarding, SOP, compliance]
 icon: "🦺"
 reviewed: 2026-07-03

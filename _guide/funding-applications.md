@@ -3,6 +3,7 @@ title: Funding applications
 category: Professional Development
 order: 1
 summary: How to approach fellowships and grants, what reviewers may look for and how to write a strong proposal.
+description: "Fellowships worth applying for, and what reviewers tend to reward when they read a proposal."
 keywords: [funding, fellowships, grants, scholarships, proposals, stipend]
 icon: "💰"
 reviewed: 2026-07-05

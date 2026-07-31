@@ -3,6 +3,7 @@ title: Animal care & ethics
 category: Working in the Lab
 order: 3
 summary: How we work with animals as research partners, with respect, care, and honesty.
+description: "The standards we hold ourselves to when working with live birds and with preserved specimens, and the commitments behind them."
 keywords: [animal welfare, ethics, birds, specimens, humane, care, research ethics, IACUC]
 icon: "🕊️"
 reviewed: 2026-07-03

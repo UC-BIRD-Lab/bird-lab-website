@@ -3,6 +3,7 @@ title: Time off & vacation
 category: Working in the Lab
 order: 4
 summary: How to request leave, sick days, and notice guidelines. Rest is encouraged.
+description: "How to request leave and handle sick days. Rest is encouraged."
 keywords: [PTO, leave, time off, sick days, holiday, staycation, days off, out of office, rest, illness, sick]
 icon: "🌴"
 reviewed: 2026-07-23

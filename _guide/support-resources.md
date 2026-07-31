@@ -3,6 +3,7 @@ title: Support resources
 category: Working in the Lab
 order: 5
 summary: Confidential support and reporting resources at UC Davis for every lab member.
+description: "Confidential support and reporting options at UC Davis, for yourself or for someone you're concerned about."
 keywords: [mental health, counseling, wellbeing, help, confidential, reporting, crisis, support]
 icon: "🫂"
 reviewed: 2026-07-03

@@ -3,6 +3,7 @@ title: Journal club
 category: Communication & Culture
 order: 4
 summary: A regular space to discuss the meeting point of biology and engineering in flight.
+description: "A standing meeting to discuss papers where biology and aircraft design meet, and how it runs."
 keywords: [journal club, paper discussion, reading group]
 icon: "📖"
 reviewed: 2026-07-05

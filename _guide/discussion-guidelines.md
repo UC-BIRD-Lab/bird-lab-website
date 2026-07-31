@@ -3,6 +3,7 @@ title: Discussion guidelines
 category: Communication & Culture
 order: 2
 summary: How we hold productive, supportive discussions and keep the lab respectful and welcoming.
+description: "What we expect of each other in lab discussions, so anyone can ask a question or disagree without it becoming personal."
 keywords: [discussion, welcoming, respect, norms, ground rules]
 icon: "🤝"
 reviewed: 2026-07-05

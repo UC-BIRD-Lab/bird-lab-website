@@ -3,6 +3,7 @@ title: Goal setting
 category: Research Workflow
 order: 3
 summary: Plan at two horizons, a long-term development plan and quarterly SMART goals, and turn them into steps you actually finish.
+description: "A long-term development plan for where you're headed, and quarterly goals concrete enough to finish."
 keywords: [goals, SMART goals, quarterly goals, IDP, individual development plan, planning, objectives, milestones, career]
 icon: "🎯"
 reviewed: 2026-07-05

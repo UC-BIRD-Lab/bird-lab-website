@@ -3,6 +3,7 @@ title: Work expectations
 category: Working in the Lab
 order: 1
 summary: Work hours, flexibility, compensation, and how we manage projects and deadlines.
+description: "Hours, flexibility, pay, and how we plan projects so deadlines don't become emergencies."
 keywords: [hours, workload, compensation, pay, salary, deadlines, expectations, full-time, part-time, project management]
 icon: "💼"
 reviewed: 2026-07-21

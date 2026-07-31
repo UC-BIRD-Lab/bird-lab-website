@@ -3,6 +3,7 @@ title: Authorship policy
 category: Writing & Dissemination
 order: 3
 summary: Who earns authorship, how order is decided, and how we agree it up front.
+description: "Who qualifies as an author, how order is decided, and why the conversation happens before the writing starts."
 keywords: [authorship, author order, ICMJE, corresponding author, credit, contribution, first author]
 icon: "🖋️"
 reviewed: 2026-07-17

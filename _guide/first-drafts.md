@@ -3,6 +3,7 @@ title: First drafts
 category: Writing & Dissemination
 order: 2
 summary: Core principles, checklists, and authorship policy for manuscripts, preprints, and conference papers.
+description: "How to write a paper whose argument stands on its own, and what has to be true before you circulate a draft."
 keywords: [writing, manuscript, paper, draft, authorship, preprint, publishing]
 icon: "✍️"
 reviewed: 2026-07-17

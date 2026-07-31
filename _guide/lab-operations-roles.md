@@ -3,6 +3,7 @@ title: Lab operations roles
 category: Working in the Lab
 order: 6
 summary: How we share lightweight ownership of the operational tasks that keep the lab running.
+description: "The rotating responsibilities that keep the lab running, and what each one asks of you."
 keywords: [roles, responsibilities, operations, chores, ownership, duties, lab jobs]
 icon: "🧰"
 reviewed: 2026-07-03

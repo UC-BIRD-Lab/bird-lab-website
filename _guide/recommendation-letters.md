@@ -3,6 +3,7 @@ title: Recommendation letters
 category: Professional Development
 order: 5
 summary: How to request a recommendation letter from Christina so she can write you a strong one.
+description: "How to request a recommendation letter, and what to send with the request so it can be a strong one."
 keywords: [recommendation, reference letter, rec letter, LOR]
 icon: "✉️"
 reviewed: 2026-07-05
