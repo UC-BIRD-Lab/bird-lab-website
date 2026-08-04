@@ -23,7 +23,7 @@ requirements:
     note: UC Laboratory Safety Fundamentals can be completed in lieu. 
   - name: "PPE: Eye and Face Protection (LMS)"
     who: Everyone
-    note: Already completed UC Laboratory Safety Fundamentals? Upload that certificate in place of the PPE-Specific Training certificate.
+    note: Already completed UC Laboratory Safety Fundamentals or Hazard Communication? Upload that certificate in place of the PPE-Specific Training certificate.
   - name: Review all relevant SOPs and Safety Data Sheets (SDS).
     who: Everyone
     note: Complete relevant Slack Workflow to acknowledge completion
