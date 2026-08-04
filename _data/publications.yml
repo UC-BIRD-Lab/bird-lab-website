@@ -220,19 +220,3 @@
   date: "2019-01-01"
   type: journal
   doi: "https://doi.org/10.1098/rsif.2018.0641"
-
-- title: "Wing/store flutter: An active adaptive control application"
-  authors: "C. Harvey"
-  venue: "IEEE Transactions on Automatic Control"
-  year: 1981
-  date: "1981-01-01"
-  type: journal
-  doi: "https://doi.org/10.1109/jacc.1981.4232355"
-
-- title: "Multivariable design of robust controllers"
-  authors: "C. Harvey, J. E. Wall"
-  venue: "IEEE Transactions on Automatic Control"
-  year: 1981
-  date: "1981-01-01"
-  type: journal
-  doi: "https://doi.org/10.1109/jacc.1981.4232273"
