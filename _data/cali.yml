@@ -134,6 +134,12 @@ team:
     discipline: Neuroscience
     photo: /assets/img/cali/stavisky.jpg
     website: https://neuroprosthetics.science
+  - name: Dr. Wenzhong Yan
+    group: Advisors
+    institution: UC Davis
+    discipline: Engineering
+    photo: /assets/img/cali/yan.jpg
+    website: https://wzyan24.wixsite.com/wenzhong-yan
   - name: Dr. Kevin Haughn
     group: Affiliates
     institution: Rose-Hulman Institute of Technology
