@@ -1,5 +1,5 @@
 # ────────────────────────────────────────────────────────────
-#  PUBLICATIONS, journal articles and DOI-bearing conference papers
+#  PUBLICATIONS: journal articles and DOI-bearing conference papers
 #
 #  THIS FILE IS AUTO-MANAGED by scripts/update_publications.py.
 #  The "Update publications" GitHub Action opens a pull request when new works
@@ -8,10 +8,23 @@
 #  Anything with a DOI syncs here; conference talks and posters WITHOUT a DOI
 #  live in publications_manual.yml.
 #
-#  Fields: title, authors, venue, year, date (YYYY-MM-DD), type, doi (URL)
+#  Fields: title, authors, venue, year, date (YYYY-MM-DD), type, doi (URL),
+#          oa_url (a free open-access copy, when OpenAlex knows one)
 #  `date` is used to sort within a year (the page still groups by `year`).
+#  `oa_url` is auto-filled when a paper is open access and left blank otherwise;
+#  to point at a specific copy (e.g. your ResearchGate preprint), set `preprint:`
+#  or `pdf:` for that DOI in _data/pub_links.yml — those win over this.
 #  Keep newest first: this file is written sorted by date, newest first.
 # ────────────────────────────────────────────────────────────
+
+- title: "Comparative Biologists and Aerospace Engineers: Important allies to explore the secrets of natural flight"
+  authors: "J. Wong, V. B. Baliga, C. Harvey"
+  venue: "Integrative and Comparative Biology"
+  year: 2026
+  date: "2026-07-24"
+  type: journal
+  doi: "https://doi.org/10.1093/icb/icag123"
+  oa_url: "https://doi.org/10.1093/icb/icag123"
 
 - title: "Tuning for feather loss: wing–tail kinematic adjustments of a moulting red-tailed hawk during perching flight"
   authors: "A. Martinez, M. G. Hawkins, C. Harvey"
@@ -20,6 +33,7 @@
   date: "2026-06-17"
   type: journal
   doi: "https://doi.org/10.1098/rsif.2025.1082"
+  oa_url: "https://doi.org/10.1098/rsif.2025.1082"
 
 - title: "Experimental Study of Dynamic Stall of Porous Avian-Inspired Airfoils"
   authors: "F. A. Jackson, J. Hrynuk, C. Harvey"
@@ -44,6 +58,7 @@
   date: "2026-04-13"
   type: journal
   doi: "https://doi.org/10.1038/s44172-026-00641-4"
+  oa_url: "https://www.nature.com/articles/s44172-026-00641-4.pdf"
 
 - title: "Stability shifts in gliding flight: hawks morph from an unstable to stable state when navigating a gap"
   authors: "K. Weston, H. Zhu, G. K. Taylor, C. Harvey"
@@ -52,6 +67,7 @@
   date: "2026-03-04"
   type: journal
   doi: "https://doi.org/10.1098/rsif.2025.0868"
+  oa_url: "https://royalsocietypublishing.org/rsif/article-pdf/doi/10.1098/rsif.2025.0868/6118935/rsif.2025.0868.pdf"
 
 - title: "Dynamic Morphospaces for Animal Locomotion: A Case Study in Bird Flight"
   authors: "L. A. France, C. Harvey, G. K. Taylor"
@@ -60,6 +76,7 @@
   date: "2026-01-01"
   type: journal
   doi: "https://doi.org/10.1093/icb/icag058"
+  oa_url: "https://doi.org/10.1093/icb/icag058"
 
 - title: "Longer wing bones in warmer climates suggest a role of thermoregulation in bird wing evolution"
   authors: "B. C. Weeks, C. Harvey, J. A. Tobias, C. Sheard, Z. Zhou, D. F. Fouhey"
@@ -68,6 +85,7 @@
   date: "2025-04-01"
   type: journal
   doi: "https://doi.org/10.1111/geb.70033"
+  oa_url: "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1111/geb.70033"
 
 - title: "Distributed Pressure Sensing for Analyzing Aerodynamic Characteristics in Avian-Like Formation Flight"
   authors: "H. Zhu, K. Bordner, R. J. Bomphrey, J. R. Usherwood, K. Haughn, C. Harvey (also NCAS and GRC poster)"
@@ -92,6 +110,7 @@
   date: "2024-04-01"
   type: journal
   doi: "https://doi.org/10.1098/rsif.2023.0734"
+  oa_url: "https://royalsocietypublishing.org/doi/pdf/10.1098/rsif.2023.0734"
 
 - title: "Deep learning reduces sensor requirements for gust rejection on a small uncrewed aerial vehicle morphing wing"
   authors: "K. P. T. Haughn, C. Harvey, D. J. Inman"
@@ -100,6 +119,7 @@
   date: "2024-03-21"
   type: journal
   doi: "https://doi.org/10.1038/s44172-024-00201-8"
+  oa_url: "https://www.nature.com/articles/s44172-024-00201-8.pdf"
 
 - title: "Analysis of bird wing airfoil aerodynamic efficiency"
   authors: "R. K. Glenn, L. B. Dahlke, A. Engilis, C. Harvey"
@@ -116,6 +136,7 @@
   date: "2023-04-17"
   type: journal
   doi: "https://doi.org/10.1242/jeb.245409"
+  oa_url: "https://journals.biologists.com/jeb/article-pdf/226/Suppl_1/jeb245409/2792553/jeb245409.pdf"
 
 - title: "A longitudinal linear parameter-varying model of a gliding gull during wing morphing"
   authors: "C. Harvey"
@@ -132,6 +153,7 @@
   date: "2022-09-06"
   type: journal
   doi: "https://doi.org/10.1073/pnas.2204847119"
+  oa_url: "https://www.ncbi.nlm.nih.gov/pmc/articles/9477410"
 
 - title: "A review of avian-inspired morphing for UAV flight control"
   authors: "C. Harvey, L. L. Gamble, C. R. Bolander, D. F. Hunsaker, J. J. Joo, D. J. Inman"
@@ -148,6 +170,7 @@
   date: "2022-03-09"
   type: journal
   doi: "https://doi.org/10.1038/s41586-022-04477-8"
+  oa_url: "https://www.nature.com/articles/s41586-022-04477-8.pdf"
 
 - title: "Gull-inspired joint-driven wing morphing allows adaptive longitudinal flight control"
   authors: "C. Harvey, V. B. Baliga, C. D. Goates, D. F. Hunsaker, D. J. Inman"
@@ -156,6 +179,7 @@
   date: "2021-06-01"
   type: journal
   doi: "https://doi.org/10.1098/rsif.2021.0132"
+  oa_url: "https://royalsocietypublishing.org/doi/pdf/10.1098/rsif.2021.0132"
 
 - title: "Aerodynamic efficiency of gliding birds vs. comparable UAVs: a review"
   authors: "C. Harvey, D. J. Inman"
