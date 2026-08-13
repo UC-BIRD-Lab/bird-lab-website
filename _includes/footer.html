@@ -25,6 +25,9 @@
       <ul>
         <li><a href="{{ '/join/' | relative_url }}">Join the lab</a></li>
         <li><a href="{{ '/contact/' | relative_url }}">Contact</a></li>
+        {%- comment -%} Internal-only: current members' Notion workspace. Kept out
+           of the primary nav so that bar stays public-facing. {%- endcomment -%}
+        <li><a href="{{ '/portal/' | relative_url }}">Member Portal</a></li>
         <li><a href="{{ site.lab.scholar }}">Google Scholar</a></li>
         <li><a href="https://orcid.org/{{ site.lab.orcid }}">ORCID</a></li>
         {%- if site.lab.github_org %}<li><a href="{{ site.lab.github_org }}" rel="noopener">GitHub</a></li>{% endif -%}

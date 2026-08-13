@@ -113,7 +113,7 @@ description: "The BIRD Lab at UC Davis uncovers fundamental principles of avian 
 <section class="section">
   <div class="container center">
     <h2 class="eyebrow">Bio-informed, not just bio-inspired</h2>
-    <p class="lead prose u-mt-10 u-mi-auto">Engineers are often inspired by biological systems; however, literature often conflates inspiration with scientific evidence. For every project we report the difference.</p>
+    <p class="lead prose u-mt-10 u-mi-auto">Our framework separates biological source, level of mimicry and strength of evidence, making bio-inspired claims easier to evaluate and compare.</p>
     <p class="u-mt-12"><a class="btn btn--ghost" href="{{ '/research/#framework' | relative_url }}">See how we report it &rarr;</a></p>
   </div>
 </section>
@@ -260,7 +260,7 @@ description: "The BIRD Lab at UC Davis uncovers fundamental principles of avian 
               <span class="news-month__label">{{ m.name }}</span>
               <ul class="news-events">
                 {%- for e in m.items -%}
-                <li>{% include update-icon.html type=e.type %}<span class="ev-text">{% include link-names.html text=e.text %}</span></li>
+                <li>{% include update-icon.html type=e.type %}<span class="ev-text">{% include link-names.html text=e.text link=e.link link_text=e.link_text %}</span></li>
                 {%- endfor -%}
               </ul>
             </li>

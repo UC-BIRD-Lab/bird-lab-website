@@ -9,9 +9,15 @@
 #  would double-link. For nicknames/short forms ("Dr. Harvey", "Adam Zhu"), add an
 #  `aliases:` line to that person in people.yml.
 #
-#  For OTHER links (papers, events, external sites) you may add plain HTML, use
-#  single quotes inside so the YAML stays valid:
-#      <a href='https://example.com'>the workshop</a>
+#  TO LINK OUT (a paper, an event, a page on this site) add `link:` plus
+#  `link_text:`, where link_text is words copied from `text:` — those words
+#  become the link:
+#      - { date: "June 2026", type: talk, text: "Kaleb Bordner presented at the AIAA AVIATION Forum.",
+#          link: "https://www.aiaa.org/aviation", link_text: "the AIAA AVIATION Forum" }
+#  Use a path (/join/) for our own pages. Never use a person's name as link_text
+#  (names are already linked); if link_text is missing or isn't found in the
+#  sentence, a small "Details ↗" link is appended instead. Raw <a href='…'> in
+#  `text:` still works but is easy to get wrong — prefer link/link_text.
 # ─────────────────────────────────────────────────────────────
 
 - year: 2026

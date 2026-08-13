@@ -12,7 +12,7 @@ reviewed: 2026-07-05
 <aside class="marginnote" markdown="1">
 A strong literature review feeds straight into your
 [research hypotheses]({{ '/lab-guide/research-hypotheses/' | relative_url }}) and the
-introduction of your [first draft]({{ '/lab-guide/first-drafts/' | relative_url }}).
+introduction of your [paper]({{ '/lab-guide/writing-papers/' | relative_url }}).
 </aside>
 
 Catching up on decades of research at the start of a project can feel

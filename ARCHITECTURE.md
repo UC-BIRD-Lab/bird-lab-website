@@ -74,6 +74,11 @@ private Notion **Member Portal**, which the site links to but does not host. No
 authentication is implemented on the site itself, so nothing added to `_data/` or
 `_guide/` should assume privacy.
 
+The portal is reached from the footer, not the primary nav: the top bar is
+reserved for public destinations and ends in a single call to action (**Join**).
+Current members can bookmark the Notion workspace; a first-time visitor should
+never spend attention on a door they can't open.
+
 ---
 
 ## Content structure (where it lives, not what it says)

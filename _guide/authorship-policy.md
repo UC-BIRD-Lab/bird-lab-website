@@ -11,7 +11,7 @@ reviewed: 2026-07-17
 
 <aside class="marginnote" markdown="1">
 This is the authorship companion to
-[First drafts]({{ '/lab-guide/first-drafts/' | relative_url }}). Settle authorship
+[Writing papers]({{ '/lab-guide/writing-papers/' | relative_url }}). Settle authorship
 early; it is far easier to agree before the work than to renegotiate at submission.
 </aside>
 

@@ -28,11 +28,11 @@ the rush before a deadline.
 - Every number traces to its source in an annotated script.
 {: .checklist}
 
-The first four are the [lab non-negotiables]({{ '/lab-guide/first-drafts/' | relative_url }}#non-negotiables).
+These come from the [lab non-negotiables]({{ '/lab-guide/writing-papers/' | relative_url }}#non-negotiables).
 
 ## Journal paper or preprint
 
-- Run the [pre-send checklist]({{ '/lab-guide/first-drafts/' | relative_url }}#before-you-send-a-draft-checklist).
+- Run the [pre-send checklist]({{ '/lab-guide/writing-papers/' | relative_url }}#before-you-send-a-draft-checklist).
 - Run the [figure checklist]({{ '/lab-guide/figures/' | relative_url }}#figure-checklist) on every figure.
 - Authorship agreed and written down; see [Authorship policy]({{ '/lab-guide/authorship-policy/' | relative_url }}).
 - Data and code ready to go public on publication; see [Data management]({{ '/lab-guide/data-management/' | relative_url }}).

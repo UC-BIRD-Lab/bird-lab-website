@@ -110,14 +110,7 @@ expected.
 - **Always** use vector graphics. On a Mac, Keynote can insert `.pdf` files directly; in PowerPoint, insert vector graphics as `.svg`. A high-quality `.png` is an okay fallback if you check for pixelation. Always export the whole deck to PDF as a backup.
 - Say out loud what every axis and key means; if the audience has to read it, they aren't listening to you.
 - Avoid tables where you can; emphasize the one line that matters if you can't.
-- Run two quick integrity checks (concepts from Edward Tufte; the full treatment lives in [Figures]({{ '/lab-guide/figures/' | relative_url }})):
-  - **Lie factor**, which should sit near 1. Far from 1 means the graphic misleads; see [how a heat map can fool you](https://tywkiwdbi.blogspot.com/2013/02/how-you-can-be-fooled-by-heat-map.html?m=0).
-
-    $$\text{lie factor} = \frac{\text{size of effect shown in the graphic}}{\text{size of effect shown in the data}} \approx 1$$
-
-  - **Data-to-ink ratio**, which you push toward 1. Ink that isn't information is noise; cut the chart junk. See [this data-ink ratio explainer](https://medium.com/@vaniv7397/data-ink-ratio-fcad209ef425).
-
-    $$\text{data-to-ink} = \frac{\text{ink used to convey data}}{\text{total ink used in the graphic}} \longrightarrow 1$$
+- Run the two integrity checks from [Figures]({{ '/lab-guide/figures/' | relative_url }}#core-principles): keep the lie factor near 1, and push the data-to-ink ratio toward 1. A projector magnifies both problems.
 - Use color consistently and intentionally, and check it against color blindness, which is common. An [accessible-palette generator](https://venngage.com/tools/accessible-color-palette-generator) helps.
 
 ### Cite everything you didn't make

@@ -62,5 +62,5 @@ to pass on what you wish you'd known.
 - **Use the lab's LaTeX thesis template** (in the member portal), and confirm it
   still meets UC Davis's current formatting requirements.
 - **Settle authorship** and who will carry any unfinished manuscripts forward (see
-  [First drafts]({{ '/lab-guide/first-drafts/' | relative_url }})).
+  [Writing papers]({{ '/lab-guide/writing-papers/' | relative_url }})).
 {: .checklist}

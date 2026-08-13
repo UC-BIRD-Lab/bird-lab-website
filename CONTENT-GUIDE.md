@@ -155,13 +155,28 @@ Starting a new year? Add a new block at the very top:
     - { date: "January 2027", type: people, text: "…" }
 ```
 
-**Auto-linking (names + links).** Just write a lab member's name the way it
+**Auto-linking names.** Just write a lab member's name the way it
 appears on the People page: "Kaleb Bordner": and it becomes a link to their
 card automatically. Alumni names link to the alumni table. **Don't** wrap names in
 your own `<a>` tag (that would double-link). For a nickname or short form, add an
-`aliases:` line to that person in `people.yml`. To link to an outside page (a
-paper, an event), you can paste plain HTML: use single quotes so the YAML stays
-valid: `text: "We spoke at <a href='https://example.com'>the workshop</a>."`
+`aliases:` line to that person in `people.yml`.
+
+**Linking out (a paper, an event, a page on this site).** Add `link:` and
+`link_text:`. `link_text:` must be words copied from your `text:`; those words
+become the link, which reads better than a bare "read more" and tells screen-reader
+users where the link goes:
+```yaml
+    - { date: "June 2026", type: talk, text: "Kaleb Bordner presented at the AIAA AVIATION Forum.",
+        link: "https://www.aiaa.org/aviation", link_text: "the AIAA AVIATION Forum" }
+```
+- One link per milestone. Full addresses for outside pages; a path like `/join/`
+  for our own pages.
+- **Don't pick a person's name** as `link_text:` — names are already linked, so the
+  site skips the match and adds a small "Details ↗" link at the end instead.
+  That's also what happens if you give a `link:` with no `link_text:`, which is
+  fine when no phrase reads naturally as a link.
+- Prefer this over hand-written HTML. Raw `<a href='…'>` inside `text:` still
+  works, but it's easy to break the YAML and easy to get the accessibility wrong.
 
 ---
 
@@ -431,7 +446,13 @@ handoff live in the private Notion member portal, not on the public page.
 ---
 
 ## Change the menu: `_data/navigation.yml`
-Reorder, rename, or add items. `cta: true` makes an item the pill button.
+Reorder, rename, or add items. `cta: true` makes an item the pill button — keep
+it on exactly one item, currently **Join**, so the bar has a single clear action.
+
+The top bar is for **public** destinations. Internal or secondary links (Contact,
+the **Member Portal**) live in the footer's *Connect* list in
+`_includes/footer.html`. Every item you add here makes the others, and the Join
+button, harder to see.
 
 ## Change site-wide settings: `_config.yml`
 Title, tagline, the **member portal URL**, contact email, ORCID, the

@@ -11,7 +11,7 @@ reviewed: 2026-07-05
 
 <aside class="marginnote" markdown="1">
 On the receiving end of reviews? See
-[Paper revisions]({{ '/lab-guide/paper-revisions/' | relative_url }}).
+[responding to reviews]({{ '/lab-guide/submitting-publishing/' | relative_url }}#responding-to-reviews).
 </aside>
 
 This page offers suggestions for reviewing a paper in your field critically and

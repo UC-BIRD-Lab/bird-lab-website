@@ -64,7 +64,6 @@ title: Lab Guide
       <span class="guide-search__icon" aria-hidden="true">🔍</span>
       <input type="search" id="guide-search" placeholder="Search the guide…" autocomplete="off" aria-describedby="guide-search-hint">
     </div>
-    <p id="guide-search-hint" class="muted guide-hint">Pages with your word in the <strong>title</strong> come first, then pages that mention it in the text or related terms.</p>
     <p id="guide-noresults" class="muted guide-hint" hidden aria-live="polite">No guide pages match that yet. Try a shorter or different word.</p>
 
     <nav class="guide-cats" aria-label="Jump to a section">
@@ -82,7 +81,6 @@ title: Lab Guide
     {%- if start_pages.size > 0 -%}
     <div class="guide-start" id="start-here">
       <h2>Start here</h2>
-      <p class="muted">New to the lab? Begin with the guide for your role.</p>
       <div class="grid grid-3">
         {%- for p in start_pages -%}
         <a class="card card--link card--start" href="{{ p.url | relative_url }}" data-keywords="{{ p.keywords | join: ' ' | downcase }}">
@@ -101,19 +99,65 @@ title: Lab Guide
 
     <aside class="guide-hub-top__side" aria-labelledby="journey-title">
       <div class="guide-journey-panel">
-        <h2 id="journey-title">Your journey</h2>
-        <p class="muted">Roughly the order most projects move in. Jump in anywhere.</p>
+        <h2 id="journey-title">An academic journey</h2>
+        <p class="muted">Quick links to key phases.</p>
+        {%- comment -%} Each step names the guides it actually covers, rather than
+          deep-linking to one page and hiding the rest. The number badge is drawn
+          on the <li> (see .journey--side in style.css), so a step can carry
+          several links without each one getting its own disc. {%- endcomment -%}
         <ol class="journey journey--side">
           <li><a href="#start-here">Get oriented</a></li>
-          <li><a href="{{ '/lab-guide/goal-setting/' | relative_url }}">Set your goals</a></li>
-          <li><a href="{{ '/lab-guide/literature-reviews/' | relative_url }}">Read &amp; form a question</a></li>
-          <li><a href="{{ '/lab-guide/data-analysis/' | relative_url }}">Run &amp; analyze</a></li>
-          <li><a href="{{ '/lab-guide/first-drafts/' | relative_url }}">Figure &amp; write</a></li>
-          <li><a href="{{ '/lab-guide/presentations/' | relative_url }}">Present</a></li>
-          <li><a href="{{ '/lab-guide/before-you-submit/' | relative_url }}">Submit</a></li>
-          <li><a href="{{ '/lab-guide/paper-revisions/' | relative_url }}">Revise &amp; publish</a></li>
-          <li><a href="{{ '/lab-guide/career-planning/' | relative_url }}">Grow &amp; plan ahead</a></li>
-          <li><a href="{{ '/lab-guide/leaving-the-lab/' | relative_url }}">Move on</a></li>
+          <li><span class="journey__step">Set your goals</span>
+            <span class="journey__links">
+              <a href="{{ '/lab-guide/goal-setting/' | relative_url }}">Goal setting</a>,
+              <a href="{{ '/lab-guide/work-expectations/' | relative_url }}">Work expectations</a>
+            </span></li>
+          <li><span class="journey__step">Read &amp; form a question</span>
+            <span class="journey__links">
+              <a href="{{ '/lab-guide/literature-reviews/' | relative_url }}">Literature reviews</a>,
+              <a href="{{ '/lab-guide/research-hypotheses/' | relative_url }}">Research hypotheses</a>,
+              <a href="{{ '/lab-guide/journal-club/' | relative_url }}">Journal club</a>
+            </span></li>
+          <li><span class="journey__step">Run &amp; analyze</span>
+            <span class="journey__links">
+              <a href="{{ '/lab-guide/data-management/' | relative_url }}">Data management</a>,
+              <a href="{{ '/lab-guide/data-analysis/' | relative_url }}">Data analysis</a>,
+              <a href="{{ '/lab-guide/code/' | relative_url }}">Code</a>,
+              <a href="{{ '/lab-guide/uncertainty-analysis/' | relative_url }}">Uncertainty</a>
+            </span></li>
+          <li><span class="journey__step">Figure &amp; write</span>
+            <span class="journey__links">
+              <a href="{{ '/lab-guide/figures/' | relative_url }}">Figures</a>,
+              <a href="{{ '/lab-guide/writing-papers/' | relative_url }}">Writing papers</a>,
+              <a href="{{ '/lab-guide/authorship-policy/' | relative_url }}">Authorship</a>
+            </span></li>
+          <li><span class="journey__step">Present</span>
+            <span class="journey__links">
+              <a href="{{ '/lab-guide/presentations/' | relative_url }}">Presentations</a>,
+              <a href="{{ '/lab-guide/posters/' | relative_url }}">Posters</a>,
+              <a href="{{ '/lab-guide/conferences/' | relative_url }}">Conferences</a>
+            </span></li>
+          <li><span class="journey__step">Submit</span>
+            <span class="journey__links">
+              <a href="{{ '/lab-guide/before-you-submit/' | relative_url }}">Before you submit</a>,
+              <a href="{{ '/lab-guide/submitting-publishing/' | relative_url }}">Submitting &amp; publishing</a>,
+              <a href="{{ '/lab-guide/funding-applications/' | relative_url }}">Funding applications</a>
+            </span></li>
+          <li><span class="journey__step">Revise &amp; publish</span>
+            <span class="journey__links">
+              <a href="{{ '/lab-guide/submitting-publishing/' | relative_url }}">Submitting &amp; publishing</a>,
+              <a href="{{ '/lab-guide/peer-review/' | relative_url }}">Peer review</a>
+            </span></li>
+          <li><span class="journey__step">Grow &amp; plan ahead</span>
+            <span class="journey__links">
+              <a href="{{ '/lab-guide/career-planning/' | relative_url }}">Career planning</a>,
+              <a href="{{ '/lab-guide/professional-presence/' | relative_url }}">Professional presence</a>,
+              <a href="{{ '/lab-guide/recommendation-letters/' | relative_url }}">Recommendation letters</a>
+            </span></li>
+          <li><span class="journey__step">Move on</span>
+            <span class="journey__links">
+              <a href="{{ '/lab-guide/leaving-the-lab/' | relative_url }}">Leaving the lab</a>
+            </span></li>
         </ol>
       </div>
     </aside>

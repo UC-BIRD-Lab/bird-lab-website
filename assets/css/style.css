@@ -1510,6 +1510,13 @@ a.card--link h3 { color: var(--c-navy); }
 /* Milestone text links (News + home timeline) */
 .ev-text a { color: var(--link); text-decoration: underline; text-underline-offset: 2px; }
 .ev-text a:hover { color: var(--link-hover); }
+/* Fallback link, used only when a milestone has a URL but no words to link.
+   Quieter than an inline link so it reads as an affordance, not part of the
+   sentence; `white-space: nowrap` keeps "Details ↗" from breaking across lines. */
+.ev-text a.ev-link {
+  white-space: nowrap; margin-left: .3rem; font-size: .92em;
+  text-decoration-thickness: 1px; text-underline-offset: 3px;
+}
 
 /* Role key / legend (People page): sticky header with the bird-taxonomy chips,
    plus the hover/focus highlight that dims non-matching members (see main.js). */
@@ -1851,19 +1858,24 @@ a.rlist__title:hover, a.rlist__title:focus-visible { text-decoration: underline;
   background: var(--c-line);
 }
 .journey--side > li:last-child::after { display: none; }
-.journey--side > li > a {
+/* The step label. Either a link (step 1 jumps to #start-here) or plain text
+   when the step covers several guides, which are listed in .journey__links. */
+.journey--side > li > a,
+.journey--side > li > .journey__step {
   display: block;
   position: relative;
-  padding: .28rem .4rem .28rem 0;
+  padding: .28rem .4rem .1rem 0;
   font-size: .85rem;
   color: var(--c-ink);
   text-decoration: none;
   border-radius: 6px;
 }
-.journey--side > li > a::before {
+/* The number badge lives on the <li>, not on the label, so a step can hold
+   several links without each one picking up its own numbered disc. */
+.journey--side > li::before {
   content: counter(journey);
   position: absolute;
-  left: -1.6rem;
+  left: 0;
   top: .2rem;
   width: 1.2rem;
   height: 1.2rem;
@@ -1879,6 +1891,18 @@ a.rlist__title:hover, a.rlist__title:focus-visible { text-decoration: underline;
 }
 .journey--side > li > a:hover, .journey--side > li > a:focus-visible { color: var(--c-blue-700); text-decoration: underline; }
 .journey--side > li > a:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+/* The guides each step covers. */
+.journey__links {
+  display: block;
+  padding: 0 .4rem .4rem 0;
+  font-size: .78rem;
+  line-height: 1.55;
+  color: var(--c-muted);
+}
+.journey__links a { color: var(--c-blue-700); text-decoration: none; }
+.journey__links a:hover, .journey__links a:focus-visible { text-decoration: underline; }
+.journey__links a:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 4px; }
 
 /* Lab Guide hub: demoted stat line (was a prominent big-number bar up top) */
 .guide-stats-line { margin-top: .8rem; font-size: var(--step--1); }
@@ -2066,3 +2090,49 @@ a.rlist__title:hover, a.rlist__title:focus-visible { text-decoration: underline;
   .opening-featured__flyer { max-width: 320px; margin-inline: auto; }
 }
 @media print { .announce { display: none !important; } }
+
+/* ---------- Guide: staged protocol diagram (e.g. Zuur data-exploration steps) ---------- */
+/* Real text, not an image: screen-reader readable, searchable, and sharp at any zoom.
+   Add or reword a step by editing the markup in the guide page. */
+.protocol-fig { margin: 1.6rem 0; }
+.protocol-fig figcaption { font-size: var(--step--1); color: var(--c-muted); margin-top: .5rem; }
+.protocol {
+  margin: 0; border: 1px solid var(--c-line); border-radius: var(--radius);
+  background: var(--c-paper); box-shadow: var(--shadow); overflow: hidden;
+}
+.protocol__stage { display: grid; grid-template-columns: 3rem 1fr; align-items: stretch; }
+.protocol__stage + .protocol__stage { border-top: 1px solid var(--c-line); }
+.protocol__num {
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-size: var(--step-2); font-weight: 600;
+  color: var(--c-muted); background: var(--c-sky); border-right: 1px solid var(--c-line);
+}
+.protocol__body { padding: 1rem 1.2rem; }
+.protocol__stage--main .protocol__body { padding-bottom: 1.2rem; }
+.protocol__title {
+  font-family: var(--font-display); font-weight: 600; color: var(--c-navy);
+  font-size: var(--step-0); margin: 0;
+}
+.protocol__stage--main .protocol__title { font-size: var(--step-1); margin-bottom: .7rem; }
+.protocol__steps { list-style: none; margin: 0; padding: 0; counter-reset: protostep; }
+/* Exactly three grid items per row: the ::before counter, .what and .tool.
+   Any bare text node inside the <li> would become a fourth (anonymous) item
+   and wrap the row, so both label and tool must stay wrapped in spans. */
+.protocol__steps li {
+  display: grid; grid-template-columns: 1.6rem minmax(8ch, 1fr) minmax(0, auto);
+  gap: .15rem .9rem; align-items: baseline; padding: .45rem 0; font-size: var(--step--1);
+}
+.protocol__steps li + li { border-top: 1px dashed var(--c-line); }
+.protocol__steps li::before {
+  counter-increment: protostep; content: counter(protostep) ".";
+  color: var(--c-muted); font-variant-numeric: tabular-nums;
+}
+.protocol__steps .what { text-wrap: pretty; }
+.protocol__steps b { font-weight: 600; color: var(--c-ink); }
+.protocol__steps .tool {
+  color: var(--c-muted); font-style: italic; text-align: right; text-wrap: pretty;
+}
+@media (max-width: 640px) {
+  .protocol__steps li { grid-template-columns: 1.6rem 1fr; gap: .1rem .6rem; }
+  .protocol__steps .tool { grid-column: 2; text-align: left; }
+}

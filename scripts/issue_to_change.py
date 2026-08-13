@@ -111,6 +111,18 @@ def as_url(u: str) -> str:
     return u if u.startswith("http") else "https://" + u.lstrip("/")
 
 
+def as_link(u: str) -> str:
+    """Normalize a news-milestone link. Accepts a full URL, a bare DOI, a bare
+    domain, or an on-site path ('/join/', which must stay relative so the link
+    keeps working on a preview build)."""
+    u = (u or "").strip()
+    if not u:
+        return ""
+    if u.startswith("/"):
+        return u if u.endswith("/") or "." in u.rsplit("/", 1)[-1] else u + "/"
+    return doi_or_link(u)
+
+
 def doi_or_link(v: str) -> str:
     """Normalize a 'DOI or link' field to a URL (bare DOIs → https://doi.org/…)."""
     v = (v or "").strip()
@@ -138,10 +150,25 @@ def emit(summary: str, target: str):
 
 
 # ── Builders (one per form) ───────────────────────────────────────────────────
+def snap_phrase(text: str, phrase: str) -> str:
+    """Return the phrase EXACTLY as it appears in `text`, tolerating the two
+    mistakes people actually make when copying it into the form: different
+    capitalisation, and stray/collapsed whitespace. Returns "" if it isn't in
+    the sentence at all, in which case the entry falls back to a trailing link
+    rather than failing the whole submission over an optional field."""
+    phrase = re.sub(r"\s+", " ", (phrase or "").strip()).strip(".,;:")
+    if not phrase:
+        return ""
+    pattern = r"\s+".join(re.escape(w) for w in phrase.split(" "))
+    m = re.search(pattern, text or "", re.IGNORECASE)
+    return m.group(0) if m else ""
+
+
 def build_news(f: dict) -> int:
     date = field(f, "Month and year", "Date")
     ntype = field(f, "Type").lower()
     text = field(f, "What happened", "Text")
+    link = as_link(field(f, "Link (optional)", "Link", "URL"))
     problems = []
     if not date:
         problems.append("missing **Month and year**.")
@@ -156,7 +183,21 @@ def build_news(f: dict) -> int:
     if problems:
         return fail(problems)
 
-    entry = '    - { date: %s, type: %s, text: %s }' % (dq(date), ntype, dq(text))
+    # "Words to link" is only meaningful alongside a link, and only if those
+    # words are actually in the sentence — otherwise the site renders a small
+    # trailing "Details" link instead. Never a hard error: it's optional.
+    phrase = snap_phrase(text, field(f, "Words to link (optional)",
+                                     "Words to link", "Link text")) if link else ""
+    if link and not phrase:
+        print("note: linking the whole entry with a trailing link "
+              "(no matching words to link were given).")
+
+    parts = ["date: " + dq(date), "type: " + ntype, "text: " + dq(text)]
+    if link:
+        parts.append("link: " + dq(link))
+    if phrase:
+        parts.append("link_text: " + dq(phrase))
+    entry = "    - { %s }" % ", ".join(parts)
     append_to_updates(entry, year)
     print(entry)
     emit("news: " + text, "_data/updates.yml")

@@ -1,7 +1,7 @@
 ---
 title: Using AI
 category: Research Workflow
-order: 7
+order: 8
 summary: The lab's rules and guidelines for using generative AI responsibly in research.
 description: "Where generative AI is appropriate in our research, where it isn't, and what must be disclosed."
 keywords: [AI, ChatGPT, LLM, generative AI, machine learning, copilot, Claude, Gemini]
@@ -21,7 +21,7 @@ The following rules and guidelines surrounding the use of AI in our research wer
 
 - Code writing and debugging (e.g., with GitHub Copilot).
 - Improving plots in R or Python.
-- Editing an existing draft's spelling, grammar, logical flow, and sentence structure (see [First drafts]({{ '/lab-guide/first-drafts/' | relative_url }})). This can include abstracts, papers, and your own grants/fellowships. You must always have explicit permission if you are not the owner.
+- Editing an existing draft's spelling, grammar, logical flow, and sentence structure (see [Writing papers]({{ '/lab-guide/writing-papers/' | relative_url }})). This can include abstracts, papers, and your own grants/fellowships. You must always have explicit permission if you are not the owner.
 - Brainstorming ideas (as long as you do not limit this to only AI brainstorming).
 
 ## Inappropriate uses

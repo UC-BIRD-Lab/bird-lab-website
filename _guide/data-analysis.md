@@ -2,422 +2,562 @@
 title: Data analysis
 category: Research Workflow
 order: 6
-summary: "A staged approach to analysis: clean, explore, quantify, and report with uncertainty."
-description: "Cleaning, exploring, and quantifying your results, and reporting uncertainty honestly."
-keywords: [analysis, statistics, R, uncertainty, error, plots, quantify, stats, wind tunnel, GUM, autocorrelation, error propagation, effective sample size, Zieba, Type A, Type B, bootstrap, static margin]
-icon: "📊"
-reviewed: 2026-07-11
+summary: "The statistical methods we use, what is required of every analysis, and where to learn each one."
+description: "How the lab chooses, fits, checks and reports statistical models, with the required standards separated from the optional improvements."
+keywords: [analysis, statistics, R, model, lmer, mixed model, AIC, effect size, p-value, replicate, pseudoreplication, phylogenetic, emmeans, DHARMa, Schluter, PCA, principal component, DMD, dynamic mode decomposition, Procrustes, geomorph, PyDMD]
+icon: "📈"
+reviewed: 2026-08-12
 math: true
 ---
 
-So you finished your experiment or your code finally converged, congrats! Now comes
-the fun part: the analysis.
-
-<aside class="marginnote" markdown="1">
-Christina strongly recommends all students get comfortable analyzing data in R.
-</aside>
-
-1. **Clean your data.** Ensure consistency and remove blanks, false recordings,
-   and other artifacts. This can take about a week and needs to be clearly documented and procedural.
-
-   <div class="callout callout--warn" markdown="1">
-   Never edit your raw data. Save any cleaned data separately (see the source-file
-   rule in [Data management]({{ '/lab-guide/data-management/' | relative_url }})).
-   </div>
-
-2. **Explore the data.** Make many simple (un-styled) x–y plots to get a feel for
-   the trends. You should have decided what trends to quantify *before* running
-   the experiment. This can take 1–2 weeks.
-
-3. **Quantify your trends.** Use statistical approaches in R to test for
-   significant effects. Keep your original
-   [hypothesis]({{ '/lab-guide/research-hypotheses/' | relative_url }}) in mind and avoid
-   [p-hacking](https://pmc.ncbi.nlm.nih.gov/articles/PMC4359000/). Dolph
-   Schluter's [R tips pages](https://www.zoology.ubc.ca/~schluter/R/index.html)
-   are a great resource.
-
-4. **Calculate error and uncertainty.** Every reported value carries a quantified
-   uncertainty, see [below](#error-and-uncertainty).
-
-5. **Plot your data.** See [Figures]({{ '/lab-guide/figures/' | relative_url }}).
-
-## Error and uncertainty
-
-<div class="callout" markdown="1">
-**At a glance:** Work down this list. Each number is a step below that provides more detail. Throughout, we follow the [GUM](https://www.bipm.org/documents/20126/2071204/JCGM_100_2008_E.pdf).
-
-1. Cut each run down to the settled, stationary window.
-2. Plot and visualize the autocorrelation. Estimate $$N_\text{eff}$$, then
-   $$u_A = s_\text{corr}/\sqrt{N_\text{eff}}$$.
-3. If the autocorrelation rings, skip $$N_\text{eff}$$ and bootstrap instead.
-4. Build a Type B budget. 
-5. Assemble the budget in two parts: what varies point to point, and what is shared.
-6. Propagate with `errors` / `uncertainties`. Expand with Student-$$t$$.
-7. For slopes, use Monte Carlo for the systematic terms.
-8. Replicate runs, and cross-check against something independent.
+<div class="guide-glance">
+<div><span class="k">Jump to</span><a href="#the-five-stages">The five stages</a> · <a href="#requirements">Requirements</a> · <a href="#choosing-a-model">Choosing a model</a> · <a href="#what-to-report">What to report</a> · <a href="#decomposition">PCA &amp; DMD</a> · <a href="#sharpening-the-analysis">Sharpening</a> · <a href="#where-to-learn-each-method">Where to learn it</a></div>
 </div>
 
-### Three key quantities
+Once your experiment finishes or your code converges, now comes the analysis! 
 
-<div class="callout callout--stop" markdown="1">
-**The fluctuation, $$s_\text{corr}$$.** How much the signal moves. Buffeting is physics, not error. Its own band, labelled as the fluctuation.
+This shouldn't be the first time you're thinking about this though as good experimental design involves a consideration of the analysis goals right from the outset.
 
-**The error bar: whatever varies point to point.** The Type A term
-$$u_A = s_\text{corr}/\sqrt{N_\text{eff}}$$, plus any Type B that changes between runs (set-point repeatability). 
-
-**The shared systematic: state it once.** Identical for every point, so it moves the whole curve together. Must be reported in the text or as a single bar in a corner. Never draw it on each point: that falsely implies that each point can move independently and it can bury real trends.
-</div>
-
-
-<details class="guide-details" markdown="1">
-<summary>Glossary: every term used on this page</summary>
-
-| Term | Plain words |
-|---|---|
-| **Measurand** | The thing you want. Usually a mean: "average lift at 5 degrees." |
-| **Error** | How far you are from the truth. Unknowable. |
-| **Uncertainty** | The size of the range the truth plausibly sits in. Estimable. |
-| **Standard uncertainty**, $$u$$ | An uncertainty written as one standard deviation. |
-| **Type A** | From the statistics of recorded data. |
-| **Type B** | From anything else: a cert, spec sheet, tolerances, or judgment. Never measured. |
-| **Random error** | Changes reading to reading. Averaging reduces it. |
-| **Systematic error** | The same on every reading. Averaging does nothing to it. |
-| **Autocorrelation**, $$\hat\rho_j$$ | How much a sample resembles the one $$j$$ steps earlier. |
-| **Integral time scale**, $$T_u$$ | How long the signal stays correlated with itself. |
-| **Effective sample size**, $$N_\text{eff}$$ | How many independent samples the dataset includes. |
-| **Degrees of freedom**, $$\nu$$ | How well you know your own uncertainty. Small $$\nu$$ means poorly. |
-| **Combined uncertainty**, $$u_c$$ | Everything added in quadrature. Only for quoting one absolute value. |
-| **Coverage factor**, $$k$$ | What you multiply $$u_c$$ by to reach a stated confidence. |
-| **Expanded uncertainty**, $$U$$ | $$U = k\,u$$. The interval you report. |
-| **Sting** | The arm holding the model in the flow. Rings like a tuning fork after any move. |
-| **Tare** | The reading with no flow or no load, subtracted from every measurement. |
-
-Type A and Type B describe **how you found the number**, not whether the error is random or systematic ([GUM](https://www.bipm.org/documents/20126/2071204/JCGM_100_2008_E.pdf), 3.3.4). Both go into the final answer.
-</details>
-
+This page is about how to choose a model, fit it, check it, and report what it
+supports (and what it doesn't). How well you know any single number is covered in
+[Error and uncertainty analysis]({{ '/lab-guide/uncertainty-analysis/' | relative_url }}).
 
 <aside class="marginnote" markdown="1">
-**Stationary** means the average and spread are not drifting. 
+**Two different jobs.**
 
-- Running mean should flatten, not trend.
-- Window halves should have similar mean and spread.
-- The autocorrelation should decay.
+*Uncertainty* answers "how well do I know this value?"
 
-**Still trending? Adjust window.** If no window passes, report the condition as unsteady. 
+*Statistics* answers "is this pattern across values distinguishable from noise?"
+
+You need both, and neither substitutes for the other.
 </aside>
-
-### Step 1. Cut the record to the steady part
-
-The DAQ records continuously. Only part of each run is your test state.
-- **Start-up.** The flow takes time to reach the desired speed.
-- **Change-over.** Step to a new angle or speed and the sting rings, the flow re-establishes. Those samples belong to the *move*.
-
-Plot the raw trace. Keep the settled window. Its mean is the value you report.
-
-### Step 2. Find how many independent samples you have
-
-100,000 correlated samples are not worth 100,000 independent ones. This step determines how many samples you have that are independent, $$N_\text{eff}$$.
-
-<aside class="marginnote marginnote--warn" markdown="1">
-**Ignore the dashed lines.** R's `acf()` draws a band at $$\pm 2/\sqrt{N}$$. That band assumes *white* noise, so a healthy decaying autocorrelation sits outside it constantly. 
-</aside>
-
-**a. Compute the autocorrelation.** `acf()` in R, `statsmodels.tsa.stattools.acf()` in Python. One number per lag.
 
 <aside class="marginnote" markdown="1">
-**You are not trimming your data.** You are choosing how many autocorrelation values go into one sum. The "cut" is the upper limit of a summation.
+**Christina learned her statistics from Dolph Schluter's
+[R tips pages](https://www.zoology.ubc.ca/~schluter/R/index.html).** This page is the best starting
+point. Get comfortable analysing data in R.
 </aside>
 
-**b. Plot the autocorrelation. Decide where to truncate the sum.** The only judgment call here. Every real autocorrelation wobbles across zero once it decays. 
+## The five stages {#the-five-stages}
 
-<aside class="marginnote marginnote--warn" markdown="1">
-**Never sum every lag of a single record.** With the record's own mean subtracted, the sum of *all* the values is exactly $$-\tfrac{1}{2}$$ for any data, so the denominator collapses to zero ([Percival 1993](https://doi.org/10.1080/00031305.1993.10475997)).
-
-**Start the sum at lag 1, never lag 0.** Routines hand you lag 0 first and it is always exactly one. Including it is the most common bug here, and it is silent.
-</aside>
-
-- **Decays, negative part small and brief.** One heuristic commonly used is to cut-off the record at the first zero crossing ([Smith et al. 2018](https://doi.org/10.1088/1361-6501/aae91d)).
-- **Persistently negative or swinging back on a period.** Do not pick a cutoff,
-  [bootstrap](#step-3-if-the-autocorrelation-rings-bootstrap-instead). The zero crossing overestimates $$T_u$$ here (Smith et al.), and a truncated sum can even go negative, making $$N_\text{eff}$$ meaningless.
-
-<div class="callout" markdown="1">
-**No numeric threshold exists** to tell the two cases apart. It is a judgment about your own signal (Smith et al.).
-
-**Unsure? Bootstrap (Step 3).** Correct either way, and is just one function call.
-</div>
-
-**c. Compute these three**, summing lag 1 to your stopping lag $$k$$:
-
-$$N_\text{eff} = \frac{N}{1 + 2\sum_{j=1}^{k}\hat\rho_j}
-\qquad
-s_\text{corr}^2 = C\,s^2 ,\quad C = \frac{N_\text{eff}(N-1)}{N(N_\text{eff}-1)}
-\qquad
-u_A = \frac{s_\text{corr}}{\sqrt{N_\text{eff}}}$$
-
-<small>[Zięba 2010](http://www.metrology.pg.gda.pl/full/2010/M&MS_2010_003.pdf), Eqns. 12
-($$N_\text{eff}$$), 24b ($$C$$), 25 ($$u_A$$) ·
-[Smith et al. 2018](https://doi.org/10.1088/1361-6501/aae91d), Eqns. 4 and 18</small>
-
-$$u_A$$ is the Type A uncertainty, which is used to compute the combined uncertainty in Step 5.
+1. **Clean.** Remove blanks, false triggers and artifacts. This process must be documented and procedural.
+   Never edit raw data; save cleaned data separately (see the source-file rule in
+   [Data management]({{ '/lab-guide/data-management/' | relative_url }})).
+2. **Explore.** Make many ugly, unstyled x–y plots. One to two weeks. Work through the eight checks
+   below.
+3. **Model.** The rest of this page.
+4. **Quantify uncertainty.** [Error and uncertainty analysis]({{ '/lab-guide/uncertainty-analysis/' | relative_url }}).
+5. **Plot.** [Figures]({{ '/lab-guide/figures/' | relative_url }}).
 
 <div class="callout callout--warn" markdown="1">
-**Record for at least $$20\,T_u$$** ([Smith et al. 2018](https://doi.org/10.1088/1361-6501/aae91d)). Record **longer**, do not sample **faster**: faster sampling only adds near-copies of samples you already have.
+**Stage 2 is not stage 3.** Exploring is how you find out what the data look like. Fitting is how you
+test what you claimed before you looked. Choosing your model *after* the exploratory plots is
+[p-hacking](https://pmc.ncbi.nlm.nih.gov/articles/PMC4359000/), even when it does not feel like it.
 </div>
 
-<details class="guide-details" markdown="1">
-<summary>Why this is right, and why the full sum fails</summary>
+### What to check before you fit
 
-**Checked against reality.** [Smith et al. 2018](https://doi.org/10.1088/1361-6501/aae91d) took five long experimental records (hot-wire jet, pressure in a cylinder array, hot-wire airfoil boundary layer) and asked how often the reported error bar actually contains the true mean. A one-sigma band should contain it 68% of the time.
-
-- Bars from $$s/\sqrt{N}$$: **almost never** contained it.
-- Bars from $$s/\sqrt{N_\text{eff}}$$: contained it **very close to 68% of the time.**
-
-**Where $$N_\text{eff}$$ comes from.** The denominator is $$2T_u/\Delta t$$. Tennekes and Lumley showed two samples are independent only when more than $$2T_u$$ apart, so you are counting independence windows. Zięba derives the same quantity in metrology language.
-
-**Why our formula has no $$(1 - j/N)$$ and Zięba's Eqn. 12 does.** `acf()` in R and
-`acf(adjusted=False)` in Python divide by $$N$$ at every lag, which already bakes that weight in. 
-
-**$$N_\text{eff} > N$$ is not automatically a bug.** Anti-correlated samples converge faster than independent ones, so a ringing signal can have more effective samples than samples ([Smith et al. 2018](https://doi.org/10.1088/1361-6501/aae91d)).
-
-**With many records, Smith et al.'s first choice is different.** Given a record long enough to split into many segments, they recommend computing each segment's autocorrelation with the *parent* mean and variance, ensemble-averaging, and summing **all** lags. The zero-crossing cut is the single-record fallback, and even there they judge the bootstrap more robust. Our recipe assumes the usual tunnel case: one record per condition.
-</details>
-
-### Step 3. If the autocorrelation rings, bootstrap instead
-
-A ringing autocorrelation, or a short record, can make $$N_\text{eff}$$ sensitive to truncation and thus fragile. One way to address this issue is to use a **dependent circular block bootstrap** ([Künsch 1989](https://doi.org/10.1214/aos/1176347265) and applied to time-resolved PIV by
-[Theunissen et al. 2008](https://doi.org/10.1007/s00348-007-0418-8)). To do this, complete the following steps:
-
-- Wrap the record and then cut into overlapping sections or "blocks". 
-- Block-length selection is a recognized central difficulty of dependent bootstrapping, and may require a specific sensitivity study. We need to choose the block length to retain the relevant temporal characteristics while still remaining substantially shorter than the full record (see [Theunissen et al. 2008](https://doi.org/10.1007/s00348-007-0418-8) for a suggested automatic procedure). 
-- Draw blocks at random with replacement, concatenate into a new dataset until the new dataset is roughly the length of the original data set is formed. Finally, take and save the mean of the newly formed dataset. 
-- Repeat a few thousand times. Use enough bootstrap replicates to confirm convergence of the bootstrap mean and standard deviation; a few thousand is often sufficient, but check that the interval is stable with increasing replicate count.
-- The standard deviation of the bootstrap estimates provides an estimate of the standard error and may be used as the Type A standard uncertainty, ($$u_A$$), associated with finite-duration sampling. Note that the empirical 2.5th and 97.5th percentiles of the bootstrap estimates provide a percentile 95% confidence interval in a converged test.
-
-<aside class="callout" markdown="1">
-To do this in R, `boot::tsboot` can implement fixed-length circular block resampling using `sim = "fixed"`, a supplied block length `l`, and `endcorr = TRUE`. However, it does not implement the automatic block-length calculation directly.
+<aside class="marginnote" markdown="1">
+Every one of these is a **plot**, not a test. Look at the data. A normality test on 40,000
+autocorrelated samples will reject regardless, and tells you nothing a Q–Q plot would not have shown
+you in a second.
 </aside>
 
+The eight checks below are the data-exploration protocol from
+[Zuur, Ieno & Elphick (2010)](https://doi.org/10.1111/j.2041-210X.2009.00001.x).
+Run them in order, on every dataset, before you fit anything.
+
+<figure class="protocol-fig">
+<div class="protocol">
+  <div class="protocol__stage">
+    <div class="protocol__num" aria-hidden="true">1</div>
+    <div class="protocol__body">
+      <p class="protocol__title">Formulate the hypothesis · run the experiment · collect the data</p>
+    </div>
+  </div>
+  <div class="protocol__stage protocol__stage--main">
+    <div class="protocol__num" aria-hidden="true">2</div>
+    <div class="protocol__body">
+      <p class="protocol__title">Data exploration</p>
+      <ol class="protocol__steps">
+        <li><span class="what"><b>Outliers</b> in Y and X</span><span class="tool">boxplot · Cleveland dotplot</span></li>
+        <li><span class="what"><b>Homogeneity</b> of Y</span><span class="tool">conditional boxplot</span></li>
+        <li><span class="what"><b>Normality</b> of Y</span><span class="tool">histogram · Q–Q plot</span></li>
+        <li><span class="what"><b>Zero trouble</b> in Y</span><span class="tool">frequency plot · corrgram</span></li>
+        <li><span class="what"><b>Collinearity</b> in X</span><span class="tool">VIF · scatterplots · PCA</span></li>
+        <li><span class="what"><b>Relationships</b> between Y and X</span><span class="tool">multi-panel scatterplots</span></li>
+        <li><span class="what"><b>Interactions</b></span><span class="tool">coplots · conditional boxplots</span></li>
+        <li><span class="what"><b>Independence</b> of Y</span><span class="tool">ACF · variogram · Y against time or space</span></li>
+      </ol>
+    </div>
+  </div>
+  <div class="protocol__stage">
+    <div class="protocol__num" aria-hidden="true">3</div>
+    <div class="protocol__body">
+      <p class="protocol__title">Apply the statistical model</p>
+    </div>
+  </div>
+</div>
+<figcaption>The data exploration protocol, after
+<a href="https://doi.org/10.1111/j.2041-210X.2009.00001.x">Zuur, Ieno &amp; Elphick (2010)</a>, fig. 1.
+Step 8 is the one that decides your random-effect structure below.</figcaption>
+</figure>
+
 <div class="callout" markdown="1">
-**Run both and compare.** They should agree where the autocorrelation is well behaved.
-Large disagreements should be further investigated.
+**Two of these do double duty on this page.** Check 8, independence, is how you discover the
+non-independence that [requirement 3](#requirements) makes you model. Check 5, collinearity, is a
+common reason to reach for [PCA](#principal-component-analysis) rather than throwing every correlated
+predictor into one fit.
 </div>
 
+## The requirements {#requirements}
 
-### Step 4. Build a Type B budget
+<div class="callout callout--stop" markdown="1">
+**Every analysis in this lab meets all seven. They are not negotiable and they are not ranked.**
 
-Type B is based on calibration certificates, spec sheets, machining tolerances, or previous experiments
-([GUM](https://www.bipm.org/documents/20126/2071204/JCGM_100_2008_E.pdf), 4.3.1). Note that Type B does not shrink with sample size.
+1. The model is written down before the data are collected.
+2. The replicate unit is stated in words.
+3. Non-independence is in the model, not in a footnote.
+4. Residuals are checked, and the check is in the repository.
+5. The estimate and its interval are reported, not only the verdict.
+6. The report contains enough to refit the model.
+7. Uncertainty and inference are reported separately.
+</div>
 
-To turn a specification into a standard uncertainty use the
-[GUM](https://www.bipm.org/documents/20126/2071204/JCGM_100_2008_E.pdf):
+### 1 · Write the model down first
 
-| You are given | Assume | $$u$$ | GUM |
-|---|---|---|---|
-| Certificate quoting $$U$$ **and** a coverage factor $$k$$ | | $$U/k$$ | 4.3.3 |
-| Certificate quoting a **confidence level**, no $$k$$ | Normal | $$U/1.64$$ (90%) · $$U/1.96$$ (95%) · $$U/2.58$$ (99%) | 4.3.4 |
-| Bounds $$\pm a$$, nothing else known | Rectangular | $$a/\sqrt{3}$$ | 4.3.7 |
-| Bounds $$\pm a$$, middle values likelier | Triangular | $$a/\sqrt{6}$$ | 4.3.9 |
-| Digital readout, resolution $$q$$ | Rectangular | $$q/\sqrt{12}$$ | F.2.2.1 |
+Before the first run, put a plain-text analysis plan in the project repository: response variable,
+predictors, random effects, and what result would count as support for each
+[hypothesis]({{ '/lab-guide/research-hypotheses/' | relative_url }}). One paragraph is enough.
+
+This is the cheapest protection that exists against fitting until something is significant (i.e., [p-hacking](https://pmc.ncbi.nlm.nih.gov/articles/PMC4359000/)). 
+[Makin & Orban de Xivry's (2019)](https://doi.org/10.7554/eLife.48175) lists ten of the most common
+statistical mistakes, which is the shortest useful thing anyone in the lab can read on this.
+
+### 2 · State the replicate unit
+
+Write the sentence out: *"n = 1 hawk, 5 trials per condition, ~4000 samples per trial; inference is
+about this individual."* Then check that the model's degrees of freedom agree with it.
 
 <aside class="marginnote marginnote--stop" markdown="1">
-**A term you cannot measure is not a term you may set to zero.** Setting a calibration uncertainty to zero in code claims, in print, that the instrument is perfect. Knowingly leave a systematic effect uncorrected and the GUM requires you to carry it as an uncertainty (Note to 6.3.1, and F.2.4.5).
+**More rows is not more evidence.** Ten thousand frames from one bird are ten thousand measurements
+of one bird. Treating them as independent inflates $$\nu$$, shrinks the interval, and produces a
+$$p$$-value describing an experiment nobody ran.
 </aside>
+
+Counting correlated measurements as independent replicates is **pseudoreplication**
+([Hurlbert 1984](https://doi.org/10.2307/1942661); [Lazic 2010](https://doi.org/10.1186/1471-2202-11-5)).
+It remains the most common serious error in animal biomechanics, and a
+[2025 review of two decades of animal studies](https://doi.org/10.1186/s13229-025-00663-3) found it
+present in the majority of papers and *increasing over time*, despite statistical reporting improving
+across the same period. Better reporting does not fix this one. Naming the unit does.
+
+### 3 · Put the non-independence in the model
+
+Once the replicate unit is named, the structure follows. Repeated trials on one animal get a random
+intercept for trial. Repeated configurations of one wing specimen get a random intercept for the
+specimen. Species share ancestry, so cross-species comparisons carry the phylogeny.
 
 <aside class="marginnote" markdown="1">
-**The two rows people get wrong.**
-
-**Angle of attack.** Not encoder resolution, but true error in obtaining the commanded angle. Tunnels are typically quoted at around 0.1 degrees of flow angularity (Barlow, Rae & Pope, sec. 3.3), which is orders of magnitude above an encoder step.
-
-**Balance calibration.** Routinely one of the largest systematic terms in any force measurement
-([NASA](https://ntrs.nasa.gov/api/citations/20160009122/downloads/20160009122.pdf)).
+Our own analyses have used `(1 | trial_id)` for repeated perching trials
+([Martínez-Carmena et al. 2026](https://doi.org/10.1098/rsif.2025.1082)), `(1 | WingID)` for repeated
+morphed configurations of the same specimen
+([Harvey et al. 2021](https://doi.org/10.1098/rsif.2021.0132)), and a phylogenetic GLMM across 22
+species ([Harvey et al. 2022](https://doi.org/10.1038/s41586-022-04477-8)).
 </aside>
 
-Fill in the budget before you write any propagation code. **Fill in each row shared or not**. If the item shared across all measurements it should be reported in the text rather than displayed as error bars.
+[Harrison et al. (2018)](https://doi.org/10.7717/peerj.4794) is the lab's default reference for how to
+specify these models, and [Bolker's GLMM FAQ](https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html)
+is where to go when one misbehaves.
 
-| Source | | Comes from | Shared? |
-|---|---|---|---|
-| Balance calibration | B | Calibration certificate, full-scale accuracy | **Shared** |
-| Pressure transducer | B | Transducer certificate | **Shared** |
-| Flow angularity | B | Tunnel calibration, ~0.1° | **Shared** |
-| Moment arm | B | Machining tolerance | **Shared** |
-| Wall and blockage | B | Left uncorrected, bounded by model sizing (details below) | **Shared** |
-| Reference area, chord | B | 3D scan or CAD repeatability | Shared *within* a configuration. Not shared between them. |
-| Set-point repeatability | B | Replicate runs (Step 8) | Per point |
-| Atmospheric pressure | B | Barometer, one reading per run | Per run |
-| Air temperature | B | Thermometer, one reading per run | Per run |
-| Channel means | A | Step 2 | Per point |
-{: .table-budget}
+### 4 · Check the residuals, and commit the check
 
-**A or B is decided by how you acquired the number**. Read it once off an instrument spec and
-it is Type B. Log it as a time series and average it, and it is Type A (Step 2/3). The same thermometer can give you either.
+Run the diagnostic, look at it, and leave the code in the repository so the next person can rerun it.
+Use [`DHARMa`](https://cran.r-project.org/web/packages/DHARMa/vignettes/DHARMa.html), which simulates
+scaled residuals for mixed models and tests dispersion and residual temporal, spatial and phylogenetic
+autocorrelation. A quantile–quantile plot you looked at once and did not save is not a check.
 
-**Do not sum anything yet.** Your job in this step is to make sure every row exists, as a standard uncertainty, in the units of the result. Do not add newtons to degrees: the sensitivity factors that convert them are handled by the propagation packages. 
+### 5 · Report the estimate, not only the verdict
 
-<details class="guide-details" markdown="1">
-<summary>Worked example: our ATI Mini40 load cell</summary>
-
-The certificate quotes **"Measurement Uncertainty (95% confidence level, percent of full-scale load)"**. A confidence level with no coverage factor is the second row of the table above, so divide by 1.96 (GUM 4.3.4). The values below are from our current certificate. **Recheck them after every recalibration.**
-
-| Axis | Full scale | Certificate | $$U$$ (95%) | $$u = U/1.96$$ |
-|---|---|---|---|---|
-| Fx | 80 N | 1.50% FS | 1.20 N | **0.61 N** |
-| Fy | 80 N | 1.25% FS | 1.00 N | **0.51 N** |
-| Fz | 240 N | 1.50% FS | 3.60 N | **1.84 N** |
-| Tx | 4 N·m | 1.25% FS | 0.050 N·m | **0.026 N·m** |
-| Ty | 4 N·m | 1.75% FS | 0.070 N·m | **0.036 N·m** |
-| Tz | 4 N·m | 1.25% FS | 0.050 N·m | **0.026 N·m** |
-
-<div class="callout callout--stop" markdown="1">
-**Percent of full scale, not percent of reading.** $$u$$ is a fixed number of newtons no matter how small your load is. On the 80 N axes that is 0.61 N, permanently.
-
-A gliding bird wing makes lift of order a few newtons. So the balance alone contributes:
-| If lift is | $$u_B$$ as a fraction of your signal |
-|---|---|
-| 1 N | **61%** |
-| 2 N | 31% |
-| 5 N | 12% |
-| 10 N | 6% |
-
-On a low-load run this single term can outweigh every Type A term put together. **Never let lift be measured with $$F_z$$**: the 240 N range carries 1.84 N. Mount so the aerodynamic forces sit on the 80 N axes.
-</div>
-
-**No temperature compensation, and no mounting error.** The certificate is issued at 22.2 ± 1.1 °C and conditions its accuracy on loads being "correctly aligned to the transducer origin". Thermal drift and mount alignment are *additional* Type B terms that you own.
-</details>
-
-<details class="guide-details" markdown="1">
-<summary>Why we do not apply wall and blockage corrections</summary>
-
-The standard corrections (Barlow, Rae & Pope, ch. 10) are derived for conventional shapes. A morphing bird wing is not one, so the model error they import is plausibly larger than the effect they remove.
-We address the problem by minimizing the potential effects through using small models relative to the tunnel size and low blockage ratios. These should still be discussed in the supplemental methods of a paper.
-</details>
-
-### Step 5. Assemble the budget, in two parts
-
-Everything adds in quadrature
-([GUM](https://www.bipm.org/documents/20126/2071204/JCGM_100_2008_E.pdf), 5.1.2), but the shared rows and the per-point rows are summed separately. 
-
-$$u_\text{point} = \sqrt{u_A^2 + \sum_i u_{B,i}^2}
-\qquad\qquad
-u_\text{shared} = \sqrt{\sum_j u_{B,j}^2}$$
-
-<small>$$i$$ runs over the per-point rows, $$j$$ over the shared rows.</small>
-
-$$u_\text{point}$$ becomes the error bar. $$u_\text{shared}$$ gets reported in the text.
-
-<aside class="marginnote" markdown="1">
-Quoting one absolute value, not a curve? Then combine them:
-$$u_c = \sqrt{u_\text{point}^2 + u_\text{shared}^2}$$
-([GUM](https://www.bipm.org/documents/20126/2071204/JCGM_100_2008_E.pdf), 5.1.2).
-</aside>
-
-### Step 6. Propagate, then expand your chosen coverage factor (usually 95%)
-
-Do not hand-write a propagation formula, it is too easy to make silly errors. Carry the uncertainty automatically with R
-[`errors`](https://cran.r-project.org/package=errors) or Python
-[`uncertainties`](https://uncertainties.readthedocs.io/).
+A $$p$$-value alone says whether an effect is distinguishable from zero. It does not say how large it
+is, and that is usually the actual question. Report the estimate with a 95% interval alongside every
+test, and an effect size where one is meaningful.
 
 <div class="callout" markdown="1">
-**The packages need to know how your data is correlated.** They propagate correlation through an *expression*, so one airspeed feeding many coefficients is automatic. Correlations *between separate measured inputs* are not: declare them with `correl()` / `covar()` in R ([Ucar et al. 2018](https://journal.r-project.org/articles/RJ-2018-075/RJ-2018-075.pdf)) or `correlated_values()` in Python. Undeclared means you've assumed independence of the data. Your load-cell channels are read at the same instant, so they are correlated. Those off-diagonal terms can *increase or decrease* your final variance (Barlow, Rae & Pope, sec. 12.2).
+This is the settled position across the field, not a stylistic preference:
+[Wasserstein, Schirm & Lazar (2019)](https://doi.org/10.1080/00031305.2019.1583913) for the American
+Statistical Association, and [Amrhein, Greenland & McShane (2019)](https://doi.org/10.1038/d41586-019-00857-9)
+in *Nature*, co-signed by over 800 researchers. Both argue for leading with magnitude and precision.
+
+We keep $$\alpha = 0.05$$ and two-sided tests as a convention for deciding what to *discuss*. We do not
+let it decide what to *report*.
 </div>
 
-Then expand to 95%: $$U = k\,u$$. **State $$k$$ and the confidence level.**
+### 6 · Report enough to refit
+
+Model formula including the random terms, package and version, the degrees-of-freedom method, exact
+$$F$$ and $$p$$ (not "$$p < 0.05$$"), and the seed for anything resampled. See
+[What to report](#what-to-report).
+
+### 7 · Keep uncertainty separate
+
+Measurement uncertainty belongs in the error bars and the text, following
+[Error and uncertainty analysis]({{ '/lab-guide/uncertainty-analysis/' | relative_url }}). Model
+uncertainty belongs in the confidence intervals. Do not let one stand in for the other. Where they
+genuinely have to combine, see [Sharpening](#sharpening-the-analysis).
+
+## Choosing a model {#choosing-a-model}
+
+Find the row that describes your data. Start there; justify anything more complicated.
+
+| Your data | Start with | Where it is explained |
+|---|---|---|
+| One value per condition, conditions independent | `lm()` | Schluter, *Fit model* → **Simple linear regression** |
+| Repeated measurements on the same bird, specimen or model | `lmer(y ~ x + (1 \| ID))` | Schluter, *Fit model* → **Mixed models**; [Coding Club](https://ourcodingclub.github.io/tutorials/mixed-models/) |
+| Several individuals, generalising to the species | `lmer()`, individual as random intercept | [Harrison et al. 2018](https://doi.org/10.7717/peerj.4794) |
+| Multiple species | `gls(..., correlation = corPagel())`, or PGLMM in `MCMCglmm` | Schluter, *Phylogenetic comparison*; [Hadfield's course notes](https://cran.r-project.org/web/packages/MCMCglmm/vignettes/CourseNotes.pdf) |
+| Counts, proportions, binary outcomes | `glmer()` or `glmmTMB()` | [Bolker's GLMM FAQ](https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html) |
+| Two candidate functional forms (e.g. linear vs quadratic) | Fit both, compare AIC — see warning below | [Harrison et al. 2018](https://doi.org/10.7717/peerj.4794), §multi-model inference |
+| Real uncertainty on **both** axes | Major-axis or standardised major-axis regression (`smatr`) | Schluter, *Fit model* → **Correct for body size** |
+| A deterministic sweep with no sampling noise | No test. Run a sensitivity study instead | [Harvey 2024](https://doi.org/10.1098/rsif.2023.0734) |
+| Many correlated shape or morphology variables, no single response | [Principal component analysis](#principal-component-analysis) | Schluter, *Multivariate methods* |
+| A time series of coordinates with rhythmic structure | [Dynamic mode decomposition](#dynamic-mode-decomposition) | [BirdDMD](https://lydiafrance.github.io/BirdDMD/) |
+
+<aside class="marginnote marginnote--warn" markdown="1">
+**AIC on REML fits is wrong when the fixed effects differ.** `lmer()` defaults to `REML = TRUE`, and
+`AIC()` will happily return a REML-based value. Models with different fixed effects do not have
+comparable REML likelihoods. Refit the candidate set with `REML = FALSE` to compare, then refit the
+winner with REML for the estimates. This one is silent: nothing warns you.
+</aside>
+
+<div class="callout" markdown="1">
+**Keep the candidate set small and justified.** Every model in the set should correspond to a
+hypothesis you can state. Enumerating fifty polynomial combinations and taking the lowest AIC is a
+search, not an inference, and it will find structure in noise.
+
+When the set is a genuine comparison, report **Akaike weights** as well as $$\Delta$$AIC: they say how
+much better, not just which.
+</div>
+
+## What to report {#what-to-report}
+
+Every fitted model in a paper, thesis chapter or committee meeting reports all of
+these. For how to word the result once you have the numbers, see
+[Writing papers]({{ '/lab-guide/writing-papers/' | relative_url }}#core-principles).
+
+| Item | Example |
+|---|---|
+| Full model formula, random terms included | `avg_lift ~ state + perch_height + (1 \| trial_id)` |
+| Replicate structure in words | "1 individual, 5 trials per condition" |
+| Software and package versions | R 4.4.1; `lmerTest` 3.1-3 |
+| Estimation and df method | REML, Kenward–Roger |
+| Test statistic with **both** degrees of freedom | $$F_{1,17.06} = 42.43$$ |
+| Exact $$p$$ | $$p = 0.002$$, or "$$p < 0.001$$" only below that |
+| Estimate with a 95% interval | $$-0.14$$ [$$-0.21$$, $$-0.07$$] |
+| Effect size, where meaningful | partial $$\eta^2 = 0.51$$ |
+| Model fit | marginal and conditional $$R^2$$ |
+| Seed, for anything resampled | `set.seed(42)` |
+{: .table-budget}
+
+<aside class="marginnote" markdown="1">
+**Marginal vs conditional $$R^2$$.** Marginal is the variance explained by the fixed effects alone;
+conditional includes the random effects
+([Nakagawa & Schielzeth 2013](https://doi.org/10.1111/j.2041-210x.2012.00261.x)). Report both, or the
+reader cannot tell whether your predictors did the work or the grouping did. `performance::r2()`
+returns both.
+</aside>
+
+<details class="guide-details" markdown="1">
+<summary>Worked example: repeated measures on one animal</summary>
+
+One bird, two feather conditions, three perch heights, several trials per combination. The design
+behind [Martínez-Carmena et al. (2026)](https://doi.org/10.1098/rsif.2025.1082), written out as a
+template you can adapt.
+
+```r
+library(lmerTest)     # lmer with Kenward-Roger tests
+library(DHARMa)       # residual diagnostics
+library(performance)  # marginal / conditional R2
+library(emmeans)      # marginal means
+
+# 1. Fit. Fixed effects are the two designed factors;
+#    the random intercept carries the repeated measures.
+model_A <- lmer(avg_lift ~ factor_state + factor_perch + (1 | trial_id), data = data)
+
+# 2. Check before you read anything off it.
+res <- simulateResiduals(model_A)
+plot(res)
+
+# 3. Test. Kenward-Roger, because the sample is small.
+anova(model_A, ddf = "Kenward-Roger")
+
+# 4. Fit quality, both flavours.
+r2(model_A)
+
+# 5. Magnitudes and direction, on the response scale.
+emmeans(model_A, ~ factor_state)
+
+# 6. Intervals on the fixed effects.
+confint(model_A, method = "profile")
+```
+
+Steps 4–6 are what turn a verdict into a result. They are the reason this analysis satisfies
+requirement 5 without any extra work.
+
+**Why Kenward–Roger.** [Luke (2017)](https://doi.org/10.3758/s13428-016-0809-y) showed that REML with
+$$F$$-tests using Kenward–Roger or Satterthwaite degrees of freedom gives the most accurate inference
+for fixed effects in linear mixed models. `lmerTest` defaults to Satterthwaite; Kenward–Roger is the
+more conservative choice at small $$n$$ and is what we use.
+</details>
+
+## Decomposition: finding structure in many variables {#decomposition}
+
+Sometimes there is no single response variable. A wing outline is fifty correlated coordinates; a
+motion-capture trial is twenty-four coordinates evolving in time. Decomposition methods turn that into
+a handful of axes or modes you can plot, interpret, and put into the models above.
+
+<div class="callout" markdown="1">
+**The two we use, and how to tell them apart.**
+
+**PCA** finds the directions of greatest variance. It has no concept of time: shuffle the rows and you
+get the same answer.
+
+**DMD** finds modes that each carry one frequency and one growth rate. Shuffle the rows and it is
+meaningless.
+
+If your question contains *"how much does shape vary, and along what axes"*, you want PCA. If it
+contains *"how fast"*, *"in what order"*, or *"what would the next wingbeat look like"*, PCA cannot
+answer it and DMD can.
+</div>
+
+### Principal component analysis {#principal-component-analysis}
+
+<aside class="marginnote" markdown="1">
+**For the engineers.** PCA is the singular value decomposition of the mean-centred data matrix. The
+components are the right singular vectors, and each component's variance is its squared singular value
+divided by $$n-1$$. It is the same computation as **proper orthogonal decomposition** in fluids, under
+a different name and a different normalisation convention.
+</aside>
+
+Schluter's [Multivariate methods](https://www.zoology.ubc.ca/~schluter/R/Multivariate.html) page has
+the mechanics: `prcomp()`, scaling, scree plots, biplots, loadings and scores. Read that first. What
+follows is the part specific to how we use it.
+
+**1 · Get the variables onto a common scale before you start.** `prcomp()` defaults to the covariance
+matrix (`scale. = FALSE`), which is right when everything shares units and has a comparable variance:
+usually after log-transforming a set of lengths. Mixing linear, area and mass measurements without
+correcting first will let whichever variable happens to have the largest numbers dominate PC1. Use
+`scale. = TRUE` (the correlation matrix) when the units genuinely differ. Schluter's *Preparing
+variables* section gives the rule, including dividing logged areas by 2 and volumes by 3.
+
+**2 · If the variables are landmark coordinates, superimpose first.** Raw digitised coordinates carry
+position, orientation and size, which will otherwise appear as the first few components. A generalised
+Procrustes superimposition removes all three and leaves shape. Use
+[`geomorph::gpagen()`](https://doi.org/10.1111/2041-210X.12035); it also handles sliding
+semi-landmarks along curves, which is what you want for a wing outline or a trailing edge.
+
+**3 · Decide how many components to keep, and decide it by a stated rule.** Cumulative variance
+threshold, a break in the scree plot, whatever you like — but write the rule down before you look at
+the plot, and report it.
+
+**4 · Interpret by drawing, not by reading coefficients.** Reconstruct and plot the shape at plus and
+minus a few standard deviations along each retained axis. A loadings table tells you almost nothing
+about what a wing is doing; two overlaid outlines tell you immediately.
+
+<aside class="marginnote marginnote--warn" markdown="1">
+**The sign of a component is arbitrary.** `prcomp()` can hand you PC1 or its negative depending on
+trivia. "PC1 increased" means nothing on its own. Always say which shape the positive direction
+corresponds to, and keep the convention fixed across every figure in the paper.
+</aside>
+
+<aside class="marginnote marginnote--stop" markdown="1">
+**The axes belong to your sample, not to the animal.** Add a specimen and the axes rotate. So:
+
+- Never compare PC scores between two separately-run analyses.
+- Never treat a component as a biological or physical quantity. It is a direction that happened to
+  explain variance in the specimens you measured.
+</aside>
+
+**5 · Using scores downstream is fine, with one caveat.** PC scores make good response or predictor
+variables in the models above. But the model treats them as if they were measured, when they were
+estimated — the uncertainty in the components themselves is not carried through. Say so in the methods.
 
 <div class="callout callout--warn" markdown="1">
-**$$k = 1.96$$ for $$u_\text{shared}$$ and for $$u_c$$.** Both are dominated by certificates, which
-carry no scatter of their own.
-
-**For the per-point bar, $$k = 1.96$$ only while set-point repeatability is a small part of it.** That
-term comes from a handful of replicate runs, so it is poorly known, and it widens $$k$$:
-
-$$\nu_\text{eff} \approx (n_\text{rep} - 1)\left(\frac{u_\text{point}}{u_\text{rep}}\right)^4$$
-
-| Repeatability share of the per-point variance | $$k$$ (3 replicates) |
-|---|---|
-| under 10% | 1.96 |
-| 30% | 2.07 |
-| 50% | 2.31 |
-| 90% | 3.61 |
-
-**1.96 is not the cautious choice here.** A small $$\nu$$ means the true $$k$$ is *larger*, so assuming
-1.96 makes your bar too narrow.
+**A small percentage is not automatically a small effect.** In
+[Gamble et al. (2020)](https://doi.org/10.1088/1748-3190/ab9b6f), PCA on 57 landmarks along a
+compliant trailing edge gave PC1 = 99.7% of shape change (driven by Reynolds number) and PC2 = 0.3%
+(driven by angle of attack). The second axis was 0.3% of the variance and still a real, interpretable,
+significant effect. Percentage of variance ranks the axes. It does not rank their importance to your
+question.
 </div>
 
-<details class="guide-details" markdown="1">
-<summary> $$k$$ is 1.96 nearly everywhere, and where it is not</summary>
+**Report:** how many variables and how many specimens went in, whether you used the covariance or
+correlation matrix, whether landmarks were Procrustes-aligned, variance explained by each retained
+component, the retention rule, and the sign convention.
 
-$$k$$ is the Student-$$t$$ value at the Welch-Satterthwaite degrees of freedom
-([GUM](https://www.bipm.org/documents/20126/2071204/JCGM_100_2008_E.pdf), Eqn. G.2b):
+### Dynamic mode decomposition {#dynamic-mode-decomposition}
 
-$$\nu_\text{eff} = \frac{u^4}{\sum_i u_i^4/\nu_i}$$
+DMD approximates a time series as a sum of modes, each with its own spatial shape, frequency and
+growth or decay rate:
 
-**$$\nu$$ is not how big an uncertainty is. It is how well you know that uncertainty.** A term
-estimated from data wobbles: fewer samples, poorer estimate, larger $$t$$, wider bar. 
+$$\mathbf{x}(t) = \sum_{k=1}^{r} b_k\,\boldsymbol{\varphi}_k\, e^{\omega_k t}$$
 
-For known items like certificates: $$\nu = \infty$$. You read the number off a document, so it has no scatter (GUM G.4.3), and it drops out of the sum. For the ATI, $$\nu = \infty$$ essentially says "I am certain the uncertainty is 0.61 N." It does not say 0.61 N is small. Every certificate term is **shared** in wind tunnel measurements (or usually), this is why
-$$u_\text{shared}$$ and $$u_c$$ always give 1.96.
+<aside class="marginnote" markdown="1">
+$$\boldsymbol{\varphi}_k$$ is the spatial mode: here, a wing–tail shape. $$\omega_k$$ is **complex**, so
+one mode carries both a frequency, $$\mathrm{Im}(\omega_k)/2\pi$$ in Hz, and a growth or decay rate,
+$$\mathrm{Re}(\omega_k)$$. $$b_k$$ is how much of that mode is present.
+</aside>
 
-**Type A: $$\nu$$ is huge, so it drops out too.** Zięba's paper shows that a 180,000-sample record at $$a = 0.9$$ has $$N_\text{eff} \approx 9{,}500$$ but $$\nu \approx 19{,}000$$. That is so high we can ignore it.
+That gives you something PCA cannot: a **generative** model. Because each mode carries a frequency,
+you can run it forward, synthesise a wingbeat that was never recorded, or reconstruct a trial from a
+chosen subset of modes and see what each one contributes.
 
-**Replicates: $$\nu = n_\text{rep} - 1$$, and this is the only $$\nu$$ that matters.** Three runs gives
-$$\nu = 2$$ and $$t = 4.30$$. It is a per-point term, so it sits inside the error bar, and everything
-else in that bar has effectively infinite $$\nu$$. That is where the shortcut above comes from, and it
-matches full Welch-Satterthwaite to two decimals.
+**Where to start.** Our collaborator Lydia France has written
+[**BirdDMD**](https://lydiafrance.github.io/BirdDMD/), which wraps
+[PyDMD](https://mathlab.github.io/PyDMD/) with defaults chosen for biological motion-capture data. Work
+through the [notebook gallery](https://lydiafrance.github.io/BirdDMD/notebooks/index.html) in order: it
+starts from a synthetic sum of two sinusoids where you can check DMD recovers the frequencies you put
+in, then moves to hawk flapping modes, turning manoeuvres, reconstruction error, and a generative
+model. The underlying study is [France, Lapo & Kutz (2026)](https://arxiv.org/abs/2602.19196), which
+decomposes flapping, turning, landing and gliding into a shared, low-order set of modes.
 
-**Watch for this.** With a long record $$u_A$$ is tiny. Once you start replicating, the repeatability
-term will likely *dominate* the per-point bar, and $$k$$ will not be 1.96.
+**The knobs, and why they matter.**
 
-**To hedge on a certificate**, GUM G.4.2 sets $$\nu \approx \tfrac12[\Delta u/u]^{-2}$$ from how far
-you trust it. Trusting ATI to ±10% barely moves the bar. Do not go lower without a reason: ±50% gives
-$$\nu = 2$$ and roughly doubles your uncertainty on a guess.
-</details>
+| Setting | What it does |
+|---|---|
+| `n_modes` (rank $$r$$) | How many modes to keep. Too few and you lose real dynamics; too many and you fit noise |
+| `d` (time-delay embedding) | Stacks lagged copies of the data. Needed when you have fewer spatial channels than dynamics |
+| `eig_constraints` | `conjugate_pairs` forces eigenvalues into complex-conjugate pairs, which keeps the reconstruction real-valued and the modes interpretable as oscillations |
 
-### Step 7. Uncertainty of experimentally computed slopes
+<div class="callout callout--stop" markdown="1">
+**Reconstruction error on the data you fitted proves nothing.** Enough modes will reproduce any
+record. The number that means something is the error on a segment or a trial the fit never saw. Report
+that one.
+</div>
 
-**OLS fits through `confint()`.** Fits capture the scatter of the points about the line, and that is often a reasonable error bar. However, if there is notable uncertainty on the x-axis, and or errors shared across the sweep, the fit's interval can under report. 
+**Report:** number of modes, delay embedding, any eigenvalue constraints, the frequency and growth rate
+of each retained mode, and held-out reconstruction error.
 
-One way to include it can be to propagate the slope by a Monte Carlo analysis. To do this, randomly estimate all the points within the uncertainty range (both shared and per point) to model the possible range of the data. Then refit a slope and report the standard deviation spread of these estimated slopes as the uncertainty.  
+<div class="callout" markdown="1">
+**What DMD is and is not.** It is a linear fit in a coordinate system chosen from the data. That is a
+strength when physics-based models rest on assumptions that do not survive real flight, and it is the
+limitation when you want a mechanism rather than a description. A DMD mode tells you the motion
+contains a coherent oscillation at that frequency and shape. It does not tell you why.
+</div>
 
-### Step 8. Replicate, then cross-check
+## Sharpening the analysis {#sharpening-the-analysis}
 
-One record cannot see whether the tunnel returns to the same speed tomorrow, or the model to the same angle when you re-clamp it. Random uncertainty comes from **replicate runs**: back-to-back repeats, and where affordable, repeats after removing and reinstalling the model ([AIAA S-071A](https://arc.aiaa.org/doi/book/10.2514/4.473647);
-[G-160-2025](https://arc.aiaa.org/doi/book/10.2514/4.107450)). Within-run Type A alone under-reports.
+Everything above is required. Everything below is worth reaching for, and none of it is a prerequisite
+for a good paper. Pick what your question needs.
 
-Then check that an independent estimate lands inside your interval. Disagreement beyond the combined uncertainty means your budget is missing a term.
-[Harvey et al. 2021](https://doi.org/10.1098/rsif.2021.0132) checks tunnel forces against a lifting-line model.
+<aside class="marginnote" markdown="1">
+Talk to Christina before adding any of these to a manuscript. Most cost a day; a couple cost a month.
+</aside>
 
-<details class="guide-details" markdown="1">
-<summary>Design the runs so the replicates are worth something</summary>
+**Say what you could have detected.** With one or two animals, "power" is the wrong output. Simulate
+from a pilot fit ([`simr`](https://cran.r-project.org/package=simr)) and report the *smallest effect
+the design could resolve*. Do it before you collect, and the limitation becomes a stated scope rather
+than a caveat. Schluter's *Planning tools* page covers the simpler `pwr` and `power.t.test` cases.
 
-Three principles from Barlow, Rae & Pope (sec. 12.3), worth knowing by name:
+**Answer the comparative question directly.** [`emmeans`](https://cran.r-project.org/web/packages/emmeans/vignettes/basics.html)
+and [`marginaleffects`](https://cran.r-project.org/package=marginaleffects) give contrasts on the
+response scale with intervals, and handle multiplicity adjustment when you are making many
+comparisons. Far more informative than a table of $$p$$-values.
 
-- **Replication.** Repeat the run and measure the variability instead of inferring it.
-- **Randomization.** Vary the order you set conditions in. Order can affect the result, and
-  randomizing averages out what you are not tracking.
-- **Blocking.** Measure an *increment* by adding and removing one part while everything else stays installed. A tail-on minus tail-off increment is far more precise than either measurement alone, because the shared systematics cancel in the difference. If your question is comparative, design it as a block to improve the measurement precision.
-</details>
+**Declare which tests are exploratory.** When one study fits many models across many response
+variables at $$\alpha = 0.05$$, some will clear the bar by chance. Either pre-specify a primary
+response, adjust, or label the rest exploratory in the text. Any of the three is defensible; silence
+is not.
 
-### Further reading
+**Plot the fit, not just the data.** [`visreg`](https://pbreheny.github.io/visreg/) shows partial
+residuals against one predictor with the others accounted for, so a multi-predictor fit becomes
+something you can actually look at. It works with `lmer` fits.
 
-**Correlated data.**
-- [Smith, Neal, Feero & Richards (2018)](https://doi.org/10.1088/1361-6501/aae91d).
-- [Belanger, Lavoie & Zingg (2023)](https://doi.org/10.1007/s00348-023-03704-w) ·
-  [Benedict & Gould (1996)](https://doi.org/10.1007/s003480050030) ·
-  [Theunissen et al. (2008)](https://doi.org/10.1007/s00348-007-0421-0) ·
-  [Politis & White (2004)](https://doi.org/10.1081/ETC-120028836) ·
-  [Percival (1993)](https://doi.org/10.1080/00031305.1993.10475997) · Tennekes & Lumley (1972).
+**Push measurement error through to the conclusion.** *This is the one place the two pages meet.*
+Resample each point within its uncertainty range, refit, and check the conclusion still holds.
+[Harvey et al. (2022)](https://doi.org/10.1038/s41586-022-04477-8) did this with 5,000 bootstrap draws
+over the centre-of-gravity error range, refitting the evolutionary model each time. Schluter's
+*Resample, bootstrap* page has the mechanics, including `boot` and BCa intervals.
 
-**Standards.** 
+**Show you had the power to choose the model.** Selecting by AIC assumes the candidates are
+distinguishable at your sample size. Simulating under each and comparing likelihood-ratio distributions
+demonstrates it. [Harvey et al. (2022)](https://doi.org/10.1038/s41586-022-04477-8) used `pmc` this way
+for the Ornstein–Uhlenbeck versus Brownian motion choice.
 
-- [AIAA G-160-2025](https://arc.aiaa.org/doi/book/10.2514/4.107450) ·
-  [S-071A-1999](https://arc.aiaa.org/doi/book/10.2514/4.473647) ·
-  [ASME PTC 19.1](https://www.asme.org/codes-standards/find-codes-standards/test-uncertainty) ·
-  Coleman & Steele (4th ed.).
-- Barlow, Rae & Pope (1999), secs. 12.2–12.3. The clearest tunnel-side account of random versus
-  systematic error, and of replication, randomization and blocking. **Predates the GUM in
-  aerodynamics** and does not correct for autocorrelation: use it for the reasoning, not the recipe.
-- [GUM](https://www.bipm.org/documents/20126/2071204/JCGM_100_2008_E.pdf) ·
-  [JCGM 101](https://www.bipm.org/documents/20126/2071204/JCGM_101_2008_E.pdf) (Monte Carlo) ·
-  [Zięba (2010)](http://www.metrology.pg.gda.pl/full/2010/M&MS_2010_003.pdf) ·
-  [York et al. (2004)](https://doi.org/10.1119/1.1632486) ·
-  [`errors` (R)](https://cran.r-project.org/package=errors) ·
-  [`uncertainties` (Python)](https://uncertainties.readthedocs.io/)
+**Consider a Bayesian fit when $$n$$ is tiny.** At two or three replicates an $$F$$-test is working
+with almost no degrees of freedom. A weakly informative prior gives a better-behaved interval.
+`brms` ([Coding Club tutorial](https://ourcodingclub.github.io/tutorials/brms/)) or `MCMCglmm`. Optional,
+and never a way to rescue an analysis that failed frequentist assumptions.
+
+## Where to learn each method {#where-to-learn-each-method}
+
+Start with Dolph. The rest fill specific gaps he does not cover.
+
+**Dolph Schluter's [R tips pages](https://www.zoology.ubc.ca/~schluter/R/index.html)** — the lab's
+default reference. Written for biologists, worked examples throughout.
+
+| If you need | Go to |
+|---|---|
+| Linear models, ANOVA, mixed models, ML vs REML, singular fits | [Fit model](https://www.zoology.ubc.ca/~schluter/R/Model.html) → *Read me*, then *Mixed models* |
+| Marginal means, post-hoc tests, visualising fits | [Fit model](https://www.zoology.ubc.ca/~schluter/R/Model.html) → *Estimate magnitudes of effect* |
+| Body-size correction, errors in x, MA and SMA regression | [Fit model](https://www.zoology.ubc.ca/~schluter/R/Model.html) → *Correct for body size* |
+| Simulating a design; power and sample size | [Planning tools](https://www.zoology.ubc.ca/~schluter/R/Plan.html) |
+| Bootstrap standard errors, BCa intervals, permutation tests | [Resample, bootstrap](https://www.zoology.ubc.ca/~schluter/R/Resample.html) |
+| Independent contrasts, phylogenetic GLS, Pagel's $$\lambda$$, OU | [Phylogenetic comparison](https://www.zoology.ubc.ca/~schluter/R/Phylogenetic.html) |
+| PCA, discriminant analysis, multidimensional scaling | [Multivariate methods](https://www.zoology.ubc.ca/~schluter/R/Multivariate.html) |
+| Worked R for every example in *The Analysis of Biological Data* | [Whitlock & Schluter examples](https://whitlockschluter3e.zoology.ubc.ca/RExamples/) |
+
+**Filling the gaps.**
+
+- **Mixed models, from scratch.** [Coding Club: Introduction to linear mixed models](https://ourcodingclub.github.io/tutorials/mixed-models/)
+  (Hajduk & Gallois). The gentlest on-ramp; do this before Harrison et al.
+- **Mixed models, as a standard.** [Harrison et al. (2018), *PeerJ*](https://doi.org/10.7717/peerj.4794).
+  A code of best practice for random-effect structure and multi-model inference. Read once properly,
+  then keep for reference.
+- **When a model misbehaves.** [Bolker's GLMM FAQ](https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html).
+  Convergence warnings, singular fits, which degrees of freedom, whether to use a GLMM at all.
+- **Bayesian and phylogenetic mixed models.** [Coding Club: MCMCglmm](https://ourcodingclub.github.io/tutorials/mcmcglmm/)
+  for priors, chain convergence and building measurement error into a model, then
+  [Hadfield's course notes](https://cran.r-project.org/web/packages/MCMCglmm/vignettes/CourseNotes.pdf)
+  for the statistics underneath.
+- **Phylogenetic comparative methods.** Revell & Harmon (2022), *Phylogenetic Comparative Methods in R*,
+  and [`phytools` 2.0](https://doi.org/10.7717/peerj.16505). Where to go past Schluter's page.
+- **Exploring data before modelling.** [Zuur, Ieno & Elphick (2010)](https://doi.org/10.1111/j.2041-210X.2009.00001.x).
+- **PCA in depth.** [Jolliffe & Cadima (2016)](https://doi.org/10.1098/rsta.2015.0202), the standard
+  review: what PCA does, what the choices are, and where it breaks.
+- **Landmark shape data.** [`geomorph`](https://doi.org/10.1111/2041-210X.12035) (Adams &
+  Otárola-Castillo 2013) for Procrustes superimposition and shape PCA.
+- **DMD, start here.** [BirdDMD](https://lydiafrance.github.io/BirdDMD/) (France) — motion-capture
+  defaults and a notebook gallery. Then [France, Lapo & Kutz (2026)](https://arxiv.org/abs/2602.19196)
+  for the hawk study behind it.
+- **DMD, the theory.** [Schmid (2010)](https://doi.org/10.1017/S0022112010001217), the original ·
+  [Kutz, Brunton, Brunton & Proctor (2016)](https://doi.org/10.1137/1.9781611974508), the book ·
+  [Brunton & Kutz (2022)](https://doi.org/10.1017/9781009089517), *Data-Driven Science and
+  Engineering*, which puts SVD, PCA/POD and DMD in one place and is the best single source if you want
+  to see how they connect · [PyDMD](https://doi.org/10.21105/joss.00530).
+- **What goes wrong.** [Makin & Orban de Xivry (2019), *eLife*](https://doi.org/10.7554/eLife.48175).
+  Ten mistakes, each in a page. Read before your first submission and again before every review you write.
+- **Why we report intervals.** [Wasserstein, Schirm & Lazar (2019)](https://doi.org/10.1080/00031305.2019.1583913) ·
+  [Amrhein, Greenland & McShane (2019)](https://doi.org/10.1038/d41586-019-00857-9).
+- **Package documentation.** [`DHARMa`](https://cran.r-project.org/web/packages/DHARMa/vignettes/DHARMa.html) ·
+  [`emmeans`](https://cran.r-project.org/web/packages/emmeans/vignettes/basics.html) ·
+  [`performance::r2()`](https://easystats.github.io/performance/reference/r2_nakagawa.html) ·
+  [`marginaleffects`](https://cran.r-project.org/package=marginaleffects)
+
+## Before you write it up
+
+- Analysis plan was written before data collection, and is in the repository
+- Replicate unit stated in words, and the model's degrees of freedom agree with it
+- Non-independence is in the model
+- Residual diagnostic run, and the code committed
+- Candidate model set is small, and each model answers a stated question
+- Any AIC comparison of differing fixed effects used `REML = FALSE`
+- Estimate and 95% interval reported alongside every test
+- Effect size and both $$R^2$$ values reported
+- Exact $$F$$, both degrees of freedom, and exact $$p$$
+- Seed set and recorded for every resampling step
+- Package versions recorded
+- Any PCA states scaling, retention rule, variance per axis, and the sign convention
+- Any DMD reports rank, delay embedding, and error on data it did not fit
+- Measurement uncertainty reported separately, per [Error and uncertainty analysis]({{ '/lab-guide/uncertainty-analysis/' | relative_url }})
+{: .checklist}

@@ -25,7 +25,7 @@ description: "Milestones, press coverage, videos, and podcasts featuring the BIR
           <span class="news-month__label">{{ m.name }}</span>
           <ul class="news-events">
             {%- for e in m.items -%}
-            <li>{% include update-icon.html type=e.type %}<span class="ev-text">{% include link-names.html text=e.text %}</span></li>
+            <li>{% include update-icon.html type=e.type %}<span class="ev-text">{% include link-names.html text=e.text link=e.link link_text=e.link_text %}</span></li>
             {%- endfor -%}
           </ul>
         </li>

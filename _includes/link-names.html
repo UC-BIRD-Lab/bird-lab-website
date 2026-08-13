@@ -4,9 +4,30 @@
   Pass:  {% include link-names.html text=e.text %}
   Add an `aliases:` list to a person in people.yml for nicknames / short forms
   (e.g. "Dr. Harvey", "Adam Zhu").
+
+  OPTIONAL one external/on-site link per string:
+    {% include link-names.html text=e.text link=e.link link_text=e.link_text %}
+  `link_text` is words copied from `text`; they become the link. Naming the
+  destination in the link text reads better than "read more" and satisfies
+  WCAG 2.4.4 (link purpose). With no usable `link_text` we append a short
+  "Details ↗" link carrying an aria-label built from the sentence.
+
+  ORDER MATTERS. The phrase is swapped for a sentinel BEFORE names are linked,
+  then restored as an <a> afterwards. That is what keeps a phrase which contains
+  (or equals) a member name from producing a nested <a> — the sentinel hides it
+  from the name pass, so such a phrase links out and is simply not name-linked.
+  Doing it the other way round nests anchors, which is invalid HTML and makes
+  the inner link unreachable by keyboard. Don't reorder these blocks.
 {%- endcomment -%}
 {%- assign txt = include.text -%}
 {%- assign people_base = '/people/' | relative_url -%}
+{%- assign ev_link = include.link | default: "" -%}
+{%- assign phrase = include.link_text | default: "" -%}
+{%- assign ev_inline = false -%}
+{%- if ev_link != "" and phrase != "" and txt contains phrase -%}
+  {%- assign ev_inline = true -%}
+  {%- assign txt = txt | replace_first: phrase, "%%EVLINK%%" -%}
+{%- endif -%}
 {%- for g in site.data.people.groups -%}{%- for m in g.members -%}
   {%- capture lk -%}<a href="{{ people_base }}#{{ m.name | slugify }}">{{ m.name }}</a>{%- endcapture -%}
   {%- assign txt = txt | replace: m.name, lk -%}
@@ -21,4 +42,22 @@
   {%- capture lka -%}<a href="{{ people_base }}#alumni">{{ a.name }}</a>{%- endcapture -%}
   {%- assign txt = txt | replace: a.name, lka -%}
 {%- endfor -%}
+{%- if ev_link != "" -%}
+  {%- assign ev_href = ev_link -%}
+  {%- assign ev_rel = "" -%}
+  {%- if ev_link contains "://" -%}{%- assign ev_rel = ' rel="noopener"' -%}
+  {%- else -%}{%- assign ev_href = ev_link | relative_url -%}{%- endif -%}
+  {%- if ev_inline -%}
+    {%- capture ev_a -%}<a href="{{ ev_href }}"{{ ev_rel }}>{{ phrase }}</a>{%- endcapture -%}
+    {%- assign txt = txt | replace_first: "%%EVLINK%%", ev_a -%}
+  {%- else -%}
+    {%- comment -%} The accessible name must START WITH the visible text
+       ("Details") or speech-input users can't activate it by saying what they
+       see — WCAG 2.5.3 Label in Name. The sentence follows so the link is still
+       distinguishable from every other "Details" on the page (WCAG 2.4.4).
+    {%- endcomment -%}
+    {%- assign ev_label = include.text | strip_html | truncate: 90 -%}
+    {%- capture txt -%}{{ txt }} <a class="ev-link" href="{{ ev_href }}"{{ ev_rel }} aria-label="Details: {{ ev_label | escape }}">Details<span aria-hidden="true"> &#8599;</span></a>{%- endcapture -%}
+  {%- endif -%}
+{%- endif -%}
 {{- txt -}}

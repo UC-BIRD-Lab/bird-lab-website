@@ -32,8 +32,9 @@ Do these once a month. None of them require the command line.
    CONTENT-GUIDE → *Videos, podcasts & 3D models*).
 3. **Add notable milestones.** Awards, talks, funding, new members, graduations →
    add a one-line entry to the top of the current year in `_data/updates.yml`.
-   Member names link themselves automatically. *Easiest:* file the **📣 Add a news
-   milestone** issue form — the [issue-to-pr Action](.github/workflows/issue-to-pr.yml)
+   Member names link themselves automatically; to link out to a paper or event,
+   add `link:` and `link_text:` (CONTENT-GUIDE → *Add a news milestone*).
+   *Easiest:* file the **📣 Add a news milestone** issue form — the [issue-to-pr Action](.github/workflows/issue-to-pr.yml)
    drafts the entry and opens a PR automatically; you just merge it (which closes the
    issue). Prefer the paper helper for a new paper: `python scripts/add_press.py --paper <doi>`.
 4. **Update People** (`_data/people.yml`):
