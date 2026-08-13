@@ -31,7 +31,32 @@ body:
     id: text
     attributes:
       label: What happened
-      description: One or two sentences, written like the existing timeline entries.
+      description: >-
+        One or two sentences, written like the existing timeline entries. Lab
+        member names link automatically — just write them as they appear on the
+        People page, don't add a link yourself.
       placeholder: Ada won a best-paper award at AIAA Aviation.
     validations:
       required: true
+  - type: input
+    id: url
+    attributes:
+      label: Link (optional)
+      description: >-
+        A paper, event, award page, or news story to link from this milestone.
+        Paste the full address. A page on our own site works too (e.g. /join/).
+      placeholder: https://doi.org/10.1098/rsif.2025.0868
+    validations:
+      required: false
+  - type: input
+    id: link_text
+    attributes:
+      label: Words to link (optional)
+      description: >-
+        Copy the exact words from your sentence above that should become the
+        link — pick something that describes where it goes ("the AIAA AVIATION
+        Forum", "the Join page"), not a person's name. Leave blank and we'll add
+        a small "Details" link at the end of the entry instead.
+      placeholder: the AIAA AVIATION Forum
+    validations:
+      required: false

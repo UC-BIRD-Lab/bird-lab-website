@@ -9,7 +9,10 @@ vendor/
 .Rproj.user/
 .Rhistory
 .Rapp.history
-Gemfile.lock
+# NOTE: Gemfile.lock is deliberately COMMITTED, not ignored. This is a site, not
+# a theme gem: the lockfile is what makes the GitHub Pages build reproducible and
+# is what Dependabot needs in order to propose gem updates at all. Regenerate it
+# with ./scripts/update-lockfile.sh, never by hand.
 .DS_Store
 *.log
 # FUSE / editor-sync artifacts left when a file is edited while open. They can

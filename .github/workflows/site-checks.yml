@@ -9,6 +9,11 @@ on:
   pull_request:
   workflow_dispatch:
 
+# Use the exact gem versions in Gemfile.lock, and fail if it disagrees with the
+# Gemfile, so these checks test the same build that deploy.yml will publish.
+env:
+  BUNDLE_FROZEN: "true"
+
 jobs:
   build-and-check-links:
     runs-on: ubuntu-latest
@@ -52,7 +57,7 @@ jobs:
         env:
           JEKYLL_ENV: production
       - name: Set up Node
-        uses: actions/setup-node@v7
+        uses: actions/setup-node@v6
         with:
           node-version: "20"
       - name: Run pa11y-ci (WCAG2AA)

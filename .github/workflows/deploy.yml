@@ -6,6 +6,12 @@ on:
     branches: [main]
   workflow_dispatch:
 
+# Build the exact gem versions recorded in Gemfile.lock. If the Gemfile and the
+# lockfile ever disagree, fail loudly instead of quietly resolving to whatever is
+# newest that day — that silent drift is how a site breaks with no one changing it.
+env:
+  BUNDLE_FROZEN: "true"
+
 permissions:
   contents: read
   pages: write

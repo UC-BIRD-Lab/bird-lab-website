@@ -141,6 +141,37 @@ make sure Conda is off (`conda deactivate`) and refresh the Command Line Tools
 
 ---
 
+## Gem versions (`Gemfile.lock`)
+
+**You will almost never touch this.** It matters because it is the difference
+between a site that keeps building and one that breaks by itself.
+
+`Gemfile` says which software the site needs in loose terms ("Jekyll 4.3 or
+newer"). `Gemfile.lock` records the one exact version of each that was actually
+used, including the dozens of libraries Jekyll depends on underneath. Both files
+are committed, and `./serve.sh` and GitHub Actions read the same lockfile, so the
+preview on your laptop and the live site are built from identical parts.
+
+Without the lockfile, every publish silently picks whatever was newest that
+morning — which means a stranger's release, not any change of yours, can break
+the site. Dependabot also needs the lockfile: with no lockfile there is nothing
+for it to bump, so its weekly gem check quietly does nothing.
+
+**To move to newer gems on purpose:**
+
+```
+./scripts/update-lockfile.sh     # rewrites Gemfile.lock
+```
+
+Then commit the changed `Gemfile.lock` **on a branch** and open a pull request.
+Site checks will build with the new versions and tell you whether they are safe.
+If the build fails, close the pull request and nothing reaches the live site.
+
+If `./serve.sh` stops with a message about the Gemfile and lockfile disagreeing,
+someone edited `Gemfile` without rerunning that script. Run it, and commit both files.
+
+---
+
 ## Undo a change (rollback)
 
 Every change is a commit. To undo one: open the repo's **commit history**, find
