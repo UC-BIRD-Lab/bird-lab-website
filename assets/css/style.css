@@ -1354,7 +1354,11 @@ a.card--link h3 { color: var(--c-navy); }
   border-radius: 999px; padding: .2rem .6rem; white-space: nowrap;
 }
 .news-press__tag[data-tag="Center"]  { background: #e9eef5; color: #34567f; border-color: #cddcec; }
-.news-press__tag[data-tag="Award"]   { background: #f7edcf; color: #8a6a1e; border-color: #ecdca6; }
+/* Award text darkened from #8a6a1e (4.32:1 — below the 4.5:1 AA minimum) to
+   #755914 (5.62:1), bringing it in line with the other tags, which sit between
+   5.2:1 and 7.2:1. Darkening the text rather than lightening the background
+   keeps the badge's visual weight. If you restyle these, check contrast. */
+.news-press__tag[data-tag="Award"]   { background: #f7edcf; color: #755914; border-color: #ecdca6; }
 .news-press__tag[data-tag="Funding"] { background: #e6f3ea; color: #2e6b43; border-color: #cde6d6; }
 .news-press__tag[data-tag="Profile"] { background: #ece7fb; color: #533a97; border-color: #dcd2f3; }
 .news-press__tag[data-tag="Feature"] { background: #e2f0f2; color: #2b6b73; border-color: #c7e2e5; }

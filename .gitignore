@@ -27,3 +27,7 @@ _logocheck.png
 node_modules/
 .venv/
 __pycache__/
+
+# Generated from _site/sitemap.xml by scripts/build_pa11y_config.py at check time.
+# Edit pa11y.settings.json instead; this file is rebuilt every run.
+pa11yci.generated.json

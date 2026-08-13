@@ -15,8 +15,29 @@ env:
   BUNDLE_FROZEN: "true"
 
 jobs:
+  # Runs first and takes seconds: catches content mistakes that would build
+  # perfectly well but publish something untrue (a project lead who isn't in
+  # people.yml, a DOI matching no paper, a photo that was never uploaded).
+  content:
+    name: Content validation
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: pip install -r scripts/requirements.txt
+      - name: Check the content files
+        run: python scripts/validate_content.py
+      - name: Test the checker itself
+        run: python scripts/test_validate_content.py
+
   build-and-check-links:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v7
         with:
@@ -40,9 +61,18 @@ jobs:
             --no-enforce-https \
             --allow-missing-href
 
+  # This check BLOCKS. It used to be advisory (continue-on-error plus a `|| echo`
+  # that swallowed the exit code), which meant it reported success even when it
+  # found violations — and, worse, when it failed to run at all. The site was
+  # measured clean in August 2026, so the suppression came off. If this goes red,
+  # something on the site genuinely regressed; fix it rather than silencing it.
+  #
+  # Scanners cover roughly a third of WCAG AA. Green here is a floor, not a
+  # conformance claim — the manual checks are in MAINTENANCE.md.
   accessibility:
+    name: Accessibility (WCAG2AA)
     runs-on: ubuntu-latest
-    continue-on-error: true   # informational: surfaces issues without blocking
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v7
         with:
@@ -60,13 +90,36 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: "20"
+      - name: Build the page list from the sitemap
+        # Not a hand-kept list: every built page is covered the moment it exists.
+        run: python3 scripts/build_pa11y_config.py
+
       - name: Run pa11y-ci (WCAG2AA)
         run: |
-          npm install -g pa11y-ci http-server
-          http-server ./_site -p 4000 &
-          sleep 4
-          # URLs + Chrome launch args (needs --no-sandbox on the Ubuntu 24.04
-          # runner, which restricts unprivileged user namespaces) live in
-          # pa11yci.json at the repo root.
-          pa11y-ci --config ./pa11yci.json \
-            || echo "::warning::pa11y found accessibility issues, review the log above."
+          set -euo pipefail
+          # Pinned. An unpinned `npm install -g` silently changed the scanner
+          # (and therefore what counts as a violation) between runs, so a check
+          # could start failing with no change to the site. Bump deliberately.
+          npm install -g pa11y-ci@4.0.1 http-server@14.1.1
+
+          http-server ./_site -p 4000 --silent &
+
+          # Wait for the server to actually answer instead of guessing with
+          # `sleep 4`. If it never comes up, fail loudly — previously that
+          # produced a green tick, because a scanner that ran zero pages looked
+          # exactly like one that found no problems.
+          for i in $(seq 1 30); do
+            if curl -sf http://localhost:4000/ >/dev/null; then
+              echo "Server is up after ${i}s."
+              break
+            fi
+            if [ "$i" -eq 30 ]; then
+              echo "::error::http-server never became reachable; nothing was scanned."
+              exit 1
+            fi
+            sleep 1
+          done
+
+          # Chrome needs --no-sandbox on the Ubuntu runner (it restricts
+          # unprivileged user namespaces); that lives in pa11y.settings.json.
+          pa11y-ci --config ./pa11yci.generated.json
