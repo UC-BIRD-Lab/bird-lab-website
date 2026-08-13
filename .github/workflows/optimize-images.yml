@@ -8,6 +8,9 @@ name: Optimize images
 # Why a PR and not an auto-commit: it keeps the "bot proposes, human approves" flow,
 # and lets you eyeball that a compressed photo still looks right before it ships.
 on:
+  pull_request:
+    paths:
+      - "assets/**"
   push:
     branches: [main]
     paths:
@@ -19,7 +22,31 @@ permissions:
   pull-requests: write
 
 jobs:
+  # Runs on PULL REQUESTS and blocks. Compression used to happen only after
+  # images reached main — but deployment also starts on a push to main, so an
+  # oversized image was already live by the time anything noticed. This checks
+  # before the merge instead. It changes nothing; it only reports.
+  #
+  # It also covers video, GIFs and SVGs, which the compressor never touches:
+  # video because re-encoding needs judgement, SVGs because they can carry
+  # scripts and ours should be plain artwork.
+  budget:
+    name: Media budget
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Install Pillow
+        run: pip install Pillow
+      - name: Check images, video and SVGs against the budget
+        run: python scripts/optimize_images.py --check
+
   compress:
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
