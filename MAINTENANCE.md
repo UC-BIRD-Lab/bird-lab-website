@@ -66,6 +66,27 @@ files → Commit (with a message) → Push**. Full setup and troubleshooting is 
 > before pushing again. If a deploy ever sits on "queued" and times out, that's
 > the cause: wait about an hour and run it once.
 
+### Why your change goes through a pull request
+
+The `main` branch is protected: changes reach the live site by opening a **pull
+request**, which runs the automatic checks (build, broken links, missing images,
+content validation) before anything publishes. If you try to push straight to
+`main`, GitHub refuses it and your work stays safely on your computer. Make a
+branch, push that, and open a pull request instead.
+
+Editing on github.com handles this for you: it offers *"Create a new branch for
+this commit and start a pull request"* by default, so there is nothing extra to
+learn.
+
+> **Recorded exception.** The PI (@christinaharvey) is on the ruleset's bypass
+> list and can push directly to `main`. This is deliberate: she makes most edits,
+> and the friction of a pull request for every one-line fix would discourage
+> keeping the site current — which is the bigger risk. The automatic checks still
+> run on those pushes; they report a failure a minute later instead of preventing
+> it. **This exception should be removed once a second person has write access**,
+> at which point everyone uses pull requests. Anyone reviewing the repository's
+> settings: this is a decision, not an oversight.
+
 ---
 
 ## Editing on your computer with RStudio
@@ -138,6 +159,39 @@ old gem and Apple's newest headers, not your setup. Easiest fix: use `./serve.sh
 (Docker), or preview on GitHub via a pull request. Only if you want native Jekyll,
 make sure Conda is off (`conda deactivate`) and refresh the Command Line Tools
 (`sudo rm -rf /Library/Developer/CommandLineTools && xcode-select --install`).
+
+---
+
+## Checking your content before you publish
+
+The site build will happily publish a page that is **wrong**. A project whose
+`lead:` is spelled differently from the People page, a DOI that matches no paper,
+a photo path pointing at a file nobody uploaded — Jekyll renders all of these
+without complaint and the mistake goes live quietly.
+
+`scripts/validate_content.py` looks for exactly that. To run it yourself:
+
+```
+python3 scripts/validate_content.py
+```
+
+It prints each problem, which file it's in, and what to do about it, or
+"All content checks passed". It runs automatically on every pull request, so
+forgetting is fine — you'll see a red ✗ on the **Content validation** check with
+the same explanation.
+
+Among other things it confirms that: every project lead and news name matches a
+person in `people.yml`; every DOI in `pub_links.yml`, `press.yml` and
+`research.yml` matches a real publication; every image path points at a file that
+exists; every facility photo has alt text; exactly one facility is featured; and
+the dropdown options in the issue forms still agree with what
+`scripts/issue_to_change.py` accepts — so a lab member can't file a valid form
+that the automation then silently drops.
+
+To add a check, open the file and copy one of the small `check_*` functions.
+Please write the message for someone who has never opened that file before.
+`scripts/test_validate_content.py` proves each check still catches what it's
+meant to; run it after editing.
 
 ---
 
