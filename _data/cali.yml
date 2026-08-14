@@ -122,6 +122,12 @@ team:
     discipline: Veterinary Medicine
     photo: /assets/img/cali/beaufrere.jpg
     website: https://www.vetmed.ucdavis.edu/faculty/hugues-h-beaufrere
+  - name: Andrew English Jr.
+    group: Advisors
+    institution: UC Davis
+    discipline: Ecology
+    photo: /assets/img/cali/engilis.jpg
+    website: https://mwfb.ucdavis.edu/staff/andrew-engilisjr
   - name: Dr. Stacey Combes
     group: Advisors
     institution: UC Davis
