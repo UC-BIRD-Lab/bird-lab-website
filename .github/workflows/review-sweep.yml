@@ -1,0 +1,80 @@
+name: Quarterly review sweep
+# Website tooling, largely written by AI (Claude) and checked for behaviour
+# rather than wording. It describes how the site is built, not how the lab works;
+# lab policy lives in _guide/. See accessibility.md, "How this site is made".
+
+# Quarterly: report what may have gone out of date, in ONE issue that gets
+# rewritten each time rather than duplicated. Changes no content.
+#
+# The list lives in _data/review.yml; Lab Guide pages come from their `reviewed:`
+# front matter. See MAINTENANCE.md → "The quarterly review issue".
+#
+# GitHub disables scheduled workflows after 60 days of no repository activity.
+# Weekly Dependabot PRs should keep this alive; if no sweep issue appears for two
+# quarters, check the Actions tab.
+on:
+  schedule:
+    - cron: "0 9 5 1,4,7,10 *"   # 5 January / April / July / October, 09:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  sweep:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r scripts/requirements.txt
+
+      - name: Work out what is due
+        id: sweep
+        run: |
+          python scripts/review_sweep.py --out review-report.md
+          # Exit code says whether anything is due.
+          if python scripts/review_sweep.py --quiet; then
+            echo "due=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "due=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open or update the review issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DUE: ${{ steps.sweep.outputs.due }}
+        run: |
+          set -euo pipefail
+          TITLE="Site review: what needs a human look"
+          LABEL="site-review"
+
+          # The label is how we find our own issue again.
+          gh label create "$LABEL" \
+            --description "Quarterly reminder of content that may have gone stale" \
+            --color "0E8A16" 2>/dev/null || true
+
+          # Find the existing open sweep issue, if there is one.
+          NUMBER="$(gh issue list --label "$LABEL" --state open \
+                      --json number --jq '.[0].number // empty')"
+
+          if [ "$DUE" = "false" ]; then
+            # Close any open issue rather than leave a stale to-do list.
+            if [ -n "$NUMBER" ]; then
+              gh issue comment "$NUMBER" --body "Everything on the review list is current as of this sweep. Closing; the next sweep will open a fresh one if something falls due."
+              gh issue close "$NUMBER"
+              echo "Nothing due, closed #$NUMBER."
+            else
+              echo "Nothing due, and no open review issue. Nothing to do."
+            fi
+            exit 0
+          fi
+
+          bash scripts/upsert_issue.sh "$LABEL" "$TITLE" review-report.md \
+            "Quarterly reminder of content that may have gone stale"

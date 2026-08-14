@@ -1,0 +1,72 @@
+# Website tooling, largely written by AI (Claude) and checked for behaviour
+# rather than wording. It describes how the site is built, not how the lab works;
+# lab policy lives in _guide/. See accessibility.md, "How this site is made".
+# What to re-check, and how often. A robot reads this quarterly and opens one
+# issue listing whatever is due. It never edits content.
+#
+#   Mark something done → set its `last_reviewed:` to today, even if you changed
+#                         nothing. The next reminder counts from that date.
+#   Add something       → copy a block.
+#
+# Lab Guide pages aren't listed here; the sweep reads the `reviewed:` date in
+# each page's front matter.
+#
+# Why this exists: MAINTENANCE.md → "The quarterly review issue".
+
+# Months a Lab Guide page stays fresh. Matches the banner on the page itself.
+guide_every_months: 12
+
+items:
+  - what: Funding opportunities, eligibility rules and application links
+    file: _data/funding.yml
+    owner: "@christinaharvey"
+    every_months: 12
+    last_reviewed: 2026-07-06
+    note: Check a handful you'd actually send a student to. Eligibility wording
+      drifts and fellowships close.
+
+  - what: Safety training requirements, links and named contacts
+    file: _data/safety.yml
+    owner: "@christinaharvey"
+    every_months: 6
+    last_reviewed: 2026-08-04
+    note: Six months because stale safety information has real consequences.
+      Confirm the training links resolve and named people are still in role.
+
+  - what: CALI recharge rates and effective date
+    file: _data/cali_rates.yml
+    owner: "@christinaharvey"
+    every_months: 12
+    last_reviewed: 2026-07-28
+    note: CPA re-approves these annually. If new rates were issued, update the
+      figures and the `effective:` date.
+
+  - what: Recruiting status on the Join page (undergrad / graduate / postdoc)
+    file: _data/openings.yml
+    owner: "@christinaharvey"
+    every_months: 3
+    last_reviewed: 2026-07-06
+    note: One-line true/false each. Quarterly because the graduate cycle moves.
+
+  - what: Facilities, specifications, equipment lists and partner names
+    file: _data/facilities.yml
+    owner: "@christinaharvey"
+    every_months: 12
+    last_reviewed: 2026-07-27
+
+  - what: Manual accessibility pass (keyboard, zoom, reduced motion, alt text)
+    file: MAINTENANCE.md
+    owner: "@christinaharvey"
+    every_months: 12
+    last_reviewed: 2026-08-13
+    note: The automatic scan covers about a third of WCAG AA. The checklist for
+      the rest is in MAINTENANCE.md under "The accessibility check a person has
+      to do". Takes about 20 minutes.
+
+  - what: Member Portal link and anything it promises is behind it
+    file: portal.md
+    owner: "@christinaharvey"
+    every_months: 12
+    last_reviewed: 2026-07-06
+    note: The Notion portal is outside this repo, so no check here can see if
+      that link broke.

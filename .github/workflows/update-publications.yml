@@ -1,4 +1,7 @@
 name: Update publications
+# Website tooling, largely written by AI (Claude) and checked for behaviour
+# rather than wording. It describes how the site is built, not how the lab works;
+# lab policy lives in _guide/. See accessibility.md, "How this site is made".
 
 # Checks OpenAlex (by the lab ORCID) for new journal articles and, if any are
 # found, opens a pull request that edits _data/publications.yml. A human reviews

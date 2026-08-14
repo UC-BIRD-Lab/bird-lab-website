@@ -1,11 +1,9 @@
 {
   "_comment": [
-    "Accessibility scanning rules. The LIST OF PAGES is not here on purpose —",
-    "it is generated from _site/sitemap.xml by scripts/build_pa11y_config.py,",
-    "so a new page is covered automatically and a deleted one drops out.",
-    "",
-    "To skip a page, add it to `exclude` below WITH A REASON. Keep that list",
-    "as short as you can: every entry is a page nobody is checking."
+    "Accessibility scanning rules. The page list is generated from",
+    "_site/sitemap.xml by scripts/build_pa11y_config.py, not kept here.",
+    "To skip a page, add it to `exclude` with a reason. Keep that short:",
+    "every entry is a page nobody is checking."
   ],
   "defaults": {
     "standard": "WCAG2AA",

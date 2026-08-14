@@ -1,57 +1,37 @@
 #!/usr/bin/env python3
-"""
-add_press.py: turn a news-article URL into a ready-to-paste _data/press.yml entry.
+"""Turn a news-article URL into a ready-to-paste _data/press.yml entry.
 
-You give it the article URL, (optionally) the DOI of the paper the story covers, and
-whether the story should be "featured". It fetches the page, reads the outlet name,
-headline, and author from the page's own metadata, and: ONLY when --featured is set:
-downloads the article's lead image into assets/img/news/ (resized and compressed to the
-site's image budget). It then prints a YAML block you can paste into _data/press.yml under
-the right year. Pass --append to have it inserted for you (comments/formatting preserved).
+Reads the outlet, headline and author from the page's own metadata. With
+--featured it also downloads the lead image into assets/img/news/, resized to the
+site's budget. Prints a YAML block; --append inserts it for you.
 
-SAFE by design (same spirit as update_publications.py):
-  * Read-only unless you pass --append.
-  * --append does a *targeted text insert*; it never rewrites the whole file, so your
-    header comments and hand-formatting stay intact.
-  * If the page is missing a field, it warns and leaves that field blank to fill in.
+Read-only unless you pass --append, and --append is a targeted insert, so header
+comments and hand-formatting survive. A missing field is left blank with a warning.
 
-It can also build a _data/media.yml entry (videos, podcasts, radio, 3D models) with
---media KIND. A media item is a compact row by default; add --featured to give it a
-thumbnail card (YouTube thumbnails are automatic, other cards need an --image).
+--media KIND builds a _data/media.yml entry instead (video, podcast, radio,
+model). Compact row by default; --featured gives it a thumbnail card (automatic
+for YouTube, otherwise pass --image).
 
-── Paper announcements ──────────────────────────────────────────────────────────
-Give it a paper's DOI with --paper and it drafts the two things you write by hand
-every time a paper lands: a _data/updates.yml news-timeline entry AND ready-to-post
-LinkedIn + Instagram captions. It reads the paper's title/authors/venue/year from
-your own publications.yml (canonical) and falls back to OpenAlex by DOI if the paper
-isn't synced yet, so this pairs naturally with the monthly "Update publications" PR:
-merge that, then run this on the new DOI.
+--paper DOI drafts the two things written by hand for every new paper: an
+updates.yml timeline entry and LinkedIn + Instagram captions. Details come from
+publications.yml, falling back to OpenAlex, so this pairs with the monthly
+publications PR: merge that, then run this on the new DOI. Lab authors are
+matched to people.yml so their names auto-link. The lead lab author becomes the
+subject; --topic "…" gives the plain-language hook. Captions print to the console
+(or --out FILE) and are never committed.
 
-  * Lab authors are matched against _data/people.yml and written with their full
-    People-page names, so they AUTO-LINK in the timeline (same as any updates entry).
-  * The lead lab author becomes the subject ("Paper led by …"); a Harvey-first paper
-    reads "Paper by Dr. Harvey". Pass --topic "…" for the plain-language hook (else
-    the title is used as a placeholder to tighten).
-  * --append inserts the updates.yml entry under the right year (newest first),
-    targeted-insert so your comments/formatting stay intact. Captions print to the
-    console (or --out FILE); they are never committed to the site.
-
-Examples:
   python scripts/add_press.py "https://news.site/story" --doi 10.1098/rsif.2025.0868 --featured
-  python scripts/add_press.py "https://news.site/story"                 # not featured, just print
   python scripts/add_press.py "https://news.site/story" --featured --append
-  # Media (Watch & listen strip):
   python scripts/add_press.py "https://youtu.be/XXXX" --media video --featured --append
   python scripts/add_press.py "https://pod.site/ep" --media podcast --append
-  python scripts/add_press.py "https://npr.org/…" --media radio --doi 10.1098/rsif.2025.1082 --append
-  # Paper announcement (news entry + social captions):
-  python scripts/add_press.py --paper 10.1098/rsif.2025.1082 --topic "raptor perching behavior"
-  python scripts/add_press.py --paper 10.1098/rsif.2025.1082 --append > captions.txt
+  python scripts/add_press.py --paper 10.1098/rsif.2025.1082 --topic "raptor perching"
 
-Requires: Python 3.8+ . Pillow is used to resize/compress the image when --featured
-(optional: without it the raw image is saved and you can shrink it later). The --paper
-mode uses PyYAML (already in scripts/requirements.txt) to read your data files.
+Needs Python 3.8+. Pillow is optional (without it, --featured saves the image
+uncompressed). --paper needs PyYAML.
 """
+# Website tooling, largely written by AI (Claude) and checked for behaviour
+# rather than wording. It describes how the site is built, not how the lab works;
+# lab policy lives in _guide/. See accessibility.md, "How this site is made".
 from __future__ import annotations
 import argparse
 import datetime
@@ -263,7 +243,7 @@ def build_entry(f, indent="      "):
     elif f.get("tag"):
         # `tag:` labels why a NON-paper story is in the list (Center/Award/Funding/
         # Profile/Feature). A story with a doi shows a "Paper" pill instead, so the
-        # two are mutually exclusive — only emit tag when there is no doi.
+        # two are mutually exclusive; only emit tag when there is no doi.
         lines.append(indent + "tag: " + f["tag"])
     if f.get("featured"):
         lines.append(indent + "featured: true")
@@ -292,7 +272,7 @@ def build_media_entry(f):
 
 def append_to_media(entry_block):
     """Insert one item at the TOP of media.yml (newest first), just after the
-    header comment block. Targeted text insert — header/formatting preserved."""
+    header comment block. Targeted text insert; header/formatting preserved."""
     if not os.path.exists(MEDIA_YML):
         raise FileNotFoundError(MEDIA_YML)
     lines = open(MEDIA_YML, encoding="utf-8").read().splitlines()
@@ -332,9 +312,8 @@ def append_to_press(entry_block, year):
 
 
 # ── Paper announcements: DOI → updates.yml entry + social captions ────────────
-#
-# This whole section is self-contained so the rest of add_press.py keeps working
-# with zero extra dependencies; PyYAML is imported lazily, only when --paper runs.
+# Self-contained; PyYAML is imported lazily so the rest of the script needs no
+# extra dependencies.
 MONTHS = ["", "January", "February", "March", "April", "May", "June", "July",
           "August", "September", "October", "November", "December"]
 
@@ -541,7 +520,7 @@ def build_social(paper, doi):
     venue_line = ("%s (%s)" % (venue, year)) if venue else str(year)
 
     linkedin = (
-        "\U0001F426 New from the BIRD Lab — our latest paper is out"
+        "\U0001F426 New from the BIRD Lab: our latest paper is out"
         + ((" in %s" % venue) if venue else "") + ".\n\n"
         "“" + title + "”\n\n"
         "[One plain-language sentence on what we found and why it matters.]\n\n"
@@ -597,7 +576,7 @@ def run_paper(args):
     who = people.get(lead_key) or ("Dr. Harvey" if lead_key in harvey_keys else "(external lead)")
     print("  lead link: %s" % who, file=sys.stderr)
     if not args.topic:
-        print("  ! no --topic given: the title is used as a placeholder — tighten it.",
+        print("  ! no --topic given: the title is used as a placeholder, so tighten it.",
               file=sys.stderr)
     print("-" * 66, file=sys.stderr)
 

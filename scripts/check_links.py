@@ -1,28 +1,24 @@
 #!/usr/bin/env python3
+"""Check the outbound links in _data/*.yml: paper DOIs, press and media URLs, and
+the data/code/preprint links attached to papers.
+
+Reads the YAML directly, so the report names the paper or story each dead link
+belongs to. (The lychee sweep covers the Lab Guide's prose links instead.)
+
+Low false alarm by design:
+  * Only 404/410 or a hard connection failure counts as broken. Publishers and
+    news sites often answer bots with 403/429/503; those are reported as
+    "couldn't verify", so the issue doesn't cry wolf.
+  * Sends a browser User-Agent and follows redirects (DOIs are 302s). Tries HEAD,
+    falls back to GET.
+  * Read-only. Writes a Markdown report and exits 1 only when something is
+    genuinely broken, so CI can open an issue on that.
+
+    python scripts/check_links.py [--out report.md]   # CI: link-rot-check.yml
 """
-check_links.py: an annual health check for the OUTBOUND links the site depends on,
-the ones GitHub can't see are broken — every paper DOI, every "In the news" press
-and media URL, and the data/code/preprint/open-access links attached to papers.
-
-WHY a dedicated checker (not just the lychee guide sweep): these live in the data
-files (_data/*.yml), point at publishers and news sites that quietly move or delete
-pages, and are the links a visitor is most disappointed to find dead. This reads the
-YAML directly, so the report says exactly which paper or story a dead link belongs to.
-
-SAFE / low-false-alarm by design:
-  * Only a "gone" verdict (HTTP 404/410) or a hard connection/DNS failure counts as
-    BROKEN. Publishers and news sites routinely answer bots with 403/429/503; those
-    are reported as "couldn't verify" (a heads-up), never as broken, so the yearly
-    issue doesn't cry wolf.
-  * Sends a real browser User-Agent and follows redirects (DOIs are 302s to the
-    publisher). Tries HEAD first, falls back to GET when a server dislikes HEAD.
-  * Read-only: it never edits your files. It writes a Markdown report and exits 1
-    only when something is truly broken (so CI can open an issue on that).
-
-Run locally:   python scripts/check_links.py                 # report to the console
-               python scripts/check_links.py --out report.md # ...and/or to a file
-In CI:         see .github/workflows/link-rot-check.yml
-"""
+# Website tooling, largely written by AI (Claude) and checked for behaviour
+# rather than wording. It describes how the site is built, not how the lab works;
+# lab policy lives in _guide/. See accessibility.md, "How this site is made".
 from __future__ import annotations
 import argparse
 import concurrent.futures
@@ -104,7 +100,7 @@ def collect_targets():
         if isinstance(p, dict) and p.get("oa_url"):
             add("Open access · " + (p.get("title") or "")[:60], p["oa_url"])
 
-    # "In the news" — written press (grouped by year) and media (flat list).
+    # "In the news": written press (grouped by year) and media (flat list).
     for yr in (load("press.yml") or []):
         for it in (yr.get("items") or []) if isinstance(yr, dict) else []:
             add("Press · " + (it.get("source") or it.get("title") or "")[:60], it.get("url"))
@@ -136,7 +132,7 @@ def check(url):
                     or "no address associated" in text or "connection refused" in text:
                 return "broken", "cannot reach host (%s)" % reason
             return "unverified", "network error (%s)" % reason
-        except Exception as e:                 # noqa: BLE001 — never crash the sweep
+        except Exception as e:                 # noqa: BLE001; never crash the sweep
             return "unverified", "error (%s)" % e
     return "unverified", "no response"
 
@@ -165,15 +161,15 @@ def main(argv=None):
              "**%d** OK." % (len(targets), len(broken), len(unverified),
                              len(targets) - len(broken) - len(unverified)), ""]
     if broken:
-        lines += ["## ❌ Broken — please fix", ""]
+        lines += ["## ❌ Broken, please fix", ""]
         for label, url, detail in broken:
-            lines.append("- **%s** — %s\n  - <%s>" % (label, detail, url))
+            lines.append("- **%s**: %s\n  - <%s>" % (label, detail, url))
         lines.append("")
     if unverified:
         lines += ["## ⚠️ Couldn't verify (often bot-blocked or a slow server; "
                   "worth a quick manual click, but usually fine)", ""]
         for label, url, detail in unverified:
-            lines.append("- %s — %s\n  - <%s>" % (label, detail, url))
+            lines.append("- %s: %s\n  - <%s>" % (label, detail, url))
         lines.append("")
     if not broken and not unverified:
         lines += ["Everything resolved. 🎉", ""]

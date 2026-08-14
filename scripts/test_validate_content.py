@@ -1,17 +1,14 @@
 #!/usr/bin/env python3
 """Tests for validate_content.py.
 
-WHY THIS EXISTS
-    A checker that never complains is indistinguishable from no checker at all.
-    These tests take the real content, break one thing on purpose, and confirm
-    the checker notices. If someone later refactors validate_content.py and
-    quietly disables a check, these fail.
+Each test breaks one thing on purpose and confirms the checker notices, so a
+check can't be quietly disabled later.
 
-HOW TO RUN
-    python3 scripts/test_validate_content.py
-
-    Runs automatically on every pull request (see site-checks.yml).
+    python3 scripts/test_validate_content.py    # also runs on every pull request
 """
+# Website tooling, largely written by AI (Claude) and checked for behaviour
+# rather than wording. It describes how the site is built, not how the lab works;
+# lab policy lives in _guide/. See accessibility.md, "How this site is made".
 
 import copy
 import os
@@ -30,7 +27,7 @@ REAL_REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 class ValidatorTestCase(unittest.TestCase):
-    """Each test works on a throwaway copy of the repo, so nothing real is touched."""
+    """Each test works on a throwaway copy; nothing real is touched."""
 
     def setUp(self):
         self.tmp = tempfile.mkdtemp()
@@ -40,9 +37,13 @@ class ValidatorTestCase(unittest.TestCase):
         os.makedirs(os.path.join(self.tmp, "scripts"), exist_ok=True)
         shutil.copy(os.path.join(REAL_REPO, "scripts", "issue_to_change.py"),
                     os.path.join(self.tmp, "scripts", "issue_to_change.py"))
-        # Link rather than copy assets/ — it's large, and the "does this image
-        # exist" checks only need to read the directory listing.
+        # Link, not copy: assets/ is large and we only read the listing.
         os.symlink(os.path.join(REAL_REPO, "assets"), os.path.join(self.tmp, "assets"))
+        # Root pages too: review.yml can point at any of them (portal.md).
+        for name in os.listdir(REAL_REPO):
+            if name.endswith((".md", ".html")) and os.path.isfile(os.path.join(REAL_REPO, name)):
+                os.symlink(os.path.join(REAL_REPO, name), os.path.join(self.tmp, name))
+        os.symlink(os.path.join(REAL_REPO, "_guide"), os.path.join(self.tmp, "_guide"))
         # Point the validator at the copy instead of the real repo.
         self._saved = (vc.REPO_ROOT, vc.DATA_DIR, vc.FORMS_DIR)
         vc.REPO_ROOT = self.tmp
@@ -66,7 +67,7 @@ class ValidatorTestCase(unittest.TestCase):
         return list(check())
 
     def assertFlags(self, check, needle):
-        """The check must produce a problem mentioning `needle`."""
+        """The check must flag a problem mentioning `needle`."""
         problems = self.run_check(check)
         blob = " ".join(f"{p.where} {p.what}" for p in problems).lower()
         self.assertTrue(
@@ -81,7 +82,7 @@ class ValidatorTestCase(unittest.TestCase):
 
     # ── the real content should pass ──────────────────────────────────────────
     def test_real_content_is_clean(self):
-        """Guards against the checker becoming noisy and being ignored."""
+        """Stops the checker drifting into noise, which gets it ignored."""
         for check in vc.CHECKS:
             self.assertClean(check)
 
@@ -212,10 +213,22 @@ class ValidatorTestCase(unittest.TestCase):
         self.write("publications.yml", pubs)
         self.assertFlags(vc.check_publications, "24 july 2026")
 
+    def test_review_list_pointing_at_a_missing_file_is_caught(self):
+        review = self.read("review.yml")
+        review["items"][0]["file"] = "_data/deleted-long-ago.yml"
+        self.write("review.yml", review)
+        self.assertFlags(vc.check_review_list, "deleted-long-ago")
+
+    def test_review_item_without_a_date_is_caught(self):
+        review = self.read("review.yml")
+        review["items"][0].pop("last_reviewed", None)
+        self.write("review.yml", review)
+        self.assertFlags(vc.check_review_list, "last_reviewed")
+
     # ── DOI normalisation, the subtle one ─────────────────────────────────────
     def test_doi_forms_are_treated_as_equal(self):
-        """publications.yml stores full URLs, pub_links.yml stores bare DOIs.
-        If these ever stop matching, every extras link silently disappears."""
+        """publications.yml stores full URLs, pub_links.yml bare DOIs. If these
+        stop matching, every extras link silently disappears."""
         self.assertEqual(
             vc.norm_doi("https://doi.org/10.1098/rsif.2025.1082"),
             vc.norm_doi("10.1098/RSIF.2025.1082"),

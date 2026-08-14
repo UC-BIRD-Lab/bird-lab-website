@@ -1,4 +1,7 @@
 name: Guide link check
+# Website tooling, largely written by AI (Claude) and checked for behaviour
+# rather than wording. It describes how the site is built, not how the lab works;
+# lab policy lives in _guide/. See accessibility.md, "How this site is made".
 
 # Yearly sweep for dead EXTERNAL links in the lab guide (Site checks skips
 # external links on purpose, they flake, so this runs them separately, on a
@@ -11,7 +14,10 @@ name: Guide link check
 # You can also run it any time from the Actions tab ("Run workflow").
 on:
   schedule:
-    - cron: "0 8 5 7 *"   # once a year: July 5, 08:00 UTC
+    # Quarterly, a week after the review sweep so the two don't land together.
+    # Yearly was too slow for hiring, funding and safety links, which are the
+    # ones a visitor is most likely to need and most likely to find broken.
+    - cron: "0 8 12 1,4,7,10 *"   # 12 Jan / Apr / Jul / Oct, 08:00 UTC
   workflow_dispatch:
 
 env:
@@ -55,12 +61,13 @@ jobs:
           output: ./lychee-report.md
           fail: false   # don't fail the run; the issue below is the alert
 
-      - name: Open an issue listing the broken links
+      - name: Open or update the issue listing the broken links
         if: steps.lychee.outputs.exit_code != 0
-        uses: peter-evans/create-issue-from-file@v6
-        with:
-          title: "Lab guide: broken external links (scheduled check)"
-          content-filepath: ./lychee-report.md
-          labels: |
-            lab-guide
-            link-rot
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          bash scripts/upsert_issue.sh \
+            "link-rot-guide" \
+            "Lab guide: broken external links" \
+            ./lychee-report.md \
+            "Dead external links found in the Lab Guide by the quarterly sweep"

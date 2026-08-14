@@ -1,6 +1,11 @@
 # BIRD Lab website
 
-The public website for the **Bio-Informed Research & Design (BIRD) Lab** at UC Davis: built as a static [Jekyll](https://jekyllrb.com/) site, hosted free on **GitHub Pages**, and designed so that non-technical lab members can keep it current by editing plain text files.
+> **How this file was written.** Website documentation, largely written by AI
+> (Claude) from the code in this repository. Christina checked that it works, not
+> that every sentence is how she would put it. The site-wide statement is on the
+> [Accessibility page](accessibility.md) under *How this site is made*.
+
+The public website for the **Bio-Informed Research & Design (BIRD) Lab** at UC Davis. A static [Jekyll](https://jekyllrb.com/) site on **GitHub Pages**, built so non-technical lab members can keep it current by editing plain text files.
 
 > **New here? Read these in order:**
 > - [CONTENT-GUIDE.md](CONTENT-GUIDE.md) (edit content)
@@ -13,17 +18,15 @@ The public website for the **Bio-Informed Research & Design (BIRD) Lab** at UC D
 
 ## Quick start (run it on your computer)
 
-You only need this to preview changes locally. Editing through GitHub's website (see [CONTENT-GUIDE.md](CONTENT-GUIDE.md)) needs no setup at all.
+Only needed to preview changes locally. Editing through GitHub's website (see [CONTENT-GUIDE.md](CONTENT-GUIDE.md)) needs no setup.
 
-**Easiest (recommended):** install [Docker Desktop](https://www.docker.com/products/docker-desktop/), then:
+**Recommended:** install [Docker Desktop](https://www.docker.com/products/docker-desktop/), then:
 ```bash
 ./serve.sh        # builds in a container, serves http://localhost:4000
 ```
-This avoids compiling Ruby gems on your Mac.
+This uses the same Ruby and `Gemfile.lock` as the live build, and avoids compiling gems on your Mac.
 
-**Native Ruby** (if you prefer): `bundle install`, then `bundle exec jekyll serve`.
-On recent macOS this can fail on the `eventmachine` gem: see the fix in
-[MAINTENANCE.md](MAINTENANCE.md#preview-locally-before-publishing-optional).
+**Native Ruby:** `bundle install`, then `bundle exec jekyll serve`. On recent macOS this can fail on the `eventmachine` gem. Fix in [MAINTENANCE.md](MAINTENANCE.md#preview-locally-before-publishing-optional).
 
 ---
 
@@ -51,30 +54,33 @@ On recent macOS this can fail on the `eventmachine` gem: see the fix in
 │   ├── gallery.yml         "scenes from the lab" photos
 │   ├── openings.yml        Join-page recruiting status (one-line toggles)
 │   ├── facilities.yml      facilities: tagline, specs, capabilities, funding
+│   ├── safety.yml  funding.yml  media.yml  roles.yml
+│   ├── announcement.yml    site-wide banner (with its expiry date)
+│   ├── review.yml          what to re-check, and how often
+│   ├── cali*.yml           CALI facility page: specs, rates, gallery, milestones
 │   └── navigation.yml      top menu
 ├── _layouts/  _includes/ ← page templates (rarely touched)
 ├── assets/              ← CSS, JS, logo, images
-├── scripts/             ← publications sync · press/paper helper · link check · image tools
+├── scripts/             ← publications sync · press helper · content + link checks · image tools
 ├── CONTRIBUTING.md      ← how lab members submit updates + delegation
-└── .github/             ← workflows (deploy · publications · checks · link-rot · images · issue→PR) + issue forms
+├── CLAUDE.md            ← house style for AI assistants working in this repo
+└── .github/             ← workflows + issue forms
 ```
 
-**Rules of thumb:** 
-- Content lives in `_data/*.yml` and the `_guide/*.md` /
-`*.md` pages. 
-- Design lives in `assets/` and `_layouts/`. You can do almost all
-day-to-day updates without touching the design.
+**Rules of thumb:**
+- Content lives in `_data/*.yml` and the `_guide/*.md` / `*.md` pages.
+- Design lives in `assets/` and `_layouts/`. Almost all day-to-day updates leave the design alone.
 
 ---
 
 ## How it's built (in brief)
 
-- Static **Jekyll** site on **GitHub Pages**: content in Markdown + YAML, no runtime services, three GitHub Actions (deploy · publications sync · link + accessibility check) plus Dependabot. 
-- Journal articles and DOI-bearing conference papers sync monthly from **OpenAlex** by the PI's **ORCID** and open a pull request for review; DOI-less talks and posters and everything else are hand-curated in `_data/`. 
-- The design prioritizes **maintainability → accessibility (WCAG 2.1 AA) → scientific communication → automation → design**, in that order, so where they traded off the higher priority won (e.g. plain editable data files over a headless CMS).
+- Static **Jekyll** on **GitHub Pages**: Markdown and YAML, no runtime services, no database. GitHub Actions handle deployment, the publications sync, the pre-merge checks and the scheduled reviews; Dependabot keeps gems current.
+- Every change reaches the live site through a pull request that must pass three checks: content validation, broken links and missing images, and a WCAG 2.1 AA scan.
+- Journal articles and DOI-bearing conference papers sync monthly from **OpenAlex** by the PI's **ORCID** and open a pull request for review. Talks and posters without a DOI are hand-curated in `_data/`.
+- Priorities, in order: **maintainability → accessibility (WCAG 2.1 AA) → scientific communication → automation → design.** Where two conflicted the higher one won: plain editable data files over a headless CMS, for instance.
 
-The decisions and trade-offs behind all of this are in
-[ARCHITECTURE.md](ARCHITECTURE.md).
+Decisions and trade-offs: [ARCHITECTURE.md](ARCHITECTURE.md).
 
 ---
 

@@ -1,30 +1,21 @@
 #!/usr/bin/env python3
-"""Check the content files in _data/ for mistakes before they reach the website.
+"""Check _data/ for content mistakes that would build fine but publish something wrong.
 
-WHAT THIS IS FOR
-    The site build is happy to publish a page that is wrong. A misspelled name
-    in a project's `lead:`, a DOI that doesn't match any paper, a photo path
-    pointing at a file nobody uploaded — Jekyll renders all of these without
-    complaining, and the mistake goes live silently. This script looks for that
-    class of error, so a pull request fails instead of the website being wrong.
+Cross-references names, DOIs and image paths. Doesn't check writing or design.
 
-    It checks facts and cross-references. It does not check writing or design.
-
-HOW TO RUN IT
     python3 scripts/validate_content.py
 
-    No output and "All content checks passed" means everything is fine.
-    Otherwise it prints each problem, the file it's in, and how to fix it.
+Runs on every pull request via site-checks.yml.
 
-    It runs automatically on every pull request (see .github/workflows/
-    site-checks.yml), so you don't have to remember.
+To add a check: write a check_* function that yields Problem objects and add it
+to CHECKS at the bottom. Write the message for someone who has never opened this
+file: what's wrong, which file, what to do.
 
-ADDING A CHECK
-    Each check is a small function named check_* that yields Problem objects.
-    Add one, and add its name to CHECKS at the bottom. Please write the message
-    for someone who has never opened this file: say what is wrong, in which
-    file, and what to do about it.
+Why this exists: MAINTENANCE.md → "Checking your content before you publish".
 """
+# Website tooling, largely written by AI (Claude) and checked for behaviour
+# rather than wording. It describes how the site is built, not how the lab works;
+# lab policy lives in _guide/. See accessibility.md, "How this site is made".
 
 from __future__ import annotations
 
@@ -46,7 +37,7 @@ FORMS_DIR = os.path.join(REPO_ROOT, ".github", "ISSUE_TEMPLATE")
 # ── Problem reporting ─────────────────────────────────────────────────────────
 @dataclass
 class Problem:
-    """One thing that's wrong. `where` is the file; `fix` is plain-English advice."""
+    """`where` is the file; `fix` is plain-English advice."""
     where: str
     what: str
     fix: str = ""
@@ -63,7 +54,7 @@ def warn(where, what, fix=""):
 
 # ── Loading ───────────────────────────────────────────────────────────────────
 def load(name):
-    """Read one _data file. Returns None if it's missing (not every file is required)."""
+    """Read one _data file; None if missing."""
     path = os.path.join(DATA_DIR, name)
     if not os.path.exists(path):
         return None
@@ -72,9 +63,8 @@ def load(name):
 
 
 def norm_doi(value):
-    """DOIs are written two ways in this repo: bare (10.1098/rsif.2025.1082) in
-    pub_links.yml and press.yml, full URL (https://doi.org/10.1098/...) in
-    publications.yml. Compare them in one form so matching actually works."""
+    """DOIs appear bare in pub_links/press and as full URLs in publications.
+    Reduce both to the bare form so they compare equal."""
     if not value:
         return ""
     text = str(value).strip().lower()
@@ -92,7 +82,7 @@ def asset_exists(web_path):
 
 
 def people_names(people):
-    """Every name a person can be referred to by: their name plus any aliases."""
+    """Names plus aliases."""
     names = set()
     for group in (people or {}).get("groups", []) or []:
         for member in group.get("members") or []:
@@ -104,9 +94,8 @@ def people_names(people):
 
 
 def manual_entries(manual):
-    """publications_manual.yml groups entries under headings (conference, blog),
-    plus an `exclude` list that is deliberately NOT publications. Flatten the
-    real ones into a single list of (heading, entry) pairs."""
+    """Flatten publications_manual.yml's headings into (heading, entry) pairs,
+    skipping `exclude` (which isn't publications)."""
     out = []
     for heading, entries in (manual or {}).items():
         if heading == "exclude":
@@ -118,8 +107,7 @@ def manual_entries(manual):
 
 
 def excluded_dois(manual):
-    """DOIs intentionally kept off the site (see the `exclude:` list, which the
-    OpenAlex sync also reads). Known, but on purpose not shown."""
+    """DOIs deliberately kept off the site."""
     return {
         norm_doi(e.get("doi"))
         for e in (manual or {}).get("exclude", []) or []
@@ -128,7 +116,7 @@ def excluded_dois(manual):
 
 
 def all_dois(pubs, manual):
-    """Every DOI the site can actually display and link to."""
+    """Every DOI the site can display."""
     dois = {norm_doi(e["doi"]) for e in (pubs or []) if isinstance(e, dict) and e.get("doi")}
     dois |= {e["doi"] and norm_doi(e["doi"]) for _, e in manual_entries(manual) if e.get("doi")}
     return {d for d in dois if d}
@@ -136,7 +124,7 @@ def all_dois(pubs, manual):
 
 # ── Checks ────────────────────────────────────────────────────────────────────
 def check_yaml_parses():
-    """Nothing else can run if a file is malformed, so this runs first and alone."""
+    """Runs first and alone: nothing else works if a file won't parse."""
     for filename in sorted(os.listdir(DATA_DIR)):
         if not filename.endswith((".yml", ".yaml")):
             continue
@@ -150,8 +138,8 @@ def check_yaml_parses():
             yield error(
                 where,
                 f"This file isn't valid YAML: {getattr(exc, 'problem', exc)}",
-                "Usually indentation (use spaces, never tabs), a missing colon, or a "
-                "curly quote pasted from Word. Check the line above and the one before it.",
+                "Usually indentation (spaces, never tabs), a missing colon, or a curly "
+                "quote pasted from Word. Check that line and the one above it.",
             )
 
 
@@ -164,41 +152,41 @@ def check_people():
         gid = group.get("id", "?")
         if not group.get("title"):
             yield error(f"_data/people.yml (group '{gid}')", "This group has no `title:`.",
-                        "Add a title — it's the heading shown on the People page.")
+                        "It's the heading on the People page.")
         for member in group.get("members") or []:
             name = (member.get("name") or "").strip()
             if not name:
                 yield error(f"_data/people.yml (group '{gid}')", "A member has no `name:`.",
-                            "Every person needs a name; it's how projects and news link to them.")
+                            "Projects and news link to people by name.")
                 continue
             if name in seen:
                 yield error("_data/people.yml",
                             f"'{name}' is listed twice (in '{seen[name]}' and '{gid}').",
-                            "Remove the duplicate. Two entries with the same name break the "
-                            "automatic linking of names in news and projects.")
+                            "Remove one. Duplicate names break the automatic linking in news "
+                            "and projects.")
             seen[name] = gid
 
             if not member.get("role"):
                 yield error("_data/people.yml", f"'{name}' has no `role:`.",
-                            "The role sets their bird badge; without it the badge is missing.")
+                            "The role sets their bird badge.")
 
             photo = member.get("photo")
             if photo and not asset_exists(photo):
                 yield error("_data/people.yml",
                             f"'{name}' has photo `{photo}`, but that file isn't in the repo.",
-                            "Upload the image to assets/img/people/, or delete the `photo:` "
-                            "line to fall back to a clean initials avatar.")
+                            "Upload it to assets/img/people/, or delete the `photo:` line for "
+                            "an initials avatar.")
 
             email = member.get("email")
             if email and not re.match(r"^[^@\s]+@[^@\s]+\.[^@\s]+$", str(email)):
                 yield error("_data/people.yml", f"'{name}' has an email that looks wrong: {email}",
-                            "Check for a typo or a stray space.")
+                            "Check for a typo or stray space.")
 
             orcid = member.get("orcid")
             if orcid and not re.match(r"^\d{4}-\d{4}-\d{4}-\d{3}[\dX]$", str(orcid)):
                 yield error("_data/people.yml", f"'{name}' has an ORCID that looks wrong: {orcid}",
-                            "An ORCID looks like 0000-0002-2830-0844 — four groups of four. "
-                            "Paste just the number, not the full orcid.org address.")
+                            "Use just the number, like 0000-0002-2830-0844, not the full "
+                            "orcid.org address.")
 
 
 def check_research():
@@ -215,7 +203,7 @@ def check_research():
     for theme in research.get("themes", []) or []:
         if not theme.get("id"):
             yield error("_data/research.yml", f"Theme '{theme.get('title', '?')}' has no `id:`.",
-                        "Projects point at their theme by id, so every theme needs one.")
+                        "Projects reference themes by id.")
 
     for project in research.get("projects", []) or []:
         title = project.get("title", "(untitled project)")
@@ -223,15 +211,14 @@ def check_research():
         lead = (project.get("lead") or "").strip()
         if not lead:
             yield error("_data/research.yml", f"Project '{title}' has no `lead:`.",
-                        "Add the lead's name exactly as it appears in _data/people.yml.")
+                        "Use the name exactly as in _data/people.yml.")
         elif lead not in known_people:
             close = [n for n in known_people if lead.split()[-1].lower() in n.lower()] if lead.split() else []
             hint = f" Did you mean '{close[0]}'?" if close else ""
             yield error("_data/research.yml",
                         f"Project '{title}' has lead '{lead}', who isn't in _data/people.yml.{hint}",
-                        "The name must match a person exactly (or one of their `aliases:`), "
-                        "otherwise the project card can't link to them. If they've left the "
-                        "lab, keep them in people.yml or reassign the project.")
+                        "Must match a name or alias in people.yml, or the card can't link "
+                        "to them. If they've left, keep them listed or reassign the project.")
 
         theme = project.get("theme")
         if theme and theme not in theme_ids:
@@ -244,9 +231,8 @@ def check_research():
                 yield error("_data/research.yml",
                             f"Project '{title}' lists paper {doi}, which isn't in the "
                             "publications data.",
-                            "The card looks papers up by DOI, so an unknown one shows nothing. "
-                            "Add the paper to _data/publications_manual.yml, or wait for the "
-                            "monthly OpenAlex sync to pick it up.")
+                            "Cards look papers up by DOI, so an unknown one shows nothing. Add it "
+                            "to publications_manual.yml, or wait for the monthly sync.")
 
         image = project.get("image")
         if image and not asset_exists(image):
@@ -270,8 +256,7 @@ def check_publications():
         for field in required:
             if not entry.get(field):
                 yield error(f"_data/{label}", f"'{title}' has no `{field}:`.",
-                            "Every publication needs at least a title and year; "
-                            "papers also need an author list.")
+                            "Publications need a title and year; papers also need authors.")
 
         date = entry.get("date")
         if date and not re.match(r"^\d{4}-\d{2}-\d{2}$", str(date)):
@@ -288,9 +273,8 @@ def check_publications():
             if doi in seen:
                 yield error("_data/publications*.yml",
                             f"DOI {doi} appears twice ('{seen[doi]}' and '{title}').",
-                            "The same paper is listed in both the automatic and the manual "
-                            "file, so it will show up twice. Delete the entry in "
-                            "publications_manual.yml — the OpenAlex sync maintains the other.")
+                            "It will appear twice. Delete the publications_manual.yml entry; "
+                            "the OpenAlex sync maintains the other.")
             seen[doi] = title
 
 
@@ -305,19 +289,18 @@ def check_pub_links():
         doi = norm_doi(entry.get("doi"))
         if not doi:
             yield error("_data/pub_links.yml", "An entry has no `doi:`.",
-                        "Extras are attached to a paper by DOI, so it's required.")
+                        "Extras attach to a paper by DOI.")
             continue
         if doi in excluded_dois(manual):
             yield warn("_data/pub_links.yml",
                        f"{doi} is on the `exclude:` list in publications_manual.yml, "
                        "so it isn't shown on the site.",
-                       "These extras will never appear. Either remove this entry, or remove "
-                       "the DOI from `exclude:` if the paper should be listed after all.")
+                       "These extras will never appear. Remove this entry, or take the DOI "
+                       "off `exclude:` if the paper should be listed.")
         elif doi not in known:
             yield error("_data/pub_links.yml",
                         f"{doi} doesn't match any paper in the publications data.",
-                        "Data/code/figure links attach to a paper by DOI. Check for a typo, "
-                        "or add the paper first — otherwise these extras show nowhere.")
+                        "Check for a typo, or add the paper first, otherwise these show nowhere.")
         image = entry.get("image")
         if image and not asset_exists(image):
             yield error("_data/pub_links.yml",
@@ -338,7 +321,7 @@ def check_press():
             for field in ("title", "source", "url"):
                 if not item.get(field):
                     yield error("_data/press.yml", f"'{title}' has no `{field}:`.",
-                                "Press entries need a title, the outlet, and a link.")
+                                "Press entries need a title, outlet and link.")
             url = item.get("url")
             if url and not str(url).startswith(("http://", "https://")):
                 yield error("_data/press.yml", f"'{title}' has a link that isn't a full address: {url}",
@@ -348,13 +331,11 @@ def check_press():
                 yield warn("_data/press.yml",
                            f"'{title}' cites DOI {doi}, which is on the `exclude:` list and "
                            "so isn't shown on the site.",
-                           "The coverage will appear but won't link to a paper. That may be "
-                           "fine — just confirm it's intentional.")
+                           "The coverage will appear but won't link to a paper. Confirm that's intended.")
             elif doi and doi not in known:
                 yield error("_data/press.yml",
                             f"'{title}' cites DOI {doi}, which isn't in the publications data.",
-                            "Coverage is linked to the paper it's about by DOI. Check the DOI, "
-                            "or add the paper to publications_manual.yml.")
+                            "Check the DOI, or add the paper to publications_manual.yml.")
             image = item.get("image")
             if image and not asset_exists(image):
                 yield error("_data/press.yml", f"'{title}' has image `{image}`, which isn't in the repo.",
@@ -370,11 +351,10 @@ def check_facilities():
         names = ", ".join(f.get("name", "?") for f in featured)
         yield error("_data/facilities.yml",
                     f"{len(featured)} facilities are marked `featured: true` ({names}).",
-                    "Only one can be the flagship. Remove `featured: true` from the others.")
+                    "Remove `featured: true` from all but one.")
     elif not featured:
         yield warn("_data/facilities.yml", "No facility is marked `featured: true`.",
-                   "The Facilities page leads with the featured one; without it the page "
-                   "has no headline entry.")
+                   "The Facilities page leads with the featured one.")
 
     for facility in facilities:
         if not isinstance(facility, dict):
@@ -388,15 +368,13 @@ def check_facilities():
                             "Upload it to assets/img/facilities/, or remove the `photo:` line.")
             if not facility.get("photo_alt"):
                 yield error("_data/facilities.yml", f"'{name}' has a photo but no `photo_alt:`.",
-                            "Alt text describes the image for people using a screen reader. "
-                            "Write one sentence describing what's visible. This is a WCAG "
-                            "requirement, not a nicety.")
+                            "Write one sentence describing what's visible. Screen readers need "
+                            "it, and WCAG AA requires it.")
 
 
 def check_updates():
-    """News entry types must match the dropdown in the issue form AND the set the
-    issue-to-PR script accepts. If these three drift apart, a lab member files a
-    perfectly good form and the automation silently drops or mislabels it."""
+    """News types must match across updates.yml, the issue form and
+    issue_to_change.py, otherwise a valid form gets dropped or mislabelled."""
     updates = load("updates.yml")
 
     script_types = set()
@@ -422,8 +400,8 @@ def check_updates():
         yield error(".github/ISSUE_TEMPLATE/add-news.yml vs scripts/issue_to_change.py",
                     "The news-type options in the issue form and the script disagree. "
                     f"Only in the form: {only_form}. Only in the script: {only_script}.",
-                    "Make the two lists identical. If they differ, someone can choose a type "
-                    "in the form that the automation then rejects or mislabels.")
+                    "Make the two lists identical, or someone can pick a type the "
+                    "automation then rejects.")
 
     allowed = script_types or form_types
     for block in updates or []:
@@ -442,14 +420,14 @@ def check_updates():
             if date and not re.match(r"^[A-Z][a-z]+ \d{4}$", str(date)):
                 yield error("_data/updates.yml",
                             f"News entry '{snippet}…' has date '{date}'.",
-                            "Timeline dates are written 'Month YYYY', e.g. June 2026.")
+                            "Timeline dates are 'Month YYYY', e.g. June 2026.")
             if not event.get("text"):
                 yield error("_data/updates.yml", "A news entry has no `text:`.",
-                            "Every entry needs a sentence describing what happened.")
+                            "Each entry needs a sentence describing what happened.")
 
 
 def check_person_roles_match_form():
-    """The add-person form's dropdown must map onto a real group in people.yml."""
+    """Every role in the add-person form must map to a real people.yml group."""
     form_path = os.path.join(FORMS_DIR, "add-person.yml")
     script_path = os.path.join(REPO_ROOT, "scripts", "issue_to_change.py")
     if not (os.path.exists(form_path) and os.path.exists(script_path)):
@@ -470,8 +448,8 @@ def check_person_roles_match_form():
     if missing:
         yield error(".github/ISSUE_TEMPLATE/add-person.yml vs scripts/issue_to_change.py",
                     f"The form offers role(s) the script can't file: {', '.join(sorted(missing))}.",
-                    "Add them to ROLE_GROUP in issue_to_change.py, mapping each to a group id "
-                    "in people.yml. Otherwise someone picks that role and the automation fails.")
+                    "Add them to ROLE_GROUP in issue_to_change.py, mapped to a group id in "
+                    "people.yml, or picking that role breaks the automation.")
 
     people = load("people.yml")
     group_ids = {g.get("id") for g in (people or {}).get("groups", []) or []}
@@ -498,16 +476,45 @@ def check_openings():
         if not isinstance(block.get("open"), bool):
             yield error("_data/openings.yml",
                         f"`{key}.open` is '{block.get('open')}', which isn't true or false.",
-                        "Write `open: true` or `open: false` with no quotes — quoted "
-                        "\"true\" is text, and the status pill will be wrong.")
+                        "Write `open: true` or `open: false` unquoted. Quoted \"true\" is "
+                        "text, and the pill will be wrong.")
         for note in ("open_note", "closed_note"):
             if not block.get(note):
                 yield error("_data/openings.yml", f"`{key}` has no `{note}:`.",
-                            "Both notes are needed so the pill reads correctly either way.")
+                            "Both are needed so the pill reads correctly either way.")
+
+
+def check_review_list():
+    """A review.yml entry pointing at a deleted file silently stops being
+    reviewed: the failure the reminder exists to prevent."""
+    config = load("review.yml")
+    if not config:
+        return
+    for item in config.get("items", []) or []:
+        what = item.get("what", "(unnamed)")
+        target = item.get("file")
+        if not target:
+            yield error("_data/review.yml", f"'{what}' has no `file:`.",
+                        "Point it at the file to review.")
+        elif not os.path.exists(os.path.join(REPO_ROOT, target)):
+            yield error("_data/review.yml",
+                        f"'{what}' points at `{target}`, which doesn't exist.",
+                        "Renamed or deleted. Fix the path, or remove the entry.")
+        if not item.get("last_reviewed"):
+            yield error("_data/review.yml", f"'{what}' has no `last_reviewed:` date.",
+                        "Nothing can tell when the next check is due. Use today's date if "
+                        "you've just looked at it.")
+        every = item.get("every_months")
+        if not isinstance(every, int) or every < 1:
+            yield error("_data/review.yml",
+                        f"'{what}' has `every_months: {every}`, which isn't a whole "
+                        "number of months.",
+                        "Use a plain number, e.g. `every_months: 12`.")
 
 
 CHECKS = [
     check_people,
+    check_review_list,
     check_research,
     check_publications,
     check_pub_links,
@@ -520,7 +527,7 @@ CHECKS = [
 
 
 def main():
-    # If any file is unparseable, everything downstream is noise. Stop here.
+    # One unparseable file makes everything downstream noise.
     parse_problems = list(check_yaml_parses())
     problems = parse_problems if parse_problems else [
         p for check in CHECKS for p in check()
@@ -539,7 +546,7 @@ def main():
     if errors:
         print(f"{len(errors)} problem(s) found"
               + (f", {len(warnings)} note(s)" if warnings else "")
-              + ". The website would build, but it would be wrong — please fix the above.")
+              + ". The website would build, but it would be wrong. Please fix the above.")
         return 1
     if warnings:
         print(f"All content checks passed ({len(warnings)} note(s) above, nothing blocking).")

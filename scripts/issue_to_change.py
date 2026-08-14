@@ -1,34 +1,31 @@
 #!/usr/bin/env python3
-"""
-issue_to_change.py: turn a filled-in website issue FORM into the matching
-`_data/*.yml` edit, so a lab member submitting a form is all it takes to get a
-change drafted. An Action runs this and opens a pull request for a maintainer to
-review and merge (merging closes the issue).
+"""Turn a filled-in issue form into the matching `_data/*.yml` edit.
 
-One script handles all four forms (routed by --kind):
+A lab member submits a form; an Action runs this and opens a pull request for a
+maintainer to review. Merging it closes the issue.
 
   --kind news         📣 Add a news milestone   → _data/updates.yml
   --kind conference   📄 Add a conference paper → _data/publications_manual.yml
   --kind person       ➕ Add/update a member    → _data/people.yml
-                        (a name already on the People page is UPDATED in place —
-                        only the fields filled in are touched, photo/awards kept —
-                        so members can fix pronouns, links, notes, … via the form;
-                        an unknown name is inserted into its role group as before)
   --kind press        📰 Add press coverage     → _data/press.yml
 
-It reads the issue body GitHub's issue FORMS produce (each field is a
-'### Label' block) from stdin or the ISSUE_BODY env var, validates the fields,
-and does a SAFE targeted insert (your header comments and hand-formatting are
-preserved, same as the rest of the tooling). If a required field is missing or a
-value is invalid, it changes nothing and exits non-zero with a clear message, so
-the Action can tell the submitter what to fix instead of committing something broken.
+For `person`, a name already on the People page is updated in place. Only the
+fields filled in change, so photos and awards are kept. An unknown name is
+inserted into its role group.
 
-Member names in text auto-link on the site, so names are written as on the People page.
+Reads the issue body (GitHub renders each field as a '### Label' block) from
+stdin or ISSUE_BODY, validates it, and does a targeted insert that preserves
+header comments and formatting. A missing or invalid field changes nothing and
+exits non-zero, so the Action can tell the submitter what to fix.
 
-Run locally:  ISSUE_BODY="$(gh issue view 42 --json body -q .body)" \
-                  python scripts/issue_to_change.py --kind news
-In CI:        see .github/workflows/issue-to-pr.yml
+Names are written as they appear on the People page, so they auto-link.
+
+  ISSUE_BODY="$(gh issue view 42 --json body -q .body)" \\
+      python scripts/issue_to_change.py --kind news    # CI: issue-to-pr.yml
 """
+# Website tooling, largely written by AI (Claude) and checked for behaviour
+# rather than wording. It describes how the site is built, not how the lab works;
+# lab policy lives in _guide/. See accessibility.md, "How this site is made".
 from __future__ import annotations
 import argparse
 import os
@@ -184,7 +181,7 @@ def build_news(f: dict) -> int:
         return fail(problems)
 
     # "Words to link" is only meaningful alongside a link, and only if those
-    # words are actually in the sentence — otherwise the site renders a small
+    # words are actually in the sentence, otherwise the site renders a small
     # trailing "Details" link instead. Never a hard error: it's optional.
     phrase = snap_phrase(text, field(f, "Words to link (optional)",
                                      "Words to link", "Link text")) if link else ""
@@ -250,7 +247,7 @@ def build_person(f: dict) -> int:
     home = field(f, "Home institution (visiting members only)", "Home institution")
 
     # The form is "add OR update": if the name is already on the People page
-    # (active groups only — never alumni/affiliates), we update that entry in
+    # (active groups only, never alumni/affiliates), we update that entry in
     # place instead of inserting a duplicate.
     existing = find_person(name) if name else None
 
@@ -310,7 +307,7 @@ def build_person(f: dict) -> int:
         if changed:
             print("updated %s: %s" % (existing, ", ".join(changed)))
         else:
-            print("no changes — %s already matches the submission" % existing)
+            print("no changes: %s already matches the submission" % existing)
         emit("person update: %s (%s)" % (existing, ", ".join(changed) or "no change"),
              "_data/people.yml")
         return 0
@@ -347,7 +344,7 @@ def build_press(f: dict) -> int:
     url = as_url(field(f, "Link to the article", "Link", "URL"))
     year = find_year(field(f, "Year"))
     doi = strip_doi(field(f, "Paper DOI (optional)", "Paper DOI", "DOI"))
-    tag = field(f, "Reason tag (optional — for stories NOT tied to a paper)", "Reason tag", "Tag")
+    tag = field(f, "Reason tag (optional, for stories NOT tied to a paper)", "Reason tag", "Tag")
     problems = []
     for lbl, val in (("Article headline", title), ("Outlet / source", source),
                      ("Link to the article", url)):
@@ -389,7 +386,7 @@ def _people_lines() -> list[str]:
 
 def _active_section_end(lines: list[str]) -> int:
     """Index where the active `groups:` section ends (alumni/affiliates start).
-    Updates never touch alumni or affiliates — retiring someone stays by-hand."""
+    Updates never touch alumni or affiliates; retiring someone stays by-hand."""
     return next((i for i, ln in enumerate(lines)
                  if re.match(r"^(affiliates|alumni):", ln)), len(lines))
 

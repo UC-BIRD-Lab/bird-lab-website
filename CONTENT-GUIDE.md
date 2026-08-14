@@ -1,8 +1,14 @@
 # Content guide
 
+> **How this file was written.** Website documentation, largely written by AI
+> (Claude) from the code in this repository. Christina checked that it works, not
+> that every sentence is how she would put it. The site-wide statement is on the
+> [Accessibility page](accessibility.md) under *How this site is made*.
+
 Copy-paste templates for the most common edits. **No coding required.** You can
 do all of this in your browser: open a file on github.com, click the ✏️ pencil,
-edit, then **Commit changes**. The site rebuilds itself.
+edit, then **Commit changes**, keeping the default *"Create a new branch and
+start a pull request"*. Merge it once the checks go green and the site rebuilds itself.
 
 > **The one rule:** these `.yml` files use spaces, not tabs. Indent with **two
 > spaces**, and keep a space after every colon (`name: Ada`, not `name:Ada`).
@@ -171,7 +177,7 @@ users where the link goes:
 ```
 - One link per milestone. Full addresses for outside pages; a path like `/join/`
   for our own pages.
-- **Don't pick a person's name** as `link_text:` — names are already linked, so the
+- **Don't pick a person's name** as `link_text:`. Names are already linked, so the
   site skips the match and adds a small "Details ↗" link at the end instead.
   That's also what happens if you give a `link:` with no `link_text:`, which is
   fine when no phrase reads naturally as a link.
@@ -230,7 +236,7 @@ lives here and shows in the **"Watch & listen"** strip on the News page: link-ou
 embeds, so the page stays fast and cookie-free. Each entry has `title`, `kind`
 (`video` / `podcast` / `radio` / `model`), `source`, `year`, `url`.
 
-By default every item — videos included — renders as a **compact row**. To promote one to
+By default every item (videos included) renders as a **compact row**. To promote one to
 a **thumbnail card**, add `featured: true`. A card needs a thumbnail source: a YouTube link
 (the thumbnail is automatic) or an `image:` path for a non-YouTube card. Feature just a few
 highlights so the strip stays tidy.
@@ -240,7 +246,7 @@ source: add `doi: "10.xxxx/…"` for a blue **📄 Paper** link to the peer-revi
 or `tag: "Award"` for a reason chip (`Center` · `Award` · `Funding` · `Profile` ·
 `Feature`). An item shows at most one chip; `doi` wins if both are set.
 
-**Adding one with the script.** `scripts/add_press.py` can build a media entry for you —
+**Adding one with the script.** `scripts/add_press.py` can build a media entry for you:
 same tool as the press archive, with `--media KIND`:
 
 ```bash
@@ -345,7 +351,7 @@ long paragraphs.
   category) and a `value` (the detail), plus an optional `also:` for a second
   line under the same label. Leave it off and no table renders. Use the vendors'
   own spelling for model names so they are searchable.
-- **The house pattern is chips, then a table** — the same shape as the CALI
+- **The house pattern is chips, then a table**: the same shape as the CALI
   facility section. Chips say what a visitor can *do* here, in words; the table
   says what it is done *with*, in numbers. A chip never repeats a figure from
   the table. Keep rows to one line, label them by what a visitor can *measure*
@@ -367,11 +373,80 @@ long paragraphs.
 ## Open or close a position: `_data/openings.yml`
 
 The three status pills on the **Join** page (undergrad, graduate, postdoc) are
-driven by this file; flip the matching `open:` line and the pill text and color
+driven by this file; flip the matching `open:` line and the pill text and colour
 update themselves. `open: true` shows the green pill with `open_note`,
 `open: false` the amber pill with `closed_note`. The file's header comment has
 the details, including the shared `email_body` draft that pre-fills the
 "Email me" buttons.
+
+Write `open: true` or `open: false` **unquoted**. Quoted `"true"` is text, not a
+yes/no, and the pill comes out wrong. The content check catches this.
+
+---
+
+## The site-wide banner: `_data/announcement.yml`
+
+The strip that appears across the top of every page, used for things like an open
+position. Set `enabled: false` to remove it.
+
+```yaml
+enabled: true
+label: "Now hiring"
+text: "We're looking for a Social Media Coordinator — paid, part-time (~4 hrs/month)."
+cta: "Learn more & apply"
+url: "/join/#social-media-coordinator"
+deadline: 2026-09-30      # YYYY-MM-DD
+```
+
+**Always set a `deadline:`.** It doesn't hide the banner by itself; it's what the
+quarterly sweep watches. You get a warning two weeks before, and a flagged issue
+once it passes, so the site can't go on advertising a closed position.
+
+---
+
+## What gets re-checked, and how often: `_data/review.yml`
+
+Some things go stale without anything breaking: a fellowship changes its
+eligibility rules, a safety contact leaves, a recharge rate is superseded. This
+file lists them, and four times a year a robot opens one issue naming whatever is
+now due.
+
+```yaml
+  - what: Funding opportunities, eligibility rules and application links
+    file: _data/funding.yml
+    owner: "@christinaharvey"
+    every_months: 12
+    last_reviewed: 2026-07-06
+```
+
+**To clear an item:** look at it, fix anything wrong, then set `last_reviewed:` to
+today, even if you changed nothing. To add something, copy a block. Lab Guide
+pages aren't listed here; they use the `reviewed:` date in their own front matter.
+
+---
+
+## Safety requirements: `_data/safety.yml`
+
+Drives the required-training list on the Lab safety guide page. One entry per
+requirement, with `name`, `who` (who it applies to), an optional `link` to the
+UC Davis training, and an optional `note`.
+
+This one is on a **six-month** review cycle rather than twelve, because out-of-date
+safety information has consequences beyond embarrassment. Check that the links
+still resolve and that anyone named is still in that role.
+
+---
+
+## The CALI facility page: `_data/cali*.yml`
+
+The CALI page is built from four files: `cali.yml` (sections and specifications),
+`cali_rates.yml` (recharge rates and their `effective:` date), `cali_gallery.yml`
+(photos) and `cali_milestones.yml` (the timeline). Each has a header comment
+explaining its fields.
+
+Rates are approved by UC Davis Costing Policy & Analysis and normally re-approved
+annually. When new ones are issued, update the figures **and** the `effective:`
+date. The review sweep watches it.
 
 ---
 
@@ -427,12 +502,15 @@ Something important / a hard rule.
 
 ### Keeping pages fresh
 
-Every guide page shows a **"Needs review" band** at the top once it hasn't been
-reviewed or edited in over a year. To clear it, either edit the page or, if you
-read it through and nothing needs changing, set `reviewed:` in its front matter
-to today's date (for example `reviewed: 2026-07-03`). That records the review
-without a content change. A page with no `reviewed:` date and no recent edit
-shows the band by design, so nothing goes stale silently.
+Every guide page shows a **"Needs review" band** once it hasn't been reviewed or
+edited in over a year. To clear it, either edit the page or, if you read it
+through and nothing needs changing, set `reviewed:` in its front matter to
+today's date (for example `reviewed: 2026-07-03`). Recording the review without a
+content change is a perfectly good outcome.
+
+The same dates feed the **quarterly review sweep**, which collects every overdue
+page into one GitHub issue four times a year, so a stale page gets noticed even if
+nobody visits it.
 
 ### Lab operations roles: `_data/roles.yml`
 
@@ -446,7 +524,7 @@ handoff live in the private Notion member portal, not on the public page.
 ---
 
 ## Change the menu: `_data/navigation.yml`
-Reorder, rename, or add items. `cta: true` makes an item the pill button — keep
+Reorder, rename, or add items. `cta: true` makes an item the pill button; keep
 it on exactly one item, currently **Join**, so the bar has a single clear action.
 
 The top bar is for **public** destinations. Internal or secondary links (Contact,
@@ -561,13 +639,21 @@ Drop all logos in `assets/img/partners/`.
 
 ## Image size budget (keep the site fast & accessible)
 
-| Asset | Target size | Max file |
+Aim for these. The **first four are editorial targets**; the last column is what
+the automatic check actually enforces on a pull request.
+
+| Asset | Aim for | Enforced limit |
 |---|---|---|
-| Research figure / card | ~1280 px wide | ≤ 120 KB |
-| Lab group photo | ~1600 px wide | ≤ 300 KB |
-| Headshot | 600 × 600 px | ≤ 80 KB |
-| Social/OG image | 1200 × 630 px | ≤ 200 KB |
-| Background video | 1080p, short loop | ≤ 3 MB |
+| Research figure / card | ~1280 px wide, ≤ 120 KB | 1600 px · 300 KB JPEG / 600 KB PNG |
+| Lab group photo | ~1600 px wide, ≤ 300 KB | same |
+| Headshot | 600 × 600 px, ≤ 80 KB | same |
+| Social/OG image | 1200 × 630 px, ≤ 200 KB | same |
+| Background video | 1080p, short loop | **2.5 MB** |
+| Animated GIF | prefer an MP4 instead | 700 KB |
+
+A pull request that breaks the enforced limit fails the **Media budget** check.
+Images are compressed automatically after merge; video and GIFs never are, so
+those you re-encode yourself.
 
 **One-liner to optimize a JPG on a Mac** (built-in `sips`, no installs):
 

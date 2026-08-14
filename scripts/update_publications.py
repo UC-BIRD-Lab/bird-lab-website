@@ -1,36 +1,26 @@
 #!/usr/bin/env python3
+"""Update _data/publications.yml from OpenAlex, keyed on the PI's ORCID.
+
+OpenAlex has a free key-less API that resolves works by ORCID. Google Scholar has
+no API and blocks scraping.
+
+Safe to run unattended:
+  * The committed YAML wins. If the API fails, exit without touching the file.
+  * Only ADDS works whose DOI isn't already listed, so manual edits survive.
+  * Backfills a missing `date` so entries sort within a year; never overwrites one.
+  * Skips corrections/errata and prints them, so you can attach a `correction:`
+    link to the original paper in pub_links.yml instead.
+  * AIAA journals and meeting papers share the 10.2514/ prefix, so those are
+    classified by venue name. Anything ambiguous is logged and left out.
+  * DOIs in `exclude:` (publications_manual.yml) are removed and never re-added.
+
+Papers without a DOI aren't in OpenAlex. Add those to publications_manual.yml.
+
+    python scripts/update_publications.py    # CI: update-publications.yml
 """
-Update _data/publications.yml from OpenAlex, keyed on the PI's ORCID.
-
-Why OpenAlex? It exposes a free, well-documented, key-less API that resolves an
-author's works by ORCID and returns clean, structured metadata (title, authors,
-venue, year, DOI). Google Scholar has no official API and actively blocks
-scraping, so it is unsuitable for an automated, reliable pipeline.
-
-Design choices that make this SAFE to run unattended:
-  * The committed YAML is the source of truth. If the API is unreachable or
-    returns nothing, we exit WITHOUT modifying the file (never destructive).
-  * We only ADD works whose DOI is not already present (journal articles and
-    DOI-bearing conference papers), so manual corrections to existing entries are
-    preserved. Conference talks/posters without a DOI are added by hand in
-    publications_manual.yml.
-  * We backfill a missing `date` (YYYY-MM-DD) onto existing entries from OpenAlex so
-    the list sorts correctly within a year, but never overwrite a date you've set.
-  * Corrections / corrigenda / errata are NOT listed as separate papers. We skip them
-    and print them so you can attach a `correction:` link to the corrected paper in
-    _data/pub_links.yml (it renders as a small "Correction" pill next to that paper).
-  * AIAA works are classified journal-vs-conference by their venue NAME (AIAA
-    journals and meeting papers share the 10.2514/ DOI prefix). Anything we can't
-    classify is flagged in the run log and LEFT OUT for you to add by hand.
-  * Conference talks/posters *without a DOI* aren't indexed by OpenAlex: add those
-    by hand in _data/publications_manual.yml.
-  * A do-not-list (`exclude:` in publications_manual.yml) drops items OpenAlex returns
-    that aren't papers (a profile write-up, a talk indexed like an article). Listed DOIs
-    are removed from publications.yml and never re-added.
-
-Run locally:   python scripts/update_publications.py
-In CI:         see .github/workflows/update-publications.yml
-"""
+# Website tooling, largely written by AI (Claude) and checked for behaviour
+# rather than wording. It describes how the site is built, not how the lab works;
+# lab policy lives in _guide/. See accessibility.md, "How this site is made".
 
 from __future__ import annotations
 import json
@@ -64,9 +54,8 @@ SUPPLEMENT_KEYWORDS = (
     "supporting data",
 )
 
-# Corrections/corrigenda/errata: not listed as papers. We catch them by OpenAlex type
-# and by the standard title formats publishers use ("Correction to:", "Author
-# Correction:", "Corrigendum: …", "Erratum: …", etc.).
+# Corrections and errata aren't listed as papers. Caught by OpenAlex type and by
+# the usual title formats ("Correction to:", "Corrigendum:", "Erratum:", …).
 CORRECTION_TYPES = {"erratum", "correction"}
 CORRECTION_TITLE_PREFIXES = (
     "corrigendum",
@@ -82,20 +71,16 @@ HEADER = """\
 # ────────────────────────────────────────────────────────────
 #  PUBLICATIONS: journal articles and DOI-bearing conference papers
 #
-#  THIS FILE IS AUTO-MANAGED by scripts/update_publications.py.
-#  The "Update publications" GitHub Action opens a pull request when new works
-#  appear on OpenAlex for the lab's ORCID. Review and merge it. You may also
-#  hand-edit any entry to fix a detail; future runs preserve existing DOIs.
-#  Anything with a DOI syncs here; conference talks and posters WITHOUT a DOI
-#  live in publications_manual.yml.
+#  AUTO-MANAGED by scripts/update_publications.py. The "Update publications"
+#  Action opens a pull request when OpenAlex has new works for the lab's ORCID;
+#  review and merge it. Hand-edits to existing entries are preserved.
+#  Talks and posters without a DOI go in publications_manual.yml.
 #
 #  Fields: title, authors, venue, year, date (YYYY-MM-DD), type, doi (URL),
-#          oa_url (a free open-access copy, when OpenAlex knows one)
-#  `date` is used to sort within a year (the page still groups by `year`).
-#  `oa_url` is auto-filled when a paper is open access and left blank otherwise;
-#  to point at a specific copy (e.g. your ResearchGate preprint), set `preprint:`
-#  or `pdf:` for that DOI in _data/pub_links.yml — those win over this.
-#  Keep newest first: this file is written sorted by date, newest first.
+#          oa_url (a free copy, when OpenAlex knows one)
+#  `date` sorts within a year; the page groups by `year`. Written newest first.
+#  To override `oa_url` for one paper, set `preprint:` or `pdf:` for its DOI in
+#  _data/pub_links.yml; those win.
 # ────────────────────────────────────────────────────────────
 """
 
@@ -165,11 +150,10 @@ def load_exclude() -> set:
         return set()
     return {norm_doi(e.get("doi")) for e in (data.get("exclude") or []) if e.get("doi")}
 
-# AIAA publishes BOTH conference/meeting papers (SciTech, AVIATION, …) AND
-# peer-reviewed journals under the same "10.2514/" DOI prefix, so we can't tell them
-# apart from the DOI alone. We decide from the source (venue) NAME, and only fall back
-# to the AIAA DOI sub-code (/6. = meeting paper, /1.–/4. = journal) when the source is
-# missing. If both are inconclusive we return None → the work is flagged and left out.
+# AIAA meeting papers and journals share the 10.2514/ prefix, so the DOI alone
+# can't tell them apart. Decide from the venue name, falling back to the DOI
+# sub-code (/6. = meeting, /1.–/4. = journal). Inconclusive → None, flagged and
+# left out.
 AIAA_CONFERENCE_HINTS = ("forum", "conference", "congress", "meeting", "symposium",
                          "scitech", "aviation", "propulsion and energy")
 AIAA_JOURNAL_HINTS = ("journal",)
@@ -336,9 +320,8 @@ def main() -> int:
                 e["date"] = d
                 backfilled += 1
 
-    # Same for `oa_url`: fill it in when a paper has become open access, but never
-    # overwrite one you've set by hand. To override the auto copy for one paper,
-    # add `preprint:`/`pdf:` for its DOI in _data/pub_links.yml (those render first).
+    # Same for `oa_url`: fill in when a paper becomes open access, never overwrite
+    # a hand-set one. Per-paper overrides go in pub_links.yml.
     oa_filled = 0
     for e in existing:
         if not e.get("oa_url"):

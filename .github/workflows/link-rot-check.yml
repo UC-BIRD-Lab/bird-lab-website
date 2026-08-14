@@ -1,4 +1,7 @@
 name: Link rot check
+# Website tooling, largely written by AI (Claude) and checked for behaviour
+# rather than wording. It describes how the site is built, not how the lab works;
+# lab policy lives in _guide/. See accessibility.md, "How this site is made".
 
 # Once a year, verify every OUTBOUND link the data files depend on still works:
 # paper DOIs, "In the news" press & media URLs, and the data/code/preprint/
@@ -11,7 +14,8 @@ name: Link rot check
 # Run it any time from the Actions tab ("Run workflow").
 on:
   schedule:
-    - cron: "0 8 6 1 *"   # once a year: January 6, 08:00 UTC (offset from the guide sweep)
+    # Quarterly, offset from the guide link sweep so the two don't collide.
+    - cron: "0 8 19 1,4,7,10 *"   # 19 Jan / Apr / Jul / Oct, 08:00 UTC
   workflow_dispatch:
 
 permissions:
@@ -37,12 +41,13 @@ jobs:
         continue-on-error: true   # a failure here means "broken links found"; the issue is the alert
         run: python scripts/check_links.py --out link-report.md
 
-      - name: Open an issue listing the broken links
+      - name: Open or update the issue listing the broken links
         if: steps.check.outcome == 'failure'
-        uses: peter-evans/create-issue-from-file@v6
-        with:
-          title: "Broken outbound links (annual check)"
-          content-filepath: ./link-report.md
-          labels: |
-            link-rot
-            publications
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          bash scripts/upsert_issue.sh \
+            "link-rot-outbound" \
+            "Broken outbound links (DOIs, press, resources)" \
+            ./link-report.md \
+            "Dead publisher/press/resource links found by the quarterly sweep"

@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # ─────────────────────────────────────────────────────────────────────────
-#  BIRD Lab — image asset generator (run on a Mac; uses built-in `sips`)
+#  BIRD Lab image asset generator (run on a Mac; uses built-in `sips`)
 #
 #  Generates optimized site images from originals you have locally:
-#    • assets/img/lab-photo.jpg   — lab group photo (People page)
-#    • assets/img/og-image.jpg    — 1200×630 social-share image
-#    • assets/img/people/*.jpg    — square, optimized headshots
+#    • assets/img/lab-photo.jpg   : lab group photo (People page)
+#    • assets/img/og-image.jpg    : 1200×630 social-share image
+#    • assets/img/people/*.jpg    : square, optimized headshots
 #
 #  WHY a script you run (not generated for you): the high-res originals and the
 #  Notion export live on your Mac, not in this repo. `sips` ships with macOS, so
@@ -25,6 +25,9 @@
 #    • For each headshot, add  photo: /assets/img/people/<name>.jpg  in _data/people.yml
 #  (og-image.jpg is already wired via `image:` in _config.yml.)
 # ─────────────────────────────────────────────────────────────────────────
+# Website tooling, largely written by AI (Claude) and checked for behaviour
+# rather than wording. It describes how the site is built, not how the lab works;
+# lab policy lives in _guide/. See accessibility.md, "How this site is made".
 set -euo pipefail
 cd "$(dirname "$0")/.."          # repo root
 

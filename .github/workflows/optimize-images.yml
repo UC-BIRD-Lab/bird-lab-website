@@ -1,8 +1,11 @@
 name: Optimize images
+# Website tooling, largely written by AI (Claude) and checked for behaviour
+# rather than wording. It describes how the site is built, not how the lab works;
+# lab policy lives in _guide/. See accessibility.md, "How this site is made".
 
 # When images land in assets/img/ (a push to main that touches them, or a manual
 # run), compress any that are oversized and, if anything shrank, open a pull request
-# with the smaller files. A human reviews and merges — nothing is republished
+# with the smaller files. A human reviews and merges; nothing is republished
 # without that review, same as the publications bot.
 #
 # Why a PR and not an auto-commit: it keeps the "bot proposes, human approves" flow,
@@ -22,14 +25,11 @@ permissions:
   pull-requests: write
 
 jobs:
-  # Runs on PULL REQUESTS and blocks. Compression used to happen only after
-  # images reached main — but deployment also starts on a push to main, so an
-  # oversized image was already live by the time anything noticed. This checks
-  # before the merge instead. It changes nothing; it only reports.
+  # Blocks on pull requests. Compression used to run only after images reached
+  # main, by which point deployment had already shipped them. This checks before
+  # the merge, and changes nothing.
   #
-  # It also covers video, GIFs and SVGs, which the compressor never touches:
-  # video because re-encoding needs judgement, SVGs because they can carry
-  # scripts and ours should be plain artwork.
+  # Also covers video, GIFs and SVGs, which the compressor never rewrites.
   budget:
     name: Media budget
     if: github.event_name == 'pull_request'

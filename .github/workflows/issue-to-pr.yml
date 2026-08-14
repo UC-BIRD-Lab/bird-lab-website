@@ -1,9 +1,12 @@
 name: Issue form to pull request
+# Website tooling, largely written by AI (Claude) and checked for behaviour
+# rather than wording. It describes how the site is built, not how the lab works;
+# lab policy lives in _guide/. See accessibility.md, "How this site is made".
 
 # Turns a submitted website issue FORM into the matching _data edit and opens a
 # pull request for review. Covers all four forms (the news template, conference
 # paper/talk/poster, add/update a member, and press coverage). You just check the
-# draft and merge — because the PR says "Closes #<issue>", merging also closes it,
+# draft and merge. Because the PR says "Closes #<issue>", merging also closes it,
 # and the bot comments on the issue with the PR link.
 #
 # It only runs for OPEN issues carrying the `website-update` label (every form adds
@@ -96,7 +99,7 @@ jobs:
             const fs = require('fs');
             let detail = '';
             try { detail = fs.readFileSync('build-error.txt', 'utf8'); } catch (e) {}
-            const body = "⚠️ I couldn't auto-draft this submission — a maintainer will "
+            const body = "⚠️ I couldn't auto-draft this submission. A maintainer will "
               + "add it by hand. Details:\n\n```\n" + (detail || "see the Actions log") + "\n```";
             await github.rest.issues.createComment({
               owner: context.repo.owner,

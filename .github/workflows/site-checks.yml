@@ -1,4 +1,7 @@
 name: Site checks
+# Website tooling, largely written by AI (Claude) and checked for behaviour
+# rather than wording. It describes how the site is built, not how the lab works;
+# lab policy lives in _guide/. See accessibility.md, "How this site is made".
 
 # Quality gate: builds the site, then checks for broken internal links and
 # missing images (HTMLProofer) and runs an accessibility scan (pa11y-ci).
@@ -9,15 +12,14 @@ on:
   pull_request:
   workflow_dispatch:
 
-# Use the exact gem versions in Gemfile.lock, and fail if it disagrees with the
-# Gemfile, so these checks test the same build that deploy.yml will publish.
+# Use the exact gem versions in Gemfile.lock, so these checks test the same
+# build deploy.yml publishes.
 env:
   BUNDLE_FROZEN: "true"
 
 jobs:
-  # Runs first and takes seconds: catches content mistakes that would build
-  # perfectly well but publish something untrue (a project lead who isn't in
-  # people.yml, a DOI matching no paper, a photo that was never uploaded).
+  # Seconds. Catches content that would build fine but publish something untrue:
+  # a lead who isn't in people.yml, a DOI matching no paper, a missing photo.
   content:
     name: Content validation
     runs-on: ubuntu-latest
@@ -61,14 +63,12 @@ jobs:
             --no-enforce-https \
             --allow-missing-href
 
-  # This check BLOCKS. It used to be advisory (continue-on-error plus a `|| echo`
-  # that swallowed the exit code), which meant it reported success even when it
-  # found violations — and, worse, when it failed to run at all. The site was
-  # measured clean in August 2026, so the suppression came off. If this goes red,
-  # something on the site genuinely regressed; fix it rather than silencing it.
+  # This check BLOCKS. It was advisory until August 2026, when the site measured
+  # clean and the suppression came off. Red means a real regression; fix it
+  # rather than silencing it.
   #
-  # Scanners cover roughly a third of WCAG AA. Green here is a floor, not a
-  # conformance claim — the manual checks are in MAINTENANCE.md.
+  # Scanners cover roughly a third of WCAG AA. Green is a floor, not conformance;
+  # the manual checks are in MAINTENANCE.md.
   accessibility:
     name: Accessibility (WCAG2AA)
     runs-on: ubuntu-latest
@@ -91,23 +91,21 @@ jobs:
         with:
           node-version: "20"
       - name: Build the page list from the sitemap
-        # Not a hand-kept list: every built page is covered the moment it exists.
+        # Generated, so a new page is covered the moment it exists.
         run: python3 scripts/build_pa11y_config.py
 
       - name: Run pa11y-ci (WCAG2AA)
         run: |
           set -euo pipefail
-          # Pinned. An unpinned `npm install -g` silently changed the scanner
-          # (and therefore what counts as a violation) between runs, so a check
-          # could start failing with no change to the site. Bump deliberately.
+          # Pinned: unpinned, the scanner changes between runs and the check can
+          # fail with no change to the site. Bump deliberately.
           npm install -g pa11y-ci@4.0.1 http-server@14.1.1
 
           http-server ./_site -p 4000 --silent &
 
-          # Wait for the server to actually answer instead of guessing with
-          # `sleep 4`. If it never comes up, fail loudly — previously that
-          # produced a green tick, because a scanner that ran zero pages looked
-          # exactly like one that found no problems.
+          # Wait for a real response rather than guessing with `sleep`. If the
+          # server never comes up, fail loudly: a scanner that ran zero pages
+          # otherwise looks identical to one that found no problems.
           for i in $(seq 1 30); do
             if curl -sf http://localhost:4000/ >/dev/null; then
               echo "Server is up after ${i}s."
@@ -120,6 +118,6 @@ jobs:
             sleep 1
           done
 
-          # Chrome needs --no-sandbox on the Ubuntu runner (it restricts
-          # unprivileged user namespaces); that lives in pa11y.settings.json.
+          # Chrome's --no-sandbox flag (needed on the Ubuntu runner) is in
+          # pa11y.settings.json.
           pa11y-ci --config ./pa11yci.generated.json

@@ -1,9 +1,14 @@
 # Keeping the BIRD Lab site up to date
 
-The goal: keep the site current with as little effort as possible, and make it
-hard to break the live site (every change is reviewed and auto-checked first).
+> **How this file was written.** Website documentation, largely written by AI
+> (Claude) from the code in this repository. Christina checked that it works, not
+> that every sentence is how she would put it. The site-wide statement is on the
+> [Accessibility page](accessibility.md) under *How this site is made*.
 
-There are **three ways** to get an update in, from least to most technical.
+Keep the site current with as little effort as possible, and make it hard to
+break. Every change is reviewed and checked automatically first.
+
+**Three ways** to get an update in, from least to most technical.
 
 ---
 
@@ -16,29 +21,27 @@ Go to the repo's **Issues → New issue**, pick the matching form, fill it in, s
 - 📣 **Add a news milestone**
 - 📰 **Add press coverage**
 
-That's it. The submission lands as a tidy GitHub issue for a maintainer to apply.
-You only need a free GitHub account. (Journal articles aren't here: they update
+You only need a free GitHub account. (Journal articles aren't here; they update
 themselves from OpenAlex.)
 
-> **🤖 These forms now apply themselves.** When you submit any of the four forms
-> above, a bot immediately drafts the matching change (news milestone, conference
-> paper/talk/poster, new/updated member, or press item), opens a pull request, and
-> comments on your issue with the link. A maintainer just checks it and merges —
-> merging closes your issue. Nothing to copy by hand. If a required field is missing
-> or a role has no group yet, the bot comments to say so instead.
+**The forms apply themselves.** A bot drafts the matching change, opens a pull
+request and comments on your issue with the link. A maintainer checks it and
+merges; merging closes your issue. Nothing to copy by hand. If a required field
+is missing, the bot comments to say what to fix instead.
 
 ## 2. The direct way: edit the file (a little GitHub comfort)
 
 Edit the relevant `_data/*.yml` file on github.com (pencil icon ✏️), then
-**Commit → Propose changes → open a pull request**. The exact formats are in
-[CONTENT-GUIDE.md](CONTENT-GUIDE.md). A check runs automatically (see below); a
-maintainer reviews and merges. The site rebuilds itself.
+**Commit → Propose changes → open a pull request**. Formats are in
+[CONTENT-GUIDE.md](CONTENT-GUIDE.md). The checks run automatically; a maintainer
+reviews and merges, and the site rebuilds itself.
 
 ## 3. The maintainer way: applying a submission
 
-If you're a **web steward** (see below), you turn an issue into a commit. This
-takes ~30 seconds with the cheat-sheet below: open the file, paste the block at
-the **top** of the list, fill in the submitted values, commit.
+Most submissions arrive as a ready-made pull request, so there's nothing to
+apply. If a bot couldn't draft one, the cheat-sheet below takes about 30 seconds:
+open the file, paste the block at the **top** of the list, fill in the submitted
+values, commit on a branch.
 
 ---
 
@@ -83,7 +86,7 @@ the **top** of the list, fill in the submitted values, commit.
 ```
 The issue form collects an optional DOI and, for stories not tied to a paper, a reason
 tag (`Center` / `Award` / `Funding` / `Profile` / `Feature`). Add whichever the issue
-provides — a story has **either** a `doi:` **or** a `tag:`, not both.
+provides: a story has **either** a `doi:` **or** a `tag:`, not both.
 
 After committing, close the issue with a note like "Live on the next build 👍".
 
@@ -92,26 +95,33 @@ After committing, close the issue with a note like "Live on the next build 👍"
 ## Web stewards: who merges
 
 Merging is handled by a small number of **web stewards**: one or two trusted lab
-members (rotated yearly is ideal), alongside the PI. If you're a steward, you
-handle steps 2–3 above; the PI only steps in for big changes.
+members, ideally rotated yearly, alongside the PI. Stewards handle steps 2–3; the
+PI steps in for big changes.
 
-Because every change goes through a pull request and the automated checks, a
-steward can't accidentally break the live site: the worst case is a PR that
-fails its checks and doesn't get merged.
+A steward can't accidentally break the live site. Every change goes through a
+pull request that must pass the checks, so the worst case is a pull request that
+stays unmerged.
 
 > Steward access (GitHub **Write** permission) is granted by the repo owner under
 > **Settings → Collaborators**.
 
 ## What protects the site automatically
 
-- **`site-checks.yml`** builds every pull request and flags broken links/images
-  and accessibility issues before anything merges.
-- **`update-publications.yml`** opens a monthly PR with new journal articles from
-  OpenAlex: just review and merge.
-- **Dependabot** keeps dependencies current with small PRs.
+Every pull request must pass before it can merge:
+
+- **Content validation**: names, DOIs and image paths actually resolve, so a
+  page can't publish something untrue.
+- **Links and images**: nothing internal is broken or missing.
+- **Accessibility**: a WCAG 2.1 AA scan of every page.
+- **Media budget**: no oversized image or video reaches the site.
+
+On top of that, **Update publications** opens a monthly PR with new articles from
+OpenAlex, a **quarterly sweep** flags content that may have gone stale, and
+**Dependabot** keeps dependencies current.
 
 ## The one formatting rule
 
-The `.yml` files use **spaces, not tabs**, two spaces per indent level, and a
-space after every colon (`name: Ada`, not `name:Ada`). The forms avoid this
-entirely; it only matters if you hand-edit.
+The `.yml` files use **spaces, not tabs**, two per indent level, and a space
+after every colon (`name: Ada`, not `name:Ada`). The forms avoid this entirely;
+it only matters if you hand-edit. If you get it wrong, the content check names
+the file and line.

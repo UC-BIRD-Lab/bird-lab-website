@@ -1,21 +1,21 @@
 #!/usr/bin/env bash
 # ─────────────────────────────────────────────────────────────
-#  Regenerate Gemfile.lock — the file that pins EXACT gem versions.
+#  Regenerate Gemfile.lock, the file that pins exact gem versions.
 #
-#  Why this exists
-#  ---------------
-#  The Gemfile says things like `gem "jekyll", "~> 4.3"`, which means "any 4.x
-#  from 4.3 up". Without a lockfile, every GitHub Actions run re-resolves that
-#  to whatever is newest that day, so the live site could break with no change
-#  from anyone in the lab. Gemfile.lock freezes the answer, and is committed.
+#  The Gemfile allows a range of versions ("jekyll ~> 4.3"). Gemfile.lock records
+#  which ones were actually used, so the site can't break from an upstream
+#  release nobody here asked for. It is committed.
 #
-#  Run this ONLY when you deliberately want newer gems (or after editing the
-#  Gemfile). Then commit the updated Gemfile.lock and open a pull request, so
-#  the Site checks workflow proves the new versions still build.
+#  Run this only when you deliberately want newer gems, or after editing the
+#  Gemfile. Then commit Gemfile.lock on a branch and open a pull request, so the
+#  checks prove the new versions build.
 #
 #  Requires Docker Desktop: https://www.docker.com/products/docker-desktop/
 #  Usage:  ./scripts/update-lockfile.sh
 # ─────────────────────────────────────────────────────────────
+# Website tooling, largely written by AI (Claude) and checked for behaviour
+# rather than wording. It describes how the site is built, not how the lab works;
+# lab policy lives in _guide/. See accessibility.md, "How this site is made".
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
@@ -31,13 +31,10 @@ fi
 
 echo "Resolving gems with Ruby ${RUBY_VERSION} (matching CI)…"
 
-# --add-platform matters: the lockfile records which OS/CPU each compiled gem
-# was resolved for. CI runs x86_64 Linux; your Mac runs arm64. If the lockfile
-# lists only one of them, the other environment fails to install. So we record
-# all three the project actually uses.
-# Start from scratch. An existing lockfile can carry platforms from whatever
-# container last wrote it (the retired Alpine image left musl-only builds behind,
-# which then fail on both CI and Apple Silicon).
+# The lockfile records which OS/CPU each compiled gem was built for. CI is
+# x86_64 Linux, your Mac is arm64; listing only one breaks the other.
+# Start clean: an old lockfile carries platforms from whatever container wrote
+# it (the retired Alpine image left musl-only builds that fail everywhere else).
 rm -f Gemfile.lock
 
 docker run --rm \
