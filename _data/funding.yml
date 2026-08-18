@@ -74,6 +74,10 @@
 - name: JEB Travelling Fellowship
   level: "Masters, PhD, Post Doc"
   url: https://www.biologists.com/travelling-fellowships/
+  
+- name: Life Sciences Research Fellowship
+  level: "Post Doc"
+  url: https://lsrf.org
 
 - name: Matthew Isakowitz Fellowship
   level: "UG"
@@ -121,3 +125,4 @@
 - name: Zed Factor Fellowship
   level: "UG"
   url: https://zedfactorfellowship.org/apply
+
