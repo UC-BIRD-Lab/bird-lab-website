@@ -299,6 +299,7 @@ before you go any further.
 
 ### Tier 3 · Polish and consistency
 
+- Verb tense matches the job of the sentence: past for what you did and found, present for established knowledge, for what the paper and figures show, and for what the results mean.
 - Every equation is part of a sentence, properly punctuated, and referenced as needed. LaTeX formatting is used where appropriate, and every variable introduced in the text is in mathematical font (or italics).
 - Units, spelling (US *or* UK, not a mix), hyphenation, and notation are consistent.
 - Gender-neutral language is used throughout (e.g., uncrewed aerial vehicles).
@@ -322,6 +323,7 @@ what to do on publication live in
 ## Resources
 
 - [Gopen & Swan, *The Science of Scientific Writing*](https://www.usenix.org/sites/default/files/gopen_and_swan_science_of_scientific_writing.pdf): topic and stress positions; still the best single read on sentence-level clarity.
+- [Doumont, *Effective Writing*](https://www.nature.com/scitable/topicpage/effective-writing-13815989/): a compact reference on verb tense, subject–verb proximity, and word-level precision.
 - [Nature Masterclasses, *Writing for greater impact*](https://www.nature.com/masterclasses/writing-for-greater-impact/50732650): active voice, strong verbs, conciseness, signposting.
 - [Nature's summary-paragraph format](https://www.nature.com/documents/nature-summary-paragraph.pdf): the model we use for abstracts.
 - [Harvey (2026), *How bio-inspired is your design?*](https://doi.org/10.1038/s44172-026-00641-4): how we label bio-inspiration claims.
