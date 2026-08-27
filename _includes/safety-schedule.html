@@ -9,7 +9,7 @@
   <tbody>
   {%- for s in sched -%}
     <tr>
-      <td>{{ s.what }}{% if s.via %} <span class="req-note">via {{ s.via }}</span>{% endif %}</td>
+      <td>{% if s.link %}<a href="{{ s.link }}">{{ s.what }}</a>{% else %}{{ s.what }}{% endif %}{% if s.via %} <span class="req-note">via {{ s.via }}</span>{% endif %}{% if s.note %}<span class="req-note">{{ s.note }}</span>{% endif %}</td>
       <td>{{ s.when }}</td>
     </tr>
   {%- endfor -%}

@@ -88,11 +88,18 @@ schedule:
   - what: Annual Site-Specific Training Refresher
     when: Every year
     via: Annual Lab Safety Meeting; Report with Slack Workflow in Safety Hub
-  - what: ACU 101 refresher, for CALI
+  - what: ACU 101 refresher
     when: Every 3 years
+    note: Only required for live animal work at CALI
     via: LMS
-  - what: Emergency-eyewash test and fire-extinguisher visual checks
+  - what: Fire-extinguisher visual checks
     when: Monthly
+    note: Required for extinguishers both CALI and the wind tunnel
+    link: https://safetyservices.ucdavis.edu/safetynet/fire-extinguisher-inspection-procedures
+  - what: Emergency-eyewash test
+    when: Monthly
+    note: Only required for wind tunnel station, coordinate with DAAL
+    link: https://safetyservices.ucdavis.edu/safetynet/emergency-eyewash-and-shower-testing-and-use
   - what: Lab cleaning day with the inspection checklist and self-inspection
     when: Every 6 months
   - what: Internal EH&S General and Occupational Safety inspection
