@@ -142,7 +142,11 @@ themes above. </p>
       {%- endif -%}
 
       <p class="muted u-fs-sm u-mt-06">
+        {%- comment -%} A lead who has moved to alumni has no person card to point at,
+           so send them to the alumni section instead of a dead anchor. {%- endcomment -%}
         {%- assign lead_anchor = p.lead | slugify -%}
+        {%- assign alum_names = site.data.people.alumni.members | map: "name" -%}
+        {%- if alum_names contains p.lead %}{% assign lead_anchor = "alumni" %}{% endif -%}
         Led by <a href="{{ '/people/' | relative_url }}#{{ lead_anchor }}">{{ p.lead }}</a>
       </p>
       {%- if p.contact -%}

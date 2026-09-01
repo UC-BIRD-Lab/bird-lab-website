@@ -117,6 +117,30 @@ class ValidatorTestCase(unittest.TestCase):
         self.write("people.yml", people)
         self.assertFlags(vc.check_people, "listed twice")
 
+    def test_alumnus_without_a_start_year_is_caught(self):
+        """The alumni table is built year by year: no `start:`, no row at all."""
+        people = self.read("people.yml")
+        people["alumni"]["members"][0].pop("start", None)
+        self.write("people.yml", people)
+        self.assertFlags(vc.check_alumni, "start")
+
+    def test_person_in_both_a_group_and_alumni_is_caught(self):
+        people = self.read("people.yml")
+        leaver = copy.deepcopy(people["alumni"]["members"][0])
+        people["groups"][1]["members"].append(leaver)
+        self.write("people.yml", people)
+        self.assertFlags(vc.check_alumni, "alumni AND")
+
+    def test_alumni_names_count_as_known_people(self):
+        """Moving someone to alumni must not make their projects and news look
+        like typos to the other checks."""
+        people = self.read("people.yml")
+        names = vc.people_names(people)
+        for alumnus in people["alumni"]["members"]:
+            self.assertIn(alumnus["name"], names)
+            for alias in alumnus.get("aliases") or []:
+                self.assertIn(alias, names)
+
     def test_missing_person_photo_is_caught(self):
         people = self.read("people.yml")
         people["groups"][0]["members"][0]["photo"] = "/assets/img/people/nobody.jpg"

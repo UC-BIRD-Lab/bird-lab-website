@@ -69,8 +69,19 @@ Add a block under the right group's `members:` list. Only `name` and `role` are 
   ```yaml
     - { name: Jordan Rivera, role: "PhD Researcher", start: 2024, now: "Boeing" }
   ```
-  `start:` (year they joined) sorts the alumni table newest-first, and any
-  `linkedin:` shows a LinkedIn icon beside their name.
+  Keep their `role:` and `start:` — the table needs both. **`role:` decides where
+  they sit:** postdocs first, then PhDs, then MSc, then undergraduates, then
+  visiting members, with `start:` (year they joined) ordering newest-first inside
+  each of those. It reads the same words as the bird badge, so any role written
+  for a human ("Postdoctoral Scholar", "Visiting Student · UBC") lands in the
+  right place; a role that names none of them sorts to the bottom and the content
+  check warns you. **`start:` is required** — without it they'd vanish from the
+  table entirely, so the check treats a missing one as an error. Any `linkedin:`
+  shows a LinkedIn icon beside their name.
+
+  Bring their `aliases:` across too. Alumni keep their papers, projects and news
+  mentions, and those are matched by name; leaving the alias behind is what stops
+  an old news item linking to them.
 - **Photo (optional):** put a small square JPG in `assets/img/people/` (or a large
   original in `assets/img/people/_raw/` then run `bash scripts/apply-images.sh`),
   and add the `photo:` line above. No photo = a clean initials avatar.
@@ -163,9 +174,11 @@ Starting a new year? Add a new block at the very top:
 
 **Auto-linking names.** Just write a lab member's name the way it
 appears on the People page: "Kaleb Bordner": and it becomes a link to their
-card automatically. Alumni names link to the alumni table. **Don't** wrap names in
-your own `<a>` tag (that would double-link). For a nickname or short form, add an
-`aliases:` line to that person in `people.yml`.
+card automatically. Alumni names link to the alumni table, which opens itself
+when someone arrives that way. **Don't** wrap names in your own `<a>` tag (that
+would double-link). For a nickname or short form, add an `aliases:` line to that
+person in `people.yml` — this works for alumni too, and it's how a news item that
+says "Dr. Alfonso Martínez" still finds "Dr. Alfonso Martínez-Carmena".
 
 **Linking out (a paper, an event, a page on this site).** Add `link:` and
 `link_text:`. `link_text:` must be words copied from your `text:`; those words

@@ -319,3 +319,27 @@
     });
   }
 })();
+
+/* ---- People: open the alumni list when someone is linked to it ----
+   News items and project leads link departed members to #alumni, but the table
+   lives inside a collapsed <details>, so the visitor would land on a heading and
+   a closed toggle. Open it for them. Without JS they still land on the section
+   and the summary is one click away, so nothing is unreachable either way. */
+(function () {
+  "use strict";
+  var box = document.querySelector("#alumni .alumni-details");
+  if (!box) return;
+
+  function openIfTargeted() {
+    if (location.hash !== "#alumni") return;
+    if (!box.open) {
+      box.open = true;
+      // Re-aim at the heading: opening the list moves everything below it.
+      var head = document.getElementById("alumni");
+      if (head) head.scrollIntoView();
+    }
+  }
+
+  openIfTargeted();
+  window.addEventListener("hashchange", openIfTargeted);
+})();

@@ -1,0 +1,21 @@
+{%- comment -%}
+  Turns a person's free-text `role:` into ONE key: pi, postdoc, phd, msc,
+  undergrad, visiting — or an empty string when nothing matches.
+
+  Single source of truth for both the bird badge on a person card
+  (_includes/person.html) and the order of the alumni table (people.html),
+  so the two can never drift apart.
+
+  Pass:  {% capture role_key %}{% include role-key.html role=p.role %}{% endcapture %}
+
+  ORDER MATTERS. "Visiting Undergraduate Researcher" must resolve to visiting,
+  not undergrad; "Visiting Postdoctoral Scholar" to postdoc. Don't reorder.
+{%- endcomment -%}
+{%- assign rl = include.role | downcase -%}
+{%- if rl contains "postdoc" -%}postdoc
+{%- elsif rl contains "visiting" -%}visiting
+{%- elsif rl contains "undergrad" -%}undergrad
+{%- elsif rl contains "phd" or rl contains "ph.d" or rl contains "doctoral" -%}phd
+{%- elsif rl contains "msc" or rl contains "m.s" or rl contains "master" -%}msc
+{%- elsif rl contains "professor" or rl contains "director" -%}pi
+{%- endif -%}

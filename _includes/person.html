@@ -9,16 +9,9 @@
   {%- endif -%}
 {%- endfor -%}
 {%- comment -%} Normalize the role into one key (matches the People legend chips), then
-   pick its bird. Order matters: "Visiting Undergraduate…" resolves to visiting, not undergrad. {%- endcomment -%}
-{%- assign rl = p.role | downcase -%}
-{%- assign role_key = "" -%}
-{%- if rl contains "postdoc" -%}{%- assign role_key = "postdoc" -%}
-{%- elsif rl contains "visiting" -%}{%- assign role_key = "visiting" -%}
-{%- elsif rl contains "undergrad" -%}{%- assign role_key = "undergrad" -%}
-{%- elsif rl contains "phd" or rl contains "ph.d" or rl contains "doctoral" -%}{%- assign role_key = "phd" -%}
-{%- elsif rl contains "msc" or rl contains "m.s" or rl contains "master" -%}{%- assign role_key = "msc" -%}
-{%- elsif rl contains "professor" or rl contains "director" -%}{%- assign role_key = "pi" -%}
-{%- endif -%}
+   pick its bird. The ladder lives in _includes/role-key.html because the alumni
+   table orders itself with the same keys. {%- endcomment -%}
+{%- capture role_key %}{% include role-key.html role=p.role %}{% endcapture -%}
 {%- assign role_icon = "" -%}
 {%- if include.badge -%}
   {%- assign role_icon = p.role_icon -%}

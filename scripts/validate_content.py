@@ -31,6 +31,11 @@ except ImportError:
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(REPO_ROOT, "_data")
+
+# Role words _includes/role-key.html understands. Keep the two in step: the same
+# ladder picks a person's bird badge and their tier in the alumni table.
+ALUMNI_ROLE_WORDS = ("postdoc", "visiting", "undergrad", "phd", "ph.d", "doctoral",
+                     "msc", "m.s", "master")
 FORMS_DIR = os.path.join(REPO_ROOT, ".github", "ISSUE_TEMPLATE")
 
 
@@ -82,10 +87,19 @@ def asset_exists(web_path):
 
 
 def people_names(people):
-    """Names plus aliases."""
+    """Every name and alias the site knows: current members, affiliates AND alumni.
+
+    Alumni belong here. Someone who leaves keeps their papers, their projects and
+    their mentions in the news, and all of those are checked against this set —
+    leaving alumni out made a departure look like a typo."""
+    people = people or {}
+    rosters = [group.get("members") or [] for group in people.get("groups", []) or []]
+    rosters.append((people.get("affiliates") or {}).get("members") or [])
+    rosters.append((people.get("alumni") or {}).get("members") or [])
+
     names = set()
-    for group in (people or {}).get("groups", []) or []:
-        for member in group.get("members") or []:
+    for roster in rosters:
+        for member in roster:
             if member.get("name"):
                 names.add(member["name"].strip())
             for alias in member.get("aliases") or []:
@@ -512,8 +526,54 @@ def check_review_list():
                         "Use a plain number, e.g. `every_months: 12`.")
 
 
+def check_alumni():
+    """The alumni table groups by role and then by `start` year. A member with no
+    `start:` would be silently left out of the table, and a role that matches no
+    tier would sort into "other", so flag both."""
+    people = load("people.yml")
+    if not people:
+        return
+    alumni = (people.get("alumni") or {}).get("members") or []
+
+    in_groups = {}
+    for group in people.get("groups", []) or []:
+        for member in group.get("members") or []:
+            if member.get("name"):
+                in_groups[member["name"].strip()] = group.get("id", "?")
+
+    for person in alumni:
+        name = (person.get("name") or "").strip()
+        if not name:
+            yield error("_data/people.yml (alumni)", "An alumni entry has no `name:`.")
+            continue
+
+        if name in in_groups:
+            yield error("_data/people.yml",
+                        f"'{name}' is in alumni AND in the '{in_groups[name]}' group.",
+                        "Someone who has left belongs in one place only. Delete the "
+                        "entry from the group; duplicate names also break the automatic "
+                        "name-linking in news.")
+
+        if not person.get("start"):
+            yield error("_data/people.yml (alumni)", f"'{name}' has no `start:` year.",
+                        "The alumni table is built year by year, so an entry without "
+                        "one never appears at all. Add the year they joined.")
+
+        role = (person.get("role") or "").strip()
+        if not role:
+            yield error("_data/people.yml (alumni)", f"'{name}' has no `role:`.",
+                        "The role decides where they sort in the alumni table.")
+        elif not any(word in role.lower() for word in ALUMNI_ROLE_WORDS):
+            yield warn("_data/people.yml (alumni)",
+                       f"'{name}' has role '{role}', which doesn't say what they were "
+                       "in the lab.",
+                       "They'll sort to the bottom of the alumni table. Include one of: "
+                       + ", ".join(ALUMNI_ROLE_WORDS) + ".")
+
+
 CHECKS = [
     check_people,
+    check_alumni,
     check_review_list,
     check_research,
     check_publications,
