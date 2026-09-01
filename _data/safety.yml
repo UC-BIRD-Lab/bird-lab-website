@@ -94,7 +94,7 @@ schedule:
     via: LMS
   - what: Fire-extinguisher visual checks
     when: Monthly
-    note: Required for extinguishers both CALI and the wind tunnel
+    note: Required for both CALI and the wind tunnel
     link: https://safetyservices.ucdavis.edu/safetynet/fire-extinguisher-inspection-procedures
   - what: Emergency-eyewash test
     when: Monthly

@@ -1,11 +1,17 @@
 # ─────────────────────────────────────────────────────────────
-#  OPENINGS: drives the Undergrad, Graduate & Postdoc cards on the Join page.
+#  OPENINGS: drives the Undergrad, Graduate & Postdoc cards on the Join page,
+#  plus the one featured posting that sits above them.
 #
 #  TO OPEN OR CLOSE A POSITION, change one line:
 #     open: true    → green "Now recruiting" pill  + the `open_note`
 #     open: false   → amber "Open via fellowship" pill + the `closed_note`
 #  (Undergrad is simpler: the pill text IS the note. open: true shows the
 #   green `open_note` pill, open: false the amber `closed_note` pill.)
+#
+#  TO TAKE THE FEATURED POSTING DOWN, change one line:
+#     featured: enabled: false
+#  Then set `enabled: false` in _data/announcement.yml to retire the
+#  site-wide banner too. Nothing in join.md needs editing either way.
 #
 #  Nothing else needs editing. The pill text is also readable on its own
 #  (never colour-only), so the status stays clear for screen-reader and
@@ -24,6 +30,43 @@ email_body: |
   What I'd like to build or learn here: [...].
   Timing: [when I'd start]. My CV and unofficial transcript are attached.
 
+# ── The one featured posting on the Join page ────────────────
+#  `body` paragraphs render in order; Markdown-style **bold** is not
+#  processed here, so use <strong> if you want emphasis.
+#  `deadline` also hides the block automatically once it has passed, so
+#  a closed search can't linger if the switch above is forgotten.
+#  `flyer` is optional: if the file isn't there, no image is shown.
+featured:
+  enabled: true
+  id: postdoctoral-scholar
+  pill: Now hiring
+  title: Postdoctoral Scholar
+  deadline: 2026-09-30
+  body:
+    - >-
+      A <strong>full-time, two-year position</strong> helping lead research at the
+      Center for Animal Locomotion &amp; Innovation (CALI), our new shared facility
+      with 57 synchronised motion-capture and high-speed cameras and a 70-foot
+      flight hall. You'll lead original research in animal flight and biomechanics
+      while shaping how we turn very large multi-camera datasets into new
+      scientific measurements, and you'll coordinate experiments with falconers,
+      veterinarians and visiting research teams.
+    - >-
+      We'd like to hear from candidates coming from <strong>either</strong> computer
+      science, computer vision, machine learning or scientific computing,
+      <strong>or</strong> animal locomotion, organismal biology, experimental
+      biomechanics or high-speed imaging. You don't need to already span both.
+      What matters most is scientific independence, collaborative leadership, and
+      enthusiasm for fundamental research across disciplines.
+  terms: >-
+    Full-time · two years · Davis, California · UC salary scale and benefits.
+    Applications are due by September 30, 2026.
+  apply_subject: "Postdoctoral scholar application - BIRD Lab (UC Davis)"
+  apply_cta: Email your application
+  flyer: /assets/img/join/postdoctoral-scholar-flyer.png
+  flyer_alt: >-
+    Postdoctoral Scholar recruitment flyer. All details are in the text on this page.
+
 undergrad:
   open: true
   open_note: Interviewing most quarters
@@ -39,10 +82,10 @@ graduate:
     look at fellowship options together.
 
 postdoc:
-  open: false
+  open: true
   open_note: >-
-    I'm currently recruiting a postdoc. Email me with your interests and a few
-    fellowship or start-date thoughts, and we'll take it from there.
+    I'm recruiting a postdoctoral scholar to help lead research at CALI — see the
+    full posting above. Applications are due September 30, 2026.
   closed_note: >-
     No funded openings at the moment. If you're interested, reach out and we can
     look at fellowship options together.

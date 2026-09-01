@@ -31,28 +31,40 @@ glance before you reach out.
 
 ## Openings right now
 
-{%- comment -%} One-off featured position. When the search closes, delete this
-   block (through the closing </div> above the openings grid) and set
-   enabled: false in _data/announcement.yml to retire the site-wide bar too.
-   The flyer image only renders if the file exists, so the page never shows
-   a broken image. {%- endcomment -%}
-{%- assign smc_flyer = site.static_files | where: "path", "/assets/img/join/social-media-coordinator-flyer.png" | first %}
-<div class="opening-featured" id="social-media-coordinator">
+{%- comment -%} One-off featured position. Everything it shows lives in the
+   `featured:` block of _data/openings.yml — text, deadline, apply button, flyer.
+   To retire it, set `enabled: false` there, and set `enabled: false` in
+   _data/announcement.yml to take the site-wide bar down too. It also hides
+   itself once `deadline` has passed, and the flyer only renders if the image
+   file exists, so the page never shows a broken image. {%- endcomment -%}
+{%- assign f = site.data.openings.featured -%}
+{%- assign show_featured = f.enabled -%}
+{%- if f.deadline -%}
+  {%- comment -%} Deadline day itself still shows: hide from the following midnight. {%- endcomment -%}
+  {%- assign end_ts = f.deadline | date: "%s" | plus: 86400 -%}
+  {%- assign now_ts = site.time | date: "%s" | plus: 0 -%}
+  {%- if now_ts >= end_ts -%}{%- assign show_featured = false -%}{%- endif -%}
+{%- endif -%}
+{%- if show_featured %}
+{%- assign featured_flyer = site.static_files | where: "path", f.flyer | first %}
+<div class="opening-featured" id="{{ f.id }}">
 <div>
-<span class="status status--active">Now hiring</span>
-<h3>Social Media Coordinator</h3>
-<p>A <strong>paid, part-time position</strong> supervised by Dr.&nbsp;Harvey and graduate student Alex Fillman. You'll produce high-quality, informative posts that share the lab's biological and engineering insights — about <strong>4 hours of focused time per month</strong>, with monthly supervisor check-ins and support for our annual innovation-fair presentations.</p>
-<p>We're looking for a student from a <strong>design or artistic background</strong>: curious and eager to learn, experienced with social-media content creation, and able to work independently while integrating feedback. In return, expect regular feedback and support, insight into how biology and engineering interact in research, and professional skill development in research, science communication, and teamwork.</p>
-<p class="opening-featured__deadline">Applications are due by September 30, 2026. Top applicants will be contacted for interviews the following week.</p>
-<a class="btn btn--primary" href="https://forms.gle/G9ivAiD9EXggaPoB9">Apply now &rarr;</a>
+<span class="status status--active">{{ f.pill }}</span>
+<h3>{{ f.title }}</h3>
+{%- for para in f.body %}
+<p>{{ para }}</p>
+{%- endfor %}
+<p class="opening-featured__deadline">{{ f.terms }}</p>
+<a class="btn btn--primary" href="mailto:{{ site.lab.pi_email }}?subject={{ f.apply_subject | uri_escape }}&body={{ f.apply_body | uri_escape }}">{{ f.apply_cta }} &rarr;</a>
 </div>
-{%- if smc_flyer %}
+{%- if featured_flyer %}
 <figure class="opening-featured__flyer">
-<a href="{{ smc_flyer.path | relative_url }}"><img src="{{ smc_flyer.path | relative_url }}" alt="Social Media Coordinator recruitment flyer. All details are in the text on this page." loading="lazy"></a>
+<a href="{{ featured_flyer.path | relative_url }}"><img src="{{ featured_flyer.path | relative_url }}" alt="{{ f.flyer_alt }}" loading="lazy"></a>
 <figcaption>View the full flyer</figcaption>
 </figure>
 {% endif -%}
 </div>
+{%- endif %}
 
 <div class="grid grid-3 openings">
 {%- assign ug = site.data.openings.undergrad -%}

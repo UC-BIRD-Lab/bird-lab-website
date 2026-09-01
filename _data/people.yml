@@ -46,19 +46,8 @@ groups:
 
   - id: postdoc
     title: Postdoctoral Scholars
-    members:
-      - name: Dr. Alfonso Martínez-Carmena
-        aliases: ["Dr. Alfonso Martínez"]
-        role: Postdoctoral Scholar
-        pronouns: he/him
-        field: "Aerospace Engineering"
-        start: 2023
-        photo: /assets/img/people/alfonso-martinez.jpg
-        email: alfmartinez@ucdavis.edu
-        orcid: 0000-0002-5593-9002
-        website: https://www.ardmoth.org/
-        linkedin: https://uk.linkedin.com/in/amartinezc
-        note: Photogrammetry · Raptor perching behavior.
+    members: []
+
 
   - id: phd
     title: PhD Researchers
@@ -196,12 +185,7 @@ groups:
         pronouns: he/him
         field: "Mech + Aero Engineering"
         photo: /assets/img/people/zak-conte.jpg
-      - name: Elliot Crowder
-        role: Visiting Undergraduate Researcher · Sacramento City College
-        start: 2026
-        pronouns: he/him
-        field: "Computer Science"
-        photo: /assets/img/people/elliot-crowder.jpg
+
 
   # Visiting researchers (non-undergraduate). Kept here (empty) on purpose so a
   # submitted "Visiting Researcher" auto-files into it. While empty it shows
@@ -277,3 +261,21 @@ alumni:
         pronouns: he/him
         field: "Computer Science"
         photo: /assets/img/people/haotian-zhang.jpg
+      - name: Elliot Crowder
+        role: Visiting Undergraduate Researcher · Sacramento City College
+        start: 2026
+        pronouns: he/him
+        field: "Computer Science"
+        photo: /assets/img/people/elliot-crowder.jpg
+      - name: Dr. Alfonso Martínez-Carmena
+        aliases: ["Dr. Alfonso Martínez"]
+        role: Postdoctoral Scholar
+        pronouns: he/him
+        field: "Aerospace Engineering"
+        start: 2023
+        photo: /assets/img/people/alfonso-martinez.jpg
+        email: alfmartinez@ucdavis.edu
+        orcid: 0000-0002-5593-9002
+        website: https://www.ardmoth.org/
+        linkedin: https://uk.linkedin.com/in/amartinezc
+        note: Photogrammetry · Raptor perching behavior

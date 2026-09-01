@@ -382,25 +382,62 @@ the details, including the shared `email_body` draft that pre-fills the
 Write `open: true` or `open: false` **unquoted**. Quoted `"true"` is text, not a
 yes/no, and the pill comes out wrong. The content check catches this.
 
+### The featured posting above the three cards
+
+When there's one search worth putting front and centre, it lives in the
+`featured:` block of the same file — title, the paragraphs of body text, the
+terms line, the pre-filled apply email, and the flyer image. `join.md` renders
+whatever is there, so **you never edit the page itself**.
+
+```yaml
+featured:
+  enabled: true
+  id: postdoctoral-scholar     # becomes the #anchor the banner links to
+  pill: Now hiring
+  title: Postdoctoral Scholar
+  deadline: 2026-09-30
+  body:                        # one paragraph per list item
+    - >-
+      A <strong>full-time, two-year position</strong> ...
+  terms: "Full-time - two years - Davis, California ..."
+  apply_subject: "..."         # pre-fills the mailto
+  apply_body: |                # ...and its body
+    Hi Dr. Harvey, ...
+  apply_cta: Email your application
+  flyer: /assets/img/join/postdoctoral-scholar-flyer.png
+  flyer_alt: "..."
+```
+
+`body` paragraphs are inserted as HTML, so use `<strong>` rather than `**bold**`.
+The flyer is optional: if the file isn't in `assets/img/join/`, the block simply
+renders without an image.
+
+**To take a posting down:** set `enabled: false` here, and `enabled: false` in
+`_data/announcement.yml` for the banner. Two one-word edits, no HTML. If you
+forget, the `deadline:` hides both on the next build anyway.
+
 ---
 
 ## The site-wide banner: `_data/announcement.yml`
 
 The strip that appears across the top of every page, used for things like an open
-position. Set `enabled: false` to remove it.
+position. Set `enabled: false` to remove it. If it points at the featured posting
+on the Join page, set `enabled: false` in that file's `featured:` block too.
 
 ```yaml
 enabled: true
 label: "Now hiring"
-text: "We're looking for a Social Media Coordinator — paid, part-time (~4 hrs/month)."
+text: "We're recruiting a postdoctoral scholar to help lead research at CALI, our new animal-locomotion facility."
 cta: "Learn more & apply"
-url: "/join/#social-media-coordinator"
+url: "/join/#postdoctoral-scholar"
 deadline: 2026-09-30      # YYYY-MM-DD
 ```
 
-**Always set a `deadline:`.** It doesn't hide the banner by itself; it's what the
-quarterly sweep watches. You get a warning two weeks before, and a flagged issue
-once it passes, so the site can't go on advertising a closed position.
+**Always set a `deadline:`.** It does three things: the build stops rendering the
+banner once the date has passed, `main.js` hides it in the browser in the gap
+before the next rebuild, and the quarterly sweep watches it — a warning two weeks
+before, a flagged issue once it passes. The site can't go on advertising a closed
+position.
 
 ---
 
