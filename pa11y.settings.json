@@ -7,11 +7,17 @@
     "Two engines run on every page: HTML CodeSniffer (WCAG2AA, the older",
     "2.0-era ruleset) and axe-core, which adds the WCAG 2.1 and 2.2 rules.",
     "Both must pass. A rule name starting with a lowercase word and hyphens",
-    "(e.g. heading-order) is axe; one starting WCAG2AA. is CodeSniffer."
+    "(e.g. heading-order) is axe; one starting WCAG2AA. is CodeSniffer.",
+    "levelCapWhenNeedsReview: axe marks a check 'needs review' when it cannot",
+    "decide by itself, mostly text over a photo or gradient, where it cannot",
+    "compute a contrast ratio. Those are for the manual pass in MAINTENANCE.md,",
+    "not build failures, so they are capped to warnings. Real violations still",
+    "fail the build."
   ],
   "defaults": {
     "standard": "WCAG2AA",
     "runners": ["axe", "htmlcs"],
+    "levelCapWhenNeedsReview": "warning",
     "timeout": 60000,
     "chromeLaunchConfig": {
       "args": [
