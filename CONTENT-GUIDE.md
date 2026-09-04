@@ -498,6 +498,17 @@ Rates are approved by UC Davis Costing Policy & Analysis and normally re-approve
 annually. When new ones are issued, update the figures **and** the `effective:`
 date. The review sweep watches it.
 
+### The peer mentoring page: `_data/cali_mentoring.yml`
+
+`/cali/peer-mentoring/` has one switch, `signups: open:`. `true` links the
+sign-up form (from `opens` to `closes`, and says when sign-ups start before
+that); `false` swaps in `closed_note` and an "email us" button, and hides the
+sign-up rows in the timeline. Every sentence on the page is
+in `cali-peer-mentoring.html`, which opens with a map of what is where; the
+data file holds only the switch, the form link and the year's dates. Each fall: set the new dates, check the form link, flip the
+switch. The site only rebuilds on a push, so a date passing changes nothing
+until someone pushes.
+
 ---
 
 ## Edit a Lab Guide page: `_guide/`
@@ -552,7 +563,9 @@ Something important / a hard rule.
 
 ### Keeping pages fresh
 
-Every guide page shows a **"Needs review" band** once it hasn't been reviewed or
+Every guide page says, under its title, when it last changed and how many months
+ago. That date comes from git, so it moves on its own with each merged edit, and
+an untouched page visibly ages. It also shows a **"Needs review" band** once it hasn't been reviewed or
 edited in over a year. To clear it, either edit the page or, if you read it
 through and nothing needs changing, set `reviewed:` in its front matter to
 today's date (for example `reviewed: 2026-07-03`). Recording the review without a

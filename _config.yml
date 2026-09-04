@@ -75,6 +75,9 @@ analytics:
 
 
 # ── Build settings ───────────────────────────────────────────
+# Dates the build stamps on pages (the footer's "Site updated", the
+# announcement and sign-up deadlines) are read in this timezone.
+timezone: America/Los_Angeles
 markdown: kramdown
 kramdown:
   input: GFM

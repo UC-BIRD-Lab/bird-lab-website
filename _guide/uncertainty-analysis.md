@@ -24,7 +24,7 @@ math: true
 8. Replicate runs, and cross-check against something independent.
 </div>
 
-### Three key quantities
+## Three key quantities
 
 <div class="callout callout--stop" markdown="1">
 **The fluctuation, $$s_\text{corr}$$.** How much the signal moves. Buffeting is physics, not error. Its own band, labelled as the fluctuation.
@@ -73,7 +73,7 @@ Type A and Type B describe **how you found the number**, not whether the error i
 **Still trending? Adjust window.** If no window passes, report the condition as unsteady. 
 </aside>
 
-### Step 1. Cut the record to the steady part
+## Step 1. Cut the record to the steady part
 
 The DAQ records continuously. Only part of each run is your test state.
 - **Start-up.** The flow takes time to reach the desired speed.
@@ -81,7 +81,7 @@ The DAQ records continuously. Only part of each run is your test state.
 
 Plot the raw trace. Keep the settled window. Its mean is the value you report.
 
-### Step 2. Find how many independent samples you have
+## Step 2. Find how many independent samples you have
 
 100,000 correlated samples are not worth 100,000 independent ones. This step determines how many samples you have that are independent, $$N_\text{eff}$$.
 
@@ -149,7 +149,7 @@ $$u_A$$ is the Type A uncertainty, which is used to compute the combined uncerta
 **With many records, Smith et al.'s first choice is different.** Given a record long enough to split into many segments, they recommend computing each segment's autocorrelation with the *parent* mean and variance, ensemble-averaging, and summing **all** lags. The zero-crossing cut is the single-record fallback, and even there they judge the bootstrap more robust. Our recipe assumes the usual tunnel case: one record per condition.
 </details>
 
-### Step 3. If the autocorrelation rings, bootstrap instead
+## Step 3. If the autocorrelation rings, bootstrap instead
 
 A ringing autocorrelation, or a short record, can make $$N_\text{eff}$$ sensitive to truncation and thus fragile. One way to address this issue is to use a **dependent circular block bootstrap** ([Künsch 1989](https://doi.org/10.1214/aos/1176347265) and applied to time-resolved PIV by
 [Theunissen et al. 2008](https://doi.org/10.1007/s00348-007-0418-8)). To do this, complete the following steps:
@@ -170,7 +170,7 @@ Large disagreements should be further investigated.
 </div>
 
 
-### Step 4. Build a Type B budget
+## Step 4. Build a Type B budget
 
 Type B is based on calibration certificates, spec sheets, machining tolerances, or previous experiments
 ([GUM](https://www.bipm.org/documents/20126/2071204/JCGM_100_2008_E.pdf), 4.3.1). Note that Type B does not shrink with sample size.
@@ -201,7 +201,7 @@ To turn a specification into a standard uncertainty use the
 
 Fill in the budget before you write any propagation code. **Fill in each row shared or not**. If the item shared across all measurements it should be reported in the text rather than displayed as error bars.
 
-| Source | | Comes from | Shared? |
+| Source | Type | Comes from | Shared? |
 |---|---|---|---|
 | Balance calibration | B | Calibration certificate, full-scale accuracy | **Shared** |
 | Pressure transducer | B | Transducer certificate | **Shared** |
@@ -258,7 +258,7 @@ The standard corrections (Barlow, Rae & Pope, ch. 10) are derived for convention
 We address the problem by minimizing the potential effects through using small models relative to the tunnel size and low blockage ratios. These should still be discussed in the supplemental methods of a paper.
 </details>
 
-### Step 5. Assemble the budget, in two parts
+## Step 5. Assemble the budget, in two parts
 
 Everything adds in quadrature
 ([GUM](https://www.bipm.org/documents/20126/2071204/JCGM_100_2008_E.pdf), 5.1.2), but the shared rows and the per-point rows are summed separately. 
@@ -277,7 +277,7 @@ $$u_c = \sqrt{u_\text{point}^2 + u_\text{shared}^2}$$
 ([GUM](https://www.bipm.org/documents/20126/2071204/JCGM_100_2008_E.pdf), 5.1.2).
 </aside>
 
-### Step 6. Propagate, then expand your chosen coverage factor (usually 95%)
+## Step 6. Propagate, then expand your chosen coverage factor (usually 95%)
 
 Do not hand-write a propagation formula, it is too easy to make silly errors. Carry the uncertainty automatically with R
 [`errors`](https://cran.r-project.org/package=errors) or Python
@@ -338,13 +338,13 @@ you trust it. Trusting ATI to ±10% barely moves the bar. Do not go lower withou
 $$\nu = 2$$ and roughly doubles your uncertainty on a guess.
 </details>
 
-### Step 7. Uncertainty of experimentally computed slopes
+## Step 7. Uncertainty of experimentally computed slopes
 
 **OLS fits through `confint()`.** Fits capture the scatter of the points about the line, and that is often a reasonable error bar. However, if there is notable uncertainty on the x-axis, and or errors shared across the sweep, the fit's interval can under report. 
 
 One way to include it can be to propagate the slope by a Monte Carlo analysis. To do this, randomly estimate all the points within the uncertainty range (both shared and per point) to model the possible range of the data. Then refit a slope and report the standard deviation spread of these estimated slopes as the uncertainty.  
 
-### Step 8. Replicate, then cross-check
+## Step 8. Replicate, then cross-check
 
 One record cannot see whether the tunnel returns to the same speed tomorrow, or the model to the same angle when you re-clamp it. Random uncertainty comes from **replicate runs**: back-to-back repeats, and where affordable, repeats after removing and reinstalling the model ([AIAA S-071A](https://arc.aiaa.org/doi/book/10.2514/4.473647);
 [G-160-2025](https://arc.aiaa.org/doi/book/10.2514/4.107450)). Within-run Type A alone under-reports.
@@ -363,7 +363,7 @@ Three principles from Barlow, Rae & Pope (sec. 12.3), worth knowing by name:
 - **Blocking.** Measure an *increment* by adding and removing one part while everything else stays installed. A tail-on minus tail-off increment is far more precise than either measurement alone, because the shared systematics cancel in the difference. If your question is comparative, design it as a block to improve the measurement precision.
 </details>
 
-### Further reading
+## Further reading
 
 **Correlated data.**
 - [Smith, Neal, Feero & Richards (2018)](https://doi.org/10.1088/1361-6501/aae91d).

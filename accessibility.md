@@ -17,7 +17,7 @@ to the **Web Content Accessibility Guidelines (WCAG) 2.1, Level AA**.
 - Meaningful alternative text for informative images; decorative graphics are hidden from screen readers.
 - Respect for the operating-system "reduce motion" setting, including a control to pause background video.
 - Captions/labels on interactive controls. Page content remains readable with JavaScript disabled, though some conveniences (search, filtering, and the mobile menu) require it.
-- Automated WCAG 2.1 AA scans (pa11y-ci) run on every page each time the site changes. The site was last fully audited in July 2026.
+- Automated WCAG 2.1 AA scans (axe-core and HTML CodeSniffer, via pa11y-ci) run on every page each time the site changes. The date of the last change is at the foot of every page.
 
 ## Known limitations
 

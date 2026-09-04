@@ -226,6 +226,13 @@ image:
   .page--cali .cali-ways .card { display: flex; flex-direction: column; }
   .page--cali .cali-ways .card > p:last-child { margin-top: auto; }
 
+  /* Students' route in. It sits under the three cards rather than beside
+     them: .cali-ways is a fixed three-column grid, so a fourth card would
+     drop to a lopsided orphan row. */
+  .page--cali .cali-mentoring-note { max-width: 920px; margin-inline: auto; text-align: left; }
+  .page--cali .cali-mentoring-note p { margin: 0; }
+  .page--cali .cali-mentoring-note a { font-weight: 600; }
+
   /* Onward links, so the page isn't a dead end. */
   .page--cali .cali-onward { max-width: 74ch; margin-inline: auto; }
 </style>
@@ -274,7 +281,7 @@ image:
        consortium takes shape, and retire it once membership means something specific. {%- endcomment -%}
     <p class="cali-founding u-mt-12">We're in our founding phase — expanding our research network,
     identifying shared priorities, and building teams for collaborative proposals, training, and a new
-    peer mentoring program.</p>
+    <a href="{{ '/cali/peer-mentoring/' | relative_url }}">peer mentoring program</a>.</p>
 
     <p class="cali-statement u-mt-16">Animal locomotion links biomechanics, robotics, health, and conservation.</p>
 
@@ -526,6 +533,14 @@ image:
         <p>We're still working out how the consortium runs. Founding affiliates help decide.</p>
         <p class="u-mt-11 u-mb0"><a class="btn btn--ghost btn--sm" href="mailto:{{ cali.contact_email }}?subject={{ 'Becoming a CALI founding affiliate' | uri_escape }}">Get in touch &rarr;</a></p>
       </div>
+    </div>
+
+    {%- comment -%} Students arriving from the flyer QR code land on the
+       mentoring page directly; this is the route for everyone else. {%- endcomment -%}
+    <div class="note cali-mentoring-note u-mt-16">
+      <p><strong>Students:</strong> our peer mentoring program pairs you with someone from a different
+      field for a year, ending at the Innovation Fair in May.
+      <a href="{{ '/cali/peer-mentoring/' | relative_url }}">How it works &rarr;</a></p>
     </div>
 
     <p class="muted u-mt-16 cali-onward">CALI is part of the <a href="{{ '/' | relative_url }}">BIRD Lab</a> at UC&nbsp;Davis ·

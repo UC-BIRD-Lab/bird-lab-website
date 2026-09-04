@@ -1,0 +1,261 @@
+---
+layout: default
+permalink: /cali/peer-mentoring/
+title: "Peer Mentoring Program — CALI"
+body_class: cali-mentoring
+description: "CALI's peer mentoring program pairs UC Davis students from different disciplines for a year to explore how things move — animals, humans, robots, cells — ending at the Innovation Fair in May 2027."
+image:
+  path: /assets/img/cali/og-cali.png
+  width: 1200
+  height: 630
+---
+
+{%- comment -%}
+  HOW TO EDIT THIS PAGE
+
+  Words     Everything the reader sees is written out below, in order, in
+            plain HTML. Find the sentence, change it, commit. The sections
+            are labelled ══ HERO ══, ══ 1. THE PROGRAM ══ and so on.
+
+  Dates, the sign-up switch, the form link
+            _data/cali_mentoring.yml. Not here.
+
+  Look      The <style> block at the very BOTTOM of this file. You should
+            not need it to change words or dates.
+
+  Sign-up states  The page has three, decided by the switch and dates in the
+            data file: before sign-ups open (says when), open (Sign up button),
+            closed (email us). The short if/else blocks in the hero and the closing band
+            are what pick between them. Leave those alone.
+{%- endcomment -%}
+{%- assign m = site.data.cali_mentoring -%}
+{%- assign cali = site.data.cali -%}
+
+{%- comment -%} Machinery: works out `advertise` (this year's round is on)
+   and `open` (the form is live). No words in here. {%- endcomment -%}
+{%- assign advertise = false -%}
+{%- assign open = false -%}
+{%- if m.signups.open -%}
+  {%- assign advertise = true -%}
+  {%- assign now_ts = site.time | date: "%s" | plus: 0 -%}
+  {%- if m.signups.closes -%}
+    {%- assign end_ts = m.signups.closes | date: "%s" | plus: 86400 -%}
+    {%- if now_ts >= end_ts -%}{%- assign advertise = false -%}{%- endif -%}
+  {%- endif -%}
+  {%- assign open = advertise -%}
+  {%- if m.signups.opens -%}
+    {%- assign start_ts = m.signups.opens | date: "%s" | plus: 0 -%}
+    {%- if now_ts < start_ts -%}{%- assign open = false -%}{%- endif -%}
+  {%- endif -%}
+{%- endif -%}
+
+<!-- ══ HERO: the eyebrow, title, and one-line pitch ══ -->
+<section class="hero">
+  <img class="section-bg" src="{{ '/assets/img/cali/cali-peregrine-hooded.jpg' | relative_url }}" alt="" aria-hidden="true" loading="eager">
+  <div class="container">
+    <p class="eyebrow eyebrow--on-dark">Anything that moves</p>
+    <h1>Peer Mentoring Program</h1>
+    <p class="lead">Spend a year paired with a student from a field that isn't yours, and find the idea that only exists where the two meet.</p>
+    <div class="hero__cta">
+      {%- if open -%}
+      <a class="btn btn--light" href="{{ m.signups.form_url }}" rel="noopener">Sign up</a>
+      {%- endif -%}
+      <a class="btn btn--ghost btn--on-dark" href="#the-year">How the year runs</a>
+    </div>
+    {%- if advertise and open == false -%}
+    <p class="lead u-mt-12">Sign-ups open {{ m.signups.opens | date: "%-d %B" }}.</p>
+    {%- endif -%}
+  </div>
+  {% include funder-badge.html fund=m.funding %}
+</section>
+
+<!-- ══ 1. THE PROGRAM: intro sentence and three cards ══ -->
+<section class="section section--tint" id="about" aria-labelledby="about-h">
+  <div class="container center">
+    <h2 id="about-h" class="eyebrow center">The program</h2>
+    <p class="lead prose u-mt-10 u-mi-auto">CALI pairs students from different disciplines to spend a
+    year talking about how things move — animals, humans, robots, cells, and anything else that does.</p>
+
+    <div class="grid grid-3 pm-basics u-mt-16">
+      <div class="card">
+        <h3>Who it's for</h3>
+        <p>Undergraduate, graduate, and professional students, from any discipline at UC&nbsp;Davis. You
+        sign up as either a mentor or a mentee.</p>
+      </div>
+      <div class="card">
+        <h3>How pairing works</h3>
+        <p>You're matched with someone whose field is not your own. The gap between you is the point —
+        it's where the year's work comes from.</p>
+      </div>
+      <div class="card">
+        <h3>What it asks</h3>
+        <p>Conversations across the year, five short check-ins, and the Innovation Fair in May. The
+        program pauses over winter and spring breaks.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 2. THE YEAR: dates come from _data/cali_mentoring.yml ══ -->
+<section class="section" id="the-year" aria-labelledby="year-h">
+  <div class="container center">
+    <h2 id="year-h" class="eyebrow center">The year</h2>
+    <ol class="pm-timeline">
+      {%- for step in m.timeline -%}
+      {%- unless step.signup_only and advertise == false -%}
+      <li>
+        <span class="pm-timeline__date">{{ step.date }}</span>
+        <p class="pm-timeline__text u-m0">{{ step.text }}</p>
+      </li>
+      {%- endunless -%}
+      {%- endfor -%}
+    </ol>
+  </div>
+</section>
+
+<!-- ══ 3. WHAT YOU MAKE: the fair, three example ideas, reassurance ══ -->
+<section class="section section--tint" id="the-fair" aria-labelledby="fair-h">
+  <div class="container center">
+    <h2 id="fair-h" class="eyebrow center">What you make</h2>
+    <p class="lead prose u-mt-10 u-mi-auto">In May, every mentee brings one idea to the Innovation Fair:
+    something that only makes sense because your two fields met.</p>
+
+    {%- comment -%} Deliberately rough examples. They exist so a reader can
+       point at something and think "I could do that" — keep them short, keep
+       them unfinished, and keep the two fields visible. {%- endcomment -%}
+    <div class="grid grid-3 pm-examples u-mt-16">
+      <div class="card pm-example">
+        <span class="card__tag">A product</span>
+        <p>A perch in a raptor rehab enclosure with load cells in it, so a vet can watch grip strength
+        come back over a week instead of guessing from a handling exam.</p>
+        <p class="pm-example__fields">Mechanical engineering + veterinary medicine</p>
+      </div>
+      <div class="card pm-example">
+        <span class="card__tag">A question</span>
+        <p>Do birds that fly in cluttered forest change wing shape more, or less, than open-country
+        fliers when a gust hits? Nobody has put the wind tunnel data next to the ecology data.</p>
+        <p class="pm-example__fields">Aerospace + animal behavior</p>
+      </div>
+      <div class="card pm-example">
+        <span class="card__tag">A possibility</span>
+        <p>If you could film a wing at 2000&nbsp;fps in a clinic, would a three-second video replace a
+        radiograph for spotting a healing fracture?</p>
+        <p class="pm-example__fields">Imaging + clinical practice</p>
+      </div>
+    </div>
+
+    <p class="pm-prose u-mt-18">You don't need data, results, or a finished project. Nothing is graded
+    and nothing is ranked. What matters is that the idea is clear, and that both of your fields are in it.</p>
+    <p class="pm-prose muted u-mt-12">This shouldn't feel stressful. If it starts to, tell your partner
+    or <a href="mailto:{{ m.contact_email }}?subject={{ 'CALI peer mentoring' | uri_escape }}">email us</a>.
+    We would much rather hear early.</p>
+  </div>
+</section>
+
+<!-- ══ 4. CLOSING BAND: three versions, picked by the sign-up switch ══ -->
+<section class="field-band pm-cta" aria-labelledby="signup-h">
+  <img class="field-band__img" src="{{ cali.team_photo | relative_url }}" alt="" aria-hidden="true" loading="lazy">
+  <div class="field-band__overlay"></div>
+  <div class="container field-band__caption">
+    <p class="eyebrow eyebrow--on-dark">CALI</p>
+    {%- if open -%}
+    <h2 class="field-band__line" id="signup-h">Sign up by {{ m.signups.closes | date: "%-d %B %Y" }}.</h2>
+    <div class="hero__cta u-mt-12">
+      <a class="btn btn--light" href="{{ m.signups.form_url }}" rel="noopener">Sign up</a>
+      <a class="btn btn--ghost btn--on-dark" href="mailto:{{ m.contact_email }}?subject={{ 'CALI peer mentoring' | uri_escape }}">Ask a question</a>
+    </div>
+    {%- elsif advertise -%}
+    <h2 class="field-band__line" id="signup-h">Sign-ups open {{ m.signups.opens | date: "%-d %B %Y" }}.</h2>
+    <div class="hero__cta u-mt-12">
+      <a class="btn btn--light" href="mailto:{{ m.contact_email }}?subject={{ 'CALI peer mentoring' | uri_escape }}">Ask a question</a>
+    </div>
+    {%- else -%}
+    <h2 class="field-band__line" id="signup-h">We run this every year.</h2>
+    <p class="pm-cta__note">{{ m.signups.closed_note }}</p>
+    <div class="hero__cta u-mt-12">
+      <a class="btn btn--light" href="mailto:{{ m.contact_email }}?subject={{ 'CALI peer mentoring' | uri_escape }}">Email us</a>
+    </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<!-- ══ 5. LINKS ONWARD ══ -->
+<section class="section u-pb-fluid" aria-label="More about CALI">
+  <div class="container center">
+    <p class="muted pm-onward u-m0">Part of <a href="{{ '/cali/' | relative_url }}">CALI</a>, the Center for
+    Animal Locomotion &amp; Innovation at UC&nbsp;Davis ·
+    <a href="{{ '/facilities/' | relative_url }}">Facilities</a> ·
+    <a href="{{ '/research/' | relative_url }}">Research</a> ·
+    <a href="{{ '/contact/' | relative_url }}">Contact</a></p>
+  </div>
+</section>
+
+{%- comment -%}
+  STYLING. Scoped to this page (.page--cali-mentoring) and built on the
+  site's design tokens. It lives here rather than in assets/css/style.css so
+  the page travels with the rest of the CALI unit if CALI ever spins out.
+  The gold accent is CALI's, matching cali.html.
+{%- endcomment -%}
+<style>
+  .page--cali-mentoring { --cali-accent: #c0912e; }
+
+  .page--cali-mentoring .hero > .container { padding-block: clamp(3rem, 8vw, 5.5rem); max-width: 62rem; }
+  .page--cali-mentoring .hero .lead { max-width: 46ch; }
+
+  /* The gold keyline under each centred section label — CALI's signature,
+     carried over from cali.html so the two pages read as one section. */
+  .page--cali-mentoring .eyebrow.center { padding-bottom: .6rem; }
+  .page--cali-mentoring .eyebrow.center::after { content: ""; display: block; width: 42px; height: 3px; border-radius: 2px; background: var(--cali-accent); margin: .55rem auto 0; }
+
+  /* Funder badge on the hero. The badge pins to a corner of its nearest
+     positioned ancestor; .hero is already position: relative. Below 720px
+     it would sit on top of the headline, so it drops below the buttons.
+     It stays `position: relative` rather than `static` there: the hero's
+     background photo is absolutely positioned, so an unpositioned badge
+     loses its z-index and gets painted behind the picture. */
+  .page--cali-mentoring .hero .facility-funder { z-index: 3; }
+  @media (max-width: 720px) {
+    .page--cali-mentoring .hero .facility-funder {
+      position: relative; inset: auto;
+      margin: 0 clamp(1rem, 4vw, 2rem) 1.6rem; max-width: max-content;
+      align-items: flex-start;
+    }
+    .page--cali-mentoring .hero .facility-funder__note { text-align: left; }
+  }
+
+  /* Three short cards under the intro. Fixed columns rather than auto-fit,
+     so three cards never break to a lopsided 2 + 1. */
+  .page--cali-mentoring .pm-basics { max-width: 920px; margin-inline: auto; grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 680px) { .page--cali-mentoring .pm-basics { grid-template-columns: 1fr; } }
+  .page--cali-mentoring .pm-basics .card { text-align: left; }
+  .page--cali-mentoring .pm-basics .card h3 { margin: 0 0 .3rem; font-size: var(--step-1); }
+  .page--cali-mentoring .pm-basics .card p:last-child { margin-bottom: 0; }
+
+  /* The year, as a timeline. Mirrors .cali-timeline on cali.html. */
+  .page--cali-mentoring .pm-timeline { max-width: 46rem; margin: 1.6rem auto 0; padding: 0 0 0 1.6rem; border-left: 2px solid var(--c-line); list-style: none; text-align: left; }
+  .page--cali-mentoring .pm-timeline li { position: relative; padding: 0 0 1.4rem; }
+  .page--cali-mentoring .pm-timeline li:last-child { padding-bottom: 0; }
+  .page--cali-mentoring .pm-timeline li::before { content: ""; position: absolute; left: calc(-1.6rem - 6px); top: .3rem; width: 12px; height: 12px; border-radius: 50%; background: var(--c-blue-500); border: 2px solid #fff; box-shadow: 0 0 0 1px var(--c-line); }
+  /* The fair is where the year is pointing, so its marker is the gold one. */
+  .page--cali-mentoring .pm-timeline li:last-child::before { background: var(--cali-accent); }
+  .page--cali-mentoring .pm-timeline__date { font-weight: 700; color: var(--c-navy); }
+  .page--cali-mentoring .pm-timeline__text { color: var(--c-ink-soft); }
+
+  /* Example ideas. The kind ("A product") is the card's tag; the idea
+     itself is the sentence; the two fields sit at the bottom. */
+  .page--cali-mentoring .pm-examples { max-width: 980px; margin-inline: auto; grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 760px) { .page--cali-mentoring .pm-examples { grid-template-columns: 1fr; } }
+  .page--cali-mentoring .pm-example { display: flex; flex-direction: column; text-align: left; border-top: 3px solid var(--cali-accent); }
+  .page--cali-mentoring .pm-example p { margin-bottom: 0; }
+  .page--cali-mentoring .pm-example__fields { margin-top: auto; padding-top: .9rem; color: var(--c-muted); font-size: var(--step--1); }
+
+  .page--cali-mentoring .pm-prose { max-width: 54ch; margin-inline: auto; }
+
+  /* Closing band, matching the CALI page's treatment of the same photo. */
+  .page--cali-mentoring .pm-cta .field-band__img { object-position: center 38%; height: clamp(300px, 38vw, 460px); }
+  .page--cali-mentoring .pm-cta .field-band__line { max-width: 34ch; line-height: 1.28; }
+  .page--cali-mentoring .pm-cta .field-band__overlay { background: linear-gradient(180deg, rgba(11,22,45,.30) 0%, rgba(11,22,45,.26) 42%, rgba(11,22,45,.80) 100%); }
+  .page--cali-mentoring .pm-cta__note { max-width: 46ch; margin: .9rem 0 0; }
+
+  .page--cali-mentoring .pm-onward { max-width: 74ch; margin-inline: auto; }
+</style>

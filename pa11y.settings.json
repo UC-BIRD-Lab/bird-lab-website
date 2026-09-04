@@ -3,10 +3,15 @@
     "Accessibility scanning rules. The page list is generated from",
     "_site/sitemap.xml by scripts/build_pa11y_config.py, not kept here.",
     "To skip a page, add it to `exclude` with a reason. Keep that short:",
-    "every entry is a page nobody is checking."
+    "every entry is a page nobody is checking.",
+    "Two engines run on every page: HTML CodeSniffer (WCAG2AA, the older",
+    "2.0-era ruleset) and axe-core, which adds the WCAG 2.1 and 2.2 rules.",
+    "Both must pass. A rule name starting with a lowercase word and hyphens",
+    "(e.g. heading-order) is axe; one starting WCAG2AA. is CodeSniffer."
   ],
   "defaults": {
     "standard": "WCAG2AA",
+    "runners": ["axe", "htmlcs"],
     "timeout": 60000,
     "chromeLaunchConfig": {
       "args": [

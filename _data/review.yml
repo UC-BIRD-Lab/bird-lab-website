@@ -25,6 +25,16 @@ items:
     note: Check a handful you'd actually send a student to. Eligibility wording
       drifts and fellowships close.
 
+  - what: Peer mentoring sign-up switch, form link and the year's dates
+    file: _data/cali_mentoring.yml
+    owner: "@christinaharvey"
+    every_months: 12
+    last_reviewed: 2026-09-04
+    note: >-
+      Each fall set the new dates, confirm the Qualtrics link opens the live
+      form, then set the open flag to true. Set it back to false after the
+      close date.
+
   - what: Safety training requirements, links and named contacts
     file: _data/safety.yml
     owner: "@christinaharvey"
