@@ -21,7 +21,7 @@ The following rules and guidelines surrounding the use of AI in our research wer
 
 - Code writing and debugging (e.g., with GitHub Copilot).
 - Improving plots in R or Python.
-- Editing an existing draft's spelling, grammar, logical flow, and sentence structure (see [Writing papers]({{ '/lab-guide/writing-papers/' | relative_url }})). This can include abstracts, papers, and your own grants/fellowships. You must always have explicit permission if you are not the owner.
+- As a reviewer of an existing draft: spelling, grammar, logical flow, sentence structure (see [Writing papers]({{ '/lab-guide/writing-papers/' | relative_url }})). It suggests; you review, re-type, and own every sentence. This can include abstracts, papers, and your own grants/fellowships. You must always have explicit permission if you are not the owner.
 - Brainstorming ideas (as long as you do not limit this to only AI brainstorming).
 
 ## Inappropriate uses
@@ -61,7 +61,7 @@ If a generative AI tool (e.g., ChatGPT) is used, your research publications (the
 - **Consider copyright issues**: AI-generated content can contain copyrighted or plagiarized material. You are responsible for any AI-generated content that you publish or make available to others.
 
 <div class="callout callout--stop" markdown="1">
-Never copy and paste AI-generated language. Even if acknowledged, the risk that you unknowingly plagiarize a colleague is huge.
+Never copy and paste AI-generated language, even if acknowledged: the risk that you unknowingly plagiarize a colleague is huge. Use AI as a reviewer that suggests edits, then review, re-type, and own every sentence.
 </div>
 
 References: [UC Davis & Generative AI guidance](https://iet.ucdavis.edu/aggie-ai/ai-guidance) ·

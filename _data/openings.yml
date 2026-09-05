@@ -8,8 +8,8 @@
 #  (Undergrad is simpler: the pill text IS the note. open: true shows the
 #   green `open_note` pill, open: false the amber `closed_note` pill.)
 #
-#  TO TAKE THE FEATURED POSTING DOWN, change one line:
-#     featured: enabled: false
+#  TO TAKE A POSTING DOWN, change one line:
+#     featured: enabled: false      (same for `second:`, the smaller one below it)
 #  Then set `enabled: false` in _data/announcement.yml to retire the
 #  site-wide banner too. Nothing in join.md needs editing either way.
 #
@@ -66,6 +66,36 @@ featured:
   flyer: /assets/img/join/postdoctoral-scholar-flyer.png
   flyer_alt: >-
     Postdoctoral Scholar recruitment flyer. All details are in the text on this page.
+
+# ── A second posting, shown under the featured one. Same fields.
+#  `apply_url` (a form link) replaces the email button when present.
+second:
+  enabled: true
+  id: social-media-coordinator
+  pill: Now hiring
+  title: Social Media Coordinator
+  deadline: 2026-09-30
+  body:
+    - >-
+      A <strong>paid, part-time position</strong> supervised by Dr. Harvey and
+      graduate student Alex Fillman: about four hours of focused time a month,
+      producing informative posts about the lab's work, a monthly check-in, and
+      support for the annual innovation fair.
+    - >-
+      We're looking for a student from a design or artistic background who is
+      experienced with social media content, works independently and takes
+      feedback well, and wants to communicate biological and engineering
+      insights. You'll get regular feedback, a view of how biology and
+      engineering meet in research, and practice in science communication.
+  terms: >-
+    Paid · part-time · about 4 hours a month. Applications are due by
+    September 30, 2026; top applicants are contacted for interviews the
+    following week.
+  apply_url: https://forms.gle/G9ivAiD9EXggaPoB9
+  apply_cta: Apply with the form
+  flyer: /assets/img/join/social-media-coordinator-flyer.png
+  flyer_alt: >-
+    Social Media Coordinator recruitment flyer. All details are in the text on this page.
 
 undergrad:
   open: true

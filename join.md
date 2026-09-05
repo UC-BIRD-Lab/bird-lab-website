@@ -10,7 +10,7 @@ Thank you for being interested in joining our team!
 We study birds to uncover the principles behind flight, then test which of them actually
 earn a place in engineered systems or wildlife rehabilitation. 
 
-Whether you come at flight from a **biology** (animal behavior, biomechanics, wildlife and raptor conservation) or **engineering** (aerodynamics, dynamics, controls, robotics) perspective, there's a place for your questions here.
+We take students from **biology** (animal behavior, biomechanics, wildlife and raptor conservation) and from **engineering** (aerodynamics, dynamics, controls, robotics). We expect you to be curious and interested in the fields you know less about.
 
 {%- if site.assets.culture_photo and site.assets.culture_photo != "" %}
 <figure class="culture-shot">
@@ -31,22 +31,20 @@ glance before you reach out.
 
 ## Openings right now
 
-{%- comment -%} One-off featured position. Everything it shows lives in the
-   `featured:` block of _data/openings.yml — text, deadline, apply button, flyer.
-   To retire it, set `enabled: false` there, and set `enabled: false` in
-   _data/announcement.yml to take the site-wide bar down too. It also hides
-   itself once `deadline` has passed, and the flyer only renders if the image
-   file exists, so the page never shows a broken image. {%- endcomment -%}
-{%- assign f = site.data.openings.featured -%}
-{%- assign show_featured = f.enabled -%}
+{%- comment -%} Postings. Everything they show lives in the `featured:` and
+   `second:` blocks of _data/openings.yml. Each hides itself when `enabled: false`
+   or once its `deadline` has passed; a flyer renders only if the file exists. {%- endcomment -%}
+{%- assign now_ts = site.time | date: "%s" | plus: 0 -%}
+{%- assign slots = "featured,second" | split: "," -%}
+{%- for slot in slots -%}
+{%- assign f = site.data.openings[slot] -%}
+{%- assign show = f.enabled -%}
 {%- if f.deadline -%}
-  {%- comment -%} Deadline day itself still shows: hide from the following midnight. {%- endcomment -%}
   {%- assign end_ts = f.deadline | date: "%s" | plus: 86400 -%}
-  {%- assign now_ts = site.time | date: "%s" | plus: 0 -%}
-  {%- if now_ts >= end_ts -%}{%- assign show_featured = false -%}{%- endif -%}
+  {%- if now_ts >= end_ts -%}{%- assign show = false -%}{%- endif -%}
 {%- endif -%}
-{%- if show_featured %}
-{%- assign featured_flyer = site.static_files | where: "path", f.flyer | first %}
+{%- if show %}
+{%- assign flyer = site.static_files | where: "path", f.flyer | first %}
 <div class="opening-featured" id="{{ f.id }}">
 <div>
 <span class="status status--active">{{ f.pill }}</span>
@@ -55,16 +53,21 @@ glance before you reach out.
 <p>{{ para }}</p>
 {%- endfor %}
 <p class="opening-featured__deadline">{{ f.terms }}</p>
+{%- if f.apply_url %}
+<a class="btn btn--primary" href="{{ f.apply_url }}">{{ f.apply_cta }} &rarr;</a>
+{%- else %}
 <a class="btn btn--primary" href="mailto:{{ site.lab.pi_email }}?subject={{ f.apply_subject | uri_escape }}&body={{ f.apply_body | uri_escape }}">{{ f.apply_cta }} &rarr;</a>
+{%- endif %}
 </div>
-{%- if featured_flyer %}
+{%- if flyer %}
 <figure class="opening-featured__flyer">
-<a href="{{ featured_flyer.path | relative_url }}"><img src="{{ featured_flyer.path | relative_url }}" alt="{{ f.flyer_alt }}" loading="lazy"></a>
+<a href="{{ flyer.path | relative_url }}"><img src="{{ flyer.path | relative_url }}" alt="{{ f.flyer_alt }}" loading="lazy"></a>
 <figcaption>View the full flyer</figcaption>
 </figure>
 {% endif -%}
 </div>
 {%- endif %}
+{%- endfor %}
 
 <div class="grid grid-3 openings">
 {%- assign ug = site.data.openings.undergrad -%}

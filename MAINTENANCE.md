@@ -24,7 +24,8 @@ Do these once a month. None of them require the command line.
 1. **Merge the publications update.** On the 1st, a bot checks ORCID for new
    journal articles and opens a **pull request**. Open the **Pull requests** tab,
    review the new entry (title, authors, venue, DOI), fix anything, and **Merge**.
-   No PR that month just means no new papers: that's normal.
+   No PR that month means no new papers, unless the run shows red in the
+   **Actions** tab, which means OpenAlex couldn't be reached. Re-run it.
 2. **Add any new press** (~2 min each). Run the helper:
    `python scripts/add_press.py "<url>" --doi <doi> --featured`: it reads the
    outlet, headline, and author, downloads the lead image (only with `--featured`),
@@ -88,6 +89,11 @@ commit and start a pull request"* by default.
 > bigger risk. The checks still run on those pushes; they report a failure a
 > minute later rather than preventing it. **Remove this exception once a second
 > person has write access.**
+
+> **Bot pull requests aren't checked.** GitHub doesn't run the checks on PRs a
+> workflow opens (publications sync, issue forms, image compression). To run
+> them, push any commit to the bot's branch, or just review the diff by eye:
+> those PRs only touch one data file.
 
 ---
 
@@ -347,9 +353,9 @@ this the moment a paper is accepted.
   `_data/openings.yml` (undergrad, graduate, or postdoc).
 - **Each term / as people move on:** review **alumni** destinations and add where people landed.
 - **As the team changes:** refresh **photos** and the lab **group photo**.
-- **Yearly:** confirm **funders** and any external links (guides, forms) still work. (Two Actions do most of this for you: [guide-link-check](.github/workflows/guide-link-check.yml) sweeps the lab guide's external links each July, and [link-rot-check](.github/workflows/link-rot-check.yml) verifies every paper **DOI**, **press/media** URL, and per-paper **data/code/preprint** link each January, filing an issue only for links that are genuinely dead. You can run either any time from **Actions → Run workflow**, or locally with `python scripts/check_links.py`.)
+- **Yearly:** confirm **funders** and any external links (guides, forms) still work. (Two Actions do most of this for you: [guide-link-check](.github/workflows/guide-link-check.yml) sweeps the lab guide's external links, and [link-rot-check](.github/workflows/link-rot-check.yml) verifies every paper **DOI**, **press/media** URL, and per-paper **data/code/preprint** link; both run quarterly and file one issue listing only links that are genuinely dead. You can run either any time from **Actions → Run workflow**, or locally with `python scripts/check_links.py`.)
 - **Images stay light automatically.** A pull request touching `assets/` fails if
-  anything is over budget (1600 px wide; ~300 KB JPEG, ~600 KB PNG, ~2.5 MB video).
+  anything is over budget (the numbers are at the top of `scripts/optimize_images.py`).
   Once merged, the [optimize-images Action](.github/workflows/optimize-images.yml)
   compresses what it can and opens a PR with the smaller files. Run it yourself
   with `python scripts/optimize_images.py` (`--check` to only list problems).

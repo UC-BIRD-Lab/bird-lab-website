@@ -63,7 +63,6 @@ This uses the same Ruby and `Gemfile.lock` as the live build, and avoids compili
 ├── assets/              ← CSS, JS, logo, images
 ├── scripts/             ← publications sync · press helper · content + link checks · image tools
 ├── CONTRIBUTING.md      ← how lab members submit updates + delegation
-├── CLAUDE.md            ← house style for AI assistants working in this repo
 └── .github/             ← workflows + issue forms
 ```
 
@@ -76,7 +75,7 @@ This uses the same Ruby and `Gemfile.lock` as the live build, and avoids compili
 ## How it's built (in brief)
 
 - Static **Jekyll** on **GitHub Pages**: Markdown and YAML, no runtime services, no database. GitHub Actions handle deployment, the publications sync, the pre-merge checks and the scheduled reviews; Dependabot keeps gems current.
-- Every change reaches the live site through a pull request that must pass three checks: content validation, broken links and missing images, and a WCAG 2.1 AA scan.
+- Changes go through a pull request that must pass three checks: content validation, broken links and missing images, and a WCAG 2.1 AA scan. (The PI can push to `main` directly; the checks then run after the fact. See MAINTENANCE.md.)
 - Journal articles and DOI-bearing conference papers sync monthly from **OpenAlex** by the PI's **ORCID** and open a pull request for review. Talks and posters without a DOI are hand-curated in `_data/`.
 - Priorities, in order: **maintainability → accessibility (WCAG 2.1 AA) → scientific communication → automation → design.** Where two conflicted the higher one won: plain editable data files over a headless CMS, for instance.
 

@@ -29,7 +29,11 @@ lab:
   full_name: "Bio-Informed Research & Design Lab"
   institution: "University of California, Davis"
   pi: "Dr. Christina Harvey"
+  pi_title: "Assistant Professor"          # search engines read this (schema.html)
   pi_email: "harvey@ucdavis.edu"
+  founded: 2022                            # the "Founded" number on the home page
+  department: "Mechanical &amp; Aerospace Engineering"
+  address: "University of California, Davis · Davis, CA 95616"
   orcid: "0000-0002-2830-0844"
   scholar: "https://scholar.google.com/citations?hl=en&user=_uRCRPgAAAAJ"
   location: "Department of Mechanical & Aerospace Engineering, UC Davis, Davis, CA"
@@ -128,7 +132,11 @@ exclude:
   - Gemfile.lock
   - vendor/
   - .github/
-  - pa11yci.json
+  - pa11y.settings.json
+  - pa11yci.generated.json
+  - AUTOMATION.md
+  - serve.sh
+  - bird-lab-website.Rproj
   # FUSE / editor-sync artifacts (".fuse_hiddenXXXX") can appear in collection
   # folders when a file is edited while another process holds it open. They carry
   # stale, sometimes corrupted front matter (a missing category shows up as a

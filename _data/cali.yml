@@ -23,6 +23,9 @@ name: Center for Animal Locomotion and Innovation
 # inbox such as cali@ucdavis.edu, this is the only edit needed.)
 contact_email: harvey@ucdavis.edu
 
+# The year in "Founded in …" on the page: CALI opened in 2026 (funded 2024).
+founded: 2026
+
 # ── IMAGES ────────────────────────────────────────────────────
 # Paths only; the alt text sits with each <img> in cali.html.
 hero_photo: /assets/img/cali/cali-peregrine.jpg

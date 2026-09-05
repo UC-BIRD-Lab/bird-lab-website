@@ -17,6 +17,16 @@
 guide_every_months: 12
 
 items:
+  - what: Postdoc and Social Media Coordinator postings after their 30 Sept 2026 deadline
+    file: _data/openings.yml
+    owner: "@christinaharvey"
+    every_months: 12
+    last_reviewed: 2025-10-01
+    note: >-
+      Both postings and the banner hide themselves after the deadline, but the
+      postdoc pill's "see the full posting above" note does not: set postdoc
+      open: false, or update the dates.
+
   - what: Funding opportunities, eligibility rules and application links
     file: _data/funding.yml
     owner: "@christinaharvey"
@@ -31,9 +41,8 @@ items:
     every_months: 12
     last_reviewed: 2026-09-04
     note: >-
-      Each fall set the new dates, confirm the Qualtrics link opens the live
-      form, then set the open flag to true. Set it back to false after the
-      close date.
+      Each fall set the dates, confirm the Qualtrics link opens the live form,
+      then set open: true. Set it back to false after the close date.
 
   - what: Safety training requirements, links and named contacts
     file: _data/safety.yml

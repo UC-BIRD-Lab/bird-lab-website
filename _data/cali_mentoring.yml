@@ -1,83 +1,17 @@
-# ─────────────────────────────────────────────────────────────
-#  CALI PEER MENTORING PROGRAM
+# CALI peer mentoring: the sign-up switch and this year's dates.
+# The words are in cali.html, section "Peer mentoring".
 #
-#  TO SWITCH THE PAGE FROM "SIGN UP" TO "WE RUN THIS EVERY YEAR",
-#  CHANGE ONE LINE:
-#     signups: open: true    → sign-up button, the closing date, and
-#                              the sign-up steps in the timeline
-#     signups: open: false   → the `closed_note` and an "email us to
-#                              hear when it opens" link instead
-#  Nothing in cali-peer-mentoring.html needs editing either way.
+#   open: true   → Sign up button (from `opens`; before that the page says
+#                  when sign-ups start; after `closes` the button goes)
+#   open: false  → "We run this every year. Email us."
 #
-#  The `opens` and `closes` dates are guard rails, not the switch. Before
-#  `opens` the page says when sign-ups start instead of showing the button;
-#  after `closes` it drops the button. But the site only rebuilds when
-#  something is pushed, so a date passing does nothing until the next
-#  push. Flip the flag; don't rely on the dates.
-#
-#  DATA ONLY: the switch, the form link, the email address, the funder
-#  badge and the year's dates. Every sentence on the page is in
-#  cali-peer-mentoring.html, and that file starts with a map of where.
-#
-#  YAML rules: two-space indents, a space after every colon.
-# ─────────────────────────────────────────────────────────────
-
-# Used by every "email us" link on the page and by the callout on the
-# CALI page. Change it once and they all follow.
-contact_email: harvey@ucdavis.edu
-
-# Funding credit, shown as a badge on the hero. Same shape as
-# cali.yml's `funding:` block, rendered by _includes/funder-badge.html.
-funding:
-  note: "Supported by:"
-  name: National Science Foundation
-  logo: /assets/img/partners/nsf.png
-  url: https://www.nsf.gov/
-
-# ── SIGN-UPS ──────────────────────────────────────────────────
+# Dates only take effect when the site is next pushed; the switch is the
+# thing to flip.
 signups:
   open: true
-
-  # ⚠ VERIFY BEFORE LAUNCH. This is the Qualtrics link printed on the
-  # flyer QR code and in the organiser one-sheet. Confirm it points at
-  # the live intake form before the page goes public.
-  form_url: https://ucdavis.co1.qualtrics.com/jfe/form/SV_br5wSmULKjGnZBQ
-
-  # Before this date the page shows "Sign-ups open 28 September" in place
-  # of the button (only while open: true).
+  form_url: https://ucdavis.co1.qualtrics.com/jfe/form/SV_br5wSmULKjGnZBQ   # ⚠ confirm before launch
   opens: 2026-09-28
-
-  # Deadline day itself still counts as open.
   closes: 2026-10-28
 
-  # Shown in place of the sign-up button once `open: false` (or once
-  # `closes` has passed). Keep it warm: most readers who land here out
-  # of season found us from a flyer.
-  closed_note: >-
-    Sign-ups for this year have closed. Check back in early fall, or
-    email us and we'll let you know when the next round opens.
-
-# ── THE YEAR ──────────────────────────────────────────────────
-# One line each, in order. `signup_only: true` marks a step that is only
-# shown while sign-ups are open, so the timeline reads correctly in both
-# states. Edit these when next year's dates are set.
-timeline:
-  - date: "28 September 2026"
-    text: Sign-ups open.
-    signup_only: true
-  - date: "7 October 2026"
-    text: >-
-      Perspectives &amp; Connections, the kickoff. Two faculty on their
-      different paths into locomotion research.
-  - date: "28 October 2026"
-    text: Sign-ups close.
-    signup_only: true
-  - date: "Early November 2026"
-    text: Pairs are matched and introduced.
-  - date: "February 2027"
-    text: >-
-      An evening at the California Raptor Center, with short talks from
-      graduate students.
-  # Day and venue are confirmed in spring; add the day once the room is booked.
-  - date: "May 2027"
-    text: The Innovation Fair, where every mentee shares their idea.
+kickoff: 7 October 2026     # Perspectives & Connections
+fair: May 2027              # Innovation Fair; add the day once the room is booked

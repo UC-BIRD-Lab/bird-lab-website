@@ -8,10 +8,10 @@ description: "Contact the BIRD Lab at UC Davis: email Dr. Christina Harvey about
 
 <div class="contact-card">
 <div class="contact-card__info">
-<p class="contact-card__name">Dr. Christina Harvey</p>
-<p class="muted">Lab Director · Mechanical &amp; Aerospace Engineering, UC&nbsp;Davis</p>
+<p class="contact-card__name">{{ site.lab.pi }}</p>
+<p class="muted">Lab Director · {{ site.lab.department }}, UC&nbsp;Davis</p>
 <p><a href="mailto:{{ site.lab.pi_email }}">{{ site.lab.pi_email }}</a><br>
-University of California, Davis · Davis, CA 95616</p>
+{{ site.lab.address }}</p>
 </div>
 <a class="btn btn--primary contact-card__btn" href="mailto:{{ site.lab.pi_email }}">Email the lab &rarr;</a>
 </div>

@@ -107,7 +107,7 @@ stays unmerged.
 
 ## What protects the site automatically
 
-Every pull request must pass before it can merge:
+Every pull request must pass before it can merge (the PI's direct pushes are checked after the fact instead; see MAINTENANCE.md):
 
 - **Content validation**: names, DOIs and image paths actually resolve, so a
   page can't publish something untrue.

@@ -5,7 +5,7 @@ OpenAlex has a free key-less API that resolves works by ORCID. Google Scholar ha
 no API and blocks scraping.
 
 Safe to run unattended:
-  * The committed YAML wins. If the API fails, exit without touching the file.
+  * The committed YAML wins. If the API fails, the run fails and the file is untouched.
   * Only ADDS works whose DOI isn't already listed, so manual edits survive.
   * Backfills a missing `date` so entries sort within a year; never overwrites one.
   * Skips corrections/errata and prints them, so you can attach a `correction:`
@@ -86,7 +86,7 @@ HEADER = """\
 
 
 def fetch_works() -> list[dict]:
-    """Page through every work for the ORCID. Returns [] on any failure."""
+    """Page through every work for the ORCID. Exits non-zero on any failure."""
     works, cursor = [], "*"
     base = "https://api.openalex.org/works"
     while cursor:
@@ -103,9 +103,8 @@ def fetch_works() -> list[dict]:
             req = urllib.request.Request(url, headers={"User-Agent": f"BIRDLab-site ({MAILTO})"})
             with urllib.request.urlopen(req, timeout=30) as resp:
                 data = json.load(resp)
-        except Exception as exc:  # network/JSON/HTTP: fail safe
-            print(f"::warning::OpenAlex fetch failed ({exc}); leaving file unchanged.")
-            return []
+        except Exception as exc:  # network/JSON/HTTP: leave the file alone, but fail the run
+            sys.exit(f"::error::OpenAlex fetch failed ({exc}). publications.yml left unchanged.")
         works.extend(data.get("results", []))
         cursor = data.get("meta", {}).get("next_cursor")
     return works
@@ -288,6 +287,9 @@ def sort_key(e: dict) -> str:
 
 
 def main() -> int:
+    if len(sys.argv) > 1:
+        print(__doc__)
+        return 0 if sys.argv[1] in ("-h", "--help") else 2
     with open(OUT, encoding="utf-8") as fh:
         existing = yaml.safe_load(fh) or []
 

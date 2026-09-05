@@ -23,8 +23,9 @@ or other data that could identify you, and does **not** track you across other
 websites. Because we collect no personal data and set no cookies, there is nothing
 to opt out of.
 
-If your browser sends a **Do Not Track** signal, or you use an ad/analytics
-blocker, that is respected: the site works exactly the same either way.
+GoatCounter does not read the **Do Not Track** signal; it collects no personal
+data to opt out of. Ad and analytics blockers are fine: the site works the same
+either way.
 
 ## External links and services
 

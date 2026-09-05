@@ -74,9 +74,9 @@ We strongly support and encourage open science.
 
 When funding is available, Christina will pay the open-access fees, reach out to verify.
 
-All code and data used in the work are expected to be public as soon as the article is published. 
+All code and data used in the work go public when the paper is published at the latest; the exact timing depends on the journal and the project.
 
-Once the final proof is submitted:
+Before or at publication:
 
 - Set the associated GitHub repository to public.
 - Set FigShare items and the collection to public.

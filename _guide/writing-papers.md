@@ -1,7 +1,7 @@
 ---
 title: Writing papers
 category: Writing & Dissemination
-order: 2
+order: 1
 summary: Core principles, the drafting cycle, and a pre-send checklist for manuscripts, preprints, and conference papers.
 description: "How to write a paper whose argument stands on its own, and what has to be true before you circulate a draft."
 keywords: [writing, manuscript, paper, draft, authorship, preprint, publishing]

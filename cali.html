@@ -10,231 +10,15 @@ image:
 ---
 
 {%- comment -%}
-  THE WORDS ON THIS PAGE ARE IN THIS FILE, not in a data file. To reword
-  anything, edit the paragraph in the markup below and commit — that is the
-  whole process. _data/cali.yml holds only lists and reused values (people,
-  equipment, partners, image paths, the contact address), and
-  _data/cali_rates.yml holds the approved rate schedule.
+  HOW TO EDIT THIS PAGE
+  Words     Written out below in order, in plain HTML. Find the sentence, edit, commit.
+  Lists     People, equipment, partners, photos, contact: _data/cali.yml.
+            Rates: _data/cali_rates.yml. Milestones: _data/cali_milestones.yml.
+  Look      The <style> block at the BOTTOM of this file.
 {%- endcomment -%}
 {%- assign cali = site.data.cali -%}
 {%- assign rates = site.data.cali_rates -%}
 
-{%- comment -%}
-  CALI-specific styling, scoped under the body's `.page--cali` class and built on
-  the site's design tokens, so the section stays visually consistent and can move
-  with the /cali/ pages if CALI ever spins out to its own site.
-
-  NOTE: this block lives in the page body, which means it beats
-  assets/css/style.css in the cascade automatically. Keep CALI overrides here
-  rather than in the site stylesheet — it is what makes the CALI unit movable.
-{%- endcomment -%}
-<style>
-  /* CALI's signature accent — a warm gold that distinguishes the consortium
-     from the lab's blue. Change this one value to re-tint the whole section. */
-  .page--cali { --cali-accent: #c0912e; }
-
-  .page--cali .hero > .container { padding-block: clamp(3rem, 8vw, 5.5rem); max-width: 62rem; }
-  .page--cali .hero .lead { max-width: 40ch; }
-
-  /* In-page nav. It must stick BELOW the site header (which is sticky at
-     top:0, z-index:100) — parking it at top:0 hides it underneath. Same
-     pattern as .people-header. */
-  .page--cali .cali-subnav { border-bottom: 1px solid var(--c-line); background: rgba(255,255,255,.96); backdrop-filter: saturate(150%) blur(10px); position: sticky; top: var(--header-h); z-index: 90; }
-  .page--cali .cali-subnav .container { display: flex; flex-wrap: wrap; gap: .4rem 1.4rem; padding-block: .8rem; }
-  .page--cali .cali-subnav a { font-size: var(--step--1); font-weight: 600; color: var(--c-blue-700); text-decoration: none; }
-  .page--cali .cali-subnav a:hover, .page--cali .cali-subnav a:focus-visible { text-decoration: underline; }
-  /* Anchor jumps must clear the site header AND the sub-nav. This has to
-     target [id] (the site's own mechanism) — scroll-padding-top only works on
-     the actual scrolling element, so setting it on the body class does nothing.
-     The bar is ~3.15rem on one line and ~4.9rem once the links wrap to two,
-     which happens just above 600px; each value adds a little breathing room. */
-  .page--cali [id] { scroll-margin-top: calc(var(--header-h) + 3.9rem); }
-  @media (max-width: 620px) { .page--cali [id] { scroll-margin-top: calc(var(--header-h) + 5.6rem); } }
-
-  /* Focus-area cards: image or silent loop on top, short verbatim line below. */
-  .page--cali .cali-focus { overflow: hidden; padding: 0; }
-  .page--cali .cali-focus__img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; display: block; background: var(--c-sky-2); }
-  .page--cali .cali-focus__still { display: none; }
-  .page--cali .cali-focus__body { padding: 1.1rem 1.2rem 1.3rem; }
-  .page--cali .cali-focus__body h3 { margin: 0 0 .35rem; font-size: var(--step-1); }
-  /* Motion that can't be paused is a WCAG 2.2.2 problem, so readers who ask
-     for less motion get the poster frame instead of the loop. */
-  @media (prefers-reduced-motion: reduce) {
-    .page--cali .cali-focus__video { display: none; }
-    .page--cali .cali-focus__still { display: block; }
-  }
-
-  .page--cali .cali-statement { font-size: var(--step-2); line-height: 1.25; max-width: 34rem; margin-inline: auto; color: var(--c-navy); text-align: center; }
-  .page--cali .cali-founding { max-width: 62ch; margin-inline: auto; }
-
-  /* Team: uniform cards, each group centered as its own row. */
-  .page--cali .cali-group-h { font-size: var(--step-0); font-weight: 700; }
-  .page--cali .cali-group-blurb { max-width: 46ch; margin-inline: auto; }
-  .page--cali .cali-people { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin: 0 auto; padding: 0; list-style: none; max-width: 980px; }
-  .page--cali .cali-people > li { display: flex; }
-  .page--cali .cali-person { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; text-align: center; width: 200px; background: #fff; border: 1px solid var(--c-line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.4rem 1rem 1.2rem; transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease; }
-  .page--cali .cali-person__photo { width: 92px; height: 92px; border-radius: 50%; object-fit: cover; margin-bottom: .7rem; background: var(--c-sky-2); }
-  .page--cali .cali-person__photo--initials { display: flex; align-items: center; justify-content: center; background: var(--c-sky); color: var(--c-blue-700); font-weight: 700; font-size: var(--step-1); }
-  .page--cali .cali-person__name { font-weight: 700; line-height: 1.2; }
-  /* Pushed to the bottom so a two-line name doesn't knock the affiliation
-     out of line with the cards beside it. */
-  .page--cali .cali-person__meta { color: var(--c-muted); font-size: var(--step--1); margin-top: auto; padding-top: .3rem; }
-  .page--cali a.cali-person--link { text-decoration: none; color: inherit; }
-  .page--cali a.cali-person--link:hover, .page--cali a.cali-person--link:focus-visible { transform: translateY(-3px); box-shadow: var(--shadow-lg); border-color: var(--c-blue-500); }
-  .page--cali a.cali-person--link:hover .cali-person__name { text-decoration: underline; }
-  /* Featured first group (Directors): larger card + gold accent. */
-  .page--cali .cali-people--lead .cali-person { width: 244px; border-top: 3px solid var(--cali-accent); padding-top: 1.5rem; }
-  .page--cali .cali-people--lead .cali-person__photo { width: 120px; height: 120px; }
-
-  /* Using CALI: words on the left, table pushed to the right. */
-  .page--cali .cali-access { display: grid; grid-template-columns: minmax(230px, 300px) 1fr; gap: clamp(1.5rem, 4vw, 3rem); align-items: start; }
-  .page--cali .cali-access__intro h2 { margin-top: 0; }
-  @media (max-width: 820px) { .page--cali .cali-access { grid-template-columns: 1fr; } }
-
-  /* Rate + equipment tables. Both sit in a white card so they read as one
-     crisp object on the tinted section, with a navy header row and a tinted
-     service column giving the grid its structure. The wrapper's overflow is
-     what rounds the corners, since border-collapse ignores border-radius. */
-  .page--cali .rate-scroll { overflow-x: auto; background: #fff; border: 1px solid var(--c-line); border-radius: var(--radius); box-shadow: var(--shadow); }
-  .page--cali .rate-scroll:focus-visible { outline: 3px solid var(--c-blue-500); outline-offset: 2px; }
-  /* The table fills its column and lets its own content set the column widths.
-     Fixed 20% money columns plus nowrap headers used to force it wider than
-     the space available, which is what clipped the Industry rate. */
-  .page--cali .rate-table { width: 100%; margin: 0; background: #fff; }
-  .page--cali .rate-table caption { text-align: left; font-size: var(--step--1); color: var(--c-muted); padding-bottom: .6rem; }
-  /* Headers wrap to two lines when the column gets tight, rather than
-     forcing the table wider than its column. */
-  .page--cali .rate-table thead th {
-    white-space: normal; background: var(--c-navy); color: #fff;
-    font-weight: 600; letter-spacing: .01em; border-bottom: 0;
-    padding-block: .8rem; vertical-align: bottom;
-  }
-  /* Service column: tinted, so the eye has a fixed left edge to read across from. */
-  .page--cali .rate-table th[scope="row"] {
-    background: var(--c-sky); color: var(--c-navy); padding-right: .8rem; vertical-align: top;
-  }
-  .page--cali .rate-table td { background: #fff; }
-  .page--cali .rate-tier { display: none; }   /* shown only in the phone card layout below */
-  /* Breathing room against the card's edges, so nothing kisses the border. */
-  .page--cali .rate-table th:first-child, .page--cali .rate-table td:first-child { padding-left: 1.1rem; }
-  .page--cali .rate-table th:last-child,  .page--cali .rate-table td:last-child  { padding-right: 1.1rem; }
-  .page--cali .rate-table tbody tr:last-child th,
-  .page--cali .rate-table tbody tr:last-child td { border-bottom: 0; }
-  .page--cali .rate-table tbody tr:hover td { background: var(--c-sky-2); }
-  .page--cali .rate-table .svc-desc { display: block; font-weight: 400; font-size: var(--step--1); color: var(--c-muted); }
-  /* Right-align the money columns so decimals line up. */
-  .page--cali .rate-table thead th:not(:first-child),
-  .page--cali .rate-table td { text-align: right; }
-  .page--cali .rate-table td { font-variant-numeric: tabular-nums; white-space: nowrap; }
-
-  /* On a phone a four-column table hides two of the three rates off-screen,
-     so each service becomes its own card. The thead stays in the DOM
-     (clipped, not display:none) so screen readers keep the column
-     associations; each cell repeats its tier label from data-tier. */
-  @media (max-width: 620px) {
-    .page--cali .rate-scroll { overflow: visible; background: none; border: 0; border-radius: 0; box-shadow: none; }
-    .page--cali .rate-table { width: 100%; border-collapse: separate; border-spacing: 0; }
-    .page--cali .rate-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-    .page--cali .rate-table tr { display: block; background: #fff; border: 1px solid var(--c-line); border-radius: var(--radius-sm); padding: .9rem 1rem; }
-    .page--cali .rate-table tr + tr { margin-top: .8rem; }
-    .page--cali .rate-table { background: none; }
-    .page--cali .rate-table th[scope="row"] { display: block; width: auto; padding: 0 0 .5rem; border: 0; background: none; color: var(--c-navy); text-align: left; }
-    .page--cali .rate-table tbody tr:hover td { background: none; }
-    .page--cali .rate-table td { display: flex; justify-content: space-between; gap: 1rem; width: auto; text-align: right; padding: .35rem 0; border: 0; border-top: 1px solid var(--c-line); white-space: normal; }
-    .page--cali .rate-tier { display: block; font-weight: 600; color: var(--c-ink-soft); text-align: left; }
-  }
-
-  /* Equipment detail table. Shares .rate-table's chrome but reads as prose,
-     so it overrides the money-column alignment — these rules must stay AFTER
-     the .rate-table rules above, since they have the same specificity. */
-  .page--cali .cali-equip-wrap { background: #fff; border: 1px solid var(--c-line); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; margin-top: .6rem; }
-  .page--cali .cali-equip { width: 100%; margin: 0; }
-  .page--cali .cali-equip td { text-align: left; width: auto; white-space: normal; font-variant-numeric: normal; }
-  .page--cali .cali-equip th[scope="row"] { white-space: nowrap; vertical-align: top; padding-right: 1.2rem; background: var(--c-sky); color: var(--c-navy); }
-  .page--cali .cali-equip tbody tr:last-child th,
-  .page--cali .cali-equip tbody tr:last-child td { border-bottom: 0; }
-  .page--cali .cali-equip__also { display: block; margin-top: .3rem; }
-  @media (max-width: 620px) {
-    .page--cali .cali-equip th[scope="row"] { display: block; padding: .6rem .8rem .2rem; }
-    .page--cali .cali-equip td { display: block; padding: .2rem .8rem .7rem; }
-  }
-
-  /* Discipline tag — small, colored, shows the transdisciplinary mix at a glance. */
-  .page--cali .disc { display: inline-block; margin: .1rem 0 .35rem; padding: .2rem .66rem; border-radius: 999px; font-size: .74rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; background: var(--c-sky); color: var(--c-blue-700); }
-  .page--cali .disc--engineering { background: #e4ecfb; color: #22406b; }
-  .page--cali .disc--veterinary-medicine { background: #e2f1e8; color: #1c5f34; }
-  .page--cali .disc--biology { background: #dcefee; color: #0f5a63; }
-  .page--cali .disc--zoology { background: #dcefee; color: #0f5a63; }
-  .page--cali .disc--neuroscience { background: #ebe3f6; color: #543681; }
-  .page--cali .disc--animation { background: #f8ebd6; color: #7d5210; }
-
-  /* CALI identifier: a gold keyline under each centered section label — a
-     lightweight, CSS-only signature until a bespoke logo is ready. */
-  .page--cali .eyebrow.center { padding-bottom: .6rem; }
-  .page--cali .eyebrow.center::after { content: ""; display: block; width: 42px; height: 3px; border-radius: 2px; background: var(--cali-accent); margin: .55rem auto 0; }
-
-  /* Milestones + news, side by side. */
-  .page--cali .cali-progress { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 3.5rem); max-width: 940px; margin: 1.6rem auto 0; align-items: start; }
-  .page--cali .cali-progress h3 { margin: 0 0 .3rem; }
-  @media (max-width: 760px) { .page--cali .cali-progress { grid-template-columns: 1fr; } }
-  .page--cali .cali-news { list-style: none; margin: 1rem 0 0; padding: 0; }
-  .page--cali .cali-news li { padding: .7rem 0; border-bottom: 1px solid var(--c-line); }
-  .page--cali .cali-news li:first-child { padding-top: 0; }
-  .page--cali .cali-news a { font-weight: 600; text-decoration: none; color: var(--c-blue-700); }
-  .page--cali .cali-news a:hover, .page--cali .cali-news a:focus-visible { text-decoration: underline; }
-  .page--cali .cali-news__src { display: block; color: var(--c-muted); font-size: var(--step--1); margin-top: .1rem; }
-  /* Milestones are short and are the credibility story (the 2024 award and
-     groundbreaking included) — show them all. News grows without bound, so
-     cap that one only, and fade the cut so it reads as "there's more"
-     rather than as a slice through a headline. */
-  .page--cali .cali-scroll { padding: 0 .6rem 0 .8rem; }
-  .page--cali .cali-scroll--news { max-height: 26rem; overflow-y: auto; -webkit-mask-image: linear-gradient(180deg, #000 88%, transparent 100%); mask-image: linear-gradient(180deg, #000 88%, transparent 100%); }
-  .page--cali .cali-scroll--news:focus-visible { outline: 3px solid var(--c-blue-500); outline-offset: 3px; border-radius: 4px; }
-  @media (max-width: 760px) { .page--cali .cali-scroll--news { max-height: none; overflow: visible; -webkit-mask-image: none; mask-image: none; } }
-
-  /* Milestones timeline (mirrors the home-page news feel). */
-  .page--cali .cali-timeline { max-width: none; margin: 1rem 0 0; padding: 0 0 0 1.6rem; border-left: 2px solid var(--c-line); list-style: none; }
-  .page--cali .cali-timeline li { position: relative; padding: 0 0 1.3rem; }
-  .page--cali .cali-timeline li:last-child { padding-bottom: 0; }
-  .page--cali .cali-timeline li::before { content: ""; position: absolute; left: calc(-1.6rem - 6px); top: .3rem; width: 12px; height: 12px; border-radius: 50%; background: var(--c-blue-500); border: 2px solid #fff; box-shadow: 0 0 0 1px var(--c-line); }
-  .page--cali .cali-timeline__date { font-weight: 700; color: var(--c-navy); }
-  .page--cali .cali-timeline__text { color: var(--c-ink-soft); }
-
-  /* Get-involved call-to-action band: team photo backdrop, kept short.
-     The overlay is deliberately lighter than the site default's lower stop
-     only where the caption sits — this photograph is bright, and a flat
-     dark wash erases fifteen faces. */
-  .page--cali .cali-cta .field-band__img { object-position: center 38%; height: clamp(300px, 38vw, 460px); }
-  .page--cali .cali-cta .field-band__line { max-width: 32ch; line-height: 1.28; }
-
-  /* Tidy 2x2 spec tiles inside the facility column. */
-  .page--cali .facility-body .spec-grid { grid-template-columns: repeat(2, 1fr); }
-
-  /* Funder badge, lower-right of the facility photo. Pin the logo size so the
-     big-photo `.facility-photo img` rule doesn't stretch it. */
-  .page--cali .facility-photo { position: relative; }
-  .page--cali .facility-photo .facility-funder { top: auto; bottom: clamp(.8rem, 2vw, 1.3rem); }
-  .page--cali .facility-photo .facility-funder img { width: auto; height: 30px; max-width: 170px; aspect-ratio: auto; object-fit: contain; border: 0; border-radius: 0; box-shadow: none; background: none; }
-
-  .page--cali .cali-join { text-align: center; }
-  .page--cali .cali-join .lead { max-width: 46ch; margin-inline: auto; }
-  .page--cali .cali-ways { max-width: 920px; margin-inline: auto; grid-template-columns: repeat(3, 1fr); }
-  @media (max-width: 680px) { .page--cali .cali-ways { grid-template-columns: 1fr; } }
-  .page--cali .cali-ways .card h3 { margin: 0 0 .3rem; font-size: var(--step-1); }
-  .page--cali .cali-ways .card a:not(.btn) { text-decoration: underline; }
-  .page--cali .cali-ways .card { display: flex; flex-direction: column; }
-  .page--cali .cali-ways .card > p:last-child { margin-top: auto; }
-
-  /* Students' route in. It sits under the three cards rather than beside
-     them: .cali-ways is a fixed three-column grid, so a fourth card would
-     drop to a lopsided orphan row. */
-  .page--cali .cali-mentoring-note { max-width: 920px; margin-inline: auto; text-align: left; }
-  .page--cali .cali-mentoring-note p { margin: 0; }
-  .page--cali .cali-mentoring-note a { font-weight: 600; }
-
-  /* Onward links, so the page isn't a dead end. */
-  .page--cali .cali-onward { max-width: 74ch; margin-inline: auto; }
-</style>
 
 <!-- Hero -->
 <section class="hero">
@@ -263,6 +47,7 @@ image:
     <a href="#team">Team</a>
     <a href="#access">Using CALI</a>
     <a href="#get-involved">Get involved</a>
+    <a href="#mentoring">Peer mentoring</a>
   </div>
 </nav>
 
@@ -271,7 +56,7 @@ image:
   <div class="container center">
     <h2 id="about-h" class="eyebrow center">The consortium</h2>
     <p class="lead prose u-mt-10 u-mi-auto">CALI is a transdisciplinary research consortium and shared
-    facility at UC&nbsp;Davis. Founded in 2026, we bring together engineering, veterinary medicine, and
+    facility at UC&nbsp;Davis. Founded in {{ cali.founded }}, we bring together engineering, veterinary medicine, and
     biology to study how animals move. We're growing into a multi-institution network.</p>
 
     {%- comment -%} Keep this honest and current. Being visibly early is the reason
@@ -280,7 +65,7 @@ image:
        consortium takes shape, and retire it once membership means something specific. {%- endcomment -%}
     <p class="cali-founding u-mt-12">We're in our founding phase — expanding our research network,
     identifying shared priorities, and building teams for collaborative proposals, training, and a new
-    <a href="{{ '/cali/peer-mentoring/' | relative_url }}">peer mentoring program</a>.</p>
+    <a href="#mentoring">peer mentoring program</a>.</p>
 
     <p class="cali-statement u-mt-16">Animal locomotion links biomechanics, robotics, health, and conservation.</p>
 
@@ -533,19 +318,49 @@ image:
         <p class="u-mt-11 u-mb0"><a class="btn btn--ghost btn--sm" href="mailto:{{ cali.contact_email }}?subject={{ 'Becoming a CALI founding affiliate' | uri_escape }}">Get in touch &rarr;</a></p>
       </div>
     </div>
+  </div>
+</section>
 
-    {%- comment -%} Students arriving from the flyer QR code land on the
-       mentoring page directly; this is the route for everyone else. {%- endcomment -%}
-    <div class="note cali-mentoring-note u-mt-16">
-      <p><strong>Students:</strong> our peer mentoring program pairs you with someone from a different
-      field for a year, ending at the Innovation Fair in May.
-      <a href="{{ '/cali/peer-mentoring/' | relative_url }}">How it works &rarr;</a></p>
+<!-- 7. Peer mentoring: the student route in. Switch and dates in _data/cali_mentoring.yml. -->
+{%- assign m = site.data.cali_mentoring.signups -%}
+{%- assign now_ts = site.time | date: "%s" | plus: 0 -%}
+{%- assign start_ts = m.opens | date: "%s" | plus: 0 -%}
+{%- assign end_ts = m.closes | date: "%s" | plus: 86400 -%}
+{%- assign state = "closed" -%}
+{%- if m.open and now_ts < end_ts -%}
+  {%- if now_ts >= start_ts -%}{%- assign state = "open" -%}{%- else -%}{%- assign state = "soon" -%}{%- endif -%}
+{%- endif -%}
+<section class="section section--tint" id="mentoring" aria-labelledby="mentoring-h">
+  <div class="container center">
+    <h2 id="mentoring-h" class="eyebrow center">Peer mentoring</h2>
+    <p class="lead prose u-mt-10 u-mi-auto"><strong>Anything that moves.</strong> Spend a year paired with a
+    student from a different field, and bring the Innovation Fair one idea that only exists where your two
+    fields meet.</p>
+    <div class="grid grid-3 cali-ways u-mt-16">
+      <div class="card">
+        <h3>Who</h3>
+        <p>Undergraduate, graduate and professional students from any discipline at UC&nbsp;Davis, as a
+        mentor or a mentee.</p>
+      </div>
+      <div class="card">
+        <h3>What</h3>
+        <p>A year of conversations about how things move: animals, humans, robots, cells. No data or results
+        needed, and nothing is graded.</p>
+      </div>
+      <div class="card">
+        <h3>When</h3>
+        <p>Kickoff {{ site.data.cali_mentoring.kickoff }}. Pairs matched in November. The Innovation Fair in
+        {{ site.data.cali_mentoring.fair }}.</p>
+      </div>
     </div>
-
-    <p class="muted u-mt-16 cali-onward">CALI is part of the <a href="{{ '/' | relative_url }}">BIRD Lab</a> at UC&nbsp;Davis ·
-    <a href="{{ '/facilities/' | relative_url }}">Our other facilities</a> ·
-    <a href="{{ '/research/' | relative_url }}">Research</a> ·
-    <a href="{{ '/contact/' | relative_url }}">Contact</a></p>
+    {%- if state == "open" %}
+    <p class="u-mt-16"><a class="btn btn--primary" href="{{ m.form_url }}">Sign up by {{ m.closes | date: "%-d %B" }} &rarr;</a></p>
+    {%- elsif state == "soon" %}
+    <p class="u-mt-16"><strong>Sign-ups open {{ m.opens | date: "%-d %B %Y" }}.</strong></p>
+    {%- else %}
+    <p class="u-mt-16">We run this every year. <a href="mailto:{{ cali.contact_email }}?subject={{ 'CALI peer mentoring' | uri_escape }}">Email us</a> to hear when the next round opens.</p>
+    {%- endif %}
+    <p class="muted u-mt-12">Questions: <a href="mailto:{{ cali.contact_email }}?subject={{ 'CALI peer mentoring' | uri_escape }}">{{ cali.contact_email }}</a> · Supported by the National Science Foundation.</p>
   </div>
 </section>
 
@@ -577,3 +392,207 @@ image:
   "funder": { "@type": "Organization", "name": "{{ cali.funding.name }}", "url": "{{ cali.funding.url }}" }
 }
 </script>
+
+{%- comment -%}
+  STYLING. Scoped to .page--cali and kept here, not in assets/css/style.css, so
+  the CALI pages can move to their own site as a unit. Being in the page body it
+  also wins the cascade over the site stylesheet.
+{%- endcomment -%}
+<style>
+  /* CALI's signature accent — a warm gold that distinguishes the consortium
+     from the lab's blue. Change this one value to re-tint the whole section. */
+  .page--cali { --cali-accent: #c0912e; }
+
+  .page--cali .hero > .container { padding-block: clamp(3rem, 8vw, 5.5rem); max-width: 62rem; }
+  .page--cali .hero .lead { max-width: 40ch; }
+
+  /* In-page nav. It must stick BELOW the site header (which is sticky at
+     top:0, z-index:100) — parking it at top:0 hides it underneath. Same
+     pattern as .people-header. */
+  .page--cali .cali-subnav { border-bottom: 1px solid var(--c-line); background: rgba(255,255,255,.96); backdrop-filter: saturate(150%) blur(10px); position: sticky; top: var(--header-h); z-index: 90; }
+  .page--cali .cali-subnav .container { display: flex; flex-wrap: wrap; gap: .4rem 1.4rem; padding-block: .8rem; }
+  .page--cali .cali-subnav a { font-size: var(--step--1); font-weight: 600; color: var(--c-blue-700); text-decoration: none; }
+  .page--cali .cali-subnav a:hover, .page--cali .cali-subnav a:focus-visible { text-decoration: underline; }
+  /* Anchor jumps must clear the site header AND the sub-nav. This has to
+     target [id] (the site's own mechanism) — scroll-padding-top only works on
+     the actual scrolling element, so setting it on the body class does nothing.
+     The bar is ~3.15rem on one line and ~4.9rem once the links wrap to two,
+     which happens just above 600px; each value adds a little breathing room. */
+  .page--cali [id] { scroll-margin-top: calc(var(--header-h) + 3.9rem); }
+  @media (max-width: 620px) { .page--cali [id] { scroll-margin-top: calc(var(--header-h) + 5.6rem); } }
+
+  /* Focus-area cards: image or silent loop on top, short verbatim line below. */
+  .page--cali .cali-focus { overflow: hidden; padding: 0; }
+  .page--cali .cali-focus__img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; display: block; background: var(--c-sky-2); }
+  .page--cali .cali-focus__still { display: none; }
+  .page--cali .cali-focus__body { padding: 1.1rem 1.2rem 1.3rem; }
+  .page--cali .cali-focus__body h3 { margin: 0 0 .35rem; font-size: var(--step-1); }
+  /* Motion that can't be paused is a WCAG 2.2.2 problem, so readers who ask
+     for less motion get the poster frame instead of the loop. */
+  @media (prefers-reduced-motion: reduce) {
+    .page--cali .cali-focus__video { display: none; }
+    .page--cali .cali-focus__still { display: block; }
+  }
+
+  .page--cali .cali-statement { font-size: var(--step-2); line-height: 1.25; max-width: 34rem; margin-inline: auto; color: var(--c-navy); text-align: center; }
+  .page--cali .cali-founding { max-width: 62ch; margin-inline: auto; }
+
+  /* Team: uniform cards, each group centered as its own row. */
+  .page--cali .cali-group-h { font-size: var(--step-0); font-weight: 700; }
+  .page--cali .cali-group-blurb { max-width: 46ch; margin-inline: auto; }
+  .page--cali .cali-people { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin: 0 auto; padding: 0; list-style: none; max-width: 980px; }
+  .page--cali .cali-people > li { display: flex; }
+  .page--cali .cali-person { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; text-align: center; width: 200px; background: #fff; border: 1px solid var(--c-line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.4rem 1rem 1.2rem; transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease; }
+  .page--cali .cali-person__photo { width: 92px; height: 92px; border-radius: 50%; object-fit: cover; margin-bottom: .7rem; background: var(--c-sky-2); }
+  .page--cali .cali-person__photo--initials { display: flex; align-items: center; justify-content: center; background: var(--c-sky); color: var(--c-blue-700); font-weight: 700; font-size: var(--step-1); }
+  .page--cali .cali-person__name { font-weight: 700; line-height: 1.2; }
+  /* Pushed to the bottom so a two-line name doesn't knock the affiliation
+     out of line with the cards beside it. */
+  .page--cali .cali-person__meta { color: var(--c-muted); font-size: var(--step--1); margin-top: auto; padding-top: .3rem; }
+  .page--cali a.cali-person--link { text-decoration: none; color: inherit; }
+  .page--cali a.cali-person--link:hover, .page--cali a.cali-person--link:focus-visible { transform: translateY(-3px); box-shadow: var(--shadow-lg); border-color: var(--c-blue-500); }
+  .page--cali a.cali-person--link:hover .cali-person__name { text-decoration: underline; }
+  /* Featured first group (Directors): larger card + gold accent. */
+  .page--cali .cali-people--lead .cali-person { width: 244px; border-top: 3px solid var(--cali-accent); padding-top: 1.5rem; }
+  .page--cali .cali-people--lead .cali-person__photo { width: 120px; height: 120px; }
+
+  /* Using CALI: words on the left, table pushed to the right. */
+  .page--cali .cali-access { display: grid; grid-template-columns: minmax(230px, 300px) 1fr; gap: clamp(1.5rem, 4vw, 3rem); align-items: start; }
+  .page--cali .cali-access__intro h2 { margin-top: 0; }
+  @media (max-width: 820px) { .page--cali .cali-access { grid-template-columns: 1fr; } }
+
+  /* Rate + equipment tables. Both sit in a white card so they read as one
+     crisp object on the tinted section, with a navy header row and a tinted
+     service column giving the grid its structure. The wrapper's overflow is
+     what rounds the corners, since border-collapse ignores border-radius. */
+  .page--cali .rate-scroll { overflow-x: auto; background: #fff; border: 1px solid var(--c-line); border-radius: var(--radius); box-shadow: var(--shadow); }
+  .page--cali .rate-scroll:focus-visible { outline: 3px solid var(--c-blue-500); outline-offset: 2px; }
+  /* The table fills its column and lets its own content set the column widths.
+     Fixed 20% money columns plus nowrap headers used to force it wider than
+     the space available, which is what clipped the Industry rate. */
+  .page--cali .rate-table { width: 100%; margin: 0; background: #fff; }
+  .page--cali .rate-table caption { text-align: left; font-size: var(--step--1); color: var(--c-muted); padding-bottom: .6rem; }
+  /* Headers wrap to two lines when the column gets tight, rather than
+     forcing the table wider than its column. */
+  .page--cali .rate-table thead th {
+    white-space: normal; background: var(--c-navy); color: #fff;
+    font-weight: 600; letter-spacing: .01em; border-bottom: 0;
+    padding-block: .8rem; vertical-align: bottom;
+  }
+  /* Service column: tinted, so the eye has a fixed left edge to read across from. */
+  .page--cali .rate-table th[scope="row"] {
+    background: var(--c-sky); color: var(--c-navy); padding-right: .8rem; vertical-align: top;
+  }
+  .page--cali .rate-table td { background: #fff; }
+  .page--cali .rate-tier { display: none; }   /* shown only in the phone card layout below */
+  /* Breathing room against the card's edges, so nothing kisses the border. */
+  .page--cali .rate-table th:first-child, .page--cali .rate-table td:first-child { padding-left: 1.1rem; }
+  .page--cali .rate-table th:last-child,  .page--cali .rate-table td:last-child  { padding-right: 1.1rem; }
+  .page--cali .rate-table tbody tr:last-child th,
+  .page--cali .rate-table tbody tr:last-child td { border-bottom: 0; }
+  .page--cali .rate-table tbody tr:hover td { background: var(--c-sky-2); }
+  .page--cali .rate-table .svc-desc { display: block; font-weight: 400; font-size: var(--step--1); color: var(--c-muted); }
+  /* Right-align the money columns so decimals line up. */
+  .page--cali .rate-table thead th:not(:first-child),
+  .page--cali .rate-table td { text-align: right; }
+  .page--cali .rate-table td { font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+  /* On a phone a four-column table hides two of the three rates off-screen,
+     so each service becomes its own card. The thead stays in the DOM
+     (clipped, not display:none) so screen readers keep the column
+     associations; each cell repeats its tier label from data-tier. */
+  @media (max-width: 620px) {
+    .page--cali .rate-scroll { overflow: visible; background: none; border: 0; border-radius: 0; box-shadow: none; }
+    .page--cali .rate-table { width: 100%; border-collapse: separate; border-spacing: 0; }
+    .page--cali .rate-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+    .page--cali .rate-table tr { display: block; background: #fff; border: 1px solid var(--c-line); border-radius: var(--radius-sm); padding: .9rem 1rem; }
+    .page--cali .rate-table tr + tr { margin-top: .8rem; }
+    .page--cali .rate-table { background: none; }
+    .page--cali .rate-table th[scope="row"] { display: block; width: auto; padding: 0 0 .5rem; border: 0; background: none; color: var(--c-navy); text-align: left; }
+    .page--cali .rate-table tbody tr:hover td { background: none; }
+    .page--cali .rate-table td { display: flex; justify-content: space-between; gap: 1rem; width: auto; text-align: right; padding: .35rem 0; border: 0; border-top: 1px solid var(--c-line); white-space: normal; }
+    .page--cali .rate-tier { display: block; font-weight: 600; color: var(--c-ink-soft); text-align: left; }
+  }
+
+  /* Equipment detail table. Shares .rate-table's chrome but reads as prose,
+     so it overrides the money-column alignment — these rules must stay AFTER
+     the .rate-table rules above, since they have the same specificity. */
+  .page--cali .cali-equip-wrap { background: #fff; border: 1px solid var(--c-line); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; margin-top: .6rem; }
+  .page--cali .cali-equip { width: 100%; margin: 0; }
+  .page--cali .cali-equip td { text-align: left; width: auto; white-space: normal; font-variant-numeric: normal; }
+  .page--cali .cali-equip th[scope="row"] { white-space: nowrap; vertical-align: top; padding-right: 1.2rem; background: var(--c-sky); color: var(--c-navy); }
+  .page--cali .cali-equip tbody tr:last-child th,
+  .page--cali .cali-equip tbody tr:last-child td { border-bottom: 0; }
+  .page--cali .cali-equip__also { display: block; margin-top: .3rem; }
+  @media (max-width: 620px) {
+    .page--cali .cali-equip th[scope="row"] { display: block; padding: .6rem .8rem .2rem; }
+    .page--cali .cali-equip td { display: block; padding: .2rem .8rem .7rem; }
+  }
+
+  /* Discipline tag — small, colored, shows the transdisciplinary mix at a glance. */
+  .page--cali .disc { display: inline-block; margin: .1rem 0 .35rem; padding: .2rem .66rem; border-radius: 999px; font-size: .74rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; background: var(--c-sky); color: var(--c-blue-700); }
+  .page--cali .disc--engineering { background: #e4ecfb; color: #22406b; }
+  .page--cali .disc--veterinary-medicine { background: #e2f1e8; color: #1c5f34; }
+  .page--cali .disc--biology { background: #dcefee; color: #0f5a63; }
+  .page--cali .disc--zoology { background: #dcefee; color: #0f5a63; }
+  .page--cali .disc--neuroscience { background: #ebe3f6; color: #543681; }
+  .page--cali .disc--animation { background: #f8ebd6; color: #7d5210; }
+
+  /* CALI identifier: a gold keyline under each centered section label — a
+     lightweight, CSS-only signature until a bespoke logo is ready. */
+  .page--cali .eyebrow.center { padding-bottom: .6rem; }
+  .page--cali .eyebrow.center::after { content: ""; display: block; width: 42px; height: 3px; border-radius: 2px; background: var(--cali-accent); margin: .55rem auto 0; }
+
+  /* Milestones + news, side by side. */
+  .page--cali .cali-progress { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 3.5rem); max-width: 940px; margin: 1.6rem auto 0; align-items: start; }
+  .page--cali .cali-progress h3 { margin: 0 0 .3rem; }
+  @media (max-width: 760px) { .page--cali .cali-progress { grid-template-columns: 1fr; } }
+  .page--cali .cali-news { list-style: none; margin: 1rem 0 0; padding: 0; }
+  .page--cali .cali-news li { padding: .7rem 0; border-bottom: 1px solid var(--c-line); }
+  .page--cali .cali-news li:first-child { padding-top: 0; }
+  .page--cali .cali-news a { font-weight: 600; text-decoration: none; color: var(--c-blue-700); }
+  .page--cali .cali-news a:hover, .page--cali .cali-news a:focus-visible { text-decoration: underline; }
+  .page--cali .cali-news__src { display: block; color: var(--c-muted); font-size: var(--step--1); margin-top: .1rem; }
+  /* Milestones are short and are the credibility story (the 2024 award and
+     groundbreaking included) — show them all. News grows without bound, so
+     cap that one only, and fade the cut so it reads as "there's more"
+     rather than as a slice through a headline. */
+  .page--cali .cali-scroll { padding: 0 .6rem 0 .8rem; }
+  .page--cali .cali-scroll--news { max-height: 26rem; overflow-y: auto; -webkit-mask-image: linear-gradient(180deg, #000 88%, transparent 100%); mask-image: linear-gradient(180deg, #000 88%, transparent 100%); }
+  .page--cali .cali-scroll--news:focus-visible { outline: 3px solid var(--c-blue-500); outline-offset: 3px; border-radius: 4px; }
+  @media (max-width: 760px) { .page--cali .cali-scroll--news { max-height: none; overflow: visible; -webkit-mask-image: none; mask-image: none; } }
+
+  /* Milestones timeline (mirrors the home-page news feel). */
+  .page--cali .cali-timeline { max-width: none; margin: 1rem 0 0; padding: 0 0 0 1.6rem; border-left: 2px solid var(--c-line); list-style: none; }
+  .page--cali .cali-timeline li { position: relative; padding: 0 0 1.3rem; }
+  .page--cali .cali-timeline li:last-child { padding-bottom: 0; }
+  .page--cali .cali-timeline li::before { content: ""; position: absolute; left: calc(-1.6rem - 6px); top: .3rem; width: 12px; height: 12px; border-radius: 50%; background: var(--c-blue-500); border: 2px solid #fff; box-shadow: 0 0 0 1px var(--c-line); }
+  .page--cali .cali-timeline__date { font-weight: 700; color: var(--c-navy); }
+  .page--cali .cali-timeline__text { color: var(--c-ink-soft); }
+
+  /* Get-involved call-to-action band: team photo backdrop, kept short.
+     The overlay is deliberately lighter than the site default's lower stop
+     only where the caption sits — this photograph is bright, and a flat
+     dark wash erases fifteen faces. */
+  .page--cali .cali-cta .field-band__img { object-position: center 38%; height: clamp(300px, 38vw, 460px); }
+  .page--cali .cali-cta .field-band__line { max-width: 32ch; line-height: 1.28; }
+
+  /* Tidy 2x2 spec tiles inside the facility column. */
+  .page--cali .facility-body .spec-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* Funder badge, lower-right of the facility photo. Pin the logo size so the
+     big-photo `.facility-photo img` rule doesn't stretch it. */
+  .page--cali .facility-photo { position: relative; }
+  .page--cali .facility-photo .facility-funder { top: auto; bottom: clamp(.8rem, 2vw, 1.3rem); }
+  .page--cali .facility-photo .facility-funder img { width: auto; height: 30px; max-width: 170px; aspect-ratio: auto; object-fit: contain; border: 0; border-radius: 0; box-shadow: none; background: none; }
+
+  .page--cali .cali-join { text-align: center; }
+  .page--cali .cali-join .lead { max-width: 46ch; margin-inline: auto; }
+  .page--cali .cali-ways { max-width: 920px; margin-inline: auto; grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 680px) { .page--cali .cali-ways { grid-template-columns: 1fr; } }
+  .page--cali .cali-ways .card h3 { margin: 0 0 .3rem; font-size: var(--step-1); }
+  .page--cali .cali-ways .card a:not(.btn) { text-decoration: underline; }
+  .page--cali .cali-ways .card { display: flex; flex-direction: column; }
+  .page--cali .cali-ways .card > p:last-child { margin-top: auto; }
+  .page--cali #mentoring .card > p:last-child { margin-top: 0; }   /* no button to pin down here */
+</style>

@@ -24,7 +24,7 @@
       "@id": "{{ base }}/#pi",
       "name": {{ site.lab.pi | remove: "Dr. " | jsonify }},
       "honorificPrefix": "Dr.",
-      "jobTitle": "Assistant Professor",
+      "jobTitle": {{ site.lab.pi_title | jsonify }},
       "email": "mailto:{{ site.lab.pi_email }}",
       "affiliation": { "@type": "CollegeOrUniversity", "name": {{ site.lab.institution | jsonify }} },
       "worksFor": { "@id": "{{ base }}/#lab" },

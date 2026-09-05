@@ -44,7 +44,7 @@ second copy off the cloud is your responsibility as much as the PI's.
 We manage data to be [FAIR](https://www.go-fair.org/fair-principles/): findable,
 accessible, interoperable, and reusable. In practice that means:
 
-- When a paper is published, its data (both raw and derived) are made public with
+- When a paper is published at the latest (the journal or project may require earlier), its data (both raw and derived) are made public with
   a citable DOI, and the associated code repositories are made public alongside it. Please follow the [lab template](https://github.com/UC-BIRD-Lab/.github-private/blob/main/repo_template.md) for setting up your GitHub repository README.
 - Data are archived for the long term so the work stays reproducible after the
   project ends.

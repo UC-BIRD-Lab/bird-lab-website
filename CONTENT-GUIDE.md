@@ -386,16 +386,20 @@ long paragraphs.
 ## Open or close a position: `_data/openings.yml`
 
 The three status pills on the **Join** page (undergrad, graduate, postdoc) are
-driven by this file; flip the matching `open:` line and the pill text and colour
-update themselves. `open: true` shows the green pill with `open_note`,
-`open: false` the amber pill with `closed_note`. The file's header comment has
-the details, including the shared `email_body` draft that pre-fills the
-"Email me" buttons.
+driven by this file; flip the matching `open:` line and the pill colour and the
+note under it update themselves (`open_note` or `closed_note`). The undergrad
+pill also takes its wording from those notes; the graduate and postdoc pills say
+"Now recruiting" / "Open via fellowship" and are worded in `join.md`. The file's
+header comment has the details, including the shared `email_body` draft that
+pre-fills the "Email me" buttons.
 
 Write `open: true` or `open: false` **unquoted**. Quoted `"true"` is text, not a
 yes/no, and the pill comes out wrong. The content check catches this.
 
 ### The featured posting above the three cards
+
+A smaller `second:` block with the same fields sits under it; both hide
+themselves after their `deadline`.
 
 When there's one search worth putting front and centre, it lives in the
 `featured:` block of the same file — title, the paragraphs of body text, the
@@ -498,16 +502,11 @@ Rates are approved by UC Davis Costing Policy & Analysis and normally re-approve
 annually. When new ones are issued, update the figures **and** the `effective:`
 date. The review sweep watches it.
 
-### The peer mentoring page: `_data/cali_mentoring.yml`
+### Peer mentoring: `_data/cali_mentoring.yml`
 
-`/cali/peer-mentoring/` has one switch, `signups: open:`. `true` links the
-sign-up form (from `opens` to `closes`, and says when sign-ups start before
-that); `false` swaps in `closed_note` and an "email us" button, and hides the
-sign-up rows in the timeline. Every sentence on the page is
-in `cali-peer-mentoring.html`, which opens with a map of what is where; the
-data file holds only the switch, the form link and the year's dates. Each fall: set the new dates, check the form link, flip the
-switch. The site only rebuilds on a push, so a date passing changes nothing
-until someone pushes.
+The "Peer mentoring" section of the CALI page. The file holds the switch
+(`signups: open:`), the form link and the year's dates; the words are in
+`cali.html`. Each fall: set the dates, check the form link, flip the switch.
 
 ---
 
@@ -601,13 +600,10 @@ undergraduate interest-form link, the PI **LinkedIn** and **GitHub org**, the
 **FigShare** data URL, and the **social-share image** all live here. After
 editing `_config.yml`, the change appears on the next build.
 
-**Turn on analytics (optional).** The site ships with privacy-friendly,
-cookieless analytics ([GoatCounter](https://www.goatcounter.com/)) that stay
-**off** until you add a code. Make a free GoatCounter site, then set
-`analytics: { goatcounter: "yourcode" }` in `_config.yml`. It collects only
-anonymous page counts: no cookies, no personal data: so no consent banner is
-needed (the [Privacy]({{ '/privacy/' | relative_url }}) page explains this to
-visitors). Leave it blank to collect nothing.
+**Analytics.** Privacy-friendly, cookieless page counts via
+[GoatCounter](https://www.goatcounter.com/), set by `analytics: { goatcounter: }`
+in `_config.yml`. Anonymous counts only, so no consent banner is needed (the
+Privacy page says so). Blank it to collect nothing.
 
 ---
 
@@ -678,12 +674,14 @@ These live directly in `index.html` (edit the text in place):
   overlay and a pause/play button. It auto-hides for visitors who set "reduce
   motion." To swap the clip, replace the `.mp4` (keep it small: see budget). The
   poster frame shown before the video loads is `assets/img/facilities/cali.jpg`.
-- **Brand band**: the logo + one-line "principles, not mimicry" statement.
-- **"A signature idea"**: the three-axis bio-inspired reporting framework
-  (source / mimicry / evidence) tied to Harvey 2026.
-- **"We run our lab in the open"**: links to the Lab Guide, GitHub, and blog.
-- **Supported by / In partnership with**: funder logos from `_data/funders.yml`
-  and partner organizations from `_data/collaborators.yml` (see below).
+- **Our research**: three cards, from `_data/research.yml`.
+- **Bio-informed, not just bio-inspired**: one paragraph, in `index.html`.
+- **In partnership with** and **Supported by**: logos from `_data/collaborators.yml`
+  and `_data/funders.yml` (see below).
+- **CALI band**: the photo strip linking to the CALI page; words in `index.html`.
+- **Open science**, **Selected work**, **Recognition**, **Featured in**,
+  **Latest news**: driven by `pub_links.yml`, `publications.yml`,
+  `recognition.yml`, `press.yml` and `updates.yml`.
 
 ### Funders & partners: two files
 - **`_data/funders.yml`**: the home page **"Supported by"** logo band (AFOSR,

@@ -115,7 +115,7 @@ Journal articles and DOI-bearing conference papers sync from OpenAlex by the PI'
 ORCID and open a pull request for review. Talks and posters without a DOI are
 added by hand in `_data/publications_manual.yml`.
 
-Nothing reaches `main` without passing the checks: content validation
+Every pull request must pass the checks before it merges: content validation
 (cross-referenced names, DOIs and image paths), broken links and missing images,
 a WCAG 2.1 AA scan, and a media weight budget. Four times a year a sweep opens
 one issue listing content that may have gone out of date. No automation edits

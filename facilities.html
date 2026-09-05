@@ -6,52 +6,11 @@ description: "Tour the BIRD Lab facilities: the CALI flight hall with motion cap
 ---
 
 {%- comment -%}
-  Equipment detail table styling, scoped under the body's `.page--facilities`
-  class. It mirrors the CALI equipment table's chrome (white card, tinted row
-  labels, prose-aligned cells) so the two facilities read as one system.
-
-  The rules are duplicated from cali.html rather than shared through
-  assets/css/style.css on purpose: ARCHITECTURE.md and the header comment in
-  _data/cali.yml both treat the CALI files as a self-contained unit that could
-  spin out to its own site, so cali.html is left untouched here. If that ever
-  stops mattering, promote these two classes into the site stylesheet and point
-  both pages at them.
+  HOW TO EDIT THIS PAGE
+  Words     Facility names, blurbs, specs and photos: _data/facilities.yml.
+            The little that is written here (headings, the contact note) is below.
+  Look      The <style> block at the BOTTOM of this file.
 {%- endcomment -%}
-<style>
-  /* The site reset zeroes all margins, so a facility blurb would otherwise sit
-     flush against the partner/location line above it and read as one block. */
-  .page--facilities .facility-blurb { margin-top: .7rem; }
-
-  .page--facilities .equip-wrap {
-    background: #fff; border: 1px solid var(--c-line);
-    border-radius: var(--radius); box-shadow: var(--shadow);
-    overflow: hidden; margin-top: .6rem;
-  }
-  .page--facilities .equip-table { width: 100%; margin: 0; }
-  .page--facilities .equip-table th[scope="row"] {
-    white-space: nowrap; vertical-align: top;
-    background: var(--c-sky); color: var(--c-navy); font-weight: 600;
-    padding: .8rem 1.2rem .8rem 1.1rem;
-  }
-  .page--facilities .equip-table td {
-    background: #fff; text-align: left; vertical-align: top;
-    white-space: normal; padding: .8rem 1.1rem .8rem .7rem;
-  }
-  .page--facilities .equip-table tbody tr:hover td { background: var(--c-sky-2); }
-  .page--facilities .equip-table tbody tr:last-child th,
-  .page--facilities .equip-table tbody tr:last-child td { border-bottom: 0; }
-  .page--facilities .equip-table__also { display: block; margin-top: .3rem; }
-  /* On a phone the two columns stack, so a long row label no longer squeezes
-     its value into a sliver. */
-  @media (max-width: 620px) {
-    .page--facilities .equip-wrap { overflow: visible; }
-    .page--facilities .equip-table th[scope="row"] {
-      display: block; white-space: normal; padding: .6rem .8rem .2rem;
-    }
-    .page--facilities .equip-table td { display: block; padding: .2rem .8rem .7rem; }
-  }
-</style>
-
 {%- assign featured = site.data.facilities | where_exp: "f", "f.featured" | first -%}
 {%- assign others = site.data.facilities | where_exp: "f", "f.featured != true" -%}
 
@@ -161,3 +120,42 @@ description: "Tour the BIRD Lab facilities: the CALI flight hall with motion cap
 <div class="note u-mt-fluid">
   <p class="u-m0">Interested in collaborating or visiting? <a href="{{ '/contact/' | relative_url }}">Get in touch</a>.</p>
 </div>
+
+{%- comment -%}
+  STYLING for the equipment tables. Duplicated from cali.html on purpose: the
+  CALI files stay self-contained so they can move to their own site.
+{%- endcomment -%}
+<style>
+  /* The site reset zeroes all margins, so a facility blurb would otherwise sit
+     flush against the partner/location line above it and read as one block. */
+  .page--facilities .facility-blurb { margin-top: .7rem; }
+
+  .page--facilities .equip-wrap {
+    background: #fff; border: 1px solid var(--c-line);
+    border-radius: var(--radius); box-shadow: var(--shadow);
+    overflow: hidden; margin-top: .6rem;
+  }
+  .page--facilities .equip-table { width: 100%; margin: 0; }
+  .page--facilities .equip-table th[scope="row"] {
+    white-space: nowrap; vertical-align: top;
+    background: var(--c-sky); color: var(--c-navy); font-weight: 600;
+    padding: .8rem 1.2rem .8rem 1.1rem;
+  }
+  .page--facilities .equip-table td {
+    background: #fff; text-align: left; vertical-align: top;
+    white-space: normal; padding: .8rem 1.1rem .8rem .7rem;
+  }
+  .page--facilities .equip-table tbody tr:hover td { background: var(--c-sky-2); }
+  .page--facilities .equip-table tbody tr:last-child th,
+  .page--facilities .equip-table tbody tr:last-child td { border-bottom: 0; }
+  .page--facilities .equip-table__also { display: block; margin-top: .3rem; }
+  /* On a phone the two columns stack, so a long row label no longer squeezes
+     its value into a sliver. */
+  @media (max-width: 620px) {
+    .page--facilities .equip-wrap { overflow: visible; }
+    .page--facilities .equip-table th[scope="row"] {
+      display: block; white-space: normal; padding: .6rem .8rem .2rem;
+    }
+    .page--facilities .equip-table td { display: block; padding: .2rem .8rem .7rem; }
+  }
+</style>
