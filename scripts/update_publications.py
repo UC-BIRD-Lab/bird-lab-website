@@ -13,6 +13,8 @@ Safe to run unattended:
   * AIAA journals and meeting papers share the 10.2514/ prefix, so those are
     classified by venue name. Anything ambiguous is logged and left out.
   * DOIs in `exclude:` (publications_manual.yml) are removed and never re-added.
+  * Works before MIN_YEAR are ignored: OpenAlex sometimes attaches another
+    C. Harvey's 1980s papers to the ORCID.
 
 Papers without a DOI aren't in OpenAlex. Add those to publications_manual.yml.
 
@@ -39,6 +41,9 @@ MAILTO = os.environ.get("OPENALEX_MAILTO", "harvey@ucdavis.edu")
 OUT = os.path.join(os.path.dirname(__file__), "..", "_data", "publications.yml")
 # The hand-maintained companion; its `exclude:` list names DOIs to never list.
 MANUAL = os.path.join(os.path.dirname(__file__), "..", "_data", "publications_manual.yml")
+
+# Nothing before this year is the lab's. Raise it if a wrong author is merged in again.
+MIN_YEAR = 2016
 
 # OpenAlex work types we treat as peer-reviewed journal articles.
 JOURNAL_TYPES = {"article", "review", "letter"}
@@ -226,6 +231,8 @@ def to_entry(work: dict) -> dict | None:
     title = (work.get("title") or "").strip()
 
     if not doi or not title or not work.get("publication_year"):
+        return None
+    if int(work["publication_year"]) < MIN_YEAR:
         return None
 
     loc = work.get("primary_location") or {}
