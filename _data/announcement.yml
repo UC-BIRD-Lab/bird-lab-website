@@ -1,23 +1,8 @@
-# ─────────────────────────────────────────────────────────────
-#  ANNOUNCEMENT BAR: drives the slim site-wide banner shown under the
-#  header (see _includes/announcement-banner.html). Meant for one-off,
-#  time-limited notices: a job posting, an event, a big deadline.
-#
-#  TO TAKE IT DOWN, change one line:
-#     enabled: false
-#
-#  It also retires itself automatically after `deadline` (inclusive):
-#    - at build time, the include skips rendering it, and
-#    - in the browser, main.js hides it even if the site hasn't been
-#      rebuilt since the deadline passed. An expired notice can never
-#      linger on the live site.
-#
-#  Visitors can dismiss the bar for their visit (X button); the
-#  dismissal is remembered for the browser session only, keyed by the
-#  deadline, so a future announcement with a new deadline shows again.
-#
-#  `url` is a site-relative path (baseurl is added automatically).
-# ─────────────────────────────────────────────────────────────
+# Site-wide banner under the header (_includes/announcement-banner.html), for
+# time-limited notices. `enabled: false` takes it down; it also hides itself
+# after `deadline` (inclusive), both at build time and in main.js if the site
+# has not been rebuilt. Visitor dismissals last the browser session, keyed by
+# deadline. `url` is site-relative (baseurl added automatically).
 
 enabled: true
 label: "Now hiring"

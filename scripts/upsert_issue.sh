@@ -1,14 +1,9 @@
 #!/usr/bin/env bash
-# Website tooling, largely written by AI (Claude) and checked for behaviour
-# rather than wording. It describes how the site is built, not how the lab works;
-# lab policy lives in _guide/. See accessibility.md, "How this site is made".
-# Open a GitHub issue, or rewrite the existing one instead of adding a duplicate.
-# Each scheduled check owns one issue, found by its label.
-#
+# Open a GitHub issue, or rewrite the open one with the same label.
 #   scripts/upsert_issue.sh <label> <title> <body-file> [label-description]
-#
-# Needs the `gh` CLI (on GitHub runners by default) and GH_TOKEN, with
-# `issues: write` in the workflow.
+# Needs `gh`, GH_TOKEN and `issues: write` in the workflow.
+# Site tooling, largely AI-written (Claude), checked for behaviour not wording.
+# Lab policy lives in _guide/. See accessibility.md, "How this site is made".
 set -euo pipefail
 
 LABEL="${1:?usage: upsert_issue.sh <label> <title> <body-file> [description]}"
@@ -21,7 +16,6 @@ if [ ! -f "$BODY_FILE" ]; then
   exit 1
 fi
 
-# The label is how we find our own issue again.
 gh label create "$LABEL" --description "$DESCRIPTION" --color "D93F0B" 2>/dev/null || true
 
 NUMBER="$(gh issue list --label "$LABEL" --state open \

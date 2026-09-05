@@ -1,49 +1,21 @@
-# ─────────────────────────────────────────────────────────────
-#  FACILITIES
-#
-#  featured: true      → rendered as the full-bleed "flagship" band at the top
-#                        (only set this on ONE facility).
-#  tagline             → one credible line shown with the name.
-#  funding:            → optional credit badge shown in the corner of the
-#                        flagship photo ({ note, name, logo, url }).
-#  funding_key:        → use another data file's `funding:` block instead of
-#                        repeating it here, e.g. `cali` reads _data/cali.yml.
-#  capabilities:       → short plain-language chips: what a visitor can DO here.
-#  equipment:          → the detail table under the chips: what it is done WITH.
-#                        Each row is { label, value }, plus an optional `also:`
-#                        for a second line under the same label. Omit the whole
-#                        key and no table renders.
-#
-#                        When a row covers two DISTINCT things — a second
-#                        instrument, a different measurement — put the second on
-#                        `also:` rather than joining them with a semicolon. Save
-#                        commas for facts about the same thing (one camera's
-#                        resolution and frame rate, one balance's load limits).
-#  specs:              → big-number tiles. Available, but deliberately UNUSED on
-#                        this page: the tiles restated whatever the chips and the
-#                        table already said, and three layers of the same facts
-#                        read as padding. Reach for them only if a facility has a
-#                        headline number that genuinely belongs nowhere else.
-#  blurb               → optional; one or two sentences at most.
-#  photo_alt           → alt text describing the photo for screen-reader users.
-#                        Say what the image shows (and note if it is a rendering,
-#                        not a photo). Falls back to "Inside {name}" if omitted.
-#
-#  THE HOUSE PATTERN (matches the CALI facility section, and every facility here
-#  should follow it): chips for the capabilities in words, then an equipment
-#  table for the numbers. A chip never repeats a figure from the table. Label
-#  rows by what a visitor can MEASURE rather than by what hardware exists, and
-#  leave out anything a facility of that kind would obviously have. Anyone who
-#  needs more than the table detail is meant to email us — the contact note at
-#  the foot of the page is the release valve, which is what lets these blocks
-#  stay short.
-#
-#  NOTE ON CALI: the flagship block below is intentionally a short TEASER. CALI
-#  has its own section at /cali/, which owns the full equipment specs, services,
-#  recharge rates, team, and access details (single source of truth in
-#  _data/cali.yml). Keep this block brief and let the button link into /cali/ so
-#  the two pages never repeat — and never drift out of sync.
-# ─────────────────────────────────────────────────────────────
+# Facilities page.
+#   featured: true   full-bleed flagship band at the top (one facility only)
+#   tagline          one line shown with the name
+#   funding          optional credit badge on the flagship photo
+#                    ({ note, name, logo, url }); `funding_key: cali` reads the
+#                    block from cali.yml instead
+#   capabilities     chips: what a visitor can do here (no figures)
+#   equipment        table of { label, value } rows plus optional `also:` for a
+#                    second, distinct item (commas join facts about one item).
+#                    Label rows by what can be measured. Omit for no table.
+#   specs            big-number tiles; unused here because they repeated the
+#                    chips and table
+#   blurb            optional, one or two sentences
+#   photo_alt        alt text (say if it is a rendering); defaults to
+#                    "Inside {name}"
+# Keep blocks short; the contact note at the foot of the page covers detail.
+# The CALI block is a teaser: /cali/ (cali.yml) owns the full specs, rates and
+# team, so the two pages never repeat.
 
 - name: Center for Animal Locomotion and Innovation (CALI)
   featured: true

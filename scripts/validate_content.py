@@ -1,21 +1,14 @@
 #!/usr/bin/env python3
-"""Check _data/ for content mistakes that would build fine but publish something wrong.
+"""Check _data/ for mistakes that build fine but publish wrong (names, DOIs, image paths).
 
-Cross-references names, DOIs and image paths. Doesn't check writing or design.
+    python3 scripts/validate_content.py    # CI: site-checks.yml
 
-    python3 scripts/validate_content.py
-
-Runs on every pull request via site-checks.yml.
-
-To add a check: write a check_* function that yields Problem objects and add it
-to CHECKS at the bottom. Write the message for someone who has never opened this
-file: what's wrong, which file, what to do.
-
-Why this exists: MAINTENANCE.md → "Checking your content before you publish".
+To add a check: a check_* function yielding Problem objects, added to CHECKS at
+the bottom. Messages say what's wrong, which file, what to do.
+See MAINTENANCE.md, "Checking your content before you publish".
 """
-# Website tooling, largely written by AI (Claude) and checked for behaviour
-# rather than wording. It describes how the site is built, not how the lab works;
-# lab policy lives in _guide/. See accessibility.md, "How this site is made".
+# Site tooling, largely AI-written (Claude), checked for behaviour not wording.
+# Lab policy lives in _guide/. See accessibility.md, "How this site is made".
 
 from __future__ import annotations
 
@@ -32,14 +25,13 @@ except ImportError:
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(REPO_ROOT, "_data")
 
-# Role words _includes/role-key.html understands. Keep the two in step: the same
-# ladder picks a person's bird badge and their tier in the alumni table.
+# Keep in step with _includes/role-key.html, which uses the same ladder.
 ALUMNI_ROLE_WORDS = ("postdoc", "visiting", "undergrad", "phd", "ph.d", "doctoral",
                      "msc", "m.s", "master")
 FORMS_DIR = os.path.join(REPO_ROOT, ".github", "ISSUE_TEMPLATE")
 
 
-# ── Problem reporting ─────────────────────────────────────────────────────────
+# Problems
 @dataclass
 class Problem:
     """`where` is the file; `fix` is plain-English advice."""
@@ -57,9 +49,9 @@ def warn(where, what, fix=""):
     return Problem(where, what, fix, warning=True)
 
 
-# ── Loading ───────────────────────────────────────────────────────────────────
+# Loading
 def load(name):
-    """Read one _data file; None if missing."""
+    """One _data file, or None if missing."""
     path = os.path.join(DATA_DIR, name)
     if not os.path.exists(path):
         return None
@@ -68,8 +60,7 @@ def load(name):
 
 
 def norm_doi(value):
-    """DOIs appear bare in pub_links/press and as full URLs in publications.
-    Reduce both to the bare form so they compare equal."""
+    """Bare lowercase DOI, from a bare DOI or a doi.org URL."""
     if not value:
         return ""
     text = str(value).strip().lower()
@@ -80,18 +71,16 @@ def norm_doi(value):
 
 
 def asset_exists(web_path):
-    """'/assets/img/people/jane.jpg' → is that file actually in the repo?"""
+    """Is '/assets/…' actually in the repo? External URLs and blanks pass."""
     if not web_path or not str(web_path).startswith("/"):
-        return True  # external URLs and blank values are handled elsewhere
+        return True
     return os.path.exists(os.path.join(REPO_ROOT, str(web_path).lstrip("/")))
 
 
 def people_names(people):
-    """Every name and alias the site knows: current members, affiliates AND alumni.
+    """Every name and alias: members, affiliates and alumni.
 
-    Alumni belong here. Someone who leaves keeps their papers, their projects and
-    their mentions in the news, and all of those are checked against this set —
-    leaving alumni out made a departure look like a typo."""
+    Alumni stay in, or a departure makes their projects and news look like typos."""
     people = people or {}
     rosters = [group.get("members") or [] for group in people.get("groups", []) or []]
     rosters.append((people.get("affiliates") or {}).get("members") or [])
@@ -108,8 +97,7 @@ def people_names(people):
 
 
 def manual_entries(manual):
-    """Flatten publications_manual.yml's headings into (heading, entry) pairs,
-    skipping `exclude` (which isn't publications)."""
+    """(heading, entry) pairs from publications_manual.yml, skipping `exclude`."""
     out = []
     for heading, entries in (manual or {}).items():
         if heading == "exclude":
@@ -136,9 +124,9 @@ def all_dois(pubs, manual):
     return {d for d in dois if d}
 
 
-# ── Checks ────────────────────────────────────────────────────────────────────
+# Checks
 def check_yaml_parses():
-    """Runs first and alone: nothing else works if a file won't parse."""
+    """Runs first and alone; nothing else works on an unparseable file."""
     for filename in sorted(os.listdir(DATA_DIR)):
         if not filename.endswith((".yml", ".yaml")):
             continue
@@ -263,7 +251,7 @@ def check_publications():
 
     for label, entry in entries:
         title = entry.get("title", "(untitled)")
-        # Blog posts and similar have no author list; papers must have one.
+        # Blog posts have no author list.
         required = ["title", "year"]
         if entry.get("type") in ("journal", "conference"):
             required.append("authors")
@@ -387,8 +375,7 @@ def check_facilities():
 
 
 def check_updates():
-    """News types must match across updates.yml, the issue form and
-    issue_to_change.py, otherwise a valid form gets dropped or mislabelled."""
+    """News types must agree across updates.yml, the issue form and issue_to_change.py."""
     updates = load("updates.yml")
 
     script_types = set()
@@ -441,7 +428,7 @@ def check_updates():
 
 
 def check_person_roles_match_form():
-    """Every role in the add-person form must map to a real people.yml group."""
+    """Every add-person form role must map to a real people.yml group."""
     form_path = os.path.join(FORMS_DIR, "add-person.yml")
     script_path = os.path.join(REPO_ROOT, "scripts", "issue_to_change.py")
     if not (os.path.exists(form_path) and os.path.exists(script_path)):
@@ -499,8 +486,7 @@ def check_openings():
 
 
 def check_review_list():
-    """A review.yml entry pointing at a deleted file silently stops being
-    reviewed: the failure the reminder exists to prevent."""
+    """A review.yml entry pointing at a deleted file silently stops being reviewed."""
     config = load("review.yml")
     if not config:
         return
@@ -527,9 +513,7 @@ def check_review_list():
 
 
 def check_alumni():
-    """The alumni table groups by role and then by `start` year. A member with no
-    `start:` would be silently left out of the table, and a role that matches no
-    tier would sort into "other", so flag both."""
+    """The alumni table needs `start:` (else no row) and a role matching a tier (else "other")."""
     people = load("people.yml")
     if not people:
         return
@@ -587,7 +571,7 @@ CHECKS = [
 
 
 def main():
-    # One unparseable file makes everything downstream noise.
+    # An unparseable file makes every other check noise.
     parse_problems = list(check_yaml_parses())
     problems = parse_problems if parse_problems else [
         p for check in CHECKS for p in check()

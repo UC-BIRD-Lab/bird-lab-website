@@ -6,15 +6,7 @@ description: "Journal articles, conference papers, and open data and code from t
 ---
 
 {%- assign journals = site.data.publications -%}
-{%- comment -%}
-  Safety net against double-listing. Conference papers WITH a DOI sync into
-  publications.yml automatically; DOI-less talks/posters are hand-added in
-  publications_manual.yml. If a hand-added item later gets a DOI and syncs, the
-  two lists would collide. So we drop any manual conference entry whose title
-  already appears in the synced list: the DOI (auto) version always wins. Match
-  is on the exact title, downcased. Removing the manual entry once it syncs is
-  still the tidy thing to do; this just prevents a visible duplicate if you don't.
-{%- endcomment -%}
+{%- comment -%} Drop any publications_manual.yml conference entry whose title (downcased) is already in the synced publications.yml, so a hand-added item that later gets a DOI isn't listed twice. Still remove the manual entry once it syncs. {%- endcomment -%}
 {%- assign auto_titles = journals | map: "title" | join: "||" | downcase -%}
 {%- assign conf = "" | split: "," -%}
 {%- for c in site.data.publications_manual.conference -%}
@@ -27,23 +19,12 @@ description: "Journal articles, conference papers, and open data and code from t
 {%- assign all = journals | concat: conf -%}
 {%- assign years = all | map: "year" | uniq | sort | reverse -%}
 
-{%- comment -%} Flatten all coverage once, so each paper can show how many pieces
-   reference its DOI (the "In the news" badge below). Written press is grouped by
-   year; media (videos/podcasts/radio) is a flat list — include both. Items without
-   a doi simply never match. {%- endcomment -%}
+{%- comment -%} Press (grouped by year) + media (flat), flattened for the "In the news" count by DOI. {%- endcomment -%}
 {%- assign all_press = "" | split: "" -%}
 {%- for yr in site.data.press -%}{%- assign all_press = all_press | concat: yr.items -%}{%- endfor -%}
 {%- if site.data.media -%}{%- assign all_press = all_press | concat: site.data.media -%}{%- endif -%}
 
-{%- comment -%}
-  Roster of current lab members + alumni (NOT affiliates), built from people.yml so
-  it stays a single source of truth. Used to (1) bold their names where they appear
-  as authors and (2) let the search box match a full FIRST or LAST name even though
-  author lists carry only initials (typing "Kaleb" finds "K. Bordner"). Each record
-  is "firstInitial|lastname|searchwords" joined by ~. Last names are accent-folded
-  (so "Martinez" matches "Martínez") and split on hyphens so a compound surname like
-  "Martínez-Carmena" still matches the "Martinez" an author list uses.
-{%- endcomment -%}
+{%- comment -%} Roster of members + alumni (not affiliates) from people.yml, used to bold author names and let search match a full first or last name ("Kaleb" finds "K. Bordner"). Records are "initial|lastname|searchwords" joined by ~; last names accent-folded and split on hyphens. {%- endcomment -%}
 {%- assign roster_people = "" | split: "" -%}
 {%- for g in site.data.people.groups -%}{%- assign roster_people = roster_people | concat: g.members -%}{%- endfor -%}
 {%- assign roster_people = roster_people | concat: site.data.people.alumni.members -%}
@@ -75,20 +56,17 @@ description: "Journal articles, conference papers, and open data and code from t
 
 {%- for y in years -%}
   <h2 class="pub-year">{{ y }}</h2>
-  {%- comment -%} Entries keep the data-file order (publications.yml is written newest-first
-     by date; hand-curated conference items follow). {%- endcomment -%}
+  {%- comment -%} Data-file order: publications.yml newest-first, then manual conference items. {%- endcomment -%}
   {%- assign items = all | where: "year", y -%}
   {%- for pub in items -%}
-  {%- comment -%} Bold lab members / alumni in the author list, and collect their full
-     names (member_hits) so the search box matches a first or last name. {%- endcomment -%}
+  {%- comment -%} Bold roster authors; member_hits feeds the search index. {%- endcomment -%}
   {%- assign authors_html = "" -%}
   {%- assign member_hits = "" -%}
   {%- assign author_tokens = pub.authors | split: "," -%}
   {%- for traw in author_tokens -%}
     {%- assign tok = traw | strip -%}
     {%- unless tok == "" -%}
-      {%- comment -%} Ignore any trailing "(note)" so the surname is read from the name
-         itself; the note (if any) is kept but not bolded. {%- endcomment -%}
+      {%- comment -%} A trailing "(note)" is kept but not bolded. {%- endcomment -%}
       {%- assign tname = tok | split: "(" | first | strip -%}
       {%- assign tsur = tname | split: " " | last | downcase | remove: "." | replace: "í","i" | replace: "é","e" | replace: "á","a" | replace: "ó","o" | replace: "ú","u" | replace: "ñ","n" | replace: "ü","u" | replace: "è","e" | replace: "à","a" | replace: "ö","o" | replace: "ä","a" | replace: "ç","c" -%}
       {%- assign tini = tname | slice: 0 | downcase -%}
@@ -118,7 +96,7 @@ description: "Journal articles, conference papers, and open data and code from t
     {%- endunless -%}
   {%- endfor -%}
   {%- capture search %}{{ pub.title }} {{ pub.authors }} {{ pub.venue }} {{ member_hits }}{% endcapture -%}
-  {%- comment -%} Hand-curated extras (data / code / figure) matched by DOI. {%- endcomment -%}
+  {%- comment -%} pub_links.yml extras, matched by DOI. {%- endcomment -%}
   {%- assign rich = "" -%}
   {%- if pub.doi -%}{%- assign rich = site.data.pub_links | where_exp: "x", "x.doi and pub.doi contains x.doi" | first -%}{%- endif -%}
   <div class="pub{% if rich.image %} pub--rich{% endif %}" data-type="{{ pub.type }}" data-search="{{ search | downcase | strip }}">
@@ -137,8 +115,7 @@ description: "Journal articles, conference papers, and open data and code from t
         {%- endif -%}
         {%- if rich.award -%} · <span class="pub-award"><span aria-hidden="true">🏆</span> {{ rich.award }}</span>{%- endif -%}
       </p>
-      {%- comment -%} Free-to-read copy: a hand-set pdf wins, else the auto open-access
-         URL synced from OpenAlex; a preprint (e.g. ResearchGate) shows alongside. {%- endcomment -%}
+      {%- comment -%} Hand-set pdf wins over the OpenAlex oa_url; preprint shows alongside. {%- endcomment -%}
       {%- assign oa_link = rich.pdf | default: pub.oa_url -%}
       {%- if oa_link or rich.preprint or rich.data or rich.code -%}
       <p class="pub__extras">

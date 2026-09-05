@@ -1,24 +1,12 @@
 {%- comment -%}
-  Slim site-wide announcement bar, rendered just below the header on every
-  page (wired up in _layouts/default.html). All content and the on/off
-  switch live in _data/announcement.yml; edit that file, not this one.
-
-  Two safety nets keep an expired notice off the live site:
-    1. Build-time: if the build runs after `deadline` (inclusive), the bar
-       is not rendered at all.
-    2. Client-side: main.js compares data-deadline against the visitor's
-       clock and removes the bar if the deadline has passed, covering the
-       window between the deadline and the next site rebuild (the site only
-       rebuilds on push, so this net matters).
-
-  The bar works without JavaScript (it simply can't be dismissed), matching
-  the site's progressive-enhancement rule.
+  Site-wide announcement bar, included from _layouts/default.html. Content and on/off switch: _data/announcement.yml.
+  Expiry: not rendered if the build runs after `deadline`; main.js also removes it client-side via data-deadline, since the site only rebuilds on push. Works without JS (just can't be dismissed).
 {%- endcomment -%}
 {%- assign a = site.data.announcement -%}
 {%- if a.enabled -%}
 {%- assign show = true -%}
 {%- if a.deadline -%}
-  {%- comment -%} Deadline day itself still shows: hide from the following midnight. {%- endcomment -%}
+  {%- comment -%} Deadline day still shows; hidden from the following midnight. {%- endcomment -%}
   {%- assign end_ts = a.deadline | date: "%s" | plus: 86400 -%}
   {%- assign now_ts = site.time | date: "%s" | plus: 0 -%}
   {%- if now_ts >= end_ts -%}{%- assign show = false -%}{%- endif -%}

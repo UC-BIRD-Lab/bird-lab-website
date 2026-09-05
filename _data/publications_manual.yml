@@ -1,15 +1,6 @@
-# ─────────────────────────────────────────────────────────────
-#  PUBLICATIONS, manually maintained
-#  Conference talks & posters WITHOUT a DOI, plus blog posts. These are NOT
-#  indexed by OpenAlex, so add them here by hand. Conference/meeting papers that
-#  DO have a DOI (e.g. AIAA SciTech/AVIATION) are pulled automatically into
-#  publications.yml, so don't add those here. See MAINTENANCE.md.
-#
-#  If a talk you added here later gets a DOI and syncs into publications.yml,
-#  delete it here to keep this file tidy. As a safety net, the Publications page
-#  already hides any entry here whose title matches a synced one (the DOI version
-#  wins), so you won't see a duplicate even if you forget.
-# ─────────────────────────────────────────────────────────────
+# Hand-maintained talks, posters and blog posts without a DOI (anything with a
+# DOI syncs into publications.yml). If an entry later gets a DOI, delete it
+# here; the page hides title matches with a synced entry anyway.
 
 conference:
   - title: "Quantifying range of motion in the avian tail"
@@ -102,14 +93,10 @@ blog:
     year: 2024
     url: "https://communities.springernature.com/posts/tap-tap-tap-three-is-plenty-for-windy-flight"
 
-# ─────────────────────────────────────────────────────────────
-#  DO-NOT-LIST, OpenAlex sometimes returns things under the lab's ORCID that
-#  aren't really papers (a profile write-up, a talk abstract indexed like an
-#  article, …). List their BARE DOI here and the sync will drop them and never
-#  re-add them. Add a short `reason:` for the next person.
-# ─────────────────────────────────────────────────────────────
+# Bare DOIs the OpenAlex sync must drop (non-papers under the lab ORCID), with
+# a `reason:`.
 exclude:
-  - doi: "10.1242/jeb.245923"    # "ECR Spotlight – Christina Harvey", profile write-up, not a paper
+  - doi: "10.1242/jeb.245923"    # "ECR Spotlight – Christina Harvey"
     reason: "Journal spotlight/profile of the PI, not a research paper."
-  - doi: "10.1117/12.2666179"    # "Nature, smart structures, and morphing UAVs", conference talk
+  - doi: "10.1117/12.2666179"    # "Nature, smart structures, and morphing UAVs"
     reason: "Invited conference talk, not a peer-reviewed paper."

@@ -1,4 +1,4 @@
-/* BIRD Lab — progressive enhancement. Site works without JS. */
+/* BIRD Lab site behaviour. Progressive enhancement; the site works without JS. */
 (function () {
   "use strict";
 
@@ -18,7 +18,7 @@
     });
   }
 
-  // ---- Publications filter (search + year + type) ----
+  // ---- Publications filter (search + type) ----
   var pubSearch = document.getElementById("pub-search");
   var pubType = document.getElementById("pub-type");
   if (pubSearch || pubType) {
@@ -33,7 +33,7 @@
         var show = (!q || text.indexOf(q) !== -1) && (t === "all" || type === t);
         el.hidden = !show;
       });
-      // hide empty year headings
+      // Hide year headings with no visible pubs.
       years.forEach(function (h) {
         var sib = h.nextElementSibling, any = false;
         while (sib && !sib.classList.contains("pub-year")) {
@@ -53,12 +53,10 @@
   var guideSearch = document.getElementById("guide-search");
   if (guideSearch) {
     var cards = Array.prototype.slice.call(document.querySelectorAll(".card--link"));
-    // Sections that hold guide cards: the "Start here" block and each category
-    // band. Empty ones hide while the visitor is searching.
+    // Card sections; empty ones hide while searching.
     var sections = Array.prototype.slice.call(document.querySelectorAll(".guide-start, .guide-cat"));
     var guideNoResults = document.getElementById("guide-noresults");
-    // The hub grid: while searching we collapse the journey panel and category
-    // chips (both are navigation, not results) so matches sit right under the box.
+    // .is-searching hides the journey panel and category chips (CSS).
     var guideHub = guideSearch.closest(".guide-hub-top");
     guideSearch.addEventListener("input", function () {
       var q = guideSearch.value.toLowerCase().trim();
@@ -68,9 +66,8 @@
         var kw = (c.getAttribute("data-keywords") || "").toLowerCase();
         var inTitle = q && h && h.textContent.toLowerCase().indexOf(q) !== -1;
         var inText = q && (c.textContent.toLowerCase().indexOf(q) !== -1 || kw.indexOf(q) !== -1);
-        // Hide non-matches; keep any card whose title, body, OR keywords match.
         c.hidden = !!q && !inText;
-        // Rank: title matches (order 0) rise above body-only matches (order 1).
+        // Title matches rank above body-only matches.
         c.style.order = q ? (inTitle ? "0" : "1") : "";
       });
       var anyVisible = false;
@@ -83,14 +80,13 @@
     });
   }
 
-  // ---- Fellowships table: show a preview, reveal the rest on demand ----
-  // Progressive enhancement: with JS off, every row (and no button) shows.
+  // ---- Fellowships table: preview rows, reveal the rest on demand (JS off: all rows, no button) ----
   document.querySelectorAll(".fund-toggle").forEach(function (btn) {
     var table = document.getElementById(btn.getAttribute("data-target"));
     if (!table) return;
     var rows = Array.prototype.slice.call(table.querySelectorAll("tbody tr"));
     var preview = parseInt(btn.getAttribute("data-preview"), 10) || 6;
-    if (rows.length <= preview) return;              // nothing to collapse
+    if (rows.length <= preview) return;
     var collapsed = true;
     function apply() {
       rows.forEach(function (r, i) { r.hidden = collapsed && i >= preview; });
@@ -104,10 +100,8 @@
     btn.addEventListener("click", function () { collapsed = !collapsed; apply(); });
   });
 
-  // ---- Hero background video: pause/play control (WCAG 2.2.2) ----
-  // The control lets anyone stop motion that lasts >5s. We also respect the
-  // OS "reduce motion" setting: there the CSS hides the video, so we pause it
-  // and hide the button (nothing is moving to control).
+  // ---- Hero video pause/play (WCAG 2.2.2) ----
+  // Under prefers-reduced-motion the CSS hides the video, so pause it and hide the button.
   var heroVideo = document.querySelector(".hero .section-bg");
   var heroToggle = document.querySelector(".video-toggle");
   if (heroVideo && heroToggle) {
@@ -126,7 +120,7 @@
       heroToggle.hidden = true;
     } else {
       setToggleState(!heroVideo.paused);
-      var userPaused = false;   // set only by the visitor's own toggle click
+      var userPaused = false;   // set only by the visitor's toggle click
       heroToggle.addEventListener("click", function () {
         if (heroVideo.paused) {
           userPaused = false;
@@ -141,10 +135,8 @@
       heroVideo.addEventListener("play", function () { setToggleState(true); });
       heroVideo.addEventListener("pause", function () { setToggleState(false); });
 
-      // Mobile browsers sometimes ignore the autoplay attribute (Low Power
-      // Mode, data saver). Nudge playback once now and once on first touch;
-      // if the browser still refuses, the poster + play button remain the
-      // fallback. Never fights an explicit pause from the visitor.
+      // Mobile browsers may ignore autoplay (Low Power Mode, data saver): nudge once now
+      // and once on first touch. Never overrides the visitor's own pause.
       function nudgePlay() {
         if (!heroVideo.paused || userPaused) return;
         var p = heroVideo.play();
@@ -158,10 +150,8 @@
     }
   }
 
-  // ---- Wiki sidebar fold (small screens) ----
-  // The sidebar's <details> ships open (no-JS fallback and desktop). Below
-  // 820px it starts collapsed so the article isn't pushed down the page, and
-  // it reopens automatically if the window widens past the breakpoint.
+  // ---- Wiki sidebar fold ----
+  // The <details> ships open (no-JS fallback); closed below 820px, reopened if the window widens.
   var wikiFold = document.querySelector(".wiki-fold");
   if (wikiFold && window.matchMedia) {
     var foldMq = window.matchMedia("(max-width: 820px)");
@@ -171,10 +161,8 @@
     else if (foldMq.addListener) foldMq.addListener(syncWikiFold);
   }
 
-  // ---- Print: expand every collapsed <details> ----
-  // CSS cannot reliably force a closed <details> to render, so a printed guide
-  // page would silently drop whatever is inside a fold. Open them all before the
-  // print dialog and restore each one's original state afterwards.
+  // ---- Print: open every collapsed <details>, restore afterwards ----
+  // CSS cannot force a closed <details> to render, so folds would print empty.
   var printOpened = [];
   function expandFoldsForPrint() {
     printOpened = [];
@@ -189,7 +177,7 @@
   }
   window.addEventListener("beforeprint", expandFoldsForPrint);
   window.addEventListener("afterprint", restoreFoldsAfterPrint);
-  // Safari fires no beforeprint/afterprint, so drive it off the print media query.
+  // Safari fires no beforeprint/afterprint; use the print media query.
   if (window.matchMedia) {
     var printMq = window.matchMedia("print");
     var onPrintChange = function (mq) {
@@ -199,7 +187,7 @@
     else if (printMq.addListener) printMq.addListener(onPrintChange);
   }
 
-  // ---- Wiki search (filters side nav + jumps) ----
+  // ---- Wiki search (filters the side nav) ----
   var wikiSearch = document.getElementById("wiki-search");
   if (wikiSearch) {
     var items = Array.prototype.slice.call(document.querySelectorAll(".wiki-nav li"));
@@ -214,19 +202,18 @@
   }
 })();
 
-// ---- People page: legend chips highlight (and count) matching members ----
+// ---- People: legend chips highlight and count matching members ----
 (function () {
   var teamGrid = document.getElementById("team-grid");
-  if (!teamGrid) return;                       // only on the People page
+  if (!teamGrid) return;
 
   document.querySelectorAll(".role-chip").forEach(function (chip) {
     var role = chip.dataset.role;
     var cards = teamGrid.querySelectorAll('.person[data-role="' + role + '"]');
     var pips  = teamGrid.querySelectorAll('.role-pip[data-role="' + role + '"]');
 
-    // Count members of this role, once.
     var count = chip.querySelector(".role-count");
-    if (count) count.textContent = cards.length;   // always show, including 0
+    if (count) count.textContent = cards.length;   // shown even when 0
 
     function set(active) {
       teamGrid.classList.toggle("filtering", active);
@@ -242,11 +229,7 @@
   });
 })();
 
-// ---- Lab Guide: copyable section links ----
-// Adds a small "link" affordance to each H2/H3 in a guide page that has an id
-// (kramdown auto-generates these). Click copies the section's full URL to the
-// clipboard so members can paste a deep link straight into Slack or a PR. Purely
-// an enhancement: the headings and their anchors work with JS off.
+// ---- Lab Guide: copy-link button on each H2/H3 with an id (kramdown generates ids) ----
 (function () {
   var article = document.querySelector(".wiki-content");
   if (!article) return;
@@ -279,7 +262,7 @@
     h.appendChild(btn);
   });
 
-  // One polite live region for the "copied" confirmation.
+  // Live region for the "copied" confirmation.
   var live = document.createElement("div");
   live.id = "anchor-live";
   live.className = "visually-hidden";
@@ -287,13 +270,9 @@
   article.appendChild(live);
 })();
 
-/* ---- Announcement bar (see _includes/announcement-banner.html) ----
-   Progressive enhancement on top of the build-time deadline gate:
-   1) removes the bar client-side once the deadline has passed (the site only
-      rebuilds on push, so this covers the gap until the next build), and
-   2) lets visitors dismiss it for the rest of their browser session.
-   The dismissal key includes the deadline, so a future announcement with a
-   new deadline shows again. */
+/* ---- Announcement bar (_includes/announcement-banner.html) ----
+   Removes the bar once the deadline passes (the site only rebuilds on push) and lets visitors
+   dismiss it for the session. The dismissal key includes the deadline so a new announcement shows again. */
 (function () {
   "use strict";
   var bar = document.querySelector(".announce");
@@ -301,7 +280,7 @@
 
   var deadline = bar.getAttribute("data-deadline") || "";
   if (deadline) {
-    // Visible through the deadline day itself (local midnight after it).
+    // Visible through the deadline day (local time).
     var end = new Date(deadline + "T23:59:59");
     if (!isNaN(end.getTime()) && new Date() > end) { bar.remove(); return; }
   }
@@ -309,7 +288,7 @@
   var key = "birdlab-announce-dismissed-" + (deadline || "current");
   try {
     if (sessionStorage.getItem(key) === "1") { bar.remove(); return; }
-  } catch (e) { /* private mode; bar just stays dismissible per page */ }
+  } catch (e) { /* private mode: dismissal lasts one page */ }
 
   var close = bar.querySelector(".announce__close");
   if (close) {
@@ -320,11 +299,7 @@
   }
 })();
 
-/* ---- People: open the alumni list when someone is linked to it ----
-   News items and project leads link departed members to #alumni, but the table
-   lives inside a collapsed <details>, so the visitor would land on a heading and
-   a closed toggle. Open it for them. Without JS they still land on the section
-   and the summary is one click away, so nothing is unreachable either way. */
+/* ---- People: open the alumni <details> when linked to #alumni ---- */
 (function () {
   "use strict";
   var box = document.querySelector("#alumni .alumni-details");
@@ -334,7 +309,7 @@
     if (location.hash !== "#alumni") return;
     if (!box.open) {
       box.open = true;
-      // Re-aim at the heading: opening the list moves everything below it.
+      // Opening the list shifts the page; re-scroll to the heading.
       var head = document.getElementById("alumni");
       if (head) head.scrollIntoView();
     }

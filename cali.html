@@ -11,10 +11,9 @@ image:
 
 {%- comment -%}
   HOW TO EDIT THIS PAGE
-  Words     Written out below in order, in plain HTML. Find the sentence, edit, commit.
-  Lists     People, equipment, partners, photos, contact: _data/cali.yml.
-            Rates: _data/cali_rates.yml. Milestones: _data/cali_milestones.yml.
-  Look      The <style> block at the BOTTOM of this file.
+  Words  Plain HTML below, in page order.
+  Lists  People, equipment, partners, photos, contact: _data/cali.yml. Rates: _data/cali_rates.yml. Milestones: _data/cali_milestones.yml.
+  Look   The <style> block at the bottom of this file.
 {%- endcomment -%}
 {%- assign cali = site.data.cali -%}
 {%- assign rates = site.data.cali_rates -%}
@@ -25,9 +24,7 @@ image:
   <img class="section-bg" src="{{ cali.hero_photo | relative_url }}" alt="" aria-hidden="true" loading="eager">
   <div class="container">
     <p class="eyebrow eyebrow--on-dark">Center for Animal Locomotion &amp; Innovation</p>
-    {%- comment -%} The eyebrow above already spells the name out, and the
-       page title carries it for search and link previews, so the h1 stays
-       short rather than repeating it for screen-reader users. {%- endcomment -%}
+    {%- comment -%} h1 stays short; the eyebrow and page title carry the full name. {%- endcomment -%}
     <h1>CALI</h1>
     <p class="lead">Harnessing animal locomotion to advance technology, health, and conservation.</p>
     <div class="hero__cta">
@@ -37,8 +34,7 @@ image:
   </div>
 </section>
 
-<!-- In-page navigation. Labels match the headings they land on, so a jump
-     always feels like it arrived somewhere. -->
+<!-- In-page nav. Labels match the headings they land on. -->
 <nav class="cali-subnav" aria-label="On this page">
   <div class="container">
     <a href="#about">The consortium</a>
@@ -51,7 +47,7 @@ image:
   </div>
 </nav>
 
-<!-- 1. The consortium: what CALI is for, where it is right now, what we study -->
+<!-- 1. The consortium -->
 <section class="section section--tint" id="about" aria-labelledby="about-h">
   <div class="container center">
     <h2 id="about-h" class="eyebrow center">The consortium</h2>
@@ -59,28 +55,19 @@ image:
     facility at UC&nbsp;Davis. Founded in {{ cali.founded }}, we bring together engineering, veterinary medicine, and
     biology to study how animals move. We're growing into a multi-institution network.</p>
 
-    {%- comment -%} Keep this honest and current. Being visibly early is the reason
-       someone gets in touch — a reader who sees a shape still forming has a reason
-       to email; a reader who sees a finished institution has none. Rewrite it as the
-       consortium takes shape, and retire it once membership means something specific. {%- endcomment -%}
+    {%- comment -%} Keep current; retire once membership means something specific. {%- endcomment -%}
     <p class="cali-founding u-mt-12">We're in our founding phase — expanding our research network,
     identifying shared priorities, and building teams for collaborative proposals, training, and a new
     <a href="#mentoring">peer mentoring program</a>.</p>
 
     <p class="cali-statement u-mt-16">Animal locomotion links biomechanics, robotics, health, and conservation.</p>
 
-    {%- comment -%} Three research focus areas. Each card is plain markup, so the
-       heading, the sentence, and the picture's alt text are all edited here.
-       A card can carry a still <img> or a short silent <video> loop; prefer video
-       over an animated GIF, which can't be paused (WCAG 2.2.2). To convert one:
-         ffmpeg -i clip.gif -movflags faststart -pix_fmt yuv420p \
-           -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" clip.mp4
+    {%- comment -%} Focus-area cards, edited here. Use a silent <video> loop, not a GIF (can't be paused, WCAG 2.2.2):
+         ffmpeg -i clip.gif -movflags faststart -pix_fmt yuv420p -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" clip.mp4
          ffmpeg -i clip.gif -vframes 1 clip-poster.jpg {%- endcomment -%}
     <div class="grid grid-3 u-mt-16">
       <div class="card cali-focus">
-        {%- comment -%} tabindex="-1": a silent decorative loop with no controls
-           should not be a keyboard stop — there is nothing there to operate.
-           The still below it is what readers who ask for reduced motion see. {%- endcomment -%}
+        {%- comment -%} tabindex="-1": no controls, so not a keyboard stop. The still below is the reduced-motion fallback. {%- endcomment -%}
         <video class="cali-focus__img cali-focus__video" autoplay muted loop playsinline tabindex="-1"
                poster="{{ '/assets/img/cali/differenced_image-poster.jpg' | relative_url }}"
                aria-label="A high-speed difference image tracing a bird's motion in the flight hall.">
@@ -113,7 +100,7 @@ image:
   </div>
 </section>
 
-<!-- 2. The facility (the capability that makes it credible) -->
+<!-- 2. The facility -->
 <section class="section" id="facility" aria-labelledby="facility-h">
   <div class="container">
     <div class="facility-grid">
@@ -151,7 +138,7 @@ image:
   </div>
 </section>
 
-<!-- 3. Our story: milestones + in the news (the consortium's trajectory) -->
+<!-- 3. Our story: milestones + in the news -->
 <section class="section section--tint" id="milestones" aria-labelledby="milestones-h">
   <div class="container">
     <h2 id="milestones-h" class="eyebrow center">Our story</h2>
@@ -173,9 +160,7 @@ image:
       </div>
       <div>
         <h3>In the news</h3>
-        {%- comment -%} CALI coverage = press items tagged "Center" (the existing
-           tag from the CONTENT-GUIDE). Tag a story `Center` in press.yml — or with
-           add_press.py --tag Center — and it appears here automatically. {%- endcomment -%}
+        {%- comment -%} Press items tagged "Center" in press.yml (or add_press.py --tag Center). {%- endcomment -%}
         <div class="cali-scroll cali-scroll--news" tabindex="0" role="region" aria-label="CALI news coverage">
           <ul class="cali-news">
             {%- for yr in site.data.press -%}
@@ -196,7 +181,7 @@ image:
   </div>
 </section>
 
-<!-- 4. Team & partners (credibility) -->
+<!-- 4. Team & partners -->
 <section class="section" id="team" aria-labelledby="team-h">
   <div class="container">
     <h2 id="team-h" class="eyebrow center">Team</h2>
@@ -205,9 +190,7 @@ image:
     {%- assign members = cali.team | where: "group", g -%}
     {%- if members and members.size > 0 -%}
     <h3 class="center cali-group-h u-mt-16">{{ g }}</h3>
-    {%- comment -%} One line under each heading, so a reader can tell an Advisor from
-       an Affiliate. Group names come from _data/cali.yml; their descriptions are
-       here. A group with no line below simply doesn't get one. {%- endcomment -%}
+    {%- comment -%} Group names come from _data/cali.yml; their one-line blurbs live here. {%- endcomment -%}
     {%- case g -%}
     {%- when "Advisors" -%}
     <p class="center muted u-fs-sm cali-group-blurb">Helping us figure out how the consortium will work.</p>
@@ -221,8 +204,7 @@ image:
       <li>
         {%- if p.website -%}<a class="cali-person cali-person--link" href="{{ p.website }}" rel="noopener">{%- else -%}<div class="cali-person">{%- endif -%}
           {%- if p.photo -%}
-          {%- comment -%} alt is empty on purpose: the name is right below, so
-             describing the photo again makes screen readers say it twice. {%- endcomment -%}
+          {%- comment -%} alt empty on purpose; the name is right below. {%- endcomment -%}
           <img class="cali-person__photo" src="{{ p.photo | relative_url }}" alt="" loading="lazy">
           {%- else -%}
           <span class="cali-person__photo cali-person__photo--initials" aria-hidden="true">{{ initials }}</span>
@@ -252,7 +234,7 @@ image:
   </div>
 </section>
 
-<!-- 5. Using CALI: rates & access (the practical answers) -->
+<!-- 5. Using CALI: rates & access -->
 <section class="section section--tint" id="access" aria-labelledby="access-h">
   <div class="container">
     <div class="cali-access">
@@ -279,11 +261,7 @@ image:
             {%- for svc in rates.services -%}
             <tr>
               <th scope="row">{{ svc.name }}<span class="svc-desc">{{ svc.desc }}</span></th>
-              {%- comment -%} The tier label is repeated in each cell for the phone
-                 card layout, where the header row is visually hidden. It is
-                 aria-hidden because the <thead> is still in the DOM and still
-                 associates the column header — without this, a screen reader
-                 announces the tier twice. {%- endcomment -%}
+              {%- comment -%} Tier label repeated per cell for the phone card layout; aria-hidden because the <thead> still associates it. {%- endcomment -%}
               {%- for t in rates.tiers -%}
               <td><span class="rate-tier" aria-hidden="true">{{ t.label }}</span>${{ svc.rates[t.id] }}</td>
               {%- endfor -%}
@@ -296,7 +274,7 @@ image:
   </div>
 </section>
 
-<!-- 6. Get involved: concrete ways to take part -->
+<!-- 6. Get involved -->
 <section class="section" id="get-involved" aria-labelledby="getinv-h">
   <div class="container center">
     <h2 id="getinv-h" class="eyebrow center">Get involved</h2>
@@ -377,9 +355,7 @@ image:
   </div>
 </section>
 
-{%- comment -%} CALI's own structured data. The site-wide schema.html describes
-   the BIRD Lab; this describes the center as its own entity, which is both
-   good SEO now and the machine-readable half of a future spin-out. {%- endcomment -%}
+{%- comment -%} CALI's own structured data; schema.html describes the BIRD Lab. {%- endcomment -%}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -393,42 +369,31 @@ image:
 }
 </script>
 
-{%- comment -%}
-  STYLING. Scoped to .page--cali and kept here, not in assets/css/style.css, so
-  the CALI pages can move to their own site as a unit. Being in the page body it
-  also wins the cascade over the site stylesheet.
-{%- endcomment -%}
+{%- comment -%} Styling scoped to .page--cali and kept here, not style.css, so the CALI pages can move as a unit; also wins the cascade. {%- endcomment -%}
 <style>
-  /* CALI's signature accent — a warm gold that distinguishes the consortium
-     from the lab's blue. Change this one value to re-tint the whole section. */
+  /* Accent gold; change this one value to re-tint the section. */
   .page--cali { --cali-accent: #c0912e; }
 
   .page--cali .hero > .container { padding-block: clamp(3rem, 8vw, 5.5rem); max-width: 62rem; }
   .page--cali .hero .lead { max-width: 40ch; }
 
-  /* In-page nav. It must stick BELOW the site header (which is sticky at
-     top:0, z-index:100) — parking it at top:0 hides it underneath. Same
-     pattern as .people-header. */
+  /* Sub-nav sticks below the site header (sticky, top:0, z-index:100); top:0 would hide it. */
   .page--cali .cali-subnav { border-bottom: 1px solid var(--c-line); background: rgba(255,255,255,.96); backdrop-filter: saturate(150%) blur(10px); position: sticky; top: var(--header-h); z-index: 90; }
   .page--cali .cali-subnav .container { display: flex; flex-wrap: wrap; gap: .4rem 1.4rem; padding-block: .8rem; }
   .page--cali .cali-subnav a { font-size: var(--step--1); font-weight: 600; color: var(--c-blue-700); text-decoration: none; }
   .page--cali .cali-subnav a:hover, .page--cali .cali-subnav a:focus-visible { text-decoration: underline; }
-  /* Anchor jumps must clear the site header AND the sub-nav. This has to
-     target [id] (the site's own mechanism) — scroll-padding-top only works on
-     the actual scrolling element, so setting it on the body class does nothing.
-     The bar is ~3.15rem on one line and ~4.9rem once the links wrap to two,
-     which happens just above 600px; each value adds a little breathing room. */
+  /* Anchor jumps clear header + sub-nav. Must target [id]; scroll-padding-top on the body class does nothing.
+     Bar is ~3.15rem on one line, ~4.9rem when links wrap (just above 600px). */
   .page--cali [id] { scroll-margin-top: calc(var(--header-h) + 3.9rem); }
   @media (max-width: 620px) { .page--cali [id] { scroll-margin-top: calc(var(--header-h) + 5.6rem); } }
 
-  /* Focus-area cards: image or silent loop on top, short verbatim line below. */
+  /* Focus-area cards */
   .page--cali .cali-focus { overflow: hidden; padding: 0; }
   .page--cali .cali-focus__img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; display: block; background: var(--c-sky-2); }
   .page--cali .cali-focus__still { display: none; }
   .page--cali .cali-focus__body { padding: 1.1rem 1.2rem 1.3rem; }
   .page--cali .cali-focus__body h3 { margin: 0 0 .35rem; font-size: var(--step-1); }
-  /* Motion that can't be paused is a WCAG 2.2.2 problem, so readers who ask
-     for less motion get the poster frame instead of the loop. */
+  /* Reduced motion: poster frame instead of the loop (WCAG 2.2.2). */
   @media (prefers-reduced-motion: reduce) {
     .page--cali .cali-focus__video { display: none; }
     .page--cali .cali-focus__still { display: block; }
@@ -437,7 +402,7 @@ image:
   .page--cali .cali-statement { font-size: var(--step-2); line-height: 1.25; max-width: 34rem; margin-inline: auto; color: var(--c-navy); text-align: center; }
   .page--cali .cali-founding { max-width: 62ch; margin-inline: auto; }
 
-  /* Team: uniform cards, each group centered as its own row. */
+  /* Team */
   .page--cali .cali-group-h { font-size: var(--step-0); font-weight: 700; }
   .page--cali .cali-group-blurb { max-width: 46ch; margin-inline: auto; }
   .page--cali .cali-people { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin: 0 auto; padding: 0; list-style: none; max-width: 980px; }
@@ -446,61 +411,47 @@ image:
   .page--cali .cali-person__photo { width: 92px; height: 92px; border-radius: 50%; object-fit: cover; margin-bottom: .7rem; background: var(--c-sky-2); }
   .page--cali .cali-person__photo--initials { display: flex; align-items: center; justify-content: center; background: var(--c-sky); color: var(--c-blue-700); font-weight: 700; font-size: var(--step-1); }
   .page--cali .cali-person__name { font-weight: 700; line-height: 1.2; }
-  /* Pushed to the bottom so a two-line name doesn't knock the affiliation
-     out of line with the cards beside it. */
+  /* margin-top:auto keeps affiliations aligned across cards when a name wraps. */
   .page--cali .cali-person__meta { color: var(--c-muted); font-size: var(--step--1); margin-top: auto; padding-top: .3rem; }
   .page--cali a.cali-person--link { text-decoration: none; color: inherit; }
   .page--cali a.cali-person--link:hover, .page--cali a.cali-person--link:focus-visible { transform: translateY(-3px); box-shadow: var(--shadow-lg); border-color: var(--c-blue-500); }
   .page--cali a.cali-person--link:hover .cali-person__name { text-decoration: underline; }
-  /* Featured first group (Directors): larger card + gold accent. */
+  /* First group (Directors): larger card + gold accent. */
   .page--cali .cali-people--lead .cali-person { width: 244px; border-top: 3px solid var(--cali-accent); padding-top: 1.5rem; }
   .page--cali .cali-people--lead .cali-person__photo { width: 120px; height: 120px; }
 
-  /* Using CALI: words on the left, table pushed to the right. */
+  /* Using CALI */
   .page--cali .cali-access { display: grid; grid-template-columns: minmax(230px, 300px) 1fr; gap: clamp(1.5rem, 4vw, 3rem); align-items: start; }
   .page--cali .cali-access__intro h2 { margin-top: 0; }
   @media (max-width: 820px) { .page--cali .cali-access { grid-template-columns: 1fr; } }
 
-  /* Rate + equipment tables. Both sit in a white card so they read as one
-     crisp object on the tinted section, with a navy header row and a tinted
-     service column giving the grid its structure. The wrapper's overflow is
-     what rounds the corners, since border-collapse ignores border-radius. */
+  /* Rate + equipment tables. The wrapper's overflow rounds the corners; border-collapse ignores border-radius. */
   .page--cali .rate-scroll { overflow-x: auto; background: #fff; border: 1px solid var(--c-line); border-radius: var(--radius); box-shadow: var(--shadow); }
   .page--cali .rate-scroll:focus-visible { outline: 3px solid var(--c-blue-500); outline-offset: 2px; }
-  /* The table fills its column and lets its own content set the column widths.
-     Fixed 20% money columns plus nowrap headers used to force it wider than
-     the space available, which is what clipped the Industry rate. */
+  /* Content sets column widths; fixed-width columns plus nowrap headers clipped the Industry rate. */
   .page--cali .rate-table { width: 100%; margin: 0; background: #fff; }
   .page--cali .rate-table caption { text-align: left; font-size: var(--step--1); color: var(--c-muted); padding-bottom: .6rem; }
-  /* Headers wrap to two lines when the column gets tight, rather than
-     forcing the table wider than its column. */
   .page--cali .rate-table thead th {
     white-space: normal; background: var(--c-navy); color: #fff;
     font-weight: 600; letter-spacing: .01em; border-bottom: 0;
     padding-block: .8rem; vertical-align: bottom;
   }
-  /* Service column: tinted, so the eye has a fixed left edge to read across from. */
   .page--cali .rate-table th[scope="row"] {
     background: var(--c-sky); color: var(--c-navy); padding-right: .8rem; vertical-align: top;
   }
   .page--cali .rate-table td { background: #fff; }
-  .page--cali .rate-tier { display: none; }   /* shown only in the phone card layout below */
-  /* Breathing room against the card's edges, so nothing kisses the border. */
+  .page--cali .rate-tier { display: none; }   /* phone card layout only */
   .page--cali .rate-table th:first-child, .page--cali .rate-table td:first-child { padding-left: 1.1rem; }
   .page--cali .rate-table th:last-child,  .page--cali .rate-table td:last-child  { padding-right: 1.1rem; }
   .page--cali .rate-table tbody tr:last-child th,
   .page--cali .rate-table tbody tr:last-child td { border-bottom: 0; }
   .page--cali .rate-table tbody tr:hover td { background: var(--c-sky-2); }
   .page--cali .rate-table .svc-desc { display: block; font-weight: 400; font-size: var(--step--1); color: var(--c-muted); }
-  /* Right-align the money columns so decimals line up. */
   .page--cali .rate-table thead th:not(:first-child),
   .page--cali .rate-table td { text-align: right; }
   .page--cali .rate-table td { font-variant-numeric: tabular-nums; white-space: nowrap; }
 
-  /* On a phone a four-column table hides two of the three rates off-screen,
-     so each service becomes its own card. The thead stays in the DOM
-     (clipped, not display:none) so screen readers keep the column
-     associations; each cell repeats its tier label from data-tier. */
+  /* Phone: each service becomes a card. The thead is clipped, not display:none, so screen readers keep column associations. */
   @media (max-width: 620px) {
     .page--cali .rate-scroll { overflow: visible; background: none; border: 0; border-radius: 0; box-shadow: none; }
     .page--cali .rate-table { width: 100%; border-collapse: separate; border-spacing: 0; }
@@ -514,9 +465,7 @@ image:
     .page--cali .rate-tier { display: block; font-weight: 600; color: var(--c-ink-soft); text-align: left; }
   }
 
-  /* Equipment detail table. Shares .rate-table's chrome but reads as prose,
-     so it overrides the money-column alignment — these rules must stay AFTER
-     the .rate-table rules above, since they have the same specificity. */
+  /* Equipment table. Overrides .rate-table alignment; must stay after the .rate-table rules (same specificity). */
   .page--cali .cali-equip-wrap { background: #fff; border: 1px solid var(--c-line); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; margin-top: .6rem; }
   .page--cali .cali-equip { width: 100%; margin: 0; }
   .page--cali .cali-equip td { text-align: left; width: auto; white-space: normal; font-variant-numeric: normal; }
@@ -529,7 +478,7 @@ image:
     .page--cali .cali-equip td { display: block; padding: .2rem .8rem .7rem; }
   }
 
-  /* Discipline tag — small, colored, shows the transdisciplinary mix at a glance. */
+  /* Discipline tags */
   .page--cali .disc { display: inline-block; margin: .1rem 0 .35rem; padding: .2rem .66rem; border-radius: 999px; font-size: .74rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; background: var(--c-sky); color: var(--c-blue-700); }
   .page--cali .disc--engineering { background: #e4ecfb; color: #22406b; }
   .page--cali .disc--veterinary-medicine { background: #e2f1e8; color: #1c5f34; }
@@ -538,12 +487,11 @@ image:
   .page--cali .disc--neuroscience { background: #ebe3f6; color: #543681; }
   .page--cali .disc--animation { background: #f8ebd6; color: #7d5210; }
 
-  /* CALI identifier: a gold keyline under each centered section label — a
-     lightweight, CSS-only signature until a bespoke logo is ready. */
+  /* Gold keyline under section labels, a stand-in until there is a logo. */
   .page--cali .eyebrow.center { padding-bottom: .6rem; }
   .page--cali .eyebrow.center::after { content: ""; display: block; width: 42px; height: 3px; border-radius: 2px; background: var(--cali-accent); margin: .55rem auto 0; }
 
-  /* Milestones + news, side by side. */
+  /* Milestones + news */
   .page--cali .cali-progress { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 3.5rem); max-width: 940px; margin: 1.6rem auto 0; align-items: start; }
   .page--cali .cali-progress h3 { margin: 0 0 .3rem; }
   @media (max-width: 760px) { .page--cali .cali-progress { grid-template-columns: 1fr; } }
@@ -553,16 +501,13 @@ image:
   .page--cali .cali-news a { font-weight: 600; text-decoration: none; color: var(--c-blue-700); }
   .page--cali .cali-news a:hover, .page--cali .cali-news a:focus-visible { text-decoration: underline; }
   .page--cali .cali-news__src { display: block; color: var(--c-muted); font-size: var(--step--1); margin-top: .1rem; }
-  /* Milestones are short and are the credibility story (the 2024 award and
-     groundbreaking included) — show them all. News grows without bound, so
-     cap that one only, and fade the cut so it reads as "there's more"
-     rather than as a slice through a headline. */
+  /* Milestones show in full; only news is capped, with a fade at the cut. */
   .page--cali .cali-scroll { padding: 0 .6rem 0 .8rem; }
   .page--cali .cali-scroll--news { max-height: 26rem; overflow-y: auto; -webkit-mask-image: linear-gradient(180deg, #000 88%, transparent 100%); mask-image: linear-gradient(180deg, #000 88%, transparent 100%); }
   .page--cali .cali-scroll--news:focus-visible { outline: 3px solid var(--c-blue-500); outline-offset: 3px; border-radius: 4px; }
   @media (max-width: 760px) { .page--cali .cali-scroll--news { max-height: none; overflow: visible; -webkit-mask-image: none; mask-image: none; } }
 
-  /* Milestones timeline (mirrors the home-page news feel). */
+  /* Milestones timeline */
   .page--cali .cali-timeline { max-width: none; margin: 1rem 0 0; padding: 0 0 0 1.6rem; border-left: 2px solid var(--c-line); list-style: none; }
   .page--cali .cali-timeline li { position: relative; padding: 0 0 1.3rem; }
   .page--cali .cali-timeline li:last-child { padding-bottom: 0; }
@@ -570,18 +515,14 @@ image:
   .page--cali .cali-timeline__date { font-weight: 700; color: var(--c-navy); }
   .page--cali .cali-timeline__text { color: var(--c-ink-soft); }
 
-  /* Get-involved call-to-action band: team photo backdrop, kept short.
-     The overlay is deliberately lighter than the site default's lower stop
-     only where the caption sits — this photograph is bright, and a flat
-     dark wash erases fifteen faces. */
+  /* Closing band */
   .page--cali .cali-cta .field-band__img { object-position: center 38%; height: clamp(300px, 38vw, 460px); }
   .page--cali .cali-cta .field-band__line { max-width: 32ch; line-height: 1.28; }
 
-  /* Tidy 2x2 spec tiles inside the facility column. */
+  /* 2x2 spec tiles in the facility column. */
   .page--cali .facility-body .spec-grid { grid-template-columns: repeat(2, 1fr); }
 
-  /* Funder badge, lower-right of the facility photo. Pin the logo size so the
-     big-photo `.facility-photo img` rule doesn't stretch it. */
+  /* Funder badge, lower-right of the facility photo. Logo size pinned so `.facility-photo img` doesn't stretch it. */
   .page--cali .facility-photo { position: relative; }
   .page--cali .facility-photo .facility-funder { top: auto; bottom: clamp(.8rem, 2vw, 1.3rem); }
   .page--cali .facility-photo .facility-funder img { width: auto; height: 30px; max-width: 170px; aspect-ratio: auto; object-fit: contain; border: 0; border-radius: 0; box-shadow: none; background: none; }
@@ -594,5 +535,5 @@ image:
   .page--cali .cali-ways .card a:not(.btn) { text-decoration: underline; }
   .page--cali .cali-ways .card { display: flex; flex-direction: column; }
   .page--cali .cali-ways .card > p:last-child { margin-top: auto; }
-  .page--cali #mentoring .card > p:last-child { margin-top: 0; }   /* no button to pin down here */
+  .page--cali #mentoring .card > p:last-child { margin-top: 0; }   /* no button to pin */
 </style>

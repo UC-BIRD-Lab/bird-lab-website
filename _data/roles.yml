@@ -1,20 +1,11 @@
-# Lab operations roles shown on _guide/lab-operations-roles.md.
-# This is the single source of truth: edit a role here and both the
-# "at a glance" table and the role cards update. To add or retire a role,
-# add or remove an entry below; the page can't structurally re-bloat.
-#
-# Keep the PUBLIC signal here: what a member would own and the authority they
-# hold. Step-by-step routines, weekly/monthly checklists, and handoff details
-# live on each role's handoff page in the member portal, not on this page.
-#
-# Fields per role:
-#   name     - role title (required; also becomes the card's anchor id)
-#   tagline  - short "what they keep on track" line for the at-a-glance table
-#   purpose  - one sentence on what the role is for
-#   owns     - scope this role is responsible for
-#   can      - authority this role holds to act
-#
-# Order below is the order roles appear on the page.
+# Lab operations roles on _guide/lab-operations-roles.md (the at-a-glance table
+# and the role cards), in page order. Public signal only: routines and
+# checklists live on each role's handoff page in the member portal.
+#   name     required; also the card's anchor id
+#   tagline  one line for the at-a-glance table
+#   purpose  one sentence
+#   owns     scope
+#   can      authority
 
 roles:
   - name: Onboarding Officer

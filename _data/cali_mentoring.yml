@@ -1,12 +1,8 @@
-# CALI peer mentoring: the sign-up switch and this year's dates.
-# The words are in cali.html, section "Peer mentoring".
-#
-#   open: true   → Sign up button (from `opens`; before that the page says
-#                  when sign-ups start; after `closes` the button goes)
-#   open: false  → "We run this every year. Email us."
-#
-# Dates only take effect when the site is next pushed; the switch is the
-# thing to flip.
+# CALI peer mentoring switch and dates; prose is in cali.html "Peer mentoring".
+#   open: true   Sign up button between `opens` and `closes` (before `opens` the
+#                page says when sign-ups start)
+#   open: false  "We run this every year. Email us."
+# Dates take effect on the next push.
 signups:
   open: true
   form_url: https://ucdavis.co1.qualtrics.com/jfe/form/SV_br5wSmULKjGnZBQ   # ⚠ confirm before launch

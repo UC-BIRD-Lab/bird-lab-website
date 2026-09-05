@@ -1,19 +1,8 @@
 #!/usr/bin/env bash
-# ─────────────────────────────────────────────────────────────
-#  Preview the BIRD Lab site locally. No Ruby/Jekyll needed on your Mac.
-#  Runs Jekyll inside Docker, so none of the native gems
-#  (eventmachine, etc.) are compiled against your system.
-#
-#  Uses the same Ruby version and Gemfile.lock as the GitHub Actions build that
-#  publishes the live site, so what you see here is what ships.
-#
-#  Requires Docker Desktop: https://www.docker.com/products/docker-desktop/
-#  Usage:  ./serve.sh      (then open http://localhost:4000)
-#  Stop:   Ctrl+C
-# ─────────────────────────────────────────────────────────────
-# Website tooling, largely written by AI (Claude) and checked for behaviour
-# rather than wording. It describes how the site is built, not how the lab works;
-# lab policy lives in _guide/. See accessibility.md, "How this site is made".
+# Preview the site locally in Docker, with the same Ruby and Gemfile.lock as CI.
+# Needs Docker Desktop. Usage: ./serve.sh, then open http://localhost:4000; Ctrl+C stops.
+# Site tooling, largely AI-written (Claude), checked for behaviour not wording.
+# Lab policy lives in _guide/. See accessibility.md, "How this site is made".
 set -euo pipefail
 cd "$(dirname "$0")"
 
@@ -33,14 +22,13 @@ if [ ! -f Gemfile.lock ]; then
   exit 1
 fi
 
-# Gemfile.lock records which CPU/OS each compiled gem was built for. Without a
-# match Bundler fails cryptically, so check here and say what to run.
+# Bundler fails cryptically if Gemfile.lock lacks this platform.
 case "$(uname -m)" in
   arm64|aarch64) NEEDED_PLATFORM="aarch64-linux" ;;
   *)             NEEDED_PLATFORM="x86_64-linux" ;;
 esac
 
-# Anchored match: plain "x86_64-linux" must not match the "x86_64-linux-musl" line.
+# Anchored so "x86_64-linux" does not match "x86_64-linux-musl".
 if ! grep -qE "^  ${NEEDED_PLATFORM}\$" Gemfile.lock; then
   echo "Gemfile.lock doesn't cover this computer (needs ${NEEDED_PLATFORM})."
   echo "It currently covers:"
@@ -52,17 +40,14 @@ if ! grep -qE "^  ${NEEDED_PLATFORM}\$" Gemfile.lock; then
   exit 1
 fi
 
-# If a previous run was killed without Ctrl+C, its container can linger and
-# hold port 4000; remove any leftover one so a restart always works.
+# A run killed without Ctrl+C can leave a container holding port 4000.
 docker rm -f birdlab-site >/dev/null 2>&1 || true
 
 echo "Starting Jekyll in Docker: open http://localhost:4000 (Ctrl+C to stop)."
 echo "(The first run downloads gems and can take a few minutes. Later runs reuse them.)"
 
-# BUNDLE_FROZEN  stop if Gemfile and Gemfile.lock disagree, rather than
-#                previewing different versions than the live site uses.
-# birdlab-gems   Docker volume caching installed gems between runs.
-# No --platform: ruby:3.3 is multi-arch, so this runs natively on Apple Silicon.
+# BUNDLE_FROZEN: fail if Gemfile and Gemfile.lock disagree. birdlab-gems: gem
+# cache volume. No --platform: ruby:3.3 is multi-arch.
 exec docker run --rm -it \
   --name birdlab-site \
   -v "$PWD:/srv/jekyll" \

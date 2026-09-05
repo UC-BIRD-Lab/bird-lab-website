@@ -1,9 +1,4 @@
-{%- comment -%}
-  Renders the lab operations roles from _data/roles.yml: an at-a-glance table
-  followed by one card per role (name, purpose, owns, authority). Edit the data
-  file, not this template, to add, retire, or change a role. Detailed routines
-  and handoff checklists live in the member portal, not here.
-{%- endcomment -%}
+{%- comment -%} Lab operations roles from _data/roles.yml (edit that, not this). Routines and handoff checklists live in the member portal. {%- endcomment -%}
 {%- assign roles = site.data.roles.roles -%}
 
 <div class="roles-map">

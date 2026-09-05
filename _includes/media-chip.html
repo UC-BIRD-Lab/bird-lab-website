@@ -1,10 +1,4 @@
-{%- comment -%}
-  Small chip for a media item, mirroring the press-archive rows.
-  Pass a media entry as `m`. Optional fields on that entry:
-    doi: "10.xxxx/…"   → a blue "📄 Paper" link to the peer-reviewed source
-    tag: "Award"        → a reason chip (Center · Award · Funding · Profile · Feature)
-  A row/card shows at most one chip; `doi` wins if both are set.
-{%- endcomment -%}
+{%- comment -%} Chip for a media entry `m`: `doi` gives a Paper link, else `tag` (Center, Award, Funding, Profile, Feature) gives a reason chip. {%- endcomment -%}
 {%- if include.m.doi -%}<a class="news-press__doi" href="https://doi.org/{{ include.m.doi }}" rel="noopener" title="Read the peer-reviewed paper behind this coverage"><span aria-hidden="true">📄</span> Paper</a>
 {%- elsif include.m.tag -%}
   {%- case include.m.tag -%}

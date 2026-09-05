@@ -5,7 +5,7 @@ eyebrow: Who we are
 description: "Meet the BIRD Lab team at UC Davis: our PI, postdoctoral scholars, PhD and undergraduate researchers, collaborators, and alumni."
 ---
 
-{%- comment -%} Featured PI block (Christina): richer than a standard card. {%- endcomment -%}
+{%- comment -%} Featured PI block; bio is hand-written below. {%- endcomment -%}
 {%- assign pi_group = site.data.people.groups | where: "id", "pi" | first -%}
 {%- assign pi = pi_group.members | first -%}
 <section class="people-group">
@@ -33,11 +33,11 @@ description: "Meet the BIRD Lab team at UC Davis: our PI, postdoctoral scholars,
       {%- if pi.field %}<p class="field-tags u-justify-start">{%- assign pifields = pi.field | split: "," -%}{%- for fld in pifields -%}<span class="field-tag">{{ fld | strip }}</span>{%- endfor -%}</p>{% endif -%}
       <div class="prose u-mt-06">
         <p>Christina Harvey is an engineer and zoologist who seeks to understand the fundamental principles of biological flight. Her research combines biomechanics, aerodynamics, flight dynamics, and animal behavior to 
-        uncover biological principles and determine which of those principles may benefit in engineering designs.</p>
+        uncover biological principles and determine which of those principles may benefit engineering designs.</p>
         
         <p>Her background bridges engineering and biology, with a BEng in Mechanical Engineering (McGill University), an MSc in Zoology 
         (University of British Columbia), and a PhD in Aerospace Engineering (University of Michigan). 
-        That perspective shapes the BIRD Lab and the Center for Animal Locomotion & Innovation (CALI), where engineers, biologists, veterinarians, and computer scientists work together to answer questions no single discipline could solve alone.</p>
+        That perspective shapes the BIRD Lab and the Center for Animal Locomotion &amp; Innovation (CALI), where engineers, biologists, veterinarians, and computer scientists work together to answer questions no single discipline could solve alone.</p>
         
         <p>Christina is an Amelia Earhart Fellow and a Packard Fellow. She is passionate about rigorous science, continually refining her mentoring and teaching through evidence and reflection, and building an open, collaborative research environment where curiosity comes first.</p>
       </div>
@@ -45,9 +45,7 @@ description: "Meet the BIRD Lab team at UC Davis: our PI, postdoctoral scholars,
   </div>
 </section>
 
-{%- comment -%} One combined team grid (PI featured above). Each card carries its own
-   role text + bird badge, so we no longer split into separate role sections. The
-   small discipline tags show the lab's mix of engineering and biology backgrounds. {%- endcomment -%}
+{%- comment -%} One combined team grid; each card carries its role and bird badge. {%- endcomment -%}
 <section class="people-group">
 
   <div class="team-section">
@@ -95,12 +93,7 @@ description: "Meet the BIRD Lab team at UC Davis: our PI, postdoctoral scholars,
     </div>
 
     <div id="team-grid" class="grid grid-4 u-mt-14">
-      {%- comment -%} Order: by role (the group order in people.yml), then by LAST
-         NAME A–Z within each role. Last name = the person's `last:` field if set,
-         otherwise the last word of their `name` (so "Alfonso Martínez-Carmena" →
-         "Martínez-Carmena"). Set `last:` in people.yml for anyone the last-word
-         guess gets wrong. The sort key is lower-cased and accent-folded, so e.g.
-         "Martínez" files under M and ties break by full name. {%- endcomment -%}
+      {%- comment -%} Order: group order in people.yml, then last name A-Z. Last name = `last:` if set, else the last word of `name`; set `last:` where that guess is wrong. Key is lower-cased and accent-folded; ties break by full name. {%- endcomment -%}
       {%- for group in site.data.people.groups -%}
         {%- unless group.id == "pi" -%}
           {%- assign keyed = "" | split: "" -%}
@@ -108,8 +101,7 @@ description: "Meet the BIRD Lab team at UC Davis: our PI, postdoctoral scholars,
             {%- if p.last -%}{%- assign ln = p.last -%}
             {%- else -%}{%- assign np = p.name | remove: "Dr. " | strip | split: " " -%}{%- assign ln = np | last -%}{%- endif -%}
             {%- assign ln = ln | downcase | replace: "í","i" | replace: "é","e" | replace: "á","a" | replace: "ó","o" | replace: "ú","u" | replace: "ñ","n" | replace: "ü","u" | replace: "è","e" | replace: "à","a" | replace: "ö","o" | replace: "ä","a" | replace: "ç","c" -%}
-            {%- comment -%} Separator "#" sorts before letters, so a short surname
-               ("Li") correctly precedes a longer one it prefixes ("Liu"). {%- endcomment -%}
+            {%- comment -%} "#" sorts before letters, so "Li" precedes "Liu". {%- endcomment -%}
             {%- assign entry = ln | append: "#" | append: p.name -%}
             {%- assign one = entry | split: "~" -%}
             {%- assign keyed = keyed | concat: one -%}
@@ -118,7 +110,7 @@ description: "Meet the BIRD Lab team at UC Davis: our PI, postdoctoral scholars,
           {%- for k in keyed -%}
             {%- assign nm = k | split: "#" | last -%}
             {%- assign p = group.members | where: "name", nm | first -%}
-            {% include person.html p=p badge=true role=group.id %}
+            {% include person.html p=p badge=true %}
           {%- endfor -%}
         {%- endunless -%}
       {%- endfor -%}
@@ -128,8 +120,7 @@ description: "Meet the BIRD Lab team at UC Davis: our PI, postdoctoral scholars,
 
 </section>
 
-{%- comment -%} Scenes from the lab: renders only scenes flagged ready: true that also
-   have alt text, so a photo can never ship with an empty alt attribute. {%- endcomment -%}
+{%- comment -%} Only scenes with ready: true and alt text render. {%- endcomment -%}
 {%- assign ready_scenes = site.data.gallery.scenes | where_exp: "s", "s.ready and s.alt" -%}
 {%- if ready_scenes and ready_scenes.size > 0 -%}
 <section class="people-group">
@@ -158,12 +149,7 @@ description: "Meet the BIRD Lab team at UC Davis: our PI, postdoctoral scholars,
 
 <section class="people-group" id="alumni">
   <h2>{{ site.data.people.alumni.title }}</h2>
-  {%- comment -%}
-    EDIT ME BY HAND. This sentence highlights a few notable alumni destinations.
-    It is intentionally hand-written (not generated from the alumni table below),
-    so update these company/school names here whenever you want to refresh the
-    highlights. The full, always-current list lives in the table underneath.
-  {%- endcomment -%}
+  {%- comment -%} Hand-written highlights, not generated from the table; update the names here. {%- endcomment -%}
   <p class="muted">We are forever grateful to the members who helped build and grow our lab.
   They've gone on to positions in industry at <strong>Boeing, NASA&nbsp;Ames, and Northwood</strong>
   as well as to pursue academic positions at <strong>Stanford, UCLA, and CU&nbsp;Boulder</strong>.</p>
@@ -180,18 +166,7 @@ description: "Meet the BIRD Lab team at UC Davis: our PI, postdoctoral scholars,
         </tr>
       </thead>
       <tbody>
-        {%- comment -%}
-          ORDER: by what someone was in the lab first — postdocs, then PhDs, then
-          MSc, then undergraduates, then visiting members, then anything that
-          matches none of those. Within a tier: newest-joined first, then
-          alphabetically inside a year.
-
-          The tier comes from _includes/role-key.html reading each person's free-text
-          `role:`, the same ladder that picks their bird badge — so a role that reads
-          sensibly to a human sorts correctly here with no extra field to maintain.
-          To change the order, reorder `alum_tiers`; nothing else needs touching.
-          Anyone whose role matches no tier still appears, at the end, under "other".
-        {%- endcomment -%}
+        {%- comment -%} Order: tier (alum_tiers, from role-key.html reading free-text `role:`), then newest-joined, then name. Unmatched roles land in "other". Reorder `alum_tiers` to change it. {%- endcomment -%}
         {%- assign alum_tiers = "postdoc,phd,msc,undergrad,visiting,other" | split: "," -%}
         {%- assign alum_years = site.data.people.alumni.members | map: "start" | uniq | sort | reverse -%}
         {%- for tier in alum_tiers -%}

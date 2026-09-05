@@ -1,27 +1,12 @@
-# ─────────────────────────────────────────────────────────────
-#  PEOPLE
-#
-#  PHOTO (optional). Two ways, both end with a file in assets/img/people/:
-#    • Easiest: drop an already-small square JPG straight into
-#      assets/img/people/  (e.g. assets/img/people/jane-doe.jpg).
-#    • Or: drop a large original in assets/img/people/_raw/ and run
-#      `bash scripts/apply-images.sh` to auto-crop/optimize it into the folder.
-#    Then add:  photo: /assets/img/people/jane-doe.jpg
-#    No photo = a clean initials avatar.
-#
-#  ROLE BADGE (the bird) is inferred automatically from each person's `role`
-#  text: Postdoc 🦉 · PhD 🦢 · MSc 🦜 · Undergrad 🐥 · Visiting 🕊️ · PI 🦅.
-#  Override one with  role_icon: "🦅"  if needed.
-#
-#  FIELD (optional), shows small discipline tag(s) so the lab's engineering/
-#  biology mix is visible. Comma-separate for more than one, e.g.
-#    field: "Aerospace, Animal Behavior"
-#
-#  SORTING: the team grid lists each role by LAST NAME A–Z. The last name is the
-#  last word of `name` by default (so "Alfonso Martínez-Carmena" → sorts under M).
-#  If that guess is wrong for someone (e.g. a two-word surname with no hyphen),
-#  add a `last:` line with the surname to sort by, e.g.  last: "van Dijk".
-# ─────────────────────────────────────────────────────────────
+# People page.
+# photo (optional): a small square JPG in assets/img/people/, or drop a large
+#   original in assets/img/people/_raw/ and run `bash scripts/apply-images.sh`.
+#   No photo = initials avatar.
+# Bird badge comes from `role` text (Postdoc 🦉 · PhD 🦢 · MSc 🦜 · Undergrad 🐥
+#   · Visiting 🕊️ · PI 🦅); override with role_icon: "🦅".
+# field (optional): discipline tag(s), comma-separated.
+# Sorting is by last name (last word of `name`); set `last: "van Dijk"` when
+#   that guess is wrong.
 
 groups:
   - id: pi
@@ -129,11 +114,8 @@ groups:
         photo: /assets/img/people/joshua-booth.jpg
         email: jmbooth@ucdavis.edu
         note: Maneuverability & agility in morphing-wing dynamics.
-  # Master's students. Kept here (empty) on purpose so a submitted "MSc Student"
-  # auto-files into it. While empty it shows nothing on the site; members appear
-  # as soon as one is added. Keep `members: []` (an empty list) while empty — the
-  # `[]` matters so the site build stays happy; the automation swaps it for a real
-  # list when it adds the first person.
+  # Kept while empty so a submitted "MSc Student" auto-files here; hidden on the
+  # site until it has members. `members: []` must stay for the build.
   - id: msc
     title: Master's Students
     members: []
@@ -187,36 +169,22 @@ groups:
         photo: /assets/img/people/zak-conte.jpg
 
 
-  # Visiting researchers (non-undergraduate). Kept here (empty) on purpose so a
-  # submitted "Visiting Researcher" auto-files into it. While empty it shows
-  # nothing; members appear once added. (Visiting UNDERGRADS go in the undergrad
-  # group above — both get the 🕊️ badge from their role text either way.)
-  # Keep `members: []` (an empty list) while empty so the site build stays happy.
+  # Non-undergraduate visitors (visiting undergrads go in the undergrad group).
+  # Same empty-group rules as msc above.
   - id: visiting
     title: Visiting Researchers
     members: []
 
-# Individual collaborators and affiliated researchers outside the core group.
-# (Partner *organizations*, CRC, CHC, the museum, live in collaborators.yml
-#  and appear in the "In partnership with" strip on the home page.)
+# Individual collaborators (partner organizations live in collaborators.yml).
+# Currently listed on the CALI page (cali.yml `team`) instead; the People-page
+# section is hidden while this list is empty.
 affiliates:
   title: Collaborators
-  # These collaborators now appear on the CALI page (_data/cali.yml → affiliates);
-  # Dr. Michelle Hawkins shows there as a CALI co-director. The section is hidden
-  # on the People page while this list is empty (guarded in people.html). Add
-  # members back here to restore the People-page Collaborators section.
   members: []
 
-# Past members.
-#  TO RETIRE SOMEONE: cut their whole block from `groups` above (from its
-#  `- name:` line through its last field) and paste it below AS IS: the
-#  indentation here matches the groups, so no re-indenting is needed. Then just
-#  add a `now:` line (current position / destination); until you do, the table
-#  shows a dash. The alumni table reuses the same fields, `start` (year joined)
-#  and `linkedin` carry over automatically, and a LinkedIn icon appears beside
-#  the name whenever `linkedin` is present. Extra fields (photo, email, field,
-#  awards…) are simply ignored, so you don't have to trim them.
-#  `role` = position held in the lab; `now` = current position / destination.
+# Alumni. To retire someone, move their block here as is (same indentation) and
+# add `now:` (current position; a dash until set). `start` and `linkedin` carry
+# over; other fields are ignored.
 alumni:
   title: Alumni
   members:

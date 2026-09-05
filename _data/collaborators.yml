@@ -1,12 +1,6 @@
-# ─────────────────────────────────────────────────────────────
-#  PARTNER ORGANIZATIONS, shown in the "In partnership with" strip
-#  on the home page. These are collaborating organizations (not funders;
-#  funders live in funders.yml, individual academic collaborators live in
-#  people.yml under `affiliates`).
-#
-#  Each entry: name, sub (short descriptor), photo (square image in
-#  assets/img/partners/), url. Add one by copying a block.
-# ─────────────────────────────────────────────────────────────
+# Partner organizations in the home-page "In partnership with" strip (funders
+# go in funders.yml, individual collaborators in people.yml `affiliates`).
+# Fields: name, sub (short descriptor), photo (square, assets/img/partners/), url.
 
 - name: California Raptor Center
   sub: Raptor rehabilitation center.
@@ -14,7 +8,7 @@
   url: https://crc.vetmed.ucdavis.edu
 
 - name: California Hawking Club
-  sub: Licensed general and master falconers. 
+  sub: Licensed general and master falconers.
   photo: /assets/img/partners/chc.jpg
   url: https://www.calhawkingclub.org
 

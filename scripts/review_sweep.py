@@ -1,19 +1,13 @@
 #!/usr/bin/env python3
-"""Report what on the site is due for a human to re-check.
+"""Report what is due for a human re-check: Lab Guide `reviewed:` dates,
+_data/review.yml items, the banner deadline, the CALI rates `effective:` date.
 
-Checks Lab Guide `reviewed:` dates, everything in _data/review.yml, the banner
-deadline in _data/announcement.yml, and the CALI rates `effective:` date.
-Changes nothing.
+    python3 scripts/review_sweep.py [--out report.md] [--quiet]   # --quiet: exit 1 if due
 
-    python3 scripts/review_sweep.py                 # print the report
-    python3 scripts/review_sweep.py --out report.md # also write to a file
-    python3 scripts/review_sweep.py --quiet         # exit 1 if anything is due
-
-Why this exists: MAINTENANCE.md → "The quarterly review issue".
+See MAINTENANCE.md, "The quarterly review issue".
 """
-# Website tooling, largely written by AI (Claude) and checked for behaviour
-# rather than wording. It describes how the site is built, not how the lab works;
-# lab policy lives in _guide/. See accessibility.md, "How this site is made".
+# Site tooling, largely AI-written (Claude), checked for behaviour not wording.
+# Lab policy lives in _guide/. See accessibility.md, "How this site is made".
 
 from __future__ import annotations
 
@@ -32,7 +26,7 @@ REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(REPO_ROOT, "_data")
 GUIDE_DIR = os.path.join(REPO_ROOT, "_guide")
 
-DEADLINE_WARN_DAYS = 14   # warn this far before a banner deadline
+DEADLINE_WARN_DAYS = 14   # before a banner deadline
 
 
 def load(name):
@@ -44,7 +38,7 @@ def load(name):
 
 
 def as_date(value):
-    """YAML gives dates as date objects; strings need parsing."""
+    """date from a YAML date object or a string."""
     if isinstance(value, dt.date):
         return value
     if isinstance(value, dt.datetime):
@@ -63,7 +57,7 @@ def months_since(date, today):
 
 
 def front_matter(path):
-    """Read a Markdown file's YAML front matter."""
+    """YAML front matter of a Markdown file."""
     with open(path, encoding="utf-8") as fh:
         text = fh.read()
     match = re.match(r"^---\s*\n(.*?)\n---\s*\n", text, re.S)
@@ -75,7 +69,7 @@ def front_matter(path):
         return {}
 
 
-# ── the checks ────────────────────────────────────────────────────────────────
+# Checks
 def overdue_guide_pages(config, today):
     interval = config.get("guide_every_months", 12)
     rows = []
@@ -110,7 +104,7 @@ def overdue_items(config, today):
 
 
 def announcement_status(today):
-    """The site banner: expired, closing soon, or undated."""
+    """Banner expired, closing soon, or undated."""
     data = load("announcement.yml") or {}
     if not data.get("enabled"):
         return None
@@ -144,7 +138,7 @@ def rates_status(today):
     return None
 
 
-# ── report ────────────────────────────────────────────────────────────────────
+# Report
 def build_report(today):
     config = load("review.yml") or {}
     guide = overdue_guide_pages(config, today)

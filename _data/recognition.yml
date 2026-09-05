@@ -1,10 +1,5 @@
-# ─────────────────────────────────────────────────────────────
-#  RECOGNITION & MEDIA
-#  awards : selected honors (shown as the "Recognition" strip on Home)
-#  media  : major outlets that have covered the lab's work, each linking
-#           to a representative article ("Featured in" strip on Home)
-#  Add an entry by copying a block. Keep claims accurate.
-# ─────────────────────────────────────────────────────────────
+# Home page strips: `awards` (Recognition) and `media` (Featured in; each outlet
+# links to a representative article). Keep claims accurate.
 
 awards:
   - name: "NSF CAREER Award"

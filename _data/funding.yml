@@ -1,13 +1,6 @@
-# ─────────────────────────────────────────────────────────────
-#  FELLOWSHIPS & SCHOLARSHIPS
-#  A curated list of funding students can bring to (or pursue for) the lab.
-#  Shown as a table on the Lab Guide "Applying for funding" page and linked
-#  from Join. Add an entry by copying a block; omit `eligibility` or `url`
-#  when there isn't one.
-#    level       : e.g. "UG", "Masters, PhD", "Post Doc"
-#    eligibility : any restriction (citizenship, identity, …); leave off if open
-#    url         : official application page
-# ─────────────────────────────────────────────────────────────
+# Fellowships and scholarships table on the Lab Guide "Applying for funding"
+# page (linked from Join). `level` e.g. "UG", "Masters, PhD", "Post Doc";
+# `eligibility` (omit if open); `url` official application page.
 
 - name: AAUW International Fellowships
   level: "Masters, PhD, Post Doc"
@@ -74,7 +67,7 @@
 - name: JEB Travelling Fellowship
   level: "Masters, PhD, Post Doc"
   url: https://www.biologists.com/travelling-fellowships/
-  
+
 - name: Life Sciences Research Fellowship
   level: "Post Doc"
   url: https://lsrf.org

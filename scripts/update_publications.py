@@ -1,28 +1,16 @@
 #!/usr/bin/env python3
 """Update _data/publications.yml from OpenAlex, keyed on the PI's ORCID.
 
-OpenAlex has a free key-less API that resolves works by ORCID. Google Scholar has
-no API and blocks scraping.
-
-Safe to run unattended:
-  * The committed YAML wins. If the API fails, the run fails and the file is untouched.
-  * Only ADDS works whose DOI isn't already listed, so manual edits survive.
-  * Backfills a missing `date` so entries sort within a year; never overwrites one.
-  * Skips corrections/errata and prints them, so you can attach a `correction:`
-    link to the original paper in pub_links.yml instead.
-  * AIAA journals and meeting papers share the 10.2514/ prefix, so those are
-    classified by venue name. Anything ambiguous is logged and left out.
-  * DOIs in `exclude:` (publications_manual.yml) are removed and never re-added.
-  * Works before MIN_YEAR are ignored: OpenAlex sometimes attaches another
-    C. Harvey's 1980s papers to the ORCID.
-
-Papers without a DOI aren't in OpenAlex. Add those to publications_manual.yml.
+Only adds works whose DOI isn't listed and backfills empty `date`/`oa_url`, so
+hand edits survive; an API failure leaves the file untouched. Corrections and
+ambiguous AIAA (10.2514/) works are printed and left out. DOIs in `exclude:`
+(publications_manual.yml) are removed; works before MIN_YEAR are ignored.
+Papers without a DOI go in publications_manual.yml.
 
     python scripts/update_publications.py    # CI: update-publications.yml
 """
-# Website tooling, largely written by AI (Claude) and checked for behaviour
-# rather than wording. It describes how the site is built, not how the lab works;
-# lab policy lives in _guide/. See accessibility.md, "How this site is made".
+# Site tooling, largely AI-written (Claude), checked for behaviour not wording.
+# Lab policy lives in _guide/. See accessibility.md, "How this site is made".
 
 from __future__ import annotations
 import json
@@ -32,23 +20,22 @@ import urllib.parse
 import urllib.request
 
 try:
-    import yaml  # PyYAML, for reading the existing file
+    import yaml
 except ImportError:
     sys.exit("PyYAML is required: pip install pyyaml")
 
 ORCID = os.environ.get("LAB_ORCID", "0000-0002-2830-0844")
 MAILTO = os.environ.get("OPENALEX_MAILTO", "harvey@ucdavis.edu")
 OUT = os.path.join(os.path.dirname(__file__), "..", "_data", "publications.yml")
-# The hand-maintained companion; its `exclude:` list names DOIs to never list.
+# Its `exclude:` list names DOIs to never list.
 MANUAL = os.path.join(os.path.dirname(__file__), "..", "_data", "publications_manual.yml")
 
-# Nothing before this year is the lab's. Raise it if a wrong author is merged in again.
+# OpenAlex sometimes attaches another C. Harvey's older papers to the ORCID; raise if it recurs.
 MIN_YEAR = 2016
 
-# OpenAlex work types we treat as peer-reviewed journal articles.
+# OpenAlex work types treated as journal articles.
 JOURNAL_TYPES = {"article", "review", "letter"}
 
-# Ignore repositories and obvious supplementary materials.
 EXCLUDED_SOURCE_TYPES = {"repository"}
 
 SUPPLEMENT_KEYWORDS = (
@@ -59,8 +46,7 @@ SUPPLEMENT_KEYWORDS = (
     "supporting data",
 )
 
-# Corrections and errata aren't listed as papers. Caught by OpenAlex type and by
-# the usual title formats ("Correction to:", "Corrigendum:", "Erratum:", …).
+# Corrections, by OpenAlex type or title prefix.
 CORRECTION_TYPES = {"erratum", "correction"}
 CORRECTION_TITLE_PREFIXES = (
     "corrigendum",
@@ -91,7 +77,7 @@ HEADER = """\
 
 
 def fetch_works() -> list[dict]:
-    """Page through every work for the ORCID. Exits non-zero on any failure."""
+    """Every work for the ORCID. Exits non-zero on any failure."""
     works, cursor = [], "*"
     base = "https://api.openalex.org/works"
     while cursor:
@@ -108,7 +94,7 @@ def fetch_works() -> list[dict]:
             req = urllib.request.Request(url, headers={"User-Agent": f"BIRDLab-site ({MAILTO})"})
             with urllib.request.urlopen(req, timeout=30) as resp:
                 data = json.load(resp)
-        except Exception as exc:  # network/JSON/HTTP: leave the file alone, but fail the run
+        except Exception as exc:
             sys.exit(f"::error::OpenAlex fetch failed ({exc}). publications.yml left unchanged.")
         works.extend(data.get("results", []))
         cursor = data.get("meta", {}).get("next_cursor")
@@ -129,9 +115,7 @@ def fmt_authors(authorships: list[dict]) -> str:
 
 
 def oa_url_from_work(work: dict) -> str:
-    """A free, open-access full-text URL for this work, if OpenAlex knows one.
-    Prefers a direct PDF, then the OA landing page. Returns "" when not OA, so we
-    only ever surface a genuinely free copy (never a paywalled publisher page)."""
+    """Free full-text URL (PDF first, then landing page), or "" when not OA."""
     oa = work.get("open_access") or {}
     if not oa.get("is_oa"):
         return ""
@@ -146,7 +130,7 @@ def norm_doi(doi: str | None) -> str:
 
 
 def load_exclude() -> set:
-    """Bare DOIs the maintainer marked as 'not a paper' in publications_manual.yml."""
+    """Bare DOIs from `exclude:` in publications_manual.yml."""
     try:
         with open(MANUAL, encoding="utf-8") as fh:
             data = yaml.safe_load(fh) or {}
@@ -154,10 +138,8 @@ def load_exclude() -> set:
         return set()
     return {norm_doi(e.get("doi")) for e in (data.get("exclude") or []) if e.get("doi")}
 
-# AIAA meeting papers and journals share the 10.2514/ prefix, so the DOI alone
-# can't tell them apart. Decide from the venue name, falling back to the DOI
-# sub-code (/6. = meeting, /1.–/4. = journal). Inconclusive → None, flagged and
-# left out.
+# AIAA journals and meeting papers share the 10.2514/ prefix. Decide by venue
+# name, then DOI sub-code (/6. meeting, /1.-/4. journal); else None, left out.
 AIAA_CONFERENCE_HINTS = ("forum", "conference", "congress", "meeting", "symposium",
                          "scitech", "aviation", "propulsion and energy")
 AIAA_JOURNAL_HINTS = ("journal",)
@@ -170,24 +152,24 @@ def aiaa_type(source_name: str, doi: str) -> str | None:
             return "conference"
         if any(h in s for h in AIAA_JOURNAL_HINTS):
             return "journal"
-    tail = doi.split("10.2514/", 1)[-1]          # fallback: AIAA DOI sub-code
+    tail = doi.split("10.2514/", 1)[-1]
     if tail.startswith("6."):
         return "conference"
     if tail[:2] in ("1.", "2.", "3.", "4."):
         return "journal"
-    return None                                   # can't tell → flag & leave out
+    return None
 
 
 def publication_type(source_type: str, source_name: str, doi: str) -> str | None:
-    """journal | conference | None (None = exclude, or flag for manual handling)."""
+    """journal, conference, or None (leave out)."""
     if source_type == "repository":
         return None
-    if doi.startswith("10.2514/"):               # AIAA: shared journal/conference prefix
+    if doi.startswith("10.2514/"):
         return aiaa_type(source_name, doi)
     return "journal"
 
 def is_correction(work: dict) -> bool:
-    """True for corrections/corrigenda/errata (by type or standard title format)."""
+    """Correction/corrigendum/erratum, by type or title."""
     if (work.get("type") or "") in CORRECTION_TYPES:
         return True
     title = (work.get("title") or "").strip().lower()
@@ -203,7 +185,7 @@ def has_my_orcid(work):
     return False
 
 def aiaa_flagged(work: dict) -> bool:
-    """An AIAA (10.2514) work we couldn't type journal-vs-conference (left out)."""
+    """AIAA work that could not be typed, so was left out."""
     if not has_my_orcid(work) or is_correction(work):
         return False
     if work.get("type") not in JOURNAL_TYPES:
@@ -219,8 +201,7 @@ def to_entry(work: dict) -> dict | None:
     if not has_my_orcid(work):
         return None
 
-    # Corrections/corrigenda are attached to the corrected paper via pub_links.yml,
-    # never listed as their own entry.
+    # Corrections attach to the corrected paper via pub_links.yml.
     if is_correction(work):
         return None
 
@@ -248,7 +229,6 @@ def to_entry(work: dict) -> dict | None:
     if pub_type is None:
         return None
 
-    # Exclude obvious supplementary material
     if any(k in title.lower() for k in SUPPLEMENT_KEYWORDS):
         return None
 
@@ -288,7 +268,7 @@ def dump(entries: list[dict]) -> str:
 
 
 def sort_key(e: dict) -> str:
-    """Sort by full date; entries with only a year fall to the end of that year."""
+    """Full date; year-only entries sort to the end of that year."""
     d = e.get("date")
     return str(d) if d else f"{int(e.get('year', 0)):04d}-00-00"
 
@@ -300,7 +280,7 @@ def main() -> int:
     with open(OUT, encoding="utf-8") as fh:
         existing = yaml.safe_load(fh) or []
 
-    # Drop anything the maintainer put on the do-not-list, and never re-add it.
+    # Excluded DOIs are dropped and never re-added.
     exclude = load_exclude()
     removed = [e for e in existing if norm_doi(e.get("doi")) in exclude]
     if removed:
@@ -312,15 +292,13 @@ def main() -> int:
         print("No works returned; not modifying publications.yml.")
         return 0
 
-    # DOI -> publication_date, so we can backfill dates onto existing entries.
+    # For backfilling existing entries.
     date_by_doi = {norm_doi(w.get("doi")): w["publication_date"]
                    for w in works if w.get("doi") and w.get("publication_date")}
-    # DOI -> open-access URL, likewise backfilled onto existing entries.
     oa_by_doi = {norm_doi(w.get("doi")): oa_url_from_work(w)
                  for w in works if w.get("doi") and oa_url_from_work(w)}
 
-    # Backfill: add a `date` to any existing entry that lacks one (non-destructive:
-    # we only fill an empty field, never change an existing value).
+    # Fill empty `date` fields only.
     backfilled = 0
     for e in existing:
         if not e.get("date"):
@@ -329,8 +307,7 @@ def main() -> int:
                 e["date"] = d
                 backfilled += 1
 
-    # Same for `oa_url`: fill in when a paper becomes open access, never overwrite
-    # a hand-set one. Per-paper overrides go in pub_links.yml.
+    # Fill empty `oa_url` only; overrides go in pub_links.yml.
     oa_filled = 0
     for e in existing:
         if not e.get("oa_url"):
@@ -347,7 +324,7 @@ def main() -> int:
             new.append(entry)
             existing_dois.add(norm_doi(entry["doi"]))
 
-    # Corrections aren't added; surface them so they can be linked by hand.
+    # Corrections are listed for linking by hand.
     corrections = [w for w in works if has_my_orcid(w) and is_correction(w)]
     if corrections:
         print("Note: skipped %d correction/corrigendum item(s). If one corrects a paper on "
@@ -356,7 +333,7 @@ def main() -> int:
         for w in corrections:
             print(f"  ~ {norm_doi(w.get('doi'))}  {(w.get('title') or '').strip()}")
 
-    # AIAA works with no clear venue name: left out for you to classify by hand.
+    # Untyped AIAA works, for classifying by hand.
     flagged = [w for w in works if aiaa_flagged(w)]
     if flagged:
         print("Note: %d AIAA work(s) couldn't be typed journal-vs-conference (no clear "
@@ -387,7 +364,7 @@ def main() -> int:
         print(f"Added {len(new)} new article(s):")
         for e in new:
             print(f"  + ({e.get('date') or e['year']}) {e['title']}")
-    # Expose a summary for the GitHub Action PR body.
+    # For the Action's PR body.
     if os.environ.get("GITHUB_OUTPUT"):
         with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as gh:
             gh.write(f"added={len(new)}\n")

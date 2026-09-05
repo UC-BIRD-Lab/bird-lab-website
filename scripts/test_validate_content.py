@@ -1,14 +1,10 @@
 #!/usr/bin/env python3
-"""Tests for validate_content.py.
-
-Each test breaks one thing on purpose and confirms the checker notices, so a
-check can't be quietly disabled later.
+"""Tests for validate_content.py: each breaks one thing and expects the checker to notice.
 
     python3 scripts/test_validate_content.py    # also runs on every pull request
 """
-# Website tooling, largely written by AI (Claude) and checked for behaviour
-# rather than wording. It describes how the site is built, not how the lab works;
-# lab policy lives in _guide/. See accessibility.md, "How this site is made".
+# Site tooling, largely AI-written (Claude), checked for behaviour not wording.
+# Lab policy lives in _guide/. See accessibility.md, "How this site is made".
 
 import copy
 import os
@@ -27,7 +23,7 @@ REAL_REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 class ValidatorTestCase(unittest.TestCase):
-    """Each test works on a throwaway copy; nothing real is touched."""
+    """Each test works on a throwaway copy of the repo data."""
 
     def setUp(self):
         self.tmp = tempfile.mkdtemp()
@@ -37,14 +33,13 @@ class ValidatorTestCase(unittest.TestCase):
         os.makedirs(os.path.join(self.tmp, "scripts"), exist_ok=True)
         shutil.copy(os.path.join(REAL_REPO, "scripts", "issue_to_change.py"),
                     os.path.join(self.tmp, "scripts", "issue_to_change.py"))
-        # Link, not copy: assets/ is large and we only read the listing.
+        # Symlinked: assets/ is large and only listed.
         os.symlink(os.path.join(REAL_REPO, "assets"), os.path.join(self.tmp, "assets"))
-        # Root pages too: review.yml can point at any of them (portal.md).
+        # review.yml can point at root pages (portal.md).
         for name in os.listdir(REAL_REPO):
             if name.endswith((".md", ".html")) and os.path.isfile(os.path.join(REAL_REPO, name)):
                 os.symlink(os.path.join(REAL_REPO, name), os.path.join(self.tmp, name))
         os.symlink(os.path.join(REAL_REPO, "_guide"), os.path.join(self.tmp, "_guide"))
-        # Point the validator at the copy instead of the real repo.
         self._saved = (vc.REPO_ROOT, vc.DATA_DIR, vc.FORMS_DIR)
         vc.REPO_ROOT = self.tmp
         vc.DATA_DIR = os.path.join(self.tmp, "_data")
@@ -54,7 +49,7 @@ class ValidatorTestCase(unittest.TestCase):
         vc.REPO_ROOT, vc.DATA_DIR, vc.FORMS_DIR = self._saved
         shutil.rmtree(self.tmp, ignore_errors=True)
 
-    # ── helpers ───────────────────────────────────────────────────────────────
+    # Helpers
     def read(self, name):
         with open(os.path.join(vc.DATA_DIR, name), encoding="utf-8") as fh:
             return yaml.safe_load(fh)
@@ -67,7 +62,7 @@ class ValidatorTestCase(unittest.TestCase):
         return list(check())
 
     def assertFlags(self, check, needle):
-        """The check must flag a problem mentioning `needle`."""
+        """The check flags a problem mentioning `needle`."""
         problems = self.run_check(check)
         blob = " ".join(f"{p.where} {p.what}" for p in problems).lower()
         self.assertTrue(
@@ -80,13 +75,13 @@ class ValidatorTestCase(unittest.TestCase):
         problems = [p for p in self.run_check(check) if not p.warning]
         self.assertEqual(problems, [], f"Unexpected problems: {[p.what for p in problems]}")
 
-    # ── the real content should pass ──────────────────────────────────────────
+    # Real content passes
     def test_real_content_is_clean(self):
-        """Stops the checker drifting into noise, which gets it ignored."""
+        """A noisy checker gets ignored."""
         for check in vc.CHECKS:
             self.assertClean(check)
 
-    # ── each check must actually fire ─────────────────────────────────────────
+    # Each check fires
     def test_broken_yaml_is_caught(self):
         with open(os.path.join(vc.DATA_DIR, "people.yml"), "w", encoding="utf-8") as fh:
             fh.write("groups:\n  - id: pi\n\ttitle: tab indented\n")
@@ -118,7 +113,7 @@ class ValidatorTestCase(unittest.TestCase):
         self.assertFlags(vc.check_people, "listed twice")
 
     def test_alumnus_without_a_start_year_is_caught(self):
-        """The alumni table is built year by year: no `start:`, no row at all."""
+        """No `start:`, no row in the alumni table."""
         people = self.read("people.yml")
         people["alumni"]["members"][0].pop("start", None)
         self.write("people.yml", people)
@@ -132,8 +127,7 @@ class ValidatorTestCase(unittest.TestCase):
         self.assertFlags(vc.check_alumni, "alumni AND")
 
     def test_alumni_names_count_as_known_people(self):
-        """Moving someone to alumni must not make their projects and news look
-        like typos to the other checks."""
+        """Moving someone to alumni must not make their projects and news look like typos."""
         people = self.read("people.yml")
         names = vc.people_names(people)
         for alumnus in people["alumni"]["members"]:
@@ -215,7 +209,7 @@ class ValidatorTestCase(unittest.TestCase):
 
     def test_quoted_boolean_in_openings_is_caught(self):
         openings = self.read("openings.yml")
-        openings["graduate"]["open"] = "true"   # a string, not a boolean
+        openings["graduate"]["open"] = "true"   # string, not boolean
         self.write("openings.yml", openings)
         self.assertFlags(vc.check_openings, "graduate.open")
 
@@ -249,10 +243,9 @@ class ValidatorTestCase(unittest.TestCase):
         self.write("review.yml", review)
         self.assertFlags(vc.check_review_list, "last_reviewed")
 
-    # ── DOI normalisation, the subtle one ─────────────────────────────────────
+    # DOI normalisation
     def test_doi_forms_are_treated_as_equal(self):
-        """publications.yml stores full URLs, pub_links.yml bare DOIs. If these
-        stop matching, every extras link silently disappears."""
+        """publications.yml has full URLs, pub_links.yml bare DOIs; a mismatch hides every extra."""
         self.assertEqual(
             vc.norm_doi("https://doi.org/10.1098/rsif.2025.1082"),
             vc.norm_doi("10.1098/RSIF.2025.1082"),

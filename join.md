@@ -31,9 +31,7 @@ glance before you reach out.
 
 ## Openings right now
 
-{%- comment -%} Postings. Everything they show lives in the `featured:` and
-   `second:` blocks of _data/openings.yml. Each hides itself when `enabled: false`
-   or once its `deadline` has passed; a flyer renders only if the file exists. {%- endcomment -%}
+{%- comment -%} Postings: `featured:` and `second:` in _data/openings.yml. Hidden when `enabled: false` or past `deadline`; flyer renders only if the file exists. {%- endcomment -%}
 {%- assign now_ts = site.time | date: "%s" | plus: 0 -%}
 {%- assign slots = "featured,second" | split: "," -%}
 {%- for slot in slots -%}

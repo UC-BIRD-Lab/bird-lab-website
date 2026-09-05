@@ -1,8 +1,4 @@
-{%- comment -%}
-  Renders the Lab safety requirements from _data/safety.yml as two badged
-  tables: what everyone must do, and add-ons that apply only to some. Edit the
-  data file, not this template, to change requirements.
-{%- endcomment -%}
+{%- comment -%} Safety requirements from _data/safety.yml (edit that, not this), split by who == "Everyone". {%- endcomment -%}
 {%- assign reqs = site.data.safety.requirements -%}
 
 <p class="req-group-label">Everyone must complete</p>

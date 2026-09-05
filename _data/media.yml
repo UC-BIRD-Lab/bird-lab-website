@@ -1,23 +1,10 @@
-# ─────────────────────────────────────────────────────────────
-#  WATCH & LISTEN, videos, podcasts, and interactive media about the lab.
-#  Shown on the News page, separate from written press coverage. These are
-#  LINKS OUT (no embeds), so the page stays fast and cookie-free.
-#
-#    kind : video | podcast | radio | model
-#
-#  THUMBNAIL CARD vs COMPACT ROW:
-#    featured : true   → a big thumbnail card. Needs a thumbnail source: a YouTube
-#                        link (thumbnail is automatic) or an `image:` path.
-#  Without `featured`, every item — including videos — renders as a compact row.
-#    image : /assets/img/news/…  → thumbnail for a featured NON-YouTube card.
-#
-#  OPTIONAL, per entry (like the press archive):
-#    doi : "10.xxxx/…"  → adds a blue "📄 Paper" link to the peer-reviewed source
-#    tag : "Award"       → adds a reason chip: Center · Award · Funding · Profile · Feature
-#  An entry shows at most one chip; `doi` wins if both are set.
-#
-#  Keep newest first.
-# ─────────────────────────────────────────────────────────────
+# "Watch & listen" on the News page: links out (no embeds), newest first.
+#   kind      video | podcast | radio | model
+#   featured  true = big thumbnail card; needs a YouTube link or `image:` path
+#             (assets/img/news/). Otherwise a compact row.
+#   doi       bare DOI; adds a "Paper" link
+#   tag       Center · Award · Funding · Profile · Feature; one chip per entry,
+#             `doi` wins
 
 - title: "How the way red-tailed hawks adapt could change rehab efforts and aircraft design"
   kind: radio
@@ -32,7 +19,7 @@
   year: 2026
   url: "https://www.youtube.com/watch?v=fz4SfRr6xvA"
   featured: true
-  tag: "Feature" 
+  tag: "Feature"
 
 - title: "The Condor Chat, October 2024"
   kind: video
@@ -40,21 +27,21 @@
   year: 2024
   url: "https://www.youtube.com/watch?v=TUVUjut9Z-A"
   featured: true
-  tag: "Profile" 
+  tag: "Profile"
 
 - title: "Bio-informed flight with Christina Harvey and Michelle Hawkins"
   kind: podcast
   source: "Comstock's Talks"
   year: 2024
   url: "https://www.comstocksmag.com/podcast/bio-informed-flight-christina-harvey-and-michelle-hawkins"
-  tag: "Feature" 
+  tag: "Feature"
 
 - title: "Try the hard things and see what happens"
   kind: podcast
   source: "The Engineer Whisperer · S2 E3"
   year: 2024
   url: "https://podcasters.spotify.com/pod/show/andrea-clough/episodes/S2--Episode-3--Christina-Harvey--Try-The-Hard-Things-And-See-What-Happens-e2fmtva"
-  tag: "Profile" 
+  tag: "Profile"
 
 - title: "Evolution of bird maneuverability and lessons for UAV design"
   kind: video

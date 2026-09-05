@@ -1,18 +1,13 @@
-# Safety requirements shown on the Lab safety page (_guide/lab-safety.md).
-# This is the single source of truth: edit a row here and the page updates.
-# Fields per requirement:
-#   name  - what to complete (required)
-#   who   - audience. Use "Everyone" for the base set; otherwise an activity or
-#           site add-on ("Experimental work", "Ladders", "Wind tunnel", "CALI",
-#           "Motion capture", "Specimens"). "CALI" is styled as extra-care.
-#   link  - optional URL
-#   note  - optional short clarifier (shown under the name)
-#
-# Keep this consistent with the Slack Safety Hub workflows. The order below is
-# the order rows appear on the page.
+# Safety requirements on _guide/lab-safety.md, in page order. Keep consistent
+# with the Slack Safety Hub workflows.
+#   name  required
+#   who   "Everyone" for the base set, else an activity or site add-on; "CALI"
+#         is styled as extra-care
+#   link  optional URL
+#   note  optional clarifier under the name
 
 requirements:
-  # ---- Everyone ----
+  # Everyone
   - name: MAE annual safety training
     who: Everyone
     link: https://mae.ucdavis.edu/events
@@ -20,7 +15,7 @@ requirements:
   - name: Hazard Communication (LMS)
     who: Everyone
     link: https://safetyservices.ucdavis.edu/training/hazard-communication
-    note: UC Laboratory Safety Fundamentals can be completed in lieu. 
+    note: UC Laboratory Safety Fundamentals can be completed in lieu.
   - name: "PPE: Eye and Face Protection (LMS)"
     who: Everyone
     note: Already completed UC Laboratory Safety Fundamentals or Hazard Communication? Upload that certificate in place of the PPE-Specific Training certificate.
@@ -31,7 +26,7 @@ requirements:
     who: Everyone
     note: Complete relevant Slack Workflow, in-person walkthrough with your assigned trainer
 
-  # ---- Activity and site add-ons ----
+  # Activity and site add-ons
   # - name: Hand and Power Tool Safety (LMS)
   #  who: All experimental researchers
   #  link: Training from Senior Lab Members
@@ -41,14 +36,14 @@ requirements:
   - name: Electrical Safety Awareness (LMS)
     who: Wind tunnel researchers
     link: https://safetyservices.ucdavis.edu/training/electrical-safety
-  - name: Wind-tunnel operation and safety walkthrough 
+  - name: Wind-tunnel operation and safety walkthrough
     who: Wind tunnel researchers
     note: Review the wind-tunnel operation manual, walkthrough completed with senior member or PI.
   - name: Avian Specimen Handling SOP and introductory walkthrough
     who: Biomechanics researchers
     note: Guided by senior member or PI.
 
-  # ---- Live animals at CALI ----
+  # Live animals at CALI
   - name: ACU 101 course
     who: CALI researchers
     link: https://research.ucdavis.edu/research-support/animal-care-use/training-classes/animal-care-and-use-101-acu101-course/
@@ -68,7 +63,7 @@ requirements:
     note: See Working with live animals at CALI
   - name: California Raptor Center requirements
     who: CALI researchers
-    note: ask Christina for current guidelines
+    note: Ask Christina for current guidelines
   - name: Initial Safety Training, CALI
     who: CALI researchers
     note: Complete relevant Slack Workflow, includes the OHSS Risk Assessment and Health Surveillance Questionnaire
@@ -76,11 +71,8 @@ requirements:
     who: CALI researchers
     note: Complete relevant Slack Workflow to be added to the relevant IACUC protocol rosters, one request per protocol.
 
-# Recurring cadence shown on the Lab safety page. Keep this block when you edit
-# the requirements above, or the schedule table renders empty.
-#   what - the task (required)
-#   when - how often (required)
-#   via  - optional: where it is completed (e.g. Safety Hub)
+# Recurring schedule table on the same page. `what` and `when` required; `via`
+# optional (where it is completed).
 schedule:
   - what: Annual MAE Training Refresher
     when: Every year

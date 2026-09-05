@@ -1,4 +1,4 @@
-{%- comment -%} Renders one person card. Pass: include.p (member), include.badge (show the bird). {%- endcomment -%}
+{%- comment -%} One person card. Pass p (member) and badge (show the bird). {%- endcomment -%}
 {%- assign p = include.p -%}
 {%- assign parts = p.name | remove: "Dr. " | split: " " -%}
 {%- assign initials = "" -%}
@@ -8,9 +8,7 @@
     {%- assign initials = initials | append: ch -%}
   {%- endif -%}
 {%- endfor -%}
-{%- comment -%} Normalize the role into one key (matches the People legend chips), then
-   pick its bird. The ladder lives in _includes/role-key.html because the alumni
-   table orders itself with the same keys. {%- endcomment -%}
+{%- comment -%} Role key from role-key.html (shared with the alumni table order) picks the bird. {%- endcomment -%}
 {%- capture role_key %}{% include role-key.html role=p.role %}{% endcapture -%}
 {%- assign role_icon = "" -%}
 {%- if include.badge -%}

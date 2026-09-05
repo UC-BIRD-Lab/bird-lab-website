@@ -1,12 +1,6 @@
-# Primary navigation. Order = display order. `cta: true` styles the pill button.
-#
-# This bar is for PUBLIC destinations only, ending in the one action we want a
-# visitor to take: Join. Contact and the Member Portal live in the footer —
-# the portal is an internal Notion workspace, so putting it in the top bar spent
-# our most valuable slot on a link most visitors can't use.
-#
-# The logo also returns Home; the explicit "Home" link makes that obvious to
-# first-time visitors. Keep this list short: every addition dilutes the CTA.
+# Primary navigation, in display order. `cta: true` styles the pill button.
+# Public destinations only, ending in Join; Contact and the Member Portal live
+# in the footer. Keep the list short.
 - title: Home
   url: /
 - title: Research

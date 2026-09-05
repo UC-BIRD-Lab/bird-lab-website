@@ -1,21 +1,10 @@
-# ────────────────────────────────────────────────────────────
-#  PUBLICATIONS: journal articles and DOI-bearing conference papers
-#
-#  THIS FILE IS AUTO-MANAGED by scripts/update_publications.py.
-#  The "Update publications" GitHub Action opens a pull request when new works
-#  appear on OpenAlex for the lab's ORCID. Review and merge it. You may also
-#  hand-edit any entry to fix a detail; future runs preserve existing DOIs.
-#  Anything with a DOI syncs here; conference talks and posters WITHOUT a DOI
-#  live in publications_manual.yml.
-#
-#  Fields: title, authors, venue, year, date (YYYY-MM-DD), type, doi (URL),
-#          oa_url (a free open-access copy, when OpenAlex knows one)
-#  `date` is used to sort within a year (the page still groups by `year`).
-#  `oa_url` is auto-filled when a paper is open access and left blank otherwise;
-#  to point at a specific copy (e.g. your ResearchGate preprint), set `preprint:`
-#  or `pdf:` for that DOI in _data/pub_links.yml — those win over this.
-#  Keep newest first: this file is written sorted by date, newest first.
-# ────────────────────────────────────────────────────────────
+# Journal articles and DOI-bearing conference papers. Auto-managed by
+# scripts/update_publications.py (the "Update publications" action opens a PR
+# from OpenAlex); hand edits survive, existing DOIs are never rewritten.
+# Works without a DOI go in publications_manual.yml.
+# Fields: title, authors, venue, year, date (sort key within a year), type,
+# doi (URL), oa_url (auto-filled open-access copy; `preprint:`/`pdf:` in
+# pub_links.yml override it). Sorted newest first.
 
 - title: "Comparative Biologists and Aerospace Engineers: Important allies to explore the secrets of natural flight"
   authors: "J. Wong, V. B. Baliga, C. Harvey"

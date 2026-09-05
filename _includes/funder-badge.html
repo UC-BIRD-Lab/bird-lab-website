@@ -1,10 +1,6 @@
-{%- comment -%} Funding credit badge, shown in a corner of a facility photo.
-   Pass `fund`: an object with note, name, logo and url. For example
+{%- comment -%} Funding badge on a facility photo. Pass `fund` (note, name, logo, url):
    {% include funder-badge.html fund=cali.funding %}
-   Keep any example above written as a REAL, valid include tag. Liquid parses
-   the tags inside comment blocks even though it discards the output, so a
-   placeholder such as fund=<object with ...> is a syntax error and fails the
-   build. Describe the shape in prose, as this line does, instead. {%- endcomment -%}
+   Any example here must be a valid include tag; Liquid parses tags inside comments, and a placeholder like fund=<...> fails the build. {%- endcomment -%}
 {%- if include.fund -%}
 <a class="facility-funder" href="{{ include.fund.url }}" rel="noopener">
   <span class="facility-funder__note">{{ include.fund.note }}</span>

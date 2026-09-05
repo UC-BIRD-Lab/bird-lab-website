@@ -1,13 +1,4 @@
-{%- comment -%}
-  Shows a "needs review" band at the top of a guide page when it hasn't been
-  reviewed OR edited in the past year. A page counts as fresh if either:
-    - reviewed:  a date in the page's front matter. Set it to today when you
-                 review a page, even if no edits were needed. This is the lever
-                 for "reviewed, nothing to change."
-    - its last git edit (page.last_modified_at, via jekyll-last-modified-at).
-  If neither is within the past year (or both are missing), the band appears.
-  Fail loud, not silent: an undated page is treated as needing review.
-{%- endcomment -%}
+{%- comment -%} "Needs review" band unless `reviewed:` (front matter; set to today after a review with no edits) or the last git edit (page.last_modified_at) is within a year. Undated pages get the band. {%- endcomment -%}
 {%- assign year_seconds = 31536000 -%}
 {%- assign cutoff = site.time | date: "%s" | minus: year_seconds -%}
 {%- assign fresh = false -%}

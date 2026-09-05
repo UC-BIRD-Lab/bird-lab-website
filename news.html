@@ -5,7 +5,7 @@ eyebrow: Latest
 description: "Milestones, press coverage, videos, and podcasts featuring the BIRD Lab's research on bird flight and bio-informed engineering."
 ---
 
-<!-- Lab milestones: a dot per month, that month's events listed below -->
+<!-- Lab milestones -->
 <section aria-labelledby="milestones-h">
   <div class="section-head">
     <div><h2 id="milestones-h">Lab milestones</h2></div>
@@ -38,7 +38,7 @@ description: "Milestones, press coverage, videos, and podcasts featuring the BIR
 
 <hr class="divider u-my-32">
 
-<!-- In the news: one cohesive press section: reach, highlights, then full archive -->
+<!-- In the news -->
 <section id="in-the-news" aria-labelledby="press-h">
   <p class="eyebrow">In the news</p>
   <h2 id="press-h">Where our work has landed</h2>
@@ -47,7 +47,7 @@ description: "Milestones, press coverage, videos, and podcasts featuring the BIR
   <p class="lead prose">Our research has been covered in <strong>{{ press_total }} stories</strong> from
   <em>Quanta</em> to <em>Aerospace&nbsp;America</em>. A few highlights:</p>
 
-  {%- comment -%} Featured cards come from _data/press.yml items marked `featured: true`. {%- endcomment -%}
+  {%- comment -%} Cards: _data/press.yml items with `featured: true`. {%- endcomment -%}
   {%- assign all_stories = "" | split: "" -%}
   {%- for yr in site.data.press -%}{%- assign all_stories = all_stories | concat: yr.items -%}{%- endfor -%}
   {%- assign featured = all_stories | where: "featured", true -%}
@@ -103,10 +103,7 @@ description: "Milestones, press coverage, videos, and podcasts featuring the BIR
 <section aria-labelledby="media-h">
   <p class="eyebrow">Watch &amp; listen</p>
   <h2 id="media-h">Videos, podcasts &amp; interactive media</h2>
-  {%- comment -%} Only FEATURED items with a thumbnail earn a big card: a YouTube
-     link (thumbnail is automatic) or any item with its own `image:`. Everything
-     else — non-featured videos, podcasts, radio, 3D models — renders as a compact
-     row, so the strip stays tidy and nothing looks like a half-empty card. {%- endcomment -%}
+  {%- comment -%} Big card: featured items with a thumbnail (YouTube link or own `image:`). Everything else is a compact row. {%- endcomment -%}
   {%- assign vid_items = "" | split: "" -%}
   {%- assign line_items = "" | split: "" -%}
   {%- for m in site.data.media -%}

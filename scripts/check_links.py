@@ -1,24 +1,14 @@
 #!/usr/bin/env python3
-"""Check the outbound links in _data/*.yml: paper DOIs, press and media URLs, and
-the data/code/preprint links attached to papers.
+"""Check outbound links in _data/*.yml (DOIs, press/media URLs, pub_links extras).
 
-Reads the YAML directly, so the report names the paper or story each dead link
-belongs to. (The lychee sweep covers the Lab Guide's prose links instead.)
-
-Low false alarm by design:
-  * Only 404/410 or a hard connection failure counts as broken. Publishers and
-    news sites often answer bots with 403/429/503; those are reported as
-    "couldn't verify", so the issue doesn't cry wolf.
-  * Sends a browser User-Agent and follows redirects (DOIs are 302s). Tries HEAD,
-    falls back to GET.
-  * Read-only. Writes a Markdown report and exits 1 only when something is
-    genuinely broken, so CI can open an issue on that.
+Only 404/410 or a hard connection failure counts as broken; 403/429/503 are
+reported as "couldn't verify" since publishers often block bots. Exits 1 only on
+broken links, so CI opens an issue just then. Lab Guide prose links are lychee's job.
 
     python scripts/check_links.py [--out report.md]   # CI: link-rot-check.yml
 """
-# Website tooling, largely written by AI (Claude) and checked for behaviour
-# rather than wording. It describes how the site is built, not how the lab works;
-# lab policy lives in _guide/. See accessibility.md, "How this site is made".
+# Site tooling, largely AI-written (Claude), checked for behaviour not wording.
+# Lab policy lives in _guide/. See accessibility.md, "How this site is made".
 from __future__ import annotations
 import argparse
 import concurrent.futures
@@ -39,7 +29,7 @@ UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36")
 HEADERS = {"User-Agent": UA, "Accept": "*/*", "Accept-Language": "en-US,en;q=0.9"}
 TIMEOUT = 30
-GONE = {404, 410}                       # the only codes we treat as "broken"
+GONE = {404, 410}                       # the only codes counted as broken
 
 
 def load(name):
@@ -61,20 +51,19 @@ def doi_url(doi):
 
 
 def collect_targets():
-    """Return a de-duplicated list of (label, url). Label says what the link is for,
-    so the report is actionable ('DOI · <title>', 'Press · <source>', …)."""
+    """De-duplicated (label, url) pairs; the label names the paper or story."""
     targets = {}
 
     def add(label, url):
         if url and str(url).startswith("http"):
             targets.setdefault(str(url).strip(), label)
 
-    # Paper DOIs (auto-synced journal/conference articles).
+    # Paper DOIs.
     for p in (load("publications.yml") or []):
         if isinstance(p, dict) and p.get("doi"):
             add("DOI · " + (p.get("title") or "")[:70], doi_url(p["doi"]))
 
-    # Hand-maintained talks/posters/blogs (some carry a doi or a url).
+    # Hand-maintained talks, posters, blogs.
     manual = load("publications_manual.yml")
     for section in ("conference", "journal", "blog"):
         for p in (manual.get(section) or []):
@@ -85,7 +74,7 @@ def collect_targets():
             if p.get("url"):
                 add("Link · " + (p.get("title") or "")[:70], p["url"])
 
-    # Per-paper resources: data / code / preprint / open-access PDF / correction.
+    # Per-paper extras.
     for e in (load("pub_links.yml") or []):
         if not isinstance(e, dict):
             continue
@@ -95,12 +84,12 @@ def collect_targets():
             if e.get(field):
                 add("%s · %s" % (name, tag), e[field])
 
-    # Open-access links auto-filled onto publications.yml (checked with the papers).
+    # Open-access links on publications.yml.
     for p in (load("publications.yml") or []):
         if isinstance(p, dict) and p.get("oa_url"):
             add("Open access · " + (p.get("title") or "")[:60], p["oa_url"])
 
-    # "In the news": written press (grouped by year) and media (flat list).
+    # Press (grouped by year) and media (flat list).
     for yr in (load("press.yml") or []):
         for it in (yr.get("items") or []) if isinstance(yr, dict) else []:
             add("Press · " + (it.get("source") or it.get("title") or "")[:60], it.get("url"))
@@ -112,7 +101,7 @@ def collect_targets():
 
 
 def check(url):
-    """Return (status, detail). status ∈ {'ok','broken','unverified'}."""
+    """(status, detail); status is ok, broken or unverified."""
     for method in ("HEAD", "GET"):
         try:
             req = urllib.request.Request(url, headers=HEADERS, method=method)
@@ -122,17 +111,17 @@ def check(url):
             if e.code in GONE:
                 return "broken", "HTTP %s (page gone)" % e.code
             if method == "HEAD" and e.code in (403, 405, 501):
-                continue                       # server dislikes HEAD → retry with GET
+                continue                       # retry with GET
             return "unverified", "HTTP %s (couldn't confirm; likely bot-blocked)" % e.code
         except urllib.error.URLError as e:
             reason = getattr(e, "reason", e)
-            # DNS failure / refused / no route = genuinely broken; timeouts are transient.
+            # DNS failure or refused = broken; timeouts are transient.
             text = str(reason).lower()
             if "name or service not known" in text or "nodename nor servname" in text \
                     or "no address associated" in text or "connection refused" in text:
                 return "broken", "cannot reach host (%s)" % reason
             return "unverified", "network error (%s)" % reason
-        except Exception as e:                 # noqa: BLE001; never crash the sweep
+        except Exception as e:                 # noqa: BLE001
             return "unverified", "error (%s)" % e
     return "unverified", "no response"
 
@@ -155,7 +144,6 @@ def main(argv=None):
             elif status == "unverified":
                 unverified.append((label, url, detail))
 
-    # ── Markdown report ──
     lines = ["# Outbound link check", "",
              "Checked **%d** links: **%d** broken, **%d** couldn't be verified, "
              "**%d** OK." % (len(targets), len(broken), len(unverified),
@@ -181,7 +169,6 @@ def main(argv=None):
             fh.write(report)
         print("Wrote report to %s" % args.out, file=sys.stderr)
 
-    # Exit non-zero ONLY on genuinely broken links, so CI opens an issue just then.
     return 1 if broken else 0
 
 

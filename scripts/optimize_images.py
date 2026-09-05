@@ -1,23 +1,14 @@
 #!/usr/bin/env python3
-"""Keep committed images within a weight budget, so a 5 MB phone photo dropped
-into assets/img/ never ships.
+"""Shrink over-budget images under assets/img/ in place (resize to MAX_WIDTH, recompress).
 
-Walks assets/img/ and shrinks anything over budget in place: resizes above
-MAX_WIDTH (never enlarges), then recompresses to fit. Files already within budget
-are untouched, so running it twice changes nothing. PNG transparency is preserved;
-`_raw/` source folders and ICO are skipped.
-
---check reports instead of fixing, and exits 1 if anything is over. It also covers
-video, GIFs and SVGs, which are never rewritten. See the budgets below.
-
-Complements apply-images.sh, which builds specific assets from local originals on
-macOS. This one is the cross-platform safety net that runs in CI.
+Idempotent; keeps PNG transparency; skips `_raw/` and ICO. --check only reports
+(exit 1 if anything is over) and also covers video, GIF and SVG, which are never
+rewritten. Runs in CI; apply-images.sh is the macOS asset builder.
 
     python scripts/optimize_images.py [--check]     # needs Pillow
 """
-# Website tooling, largely written by AI (Claude) and checked for behaviour
-# rather than wording. It describes how the site is built, not how the lab works;
-# lab policy lives in _guide/. See accessibility.md, "How this site is made".
+# Site tooling, largely AI-written (Claude), checked for behaviour not wording.
+# Lab policy lives in _guide/. See accessibility.md, "How this site is made".
 from __future__ import annotations
 import argparse
 import os
@@ -27,24 +18,22 @@ import sys
 IMG_ROOT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
                         "assets", "img")
 
-MAX_WIDTH = 1600          # widest we ever need on the site (hero/lab photos)
-HARD_MAX_WIDTH = 2400     # beyond this, resize even if the file is already light
-JPEG_BUDGET_KB = 300      # a full-width photo should comfortably fit this
-PNG_BUDGET_KB = 600       # PNGs are often figures/screenshots; allow a bit more
-JPEG_FLOOR_Q = 60         # don't drop JPEG quality below this chasing bytes
+MAX_WIDTH = 1600          # widest the site needs (hero/lab photos)
+HARD_MAX_WIDTH = 2400     # above this, resize even a light file
+JPEG_BUDGET_KB = 300
+PNG_BUDGET_KB = 600       # figures/screenshots get more room
+JPEG_FLOOR_Q = 60         # lowest JPEG quality used
 
-# Video and GIF are reported, never rewritten: re-encoding needs ffmpeg and a
-# judgement call about quality. These budgets sit just above what the site
-# carries today, so nothing changes now but heavier files can't drift in.
-VIDEO_BUDGET_KB = 2560    # ~2.5 MB; bird-glide.mp4 is ~2.4 MB
-GIF_BUDGET_KB = 700       # GIFs are enormous for what they are; prefer MP4
+# Video and GIF are reported, never rewritten (needs ffmpeg and judgement).
+# Budgets sit just above what the site carries today.
+VIDEO_BUDGET_KB = 2560    # bird-glide.mp4 is ~2.4 MB
+GIF_BUDGET_KB = 700       # prefer MP4
 
 RASTER = (".jpg", ".jpeg", ".png")
 MEDIA = (".mp4", ".webm", ".mov", ".gif")
-SKIP_DIRS = {"_raw"}      # source originals live here; don't touch them
+SKIP_DIRS = {"_raw"}      # source originals
 
-# SVGs can carry <script> or event handlers that run on the page. Ours are all
-# hand-made icons, so a script in one means something unexpected arrived.
+# SVGs can run script; ours are plain icons, so any script is unexpected.
 SVG_DANGER = re.compile(r"<script|\son\w+\s*=|javascript:", re.I)
 
 
@@ -65,7 +54,7 @@ def budget_kb(path):
 
 
 def iter_other_media(roots):
-    """Video and GIF anywhere in assets/. Checked, never rewritten."""
+    """Video and GIF under roots."""
     for root in roots:
         if not os.path.isdir(root):
             continue
@@ -122,12 +111,10 @@ def check_svgs(roots, repo_root):
 
 
 def is_oversized(path):
-    """True if this image is worth fixing.
+    """Over budget, or past HARD_MAX_WIDTH.
 
-    A file a little wider than MAX_WIDTH but inside its byte budget is left
-    alone, because re-encoding makes it bigger (measured here: a 2003px 123 KB
-    PNG becomes 292 KB at 1600px). Width only forces a rewrite when the file is
-    also too heavy, or past HARD_MAX_WIDTH where decoding wastes phone memory.
+    A file slightly over MAX_WIDTH but within budget is left alone: re-encoding
+    can grow it (a 2003px 123 KB PNG became 292 KB at 1600px).
     """
     from PIL import Image
     if kb(path) > budget_kb(path):
@@ -140,21 +127,19 @@ def is_oversized(path):
 
 
 def optimize(path):
-    """Shrink one oversized image in place. Returns (before_kb, after_kb) or None
-    if there was nothing worth writing."""
+    """Shrink one image in place. Returns (before_kb, after_kb), or None if not written."""
     from PIL import Image
     before = kb(path)
     is_jpeg = path.lower().endswith((".jpg", ".jpeg"))
     im = Image.open(path)
 
-    # Resize down to MAX_WIDTH if wider (never up).
     was_too_wide = im.width > MAX_WIDTH
     if was_too_wide:
         im = im.resize((MAX_WIDTH, round(im.height * MAX_WIDTH / im.width)), Image.LANCZOS)
 
     tmp = path + ".opt"
     if is_jpeg:
-        if im.mode in ("RGBA", "LA", "P"):            # flatten transparency onto white
+        if im.mode in ("RGBA", "LA", "P"):            # flatten onto white
             rgba = im.convert("RGBA")
             bg = Image.new("RGB", rgba.size, (255, 255, 255))
             bg.paste(rgba, mask=rgba.split()[-1])
@@ -167,18 +152,16 @@ def optimize(path):
             q -= 5
             im.save(tmp, "JPEG", quality=q, optimize=True, progressive=True)
     else:
-        # Preserve palette/alpha; optimize losslessly and drop to palette if it has
-        # few colours. Resizing (above) is usually where the real savings come from.
+        # Lossless; the resize above is where PNG savings come from.
         im.save(tmp, "PNG", optimize=True)
 
     after = kb(tmp)
-    # Write if we saved bytes, or if the image was too wide and now isn't.
-    # Without that second case, an over-wide file that re-encodes larger is never
-    # written and stays flagged on every run.
+    # Also write when only the width changed, or an over-wide file that
+    # re-encodes larger stays flagged forever.
     if after < before or was_too_wide:
         os.replace(tmp, path)
         return before, after
-    try:                                              # nothing gained → drop the temp
+    try:
         os.remove(tmp)
     except OSError:
         pass
@@ -205,7 +188,7 @@ def main(argv=None):
 
     if args.check:
         repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        # Video and SVGs live across assets/, not just assets/img/.
+        # Video and SVGs live outside assets/img/ too.
         media_roots = [args.dir, os.path.join(repo_root, "assets", "video")]
         media_problems = check_media(media_roots, repo_root)
         svg_problems = check_svgs([os.path.join(repo_root, "assets")], repo_root)
@@ -244,7 +227,7 @@ def main(argv=None):
         if result:
             before, after = result
             changed += 1
-            # A width-driven resize can increase byte size, so show direction.
+            # A width-driven resize can grow the file, so show direction.
             pct = round(100 * abs(before - after) / before)
             direction = "-" if after <= before else "+"
             print("  ✓ %s  %d KB → %d KB  (%s%d%%%s)"

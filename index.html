@@ -6,7 +6,6 @@ description: "The BIRD Lab at UC Davis uncovers fundamental principles of avian 
 ---
 
 <section class="hero">
-  <!-- Adding Video -->
     <video class="section-bg" autoplay muted loop playsinline
          poster="{{ '/assets/img/facilities/cali.jpg' | relative_url }}" aria-hidden="true">
     <source src="{{ '/assets/video/bird-glide.mp4' | relative_url }}" type="video/mp4">
@@ -16,14 +15,12 @@ description: "The BIRD Lab at UC Davis uncovers fundamental principles of avian 
     <img class="icon-play" src="{{ '/assets/img/icons/video-play.svg' | relative_url }}" alt="" aria-hidden="true">
   </button>
   <div class="container hero__inner">
-      <!-- Decorative logo -->
   <img
     class="hero__logo"
     src="{{ '/assets/img/logo_whiteshading.png' | relative_url }}"
     alt=""
     aria-hidden="true">
 
-  <!-- Left column -->
     <div>
       <p class="eyebrow eyebrow--on-dark">Bio-Informed Research &amp; Design&nbsp;·&nbsp;UC&nbsp;Davis</p>
       <h1>Learning from birds to understand flight.</h1>
@@ -41,9 +38,7 @@ description: "The BIRD Lab at UC Davis uncovers fundamental principles of avian 
       {%- endfor -%}
       <div class="hero__stats">
         <div><span class="num">{{ site.lab.founded }}</span><span class="lbl">Founded</span></div>
-        {%- comment -%} Count peer-reviewed research + conference papers. publications.yml
-           already holds both journal and conference entries, so filter by type rather than
-           adding the manual list on top (which double-counted before). {%- endcomment -%}
+        {%- comment -%} Journal + conference entries only; adding a manual list on top double-counted before. {%- endcomment -%}
         {%- assign paper_pubs = site.data.publications | where_exp: "p", "p.type == 'journal' or p.type == 'conference'" -%}
         {%- assign pub_count = paper_pubs | size -%}
         <div><span class="num">{{ pub_count }}</span><span class="lbl">Publications</span></div>
@@ -53,7 +48,7 @@ description: "The BIRD Lab at UC Davis uncovers fundamental principles of avian 
   </div>
 </section>
 
-<!-- Our research: areas we study + why it matters, one section, one CTA -->
+<!-- Our research -->
 <section class="section section--tint">
   <div class="container">
     <div class="section-head">
@@ -109,7 +104,7 @@ description: "The BIRD Lab at UC Davis uncovers fundamental principles of avian 
   </div>
 </section>
 
-<!-- Bio-informed principle (the spine) -->
+<!-- Bio-informed principle -->
 <section class="section">
   <div class="container center">
     <h2 class="eyebrow">Bio-informed, not just bio-inspired</h2>
@@ -118,7 +113,7 @@ description: "The BIRD Lab at UC Davis uncovers fundamental principles of avian 
   </div>
 </section>
 
-<!-- In partnership with (collaborating organizations from _data/collaborators.yml) -->
+<!-- In partnership with: _data/collaborators.yml -->
 <section class="section section--tint">
   <div class="container center partners">
     <h2 class="eyebrow">In partnership with</h2>
@@ -141,7 +136,7 @@ description: "The BIRD Lab at UC Davis uncovers fundamental principles of avian 
   <div class="field-band__overlay"></div>
   <div class="container field-band__caption">
     <p class="eyebrow eyebrow--on-dark">Unique Facilities</p>
-    <h2 class="field-band__line">The Center for Animal Locomotion & Innovation (CALI)</h2>
+    <h2 class="field-band__line">The Center for Animal Locomotion &amp; Innovation (CALI)</h2>
     <p>World-class high-speed, high-resolution photogrammetry and motion capture capabilities to study animal or engineered locomotion.</p>
           <div class="hero__cta">
         <a class="btn btn--light" href="{{ '/cali/' | relative_url }}">Explore CALI</a>
@@ -153,7 +148,7 @@ description: "The BIRD Lab at UC Davis uncovers fundamental principles of avian 
 
 
 
-<!-- Open by default: public lab guide, data & code, plain-language writing -->
+<!-- Open science -->
 <section class="section section--tint">
   <div class="container">
     <h2 class="eyebrow">Open science</h2>
@@ -164,7 +159,7 @@ description: "The BIRD Lab at UC Davis uncovers fundamental principles of avian 
           <div class="os-icon"><img src="{{ '/assets/img/icons/os-lab-guide.svg' | relative_url }}" alt="" aria-hidden="true"></div>
           <h3>Public Lab Guide</h3>
         </div>
-        <p>A searchable, living-document wiki of how we run the lab open for anyone to read.</p>
+        <p>A searchable, living-document wiki of how we run the lab, open for anyone to read.</p>
       </a>
       <a class="card card--link" href="{{ site.lab.github_org }}" rel="noopener">
         <div class="card-head">
@@ -184,16 +179,14 @@ description: "The BIRD Lab at UC Davis uncovers fundamental principles of avian 
   </div>
 </section>
 
-<!-- Recent publications (primary) + Honors & awards (compact sidebar) + Featured in -->
+<!-- Selected work + Recognition + Featured in -->
 <section class="section">
   <div class="container">
     <div class="home-highlights">
       <div class="home-highlights__main">
         <h2 class="eyebrow">Selected work</h2>
         <div class="u-mt-15">
-          {%- comment -%} publications.yml is kept newest-first by date, so take the top 3.
-             A thumbnail shows when the paper has a figure in pub_links.yml, matched by
-             DOI, the same way the Publications page does it. {%- endcomment -%}
+          {%- comment -%} publications.yml is newest-first; thumbnail from pub_links.yml matched by DOI. {%- endcomment -%}
           {%- assign recent = site.data.publications -%}
           {%- for pub in recent limit:3 -%}
           {%- assign rich = "" -%}
@@ -247,7 +240,7 @@ description: "The BIRD Lab at UC Davis uncovers fundamental principles of avian 
   <div class="container home-news-row">
     <div class="home-news">
       <h2 class="eyebrow">Latest news</h2>
-      {%- comment -%} Same month-grouped timeline as the News page; capped height, scroll for older. {%- endcomment -%}
+      {%- comment -%} Same timeline as the News page, capped height. {%- endcomment -%}
       <div class="mini-scroll">
         <div class="news-timeline">
           {%- for yr in site.data.updates -%}
@@ -286,7 +279,7 @@ description: "The BIRD Lab at UC Davis uncovers fundamental principles of avian 
   </div>
 </section>
 
-<!-- Supported by (funders from _data/funders.yml) -->
+<!-- Supported by: _data/funders.yml -->
 <section class="section">
   <div class="container center partners">
     <h2 class="eyebrow">Supported by</h2>

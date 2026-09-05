@@ -1,38 +1,25 @@
 #!/usr/bin/env python3
-"""Turn a filled-in issue form into the matching `_data/*.yml` edit.
+"""Turn a filled-in issue form (stdin or ISSUE_BODY) into the matching _data edit.
 
-A lab member submits a form; an Action runs this and opens a pull request for a
-maintainer to review. Merging it closes the issue.
+  --kind news         → _data/updates.yml
+  --kind conference   → _data/publications_manual.yml
+  --kind person       → _data/people.yml (existing name: only filled fields change)
+  --kind press        → _data/press.yml
 
-  --kind news         📣 Add a news milestone   → _data/updates.yml
-  --kind conference   📄 Add a conference paper → _data/publications_manual.yml
-  --kind person       ➕ Add/update a member    → _data/people.yml
-  --kind press        📰 Add press coverage     → _data/press.yml
-
-For `person`, a name already on the People page is updated in place. Only the
-fields filled in change, so photos and awards are kept. An unknown name is
-inserted into its role group.
-
-Reads the issue body (GitHub renders each field as a '### Label' block) from
-stdin or ISSUE_BODY, validates it, and does a targeted insert that preserves
-header comments and formatting. A missing or invalid field changes nothing and
-exits non-zero, so the Action can tell the submitter what to fix.
-
-Names are written as they appear on the People page, so they auto-link.
+Inserts preserve header comments. A missing or invalid field changes nothing and
+exits non-zero so the Action can tell the submitter.
 
   ISSUE_BODY="$(gh issue view 42 --json body -q .body)" \\
       python scripts/issue_to_change.py --kind news    # CI: issue-to-pr.yml
 """
-# Website tooling, largely written by AI (Claude) and checked for behaviour
-# rather than wording. It describes how the site is built, not how the lab works;
-# lab policy lives in _guide/. See accessibility.md, "How this site is made".
+# Site tooling, largely AI-written (Claude), checked for behaviour not wording.
+# Lab policy lives in _guide/. See accessibility.md, "How this site is made".
 from __future__ import annotations
 import argparse
 import os
 import re
 import sys
 
-# Reuse the exact, format-preserving inserts the press/paper tooling already uses.
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from add_press import (append_to_press, append_to_updates, build_entry,  # noqa: E402
                        strip_doi)
@@ -46,9 +33,8 @@ NEWS_TYPES = {"award", "paper", "talk", "funding", "build",
               "service", "people", "travel", "graduation"}
 NO_RESPONSE = "_no response_"
 
-# Role → People-page group id (the group the member is filed under in people.yml).
-# Every dropdown role maps to an existing group; the msc/visiting groups are kept
-# empty in people.yml precisely so these two always have a home.
+# Form role → people.yml group id. The msc/visiting groups stay in people.yml,
+# even empty, so these always have a home.
 ROLE_GROUP = {
     "postdoctoral scholar": "postdoc",
     "phd candidate": "phd",
@@ -58,13 +44,13 @@ ROLE_GROUP = {
     "visiting undergraduate researcher": "undergrad",
     "visiting researcher": "visiting",
 }
-# Roles for which we omit a public email (matches the People page privacy pattern).
+# No public email for these roles.
 NO_EMAIL_ROLES = {"undergraduate researcher", "visiting undergraduate researcher"}
 
 
-# ── Issue-form parsing ────────────────────────────────────────────────────────
+# Issue-form parsing
 def parse_issue_form(body: str) -> dict:
-    """GitHub renders a form as '### Label\\n\\nvalue' blocks → {label: value}."""
+    """'### Label\\n\\nvalue' blocks → {label: value}."""
     fields, label, buf = {}, None, []
     for line in (body or "").splitlines():
         m = re.match(r"^#{2,4}\s+(.*\S)\s*$", line)
@@ -109,9 +95,7 @@ def as_url(u: str) -> str:
 
 
 def as_link(u: str) -> str:
-    """Normalize a news-milestone link. Accepts a full URL, a bare DOI, a bare
-    domain, or an on-site path ('/join/', which must stay relative so the link
-    keeps working on a preview build)."""
+    """Full URL, bare DOI, bare domain, or on-site path (kept relative for preview builds)."""
     u = (u or "").strip()
     if not u:
         return ""
@@ -121,7 +105,7 @@ def as_link(u: str) -> str:
 
 
 def doi_or_link(v: str) -> str:
-    """Normalize a 'DOI or link' field to a URL (bare DOIs → https://doi.org/…)."""
+    """'DOI or link' field → URL."""
     v = (v or "").strip()
     if not v:
         return ""
@@ -146,13 +130,9 @@ def emit(summary: str, target: str):
             gh.write("target=%s\n" % target)
 
 
-# ── Builders (one per form) ───────────────────────────────────────────────────
+# Builders, one per form
 def snap_phrase(text: str, phrase: str) -> str:
-    """Return the phrase EXACTLY as it appears in `text`, tolerating the two
-    mistakes people actually make when copying it into the form: different
-    capitalisation, and stray/collapsed whitespace. Returns "" if it isn't in
-    the sentence at all, in which case the entry falls back to a trailing link
-    rather than failing the whole submission over an optional field."""
+    """The phrase as it appears in `text`, ignoring case and whitespace; "" if absent."""
     phrase = re.sub(r"\s+", " ", (phrase or "").strip()).strip(".,;:")
     if not phrase:
         return ""
@@ -180,9 +160,7 @@ def build_news(f: dict) -> int:
     if problems:
         return fail(problems)
 
-    # "Words to link" is only meaningful alongside a link, and only if those
-    # words are actually in the sentence, otherwise the site renders a small
-    # trailing "Details" link instead. Never a hard error: it's optional.
+    # Without a matching phrase the site renders a trailing "Details" link.
     phrase = snap_phrase(text, field(f, "Words to link (optional)",
                                      "Words to link", "Link text")) if link else ""
     if link and not phrase:
@@ -206,7 +184,7 @@ def build_conference(f: dict) -> int:
     authors = field(f, "Authors")
     venue = field(f, "Venue")
     year = find_year(field(f, "Year"))
-    ptype = field(f, "Type").lower()          # Paper / Talk / Poster
+    ptype = field(f, "Type").lower()
     doi = doi_or_link(field(f, "DOI or link (optional)", "DOI or link", "DOI"))
     problems = []
     for lbl, val in (("Title", title), ("Authors", authors), ("Venue", venue)):
@@ -219,7 +197,7 @@ def build_conference(f: dict) -> int:
     if problems:
         return fail(problems)
 
-    note = {"talk": "Presentation", "poster": "Poster"}.get(ptype)   # Paper → none
+    note = {"talk": "Presentation", "poster": "Poster"}.get(ptype)
     lines = ["  - title: " + dq(title),
              "    authors: " + dq(authors),
              "    venue: " + dq(venue),
@@ -246,9 +224,7 @@ def build_person(f: dict) -> int:
     links = field(f, "Links (optional)", "Links")
     home = field(f, "Home institution (visiting members only)", "Home institution")
 
-    # The form is "add OR update": if the name is already on the People page
-    # (active groups only, never alumni/affiliates), we update that entry in
-    # place instead of inserting a duplicate.
+    # Existing active member (never alumni/affiliates): update in place.
     existing = find_person(name) if name else None
 
     problems = []
@@ -265,12 +241,10 @@ def build_person(f: dict) -> int:
     if problems:
         return fail(problems)
 
-    # Visiting roles show their home institution appended to the role text.
     role_text = role
     if home and role.lower().startswith("visiting"):
         role_text = "%s · %s" % (role, home)
 
-    # Classify the free-text links into linkedin / orcid / website.
     linkedin = orcid = website = ""
     for tok in re.split(r"[\s,;·]+", links):
         t = tok.strip().strip("·").strip()
@@ -286,14 +260,13 @@ def build_person(f: dict) -> int:
             website = as_url(t)
 
     if existing is not None:
-        # UPDATE in place: only the fields the form filled in are touched;
-        # everything else (photo, awards, aliases, scholar, …) is left alone.
+        # Only filled-in fields change.
         updates = {"role": role_text, "start": "%d" % start}
         if pronouns:
             updates["pronouns"] = pronouns
         if fld:
             updates["field"] = dq(fld)
-        if email and role.lower() not in NO_EMAIL_ROLES:  # privacy: no undergrad email
+        if email and role.lower() not in NO_EMAIL_ROLES:
             updates["email"] = email
         if linkedin:
             updates["linkedin"] = linkedin
@@ -319,7 +292,7 @@ def build_person(f: dict) -> int:
         lines.append("        pronouns: " + pronouns)
     if fld:
         lines.append("        field: " + dq(fld))
-    if email and role.lower() not in NO_EMAIL_ROLES:      # privacy: no undergrad email
+    if email and role.lower() not in NO_EMAIL_ROLES:
         lines.append("        email: " + email)
     if linkedin:
         lines.append("        linkedin: " + linkedin)
@@ -366,10 +339,9 @@ def build_press(f: dict) -> int:
     return 0
 
 
-# ── Shared targeted inserts ───────────────────────────────────────────────────
+# Targeted inserts
 def insert_under_key(path: str, key_line: str, block_lines: list[str]):
-    """Insert block_lines right after the first line equal to key_line (e.g.
-    'conference:'), i.e. at the TOP of that list. Targeted; formatting preserved."""
+    """Insert block_lines right after key_line (e.g. 'conference:'), top of that list."""
     lines = open(path, encoding="utf-8").read().splitlines()
     for i, ln in enumerate(lines):
         if ln.strip() == key_line.strip():
@@ -385,15 +357,13 @@ def _people_lines() -> list[str]:
 
 
 def _active_section_end(lines: list[str]) -> int:
-    """Index where the active `groups:` section ends (alumni/affiliates start).
-    Updates never touch alumni or affiliates; retiring someone stays by-hand."""
+    """Index where alumni/affiliates start; updates never go past it."""
     return next((i for i, ln in enumerate(lines)
                  if re.match(r"^(affiliates|alumni):", ln)), len(lines))
 
 
 def _entry_span(lines: list[str], i: int, stop: int) -> int:
-    """Given the index of a `- name:` line, return the index just past the last
-    line of that member's block (fields are the more-indented lines below)."""
+    """Index just past the member block starting at the `- name:` line i."""
     entry_indent = len(lines[i]) - len(lines[i].lstrip())
     j = i + 1
     while j < stop:
@@ -405,8 +375,7 @@ def _entry_span(lines: list[str], i: int, stop: int) -> int:
 
 
 def find_person(name: str) -> str | None:
-    """Return the canonical `name:` of an ACTIVE member matching `name`
-    (exact, case-insensitive; aliases count too), or None if not found."""
+    """Canonical `name:` of an active member (case-insensitive, aliases count), or None."""
     lines = _people_lines()
     stop = _active_section_end(lines)
     target = name.strip().lower()
@@ -426,10 +395,7 @@ def find_person(name: str) -> str | None:
 
 
 def update_person(name: str, updates: dict) -> list[str]:
-    """Update an active member's entry in place: replace each key's line if the
-    field exists, append it to the entry if not. Formatting, comments, and any
-    fields not in `updates` (photo, awards, …) are preserved. Returns the list
-    of keys that actually changed."""
+    """Replace or append each key's line in the member's entry; returns keys changed."""
     lines = _people_lines()
     stop = _active_section_end(lines)
     target = name.strip().lower()
@@ -451,8 +417,7 @@ def update_person(name: str, updates: dict) -> list[str]:
         j = next((k for k in range(i + 1, end)
                   if re.match(r"^\s*%s:(\s|$)" % re.escape(key), lines[k])), None)
         if j is not None:
-            # A folded/literal scalar (e.g. `note: >-`) continues on deeper
-            # lines; replace the whole thing so no orphan lines remain.
+            # A `>-`/`|` scalar spans deeper lines; replace all of them.
             k = j + 1
             if re.search(r":\s*[>|]", lines[j]):
                 key_ind = len(lines[j]) - len(lines[j].lstrip())
@@ -464,8 +429,7 @@ def update_person(name: str, updates: dict) -> list[str]:
                 end -= (k - j) - 1
                 changed.append(key)
         else:
-            # New field: append after the entry's last real line (before any
-            # trailing comments, e.g. the "# photo: …" hint).
+            # New field goes before any trailing comments (the "# photo:" hint).
             at = end
             while at - 1 > i and (not lines[at - 1].strip()
                                   or lines[at - 1].lstrip().startswith("#")):
@@ -479,20 +443,19 @@ def update_person(name: str, updates: dict) -> list[str]:
 
 
 def insert_person(gid: str, block_lines: list[str]):
-    """Insert a member block under the `- id: <gid>` group's `members:` list."""
+    """Insert a member block at the top of group gid's `members:` list."""
     lines = open(PEOPLE, encoding="utf-8").read().splitlines()
     gi = next((i for i, ln in enumerate(lines)
                if re.match(r"\s*- id:\s*%s\s*$" % re.escape(gid), ln)), None)
     if gi is None:
         raise SystemExit("ERROR: group id '%s' not found in people.yml" % gid)
-    # Accept both a block `members:` and an empty-list `members: []` (used to keep
-    # empty groups build-safe). For the latter, turn it into a block header first.
+    # `members: []` (an empty group) is rewritten as a block header.
     mi = next((j for j in range(gi + 1, len(lines))
                if re.match(r"\s*members:\s*(\[\s*\])?\s*$", lines[j])), None)
     if mi is None:
         raise SystemExit("ERROR: no 'members:' under group '%s'" % gid)
     indent = re.match(r"(\s*)members:", lines[mi]).group(1)
-    lines[mi] = indent + "members:"          # normalize `members: []` → `members:`
+    lines[mi] = indent + "members:"
     lines[mi + 1:mi + 1] = block_lines
     open(PEOPLE, "w", encoding="utf-8").write("\n".join(lines).rstrip("\n") + "\n")
 

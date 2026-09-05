@@ -1,37 +1,20 @@
 #!/usr/bin/env python3
-"""Turn a news-article URL into a ready-to-paste _data/press.yml entry.
+"""Draft a _data/press.yml entry from a news URL (metadata scraped from the page).
 
-Reads the outlet, headline and author from the page's own metadata. With
---featured it also downloads the lead image into assets/img/news/, resized to the
-site's budget. Prints a YAML block; --append inserts it for you.
-
-Read-only unless you pass --append, and --append is a targeted insert, so header
-comments and hand-formatting survive. A missing field is left blank with a warning.
-
---media KIND builds a _data/media.yml entry instead (video, podcast, radio,
-model). Compact row by default; --featured gives it a thumbnail card (automatic
-for YouTube, otherwise pass --image).
-
---paper DOI drafts the two things written by hand for every new paper: an
-updates.yml timeline entry and LinkedIn + Instagram captions. Details come from
-publications.yml, falling back to OpenAlex, so this pairs with the monthly
-publications PR: merge that, then run this on the new DOI. Lab authors are
-matched to people.yml so their names auto-link. The lead lab author becomes the
-subject; --topic "…" gives the plain-language hook. Captions print to the console
-(or --out FILE) and are never committed.
+--featured also saves the lead image to assets/img/news/. --media KIND targets
+media.yml instead. --paper DOI drafts an updates.yml entry plus LinkedIn and
+Instagram captions from publications.yml (fallback OpenAlex); run it after the
+monthly publications PR merges. Prints YAML; --append inserts it without
+disturbing header comments. Missing fields are left blank with a warning.
 
   python scripts/add_press.py "https://news.site/story" --doi 10.1098/rsif.2025.0868 --featured
-  python scripts/add_press.py "https://news.site/story" --featured --append
   python scripts/add_press.py "https://youtu.be/XXXX" --media video --featured --append
-  python scripts/add_press.py "https://pod.site/ep" --media podcast --append
   python scripts/add_press.py --paper 10.1098/rsif.2025.1082 --topic "raptor perching"
 
-Needs Python 3.8+. Pillow is optional (without it, --featured saves the image
-uncompressed). --paper needs PyYAML.
+Python 3.8+. Pillow optional (without it images are saved uncompressed). --paper needs PyYAML.
 """
-# Website tooling, largely written by AI (Claude) and checked for behaviour
-# rather than wording. It describes how the site is built, not how the lab works;
-# lab policy lives in _guide/. See accessibility.md, "How this site is made".
+# Site tooling, largely AI-written (Claude), checked for behaviour not wording.
+# Lab policy lives in _guide/. See accessibility.md, "How this site is made".
 from __future__ import annotations
 import argparse
 import datetime
@@ -54,10 +37,9 @@ PUBLICATIONS_YML = os.path.join(REPO_ROOT, "_data", "publications.yml")
 PUBLICATIONS_MANUAL_YML = os.path.join(REPO_ROOT, "_data", "publications_manual.yml")
 PEOPLE_YML = os.path.join(REPO_ROOT, "_data", "people.yml")
 IMG_DIR = os.path.join(REPO_ROOT, "assets", "img", "news")
-IMG_MAXW = 1280          # matches the research-figure budget (~1280px)
-IMG_MAX_KB = 140         # nudge JPEG quality down until under this
-# Present as a normal browser. Many news sites sit behind a bot filter (Cloudflare,
-# Akamai, a campus WAF, …) that returns 403 for anything that doesn't look like one.
+IMG_MAXW = 1280          # research-figure budget
+IMG_MAX_KB = 140         # JPEG quality is lowered until under this
+# Browser-like headers: many news sites return 403 to anything else.
 UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36")
 BROWSER_HEADERS = {
@@ -67,13 +49,13 @@ BROWSER_HEADERS = {
 }
 
 
-# ── Page parsing ──────────────────────────────────────────────────────────────
+# Page parsing
 class MetaParser(HTMLParser):
-    """Collect <meta> tags, the <title>, the first <h1>, and JSON-LD blocks."""
+    """Collect <meta> tags, <title>, first <h1> and JSON-LD blocks."""
 
     def __init__(self):
         super().__init__()
-        self.meta = {}          # keyed by property/name (lowercased)
+        self.meta = {}          # keyed by lowercased property/name
         self.title = None
         self.h1 = None
         self.ld = []            # raw application/ld+json strings
@@ -120,7 +102,7 @@ def fetch(url):
 
 
 def ld_field(ld_blocks, *keys):
-    """Search JSON-LD blocks (incl. @graph) for the first present key."""
+    """First present key across JSON-LD blocks, including @graph."""
     for block in ld_blocks:
         try:
             data = json.loads(block)
@@ -149,7 +131,7 @@ def author_name(val):
     return ""
 
 
-# ── Small helpers ─────────────────────────────────────────────────────────────
+# Helpers
 def clean_title(title, source):
     if not title:
         return ""
@@ -173,7 +155,7 @@ def slugify(text, maxlen=60):
 
 
 def yaml_dq(s):
-    """A safe YAML double-quoted scalar."""
+    """YAML double-quoted scalar."""
     return '"' + (s or "").replace("\\", "\\\\").replace('"', '\\"') + '"'
 
 
@@ -197,7 +179,7 @@ def get_year(meta, ld, override):
     return datetime.date.today().year
 
 
-# ── Image handling ────────────────────────────────────────────────────────────
+# Images
 def save_image(img_url, article_url, slug):
     img_url = urllib.parse.urljoin(article_url, img_url)
     req = urllib.request.Request(img_url, headers=dict(BROWSER_HEADERS, Referer=article_url))
@@ -230,9 +212,9 @@ def save_image(img_url, article_url, slug):
     return out, f"{im.width}px wide, {os.path.getsize(out) // 1024} KB"
 
 
-# ── YAML entry building + optional append ─────────────────────────────────────
+# YAML entries and inserts
 def build_entry(f, indent="      "):
-    """Return the YAML lines for one press item (item dash at 4 spaces)."""
+    """YAML lines for one press item (item dash at 4 spaces)."""
     lines = ["    - title: " + yaml_dq(f["title"]),
              indent + "source: " + yaml_dq(f["source"]),
              indent + "url: " + yaml_dq(f["url"])]
@@ -241,9 +223,7 @@ def build_entry(f, indent="      "):
     if f.get("doi"):
         lines.append(indent + "doi: " + yaml_dq(f["doi"]))
     elif f.get("tag"):
-        # `tag:` labels why a NON-paper story is in the list (Center/Award/Funding/
-        # Profile/Feature). A story with a doi shows a "Paper" pill instead, so the
-        # two are mutually exclusive; only emit tag when there is no doi.
+        # A doi shows a "Paper" pill, so tag: is only for stories without one.
         lines.append(indent + "tag: " + f["tag"])
     if f.get("featured"):
         lines.append(indent + "featured: true")
@@ -253,7 +233,7 @@ def build_entry(f, indent="      "):
 
 
 def build_media_entry(f):
-    """Return the YAML lines for one _data/media.yml item (a flat top-level list)."""
+    """YAML lines for one media.yml item (flat top-level list)."""
     lines = ["- title: " + yaml_dq(f["title"]),
              "  kind: " + (f.get("kind") or "video"),
              "  source: " + yaml_dq(f["source"]),
@@ -271,8 +251,7 @@ def build_media_entry(f):
 
 
 def append_to_media(entry_block):
-    """Insert one item at the TOP of media.yml (newest first), just after the
-    header comment block. Targeted text insert; header/formatting preserved."""
+    """Insert one item at the top of media.yml (newest first), after the header comments."""
     if not os.path.exists(MEDIA_YML):
         raise FileNotFoundError(MEDIA_YML)
     lines = open(MEDIA_YML, encoding="utf-8").read().splitlines()
@@ -297,29 +276,27 @@ def append_to_press(entry_block, year):
         j = year_at[year] + 1
         while j < len(lines) and not re.match(r"\s*items:\s*$", lines[j]):
             j += 1
-        lines[j + 1: j + 1] = entry_lines          # newest at top of that year
+        lines[j + 1: j + 1] = entry_lines          # newest first within the year
     else:
         block = ["- year: %d" % year, "  items:"] + entry_lines
         older = sorted([y for y in year_at if y < year], reverse=True)
-        if older:                                   # insert before first older year
+        if older:                                   # before the first older year
             pos = year_at[older[0]]
             lines[pos:pos] = block + [""]
-        else:                                       # oldest so far → append
+        else:                                       # oldest so far: append
             if lines and lines[-1].strip():
                 lines.append("")
             lines += block
     open(PRESS_YML, "w", encoding="utf-8").write("\n".join(lines).rstrip("\n") + "\n")
 
 
-# ── Paper announcements: DOI → updates.yml entry + social captions ────────────
-# Self-contained; PyYAML is imported lazily so the rest of the script needs no
-# extra dependencies.
+# Paper announcements (--paper). PyYAML imported lazily; the rest of the script needs none.
 MONTHS = ["", "January", "February", "March", "April", "May", "June", "July",
           "August", "September", "October", "November", "December"]
 
 
 def _yaml():
-    """Import PyYAML on demand with a friendly message (mirrors update_publications.py)."""
+    """Import PyYAML on demand."""
     try:
         import yaml
         return yaml
@@ -328,25 +305,23 @@ def _yaml():
 
 
 def deaccent(s):
-    """Fold accents so 'Martínez' matches 'Martinez' across data sources."""
+    """Fold accents so 'Martínez' matches 'Martinez'."""
     import unicodedata
     return "".join(c for c in unicodedata.normalize("NFKD", s or "")
                    if not unicodedata.combining(c))
 
 
 def surname_key(author):
-    """The comparable surname from one author token, e.g. 'M. G. Hawkins' → 'hawkins',
-    'C. Harvey (also …poster)' → 'harvey', 'A. Martínez-Carmena' → 'martinez'."""
+    """Comparable surname: 'C. Harvey (also …poster)' → 'harvey', 'A. Martínez-Carmena' → 'martinez'."""
     a = re.sub(r"\(.*?\)", "", author or "").strip().strip(".")
     a = re.split(r"\s+", a)[-1] if a else ""
     a = deaccent(a).lower()
-    return a.split("-")[0]                      # first part of a hyphenated surname
+    return a.split("-")[0]
 
 
 def load_people_map():
-    """Map surname → the name to print (preferring the short alias the timeline uses,
-    e.g. 'Dr. Alfonso Martínez', 'Adam Zhu'), plus the set of Harvey surnames.
-    Covers current members, affiliates, and alumni so any co-author can link."""
+    """surname → display name (first alias, as the timeline uses), plus the PI surname set.
+    Covers members, affiliates and alumni."""
     yaml = _yaml()
     try:
         with open(PEOPLE_YML, encoding="utf-8") as fh:
@@ -360,7 +335,7 @@ def load_people_map():
         if not name:
             return
         aliases = member.get("aliases") or []
-        display = aliases[0].strip() if aliases else name          # timeline style
+        display = aliases[0].strip() if aliases else name
         last = (member.get("last") or name).split()[-1]
         for key in {surname_key(last), surname_key(name)}:
             if key:
@@ -376,7 +351,7 @@ def load_people_map():
 
 
 def openalex_by_doi(doi):
-    """Resolve one work from OpenAlex by DOI. Returns a paper dict or None."""
+    """One work from OpenAlex by DOI, as a paper dict, or None."""
     url = "https://api.openalex.org/works/https://doi.org/" + urllib.parse.quote(doi)
     url += "?mailto=harvey@ucdavis.edu"
     try:
@@ -403,7 +378,7 @@ def openalex_by_doi(doi):
 
 
 def resolve_paper(doi):
-    """Prefer the site's own committed metadata (canonical), else OpenAlex by DOI."""
+    """Committed publications data first, else OpenAlex."""
     yaml = _yaml()
     want = strip_doi(doi).lower()
 
@@ -414,7 +389,7 @@ def resolve_paper(doi):
         except FileNotFoundError:
             return None
         entries = data.get(key, []) if key else data
-        if isinstance(entries, dict):                 # publications.yml is a bare list
+        if isinstance(entries, dict):
             entries = []
         for e in (entries or []):
             if isinstance(e, dict) and strip_doi(e.get("doi", "")).lower() == want and want:
@@ -440,7 +415,7 @@ def resolve_paper(doi):
 
 
 def month_year(paper):
-    """'July 2026' from the paper's date/year (falls back to the year alone)."""
+    """'July 2026' from date, else the year alone."""
     d = (paper.get("date") or "").strip()
     m = re.match(r"(\d{4})-(\d{2})", d)
     if m:
@@ -449,7 +424,7 @@ def month_year(paper):
 
 
 def build_update_text(paper, people, harvey_keys, topic=None):
-    """Draft the timeline sentence, linking the lead lab author automatically."""
+    """Timeline sentence with the lead lab author as subject."""
     authors = paper.get("authors") or ""
     first = authors.split(",")[0] if authors else ""
     lead_key = surname_key(first)
@@ -461,22 +436,21 @@ def build_update_text(paper, people, harvey_keys, topic=None):
     elif lead_key in people:
         subject = "Paper led by %s" % people[lead_key]
     else:
-        subject = "Paper"                              # external lead author
+        subject = "Paper"                              # external lead
     venue_clause = (" in %s" % venue) if venue else ""
     if topic:
         return "%s%s on %s." % (subject, venue_clause, topic.strip().rstrip("."))
-    return "%s%s: “%s.”" % (subject, venue_clause, title)   # curly quotes
+    return "%s%s: “%s.”" % (subject, venue_clause, title)
 
 
 def build_update_entry(date_label, text):
-    """One inline updates.yml event line (matches the file's flow-mapping style)."""
+    """One flow-mapping event line, as updates.yml is written."""
     safe = text.replace("\\", "\\\\").replace('"', '\\"')
     return '    - { date: "%s", type: paper, text: "%s" }' % (date_label, safe)
 
 
 def append_to_updates(entry_line, year):
-    """Insert the event as the newest item under `- year: YEAR` (targeted insert;
-    header comments and formatting are preserved). Creates the year block if new."""
+    """Insert as the newest event under `- year: YEAR`, creating the year block if needed."""
     if not os.path.exists(UPDATES_YML):
         raise FileNotFoundError(UPDATES_YML)
     lines = open(UPDATES_YML, encoding="utf-8").read().splitlines()
@@ -490,7 +464,7 @@ def append_to_updates(entry_line, year):
         j = year_at[year] + 1
         while j < len(lines) and not re.match(r"\s*events:\s*$", lines[j]):
             j += 1
-        lines[j + 1:j + 1] = [entry_line]              # newest at top of that year
+        lines[j + 1:j + 1] = [entry_line]
     else:
         block = ["- year: %d" % year, "  events:", entry_line]
         older = sorted([y for y in year_at if y < year], reverse=True)
@@ -505,13 +479,12 @@ def append_to_updates(entry_line, year):
 
 
 def clean_authors_for_social(authors):
-    """Human-readable author list for captions (drop the '(also … poster)' notes)."""
+    """Author list without the '(also … poster)' notes."""
     return re.sub(r"\s*\(.*?\)", "", authors or "").strip().rstrip(",")
 
 
 def build_social(paper, doi):
-    """Return (linkedin, instagram) caption drafts. Kept deliberately editable:
-    a bracketed takeaway prompt is left for the one human sentence worth writing."""
+    """(linkedin, instagram) drafts; a [bracketed] takeaway is left for a human to write."""
     title = (paper.get("title") or "").strip().rstrip(".")
     venue = (paper.get("venue") or "").strip()
     year = paper.get("year") or datetime.date.today().year
@@ -540,7 +513,7 @@ def build_social(paper, doi):
 
 
 def run_paper(args):
-    """--paper pipeline: draft an updates.yml news entry + LinkedIn/Instagram captions."""
+    """--paper: updates.yml entry plus social captions."""
     doi = strip_doi(args.paper)
     if not doi:
         sys.exit("ERROR: --paper needs a DOI (bare or as a doi.org URL).")
@@ -550,7 +523,7 @@ def run_paper(args):
     if err:
         sys.exit("ERROR: " + err)
 
-    # Overrides let you fix anything the metadata got wrong.
+    # CLI overrides win over metadata.
     if args.title:
         paper["title"] = args.title
     if args.source:
@@ -565,7 +538,6 @@ def run_paper(args):
     entry = build_update_entry(date_label, text)
     linkedin, instagram = build_social(paper, doi)
 
-    # ── Console summary ──
     print("\n" + "-" * 66, file=sys.stderr)
     print("  source   : %s" % paper.get("_source", "?"), file=sys.stderr)
     print("  title    : %s" % (paper.get("title") or "(!) missing"), file=sys.stderr)
@@ -589,7 +561,7 @@ def run_paper(args):
               % year, file=sys.stderr)
         print(entry)
 
-    # Captions go to a file if asked, else to the console. Never committed to the site.
+    # Captions are never committed.
     social = ("=== LinkedIn ===\n%s\n\n=== Instagram ===\n%s\n" % (linkedin, instagram))
     if args.out:
         with open(args.out, "w", encoding="utf-8") as fh:
@@ -602,7 +574,7 @@ def run_paper(args):
         print("\n" + social)
 
 
-# ── Main ──────────────────────────────────────────────────────────────────────
+# Main
 def main(argv=None):
     p = argparse.ArgumentParser(
         description="Draft a press.yml / media.yml entry from a news URL, "
@@ -631,15 +603,13 @@ def main(argv=None):
                    help="Insert into the data file (else just print). Targets media.yml with --media, else press.yml.")
     args = p.parse_args(argv)
 
-    # Paper-announcement mode is its own pipeline (no news page to scrape).
     if args.paper:
         return run_paper(args)
     if not args.url:
         p.error("give an article URL, or use --paper DOI for a paper announcement.")
 
     is_media = bool(args.media)
-    # A media item only needs an image when it's a featured NON-YouTube card;
-    # YouTube cards get their thumbnail automatically, so don't force-fetch one.
+    # YouTube cards get their thumbnail automatically, so no image fetch.
     yt = ("youtube.com" in args.url) or ("youtu.be" in args.url)
     if args.image:
         args.featured = True
@@ -658,7 +628,7 @@ def main(argv=None):
     if page:
         m.feed(page)
     elif args.source and args.title and (args.image or not want_image):
-        # Site blocked us, but you supplied the essentials by hand: carry on.
+        # Fetch failed but the essentials were passed by hand.
         print("Note: couldn't fetch the page (%s); using the values you passed."
               % fetch_err, file=sys.stderr)
     else:
@@ -694,7 +664,7 @@ def main(argv=None):
     year = get_year(meta, ld, args.year)
     doi = strip_doi(args.doi)
 
-    # A tag only applies to stories without a DOI (doi shows a "Paper" pill instead).
+    # tag: only without a DOI (see build_entry).
     tag = "" if doi else args.tag
     fields = {"title": title, "source": source, "url": args.url,
               "author": author, "doi": doi, "tag": tag, "featured": args.featured,
@@ -709,7 +679,7 @@ def main(argv=None):
     if want_image:
         img_ref = args.image
         if img_ref and img_ref.startswith("/assets/"):
-            fields["image"] = img_ref            # already a local path; trust it
+            fields["image"] = img_ref
         else:
             img_url = img_ref or meta.get("og:image") or meta.get("og:image:url") \
                 or meta.get("twitter:image") or meta.get("twitter:image:src")
@@ -728,7 +698,6 @@ def main(argv=None):
 
     entry = build_media_entry(fields) if is_media else build_entry(fields)
 
-    # ── Console summary + the paste-ready block ──
     print("\n" + "-" * 66, file=sys.stderr)
     print("  target   : %s" % ("media.yml (%s)" % args.media if is_media else "press.yml"), file=sys.stderr)
     print("  source   : %s" % (source or "(!) missing"), file=sys.stderr)
@@ -756,11 +725,11 @@ def main(argv=None):
                   % year, file=sys.stderr)
     elif is_media:
         print("Paste this at the top of _data/media.yml (newest first):\n", file=sys.stderr)
-        print(entry)   # to stdout so it's easy to copy/redirect
+        print(entry)   # stdout, so it can be redirected
     else:
         print("Paste this under `- year: %d` (items:) in _data/press.yml:\n" % year,
               file=sys.stderr)
-        print(entry)   # to stdout so it's easy to copy/redirect
+        print(entry)   # stdout, so it can be redirected
 
 
 if __name__ == "__main__":

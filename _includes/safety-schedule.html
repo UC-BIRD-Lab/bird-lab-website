@@ -1,7 +1,4 @@
-{%- comment -%}
-  Renders the recurring safety cadence from _data/safety.yml (schedule). Edit
-  the data file, not this template, to change what recurs or how often.
-{%- endcomment -%}
+{%- comment -%} Safety schedule from _data/safety.yml (edit that, not this). {%- endcomment -%}
 {%- assign sched = site.data.safety.schedule -%}
 {%- if sched and sched.size > 0 -%}
 <table class="sched-table">

@@ -3,11 +3,7 @@
 <head>
   {% include head.html %}
 </head>
-{%- comment -%} Page-scoped body class. Defaults to the slugified title, so
-  every existing page is unchanged; a page whose title is too long or too
-  descriptive to make a good class name (e.g. /cali/) sets `body_class:` in
-  its front matter instead. Page CSS is scoped to this class, so changing a
-  page title must never silently change it. {%- endcomment -%}
+{%- comment -%} Body class = `body_class:` or the slugified title. Page CSS is scoped to it, so a title change can change the class. {%- endcomment -%}
 <body class="page--{{ page.body_class | default: page.title | slugify }}">
   <a class="skip-link" href="#main">Skip to main content</a>
   {% include header.html %}

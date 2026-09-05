@@ -1,24 +1,11 @@
-# ─────────────────────────────────────────────────────────────
-#  NEWS & UPDATES, lab milestones timeline. Newest first.
-#  type controls the icon: award, paper, talk, funding, build,
-#  service, people, travel, graduation.
-#
-#  MEMBER NAMES LINK AUTOMATICALLY. Just write a name as it appears on the People
-#  page (e.g. "Kaleb Bordner") and it becomes a link to that person's card;
-#  alumni names link to the alumni table. Do NOT wrap names in <a> yourself, that
-#  would double-link. For nicknames/short forms ("Dr. Harvey", "Adam Zhu"), add an
-#  `aliases:` line to that person in people.yml.
-#
-#  TO LINK OUT (a paper, an event, a page on this site) add `link:` plus
-#  `link_text:`, where link_text is words copied from `text:` — those words
-#  become the link:
-#      - { date: "June 2026", type: talk, text: "Kaleb Bordner presented at the AIAA AVIATION Forum.",
-#          link: "https://www.aiaa.org/aviation", link_text: "the AIAA AVIATION Forum" }
-#  Use a path (/join/) for our own pages. Never use a person's name as link_text
-#  (names are already linked); if link_text is missing or isn't found in the
-#  sentence, a small "Details ↗" link is appended instead. Raw <a href='…'> in
-#  `text:` still works but is easy to get wrong — prefer link/link_text.
-# ─────────────────────────────────────────────────────────────
+# News timeline, newest first. `type` sets the icon: award, paper, talk,
+# funding, build, service, people, travel, graduation.
+# Member names written as on the People page link automatically (alumni to the
+# alumni table); do not wrap them in <a>. Short forms need an `aliases:` line
+# in people.yml.
+# To link out, add `link:` (URL or site path) and `link_text:`, words copied
+# from `text:` (never a person's name); if link_text is missing or not found,
+# a "Details ↗" link is appended instead.
 
 - year: 2026
   events:

@@ -7,9 +7,8 @@ description: "Tour the BIRD Lab facilities: the CALI flight hall with motion cap
 
 {%- comment -%}
   HOW TO EDIT THIS PAGE
-  Words     Facility names, blurbs, specs and photos: _data/facilities.yml.
-            The little that is written here (headings, the contact note) is below.
-  Look      The <style> block at the BOTTOM of this file.
+  Words  Names, blurbs, specs, photos: _data/facilities.yml. Headings and the contact note are below.
+  Look   The <style> block at the bottom of this file.
 {%- endcomment -%}
 {%- assign featured = site.data.facilities | where_exp: "f", "f.featured" | first -%}
 {%- assign others = site.data.facilities | where_exp: "f", "f.featured != true" -%}
@@ -17,7 +16,7 @@ description: "Tour the BIRD Lab facilities: the CALI flight hall with motion cap
 {%- if featured -%}
 <section class="facility-flagship-section" aria-labelledby="flagship-h">
   <div class="facility-flagship">
-    {%- comment -%} photo_alt (facilities.yml) describes the image; falls back to "Inside {name}". {%- endcomment -%}
+    {%- comment -%} photo_alt from facilities.yml, else "Inside {name}". {%- endcomment -%}
     {%- assign flagship_alt = "Inside " | append: featured.name -%}
     <img class="facility-flagship__img" src="{{ featured.photo | relative_url }}" alt="{{ featured.photo_alt | default: flagship_alt }}" loading="lazy">
     {%- assign fund = featured.funding | default: site.data[featured.funding_key].funding -%}
@@ -92,11 +91,7 @@ description: "Tour the BIRD Lab facilities: the CALI flight hall with motion cap
     </div>
   </div>
 
-  {%- comment -%} Optional per-facility equipment table (see _data/facilities.yml).
-    It sits OUTSIDE .facility-grid so it runs the full container width: the grid is
-    two equal columns with centered items, and a tall table in one of them would
-    both squeeze the values and throw the photo off-center. Same placement as the
-    CALI equipment table. {%- endcomment -%}
+  {%- comment -%} Optional equipment table (facilities.yml). Outside .facility-grid so it runs full width; a tall table in one grid column squeezes values and off-centers the photo. {%- endcomment -%}
   {%- if f.equipment -%}
   <h3 class="u-mt-16">Equipment</h3>
   <div class="equip-wrap">
@@ -121,13 +116,9 @@ description: "Tour the BIRD Lab facilities: the CALI flight hall with motion cap
   <p class="u-m0">Interested in collaborating or visiting? <a href="{{ '/contact/' | relative_url }}">Get in touch</a>.</p>
 </div>
 
-{%- comment -%}
-  STYLING for the equipment tables. Duplicated from cali.html on purpose: the
-  CALI files stay self-contained so they can move to their own site.
-{%- endcomment -%}
+{%- comment -%} Equipment table styling, duplicated from cali.html so the CALI files stay self-contained. {%- endcomment -%}
 <style>
-  /* The site reset zeroes all margins, so a facility blurb would otherwise sit
-     flush against the partner/location line above it and read as one block. */
+  /* Site reset zeroes margins; keeps the blurb off the partner/location line. */
   .page--facilities .facility-blurb { margin-top: .7rem; }
 
   .page--facilities .equip-wrap {
@@ -149,8 +140,7 @@ description: "Tour the BIRD Lab facilities: the CALI flight hall with motion cap
   .page--facilities .equip-table tbody tr:last-child th,
   .page--facilities .equip-table tbody tr:last-child td { border-bottom: 0; }
   .page--facilities .equip-table__also { display: block; margin-top: .3rem; }
-  /* On a phone the two columns stack, so a long row label no longer squeezes
-     its value into a sliver. */
+  /* Phone: columns stack. */
   @media (max-width: 620px) {
     .page--facilities .equip-wrap { overflow: visible; }
     .page--facilities .equip-table th[scope="row"] {

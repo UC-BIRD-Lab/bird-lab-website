@@ -25,8 +25,7 @@
       <ul>
         <li><a href="{{ '/join/' | relative_url }}">Join the lab</a></li>
         <li><a href="{{ '/contact/' | relative_url }}">Contact</a></li>
-        {%- comment -%} Internal-only: current members' Notion workspace. Kept out
-           of the primary nav so that bar stays public-facing. {%- endcomment -%}
+        {%- comment -%} Members' Notion workspace; kept out of the primary nav. {%- endcomment -%}
         <li><a href="{{ '/portal/' | relative_url }}">Member Portal</a></li>
         <li><a href="{{ site.lab.scholar }}">Google Scholar</a></li>
         <li><a href="https://orcid.org/{{ site.lab.orcid }}">ORCID</a></li>
@@ -38,8 +37,7 @@
   </div>
   <div class="container footer-bottom">
     <span>© {{ 'now' | date: "%Y" }} BIRD Lab · University of California, Davis</span>
-    {%- comment -%} site.time is the moment GitHub built the site, which is the
-       last push to main. Nothing to edit; it updates itself. {%- endcomment -%}
+    {%- comment -%} site.time = last build (push to main); updates itself. {%- endcomment -%}
     <span>Site updated <time datetime="{{ site.time | date_to_xmlschema }}">{{ site.time | date: "%-d %B %Y" }}</time></span>
     <span><a href="{{ '/accessibility/' | relative_url }}">Accessibility</a> · <a href="{{ '/privacy/' | relative_url }}">Privacy</a></span>
     <span class="footer-credit">Written by the BIRD Lab assisted by Claude (Cowork) · Reviewed by {{ site.lab.pi | remove: 'Dr. ' }} · Built with Jekyll on GitHub Pages · <a href="{{ '/accessibility/#how-this-site-is-made' | relative_url }}">About this site</a></span>

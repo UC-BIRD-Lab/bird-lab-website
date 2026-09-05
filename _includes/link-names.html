@@ -1,33 +1,8 @@
 {%- comment -%}
-  Auto-links lab-member names in a string to their People-page cards.
-  Current members + affiliates → their card anchor; alumni → the alumni table.
-  Pass:  {% include link-names.html text=e.text %}
-  Add an `aliases:` list to a person in people.yml for nicknames / short forms
-  (e.g. "Dr. Harvey", "Adam Zhu").
-
-  OPTIONAL one external/on-site link per string:
+  Links lab-member names in `text` to their People-page card (alumni: the alumni table). Nicknames go in `aliases:` in people.yml.
     {% include link-names.html text=e.text link=e.link link_text=e.link_text %}
-  `link_text` is words copied from `text`; they become the link. Naming the
-  destination in the link text reads better than "read more" and satisfies
-  WCAG 2.4.4 (link purpose). With no usable `link_text` we append a short
-  "Details ↗" link carrying an aria-label built from the sentence.
-
-  ORDER MATTERS. The phrase is swapped for a sentinel BEFORE names are linked,
-  then restored as an <a> afterwards. That is what keeps a phrase which contains
-  (or equals) a member name from producing a nested <a> — the sentinel hides it
-  from the name pass, so such a phrase links out and is simply not name-linked.
-  Doing it the other way round nests anchors, which is invalid HTML and makes
-  the inner link unreachable by keyboard. Don't reorder these blocks.
-
-  NAMES ARE LINKED IN TWO PASSES for the same reason. Pass 1 swaps every name
-  and alias for a %%P<slug>%% sentinel; pass 2 turns the sentinels into <a>.
-  Doing it in one pass nests anchors whenever an alias is contained in the full
-  name it belongs to ("Dr. Alfonso Martínez" inside "Dr. Alfonso
-  Martínez-Carmena"): the name would be linked first, then the alias would match
-  again inside that link's own text. The trailing %% is what keeps one
-  sentinel from matching inside a longer one. Alumni are included in both
-  passes, aliases and all — they are the people most likely to be written about
-  under a short form.
+  Optional `link`: `link_text` (words copied from `text`) becomes the link (WCAG 2.4.4); without it a "Details ↗" link with an aria-label is appended.
+  ORDER MATTERS, don't reorder: the phrase is swapped for a sentinel before name linking, and names are linked in two passes (name -> %%P<slug>%% sentinel -> <a>). Either done in one pass nests anchors when a phrase or alias sits inside a longer name ("Dr. Alfonso Martínez" in "Dr. Alfonso Martínez-Carmena"). The trailing %% stops one sentinel matching inside a longer one.
 {%- endcomment -%}
 {%- assign txt = include.text -%}
 {%- assign people_base = '/people/' | relative_url -%}
@@ -38,7 +13,7 @@
   {%- assign ev_inline = true -%}
   {%- assign txt = txt | replace_first: phrase, "%%EVLINK%%" -%}
 {%- endif -%}
-{%- comment -%} ── Pass 1: every name and alias becomes a sentinel ───────── {%- endcomment -%}
+{%- comment -%} Pass 1: names and aliases to sentinels {%- endcomment -%}
 {%- for g in site.data.people.groups -%}{%- for m in g.members -%}
   {%- capture sn -%}%%P{{ m.name | slugify }}%%{%- endcapture -%}
   {%- assign txt = txt | replace: m.name, sn -%}
@@ -54,7 +29,7 @@
   {%- assign txt = txt | replace: a.name, sn -%}
   {%- if a.aliases -%}{%- for al in a.aliases -%}{%- capture sa -%}%%P{{ al | slugify }}%%{%- endcapture -%}{%- assign txt = txt | replace: al, sa -%}{%- endfor -%}{%- endif -%}
 {%- endfor -%}
-{%- comment -%} ── Pass 2: sentinels become links, keeping the words as written ── {%- endcomment -%}
+{%- comment -%} Pass 2: sentinels to links {%- endcomment -%}
 {%- for g in site.data.people.groups -%}{%- for m in g.members -%}
   {%- capture sn -%}%%P{{ m.name | slugify }}%%{%- endcapture -%}
   {%- capture lk -%}<a href="{{ people_base }}#{{ m.name | slugify }}">{{ m.name }}</a>{%- endcapture -%}
@@ -82,11 +57,7 @@
     {%- capture ev_a -%}<a href="{{ ev_href }}"{{ ev_rel }}>{{ phrase }}</a>{%- endcapture -%}
     {%- assign txt = txt | replace_first: "%%EVLINK%%", ev_a -%}
   {%- else -%}
-    {%- comment -%} The accessible name must START WITH the visible text
-       ("Details") or speech-input users can't activate it by saying what they
-       see — WCAG 2.5.3 Label in Name. The sentence follows so the link is still
-       distinguishable from every other "Details" on the page (WCAG 2.4.4).
-    {%- endcomment -%}
+    {%- comment -%} aria-label must start with the visible "Details" (WCAG 2.5.3); the sentence after it distinguishes the link (WCAG 2.4.4). {%- endcomment -%}
     {%- assign ev_label = include.text | strip_html | truncate: 90 -%}
     {%- capture txt -%}{{ txt }} <a class="ev-link" href="{{ ev_href }}"{{ ev_rel }} aria-label="Details: {{ ev_label | escape }}">Details<span aria-hidden="true"> &#8599;</span></a>{%- endcapture -%}
   {%- endif -%}

@@ -21,13 +21,7 @@ title: Lab Guide
     <div class="guide-hub-top__main">
     <p class="lead prose">A living handbook of how we run the lab. It's public so prospective members can see how we really work, and every member is welcome to improve it.</p>
 
-    {%- comment -%}
-      Fail loud, not silent. Two failure modes:
-      1. guide_order missing (e.g. _config.yml not loaded, or Jekyll not restarted
-         after editing it): nothing can render, so say so plainly.
-      2. A page whose category isn't in guide_order: it renders in no section,
-         so name it instead of dropping it silently.
-    {%- endcomment -%}
+    {%- comment -%} Fail loud: warn if guide_order is missing, and list pages whose category isn't in it. {%- endcomment -%}
     {%- if order == nil or order == empty -%}
     <div class="note note--warn" role="alert">
       <p style="margin:0"><strong>The category list isn't loaded.</strong> It lives in
@@ -57,12 +51,10 @@ title: Lab Guide
     {%- endif -%}
     {%- endif -%}
 
-    {%- comment -%} Search first, so the quickest way to find a page is the top
-      thing a returning member sees. The chips and role start-guides follow. {%- endcomment -%}
     <div class="guide-search">
       <label class="visually-hidden" for="guide-search">Search the guide</label>
       <span class="guide-search__icon" aria-hidden="true">🔍</span>
-      <input type="search" id="guide-search" placeholder="Search the guide…" autocomplete="off" aria-describedby="guide-search-hint">
+      <input type="search" id="guide-search" placeholder="Search the guide…" autocomplete="off" aria-describedby="guide-noresults">
     </div>
     <p id="guide-noresults" class="muted guide-hint" hidden aria-live="polite">No guide pages match that yet. Try a shorter or different word.</p>
 
@@ -76,8 +68,7 @@ title: Lab Guide
       {%- endfor -%}
     </nav>
 
-    {%- comment -%} Role start-guides. Dropped from the category loop below so
-      nothing renders twice. {%- endcomment -%}
+    {%- comment -%} Role start-guides; excluded from the category loop below. {%- endcomment -%}
     {%- if start_pages.size > 0 -%}
     <div class="guide-start" id="start-here">
       <h2>Start here</h2>
@@ -101,10 +92,7 @@ title: Lab Guide
       <div class="guide-journey-panel">
         <h2 id="journey-title">An academic journey</h2>
         <p class="muted">Quick links to key phases.</p>
-        {%- comment -%} Each step names the guides it actually covers, rather than
-          deep-linking to one page and hiding the rest. The number badge is drawn
-          on the <li> (see .journey--side in style.css), so a step can carry
-          several links without each one getting its own disc. {%- endcomment -%}
+        {%- comment -%} Number badge is drawn on the <li> (.journey--side in style.css), so a step can carry several links. {%- endcomment -%}
         <ol class="journey journey--side">
           <li><a href="#start-here">Get oriented</a></li>
           <li><span class="journey__step">Set your goals</span>
@@ -165,9 +153,7 @@ title: Lab Guide
   </div>
 </section>
 
-{%- comment -%} One full-width band per category, alternating tint like the home
-  page. `band` counts only the categories that actually render, so the tint
-  pattern stays correct even if a category is empty. {%- endcomment -%}
+{%- comment -%} One band per category, alternating tint. `band` counts only categories that render. {%- endcomment -%}
 {%- assign band = 0 -%}
 {%- for cat in order -%}
   {%- unless cat == featured_cat -%}

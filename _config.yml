@@ -1,7 +1,4 @@
-# ─────────────────────────────────────────────────────────────
-#  BIRD Lab, Jekyll configuration
-#  Bio-Informed Research & Design Lab · UC Davis
-# ─────────────────────────────────────────────────────────────
+# BIRD Lab (UC Davis) Jekyll configuration.
 
 title: "BIRD Lab"
 tagline: "Bio-Informed Research & Design"
@@ -10,19 +7,13 @@ description: >-
   aircraft. We identify fundamental biological principles of flight and refine
   them to improve engineered systems through bio-informed research.
 
-# Site address. `url` is the ORIGIN only (no path, no trailing slash).
-# Leave `baseurl` EMPTY, the deploy workflow fills in the project path
-# ("/bird-lab-website") automatically at build time, and an empty baseurl keeps
-# the Site-checks link test passing. For a future custom-domain move, see the
-# migration notes under "Google Search Console verification" below.
+# `url` is the origin only. Leave `baseurl` empty: the deploy workflow passes the
+# project path ("/bird-lab-website") at build time, and an empty baseurl keeps
+# the Site-checks link test passing.
 url: "https://uc-bird-lab.github.io"
 baseurl: ""
 
-# ── Google Search Console verification ───────────────────────
-# jekyll-seo-tag reads this key and emits
-#   <meta name="google-site-verification" content="...">
-# on every page, including the homepage GSC checks.
-#
+# Google Search Console; jekyll-seo-tag emits it as a <meta> tag on every page.
 google_site_verification: L8d8KgsD07pwppyU9Jw4QpHmSsM_XuosM8-dVuAPsHw
 
 lab:
@@ -37,50 +28,46 @@ lab:
   orcid: "0000-0002-2830-0844"
   scholar: "https://scholar.google.com/citations?hl=en&user=_uRCRPgAAAAJ"
   location: "Department of Mechanical & Aerospace Engineering, UC Davis, Davis, CA"
-  # PI / lab links surfaced in the footer and Data & Code section.
+  # Links shown in the footer and Data & Code section.
   linkedin: "https://www.linkedin.com/in/Christina-A-Harvey"
   instagram: "https://www.instagram.com/ucdbirdlab_mae/"
   instagram_handle: "ucdbirdlab_mae"
   github_org: "https://github.com/UC-BIRD-Lab"
-  # FigShare (or other data repository) for published data/code.
+  # Data repository for published data/code.
   figshare_url: "https://figshare.com/authors/Christina_Harvey/4766004"
 
-# Default social-share (Open Graph) image used by jekyll-seo-tag.
-# A purpose-built 1200x630 branded card (logo on brand navy), opaque so it reads
-# the same in light and dark preview surfaces. Dimensions are declared so the
-# preview reserves the right space (og:image:width/height + twitter tags).
+# Default social-share image (jekyll-seo-tag). Opaque 1200x630 card; the
+# dimensions let previews reserve the right space.
 image:
   path: /assets/img/og-image.png
   width: 1200
   height: 630
 
-# Big summary card on X/Twitter (instead of the tiny square default).
+# Large summary card on X/Twitter.
 twitter:
   card: summary_large_image
 
-# Optional image assets. 
-# Pages only render the image when its path is set, so the build never references a missing file.
+# Optional images; pages only render one when its path is set.
 assets:
-  # Lab group photo. Powers BOTH the People-page group photo
-  # and the Home "In the field" cinematic band.
+  # People-page group photo and the Home "In the field" band.
   lab_photo: "/assets/img/lab/CALIopening-photo-edited-2026.jpg"
-  # Playful wind-tunnel candid shown as the "lab culture" moment on the Join page.
+  # "Lab culture" photo on the Join page.
   culture_photo: "/assets/img/lab/labphoto-silly-2024.jpg"
 
-# Private member workspace (Notion - Internal Pages).
+# Private member workspace (Notion).
 member_portal_url: "https://app.notion.com/p/birdlab/Internal-Lab-Pages-6d6f4c7465a44de5a518a5a6786593f1"
 
 # Undergraduate interest form
 undergrad_form_url: "https://forms.gle/TsddkYBtYMH5zkt78"
 
-# Privacy-friendly, cookieless analytics (GoatCounter). 
+# Cookieless analytics (GoatCounter).
 analytics:
-  goatcounter: "birdlab"   
+  goatcounter: "birdlab"
 
 
-# ── Build settings ───────────────────────────────────────────
-# Dates the build stamps on pages (the footer's "Site updated", the
-# announcement and sign-up deadlines) are read in this timezone.
+# Build settings
+# Timezone for build-stamped dates (footer "Site updated", announcement and
+# sign-up deadlines).
 timezone: America/Los_Angeles
 markdown: kramdown
 kramdown:
@@ -97,10 +84,8 @@ plugins:
   - jekyll-sitemap
   - jekyll-last-modified-at   # per-page "Last updated" date, from git history
 
-# ── Lab guide category order ─────────────────────────────────
-# Single source of truth for the guide's category order. Both the guide
-# landing page and the wiki sidebar read from this. Add a new category
-# here when you introduce one (the landing page warns if you forget).
+# Lab guide category order, read by the guide landing page and wiki sidebar.
+# Add new categories here (the landing page warns if you forget).
 guide_order:
   - Getting Started
   - Communication & Culture
@@ -109,7 +94,7 @@ guide_order:
   - Writing & Dissemination
   - Professional Development
 
-# ── Collections ──────────────────────────────────────────────
+# Collections
 collections:
   guide:
     output: true
@@ -137,9 +122,7 @@ exclude:
   - AUTOMATION.md
   - serve.sh
   - bird-lab-website.Rproj
-  # FUSE / editor-sync artifacts (".fuse_hiddenXXXX") can appear in collection
-  # folders when a file is edited while another process holds it open. They carry
-  # stale, sometimes corrupted front matter (a missing category shows up as a
-  # blank card on the Lab Guide hub), so keep them out of the build entirely.
+  # FUSE / editor-sync leftovers carry stale front matter (a missing category
+  # shows as a blank card on the Lab Guide hub).
   - ".fuse_hidden*"
   - "_guide/.fuse_hidden*"

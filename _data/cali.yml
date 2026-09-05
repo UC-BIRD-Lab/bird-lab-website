@@ -1,56 +1,32 @@
-# ─────────────────────────────────────────────────────────────
-#  CALI — Center for Animal Locomotion and Innovation
-#
-#  DATA ONLY. Everything in this file is a LIST or a REUSED VALUE:
-#  people, equipment, partners, image paths, the contact address.
-#
-#  The page's sentences live in cali.html, next to the markup that
-#  shows them — so changing a word is a normal edit to a paragraph,
-#  not a hunt through YAML block scalars. Add something here only if
-#  it repeats, is a list, or is used in more than one place.
-#
-#  This file plus cali_rates.yml, cali_gallery.yml, and cali.html are
-#  the movable "CALI unit": if CALI ever spins out to its own site,
-#  these move together with minimal rework.
-#
-#  YAML rules: two-space indents, a space after every colon.
-# ─────────────────────────────────────────────────────────────
+# CALI (Center for Animal Locomotion and Innovation) data: lists and reused
+# values only. The page's prose lives in cali.html; add something here only if
+# it is a list or used in more than one place. This file, cali_rates.yml,
+# cali_gallery.yml and cali.html are the movable "CALI unit".
 
 name: Center for Animal Locomotion and Innovation
 
-# Used in six places on the page, so it lives here — change it once
-# and every "email us" link follows. (If CALI ever moves to a shared
-# inbox such as cali@ucdavis.edu, this is the only edit needed.)
+# Every "email us" link on the page.
 contact_email: harvey@ucdavis.edu
 
-# The year in "Founded in …" on the page: CALI opened in 2026 (funded 2024).
+# "Founded in …" on the page (opened 2026, funded 2024).
 founded: 2026
 
-# ── IMAGES ────────────────────────────────────────────────────
-# Paths only; the alt text sits with each <img> in cali.html.
+# Images: paths only; alt text sits with each <img> in cali.html.
 hero_photo: /assets/img/cali/cali-peregrine.jpg
 facility_photo: /assets/img/cali/cali-cameras-upclose.jpg
 # Backdrop for the closing call-to-action band.
 team_photo: /assets/img/cali/cali-team.jpg
 
-# Funding credit badge. The Facilities page reads this same block via
-# `funding_key: cali` in _data/facilities.yml — edit it here only.
+# Funding credit badge, also read by facilities.yml via `funding_key: cali`.
 funding:
   note: "DURIP support from:"
   name: DEVCOM Army Research Laboratory
   logo: /assets/img/partners/arl.png
   url: https://www.arl.army.mil/
 
-# ── EQUIPMENT ─────────────────────────────────────────────────
-# `specs` are the four headline number tiles; `equipment` is the
-# detail table beneath them. Model names use the vendors' own
-# spelling so they are searchable.
-#
-# Frame rates and accuracies are the MANUFACTURERS' published
-# figures. What a given experiment achieves depends on lens,
-# resolution, capture volume, and lighting, so treat them as the
-# ceiling rather than a promise. Correct any that don't match the
-# hall's real configuration.
+# Equipment. `specs` are the headline number tiles; `equipment` is the detail
+# table beneath them. Model names use vendor spelling. Frame rates and
+# accuracies are manufacturers' figures (a ceiling, not a promise).
 specs:
   - { value: "44", label: "OptiTrack VersaX 120 motion-capture cameras" }
   - { value: "9", label: "high-speed Phantom cameras" }
@@ -63,7 +39,7 @@ capabilities:
   - Controlled-environment hall
   - Daylight-balanced lighting
 
-# `also:` is optional — a second line under the same row label.
+# `also:` (optional) is a second line under the same row label.
 equipment:
   - label: Motion capture
     value: "44 × OptiTrack VersaX 120 — 12.6 MP (4096 × 3072), 300 fps"
@@ -83,24 +59,13 @@ equipment:
   - label: Site
     value: "California Raptor Center, UC Davis"
 
-# ── TEAM ──────────────────────────────────────────────────────
-# To ADD A PERSON: copy one block under `team:` and fill it in.
-#   name        required
-#   group       which heading they appear under — must match a name
-#               in team_groups below
-#   institution short affiliation shown under the name (e.g. UC Davis, Oxford) —
-#               this is what makes the consortium's multi-institution reach show
-#   discipline  a short field shown as a colored tag (the transdisciplinary mix).
-#               Colored styles exist for: Engineering, Veterinary Medicine,
-#               Biology, Zoology, Neuroscience, Animation. A new discipline still
-#               shows as a neutral tag — add a color in cali.html if you like.
-#   photo       optional headshot (square JPG in assets/img/cali/ or people/);
-#               no photo = a clean initials circle
-#   website     optional — if set, their whole card links to it
-#
-# team_groups sets the heading order. The one-line description under
-# each heading is in cali.html — if you add a group here, add its line
-# there too (the page falls back to no description if you don't).
+# Team. Per person: name (required); group (must match team_groups);
+# institution (shown under the name); discipline (colored tag; colors exist in
+# cali.html for Engineering, Veterinary Medicine, Biology, Zoology,
+# Neuroscience, Animation, others show neutral); photo (optional square JPG,
+# else an initials circle); website (optional, links the whole card).
+# team_groups sets heading order; each heading's one-line description is in
+# cali.html (a group without one renders with no description).
 team_groups:
   - Directors
   - Advisors
@@ -125,7 +90,7 @@ team:
     discipline: Veterinary Medicine
     photo: /assets/img/cali/beaufrere.jpg
     website: https://www.vetmed.ucdavis.edu/faculty/hugues-h-beaufrere
-  - name: Andrew English Jr.
+  - name: Andrew Engilis Jr.
     group: Advisors
     institution: UC Davis
     discipline: Ecology
@@ -174,7 +139,7 @@ team:
     photo: /assets/img/cali/clark.jpeg
     website: https://animalaeroacoustics.ucr.edu/
 
-# Collaborating organizations. Logos live in assets/img/partners/.
+# Partner organizations. Logos in assets/img/partners/.
 partners:
   - name: California Hawking Club
     photo: /assets/img/partners/chc.jpg

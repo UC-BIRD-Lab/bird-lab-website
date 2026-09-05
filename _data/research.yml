@@ -1,13 +1,6 @@
-# ─────────────────────────────────────────────────────────────
-#  RESEARCH, themes (the narrative threads) + a simple project directory.
-#
-#  Each project is a small card: a one-sentence blurb, its theme, the lead
-#  (linked to their People entry), and an "ask the lead" email button.
-#  `lead` must match the person's name in _data/people.yml for the link to work.
-#  `papers` is a list of DOIs that belong to THIS project. The card looks each
-#  one up in the publications data and shows its title + year + link. To feature
-#  a new paper, paste its DOI here (one line). `image` and `contact` are optional.
-# ─────────────────────────────────────────────────────────────
+# Research themes and project cards. Per project: blurb, theme, `lead` (must
+# match a name in people.yml to link), `papers` (DOIs looked up in the
+# publications data), optional `image` and `contact`.
 
 themes:
   - id: morphology-kinematics
@@ -34,7 +27,7 @@ themes:
       The same principles that allow birds to adapt to natural conditions may allow future aircraft to autonomously adapt in flight.
 
 
-# Member-led projects. Keep blurbs to one sentence.
+# Projects. One-sentence blurbs.
 projects:
   - title: Bird-informed morphing tail flight dynamics & control
     lead: Kaleb Bordner

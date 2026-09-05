@@ -5,14 +5,14 @@ eyebrow: What we do
 description: "Bio-informed flight research at the BIRD Lab: avian morphology, flight dynamics, and sensing and control, with active projects bridging biology, aerospace, and robotics."
 ---
 
-<!-- Mission as a centered, boxless editorial statement -->
+<!-- Mission -->
 <section class="mission-statement">
   <h2 class="eyebrow" id="mission">Our mission</h2>
   <p class="mission-statement__text">To identify fundamental biological principles relating to flight, advancing our understanding of <em>animal flight</em> while adapting relevant principles into enhanced <em>engineered systems</em>.</p>
   <span class="mission-statement__rule" aria-hidden="true"></span>
 </section>
 
-<!-- transparent bio-inspired reporting framework -->
+<!-- Reporting framework -->
 <section class="section u-pb-fluid" id="framework">
   <div class="container framework-section">
     <div class="framework-intro">
@@ -62,7 +62,7 @@ description: "Bio-informed flight research at the BIRD Lab: avian morphology, fl
 
 <hr class="divider u-my-30">
 
-<!-- Values as scannable cards -->
+<!-- Core values -->
 <h2 class="eyebrow">Our core values</h2>
 <div class="grid grid-3 u-mt-12">
   <div class="card value-card">
@@ -127,8 +127,7 @@ themes above. </p>
       <h3>{{ p.title }}</h3>
       <p>{{ p.blurb }}</p>
 
-      {%- comment -%} Papers explicitly linked to this project, looked up by DOI in the
-         publications data so the title/year stay in one place. {%- endcomment -%}
+      {%- comment -%} p.papers are DOIs, looked up in the publications data. {%- endcomment -%}
       {%- if p.papers and p.papers.size > 0 -%}
         {%- assign allpubs = site.data.publications | concat: site.data.publications_manual.conference -%}
         <p class="proj-paper"><span class="proj-paper__label">Paper</span>
@@ -142,8 +141,7 @@ themes above. </p>
       {%- endif -%}
 
       <p class="muted u-fs-sm u-mt-06">
-        {%- comment -%} A lead who has moved to alumni has no person card to point at,
-           so send them to the alumni section instead of a dead anchor. {%- endcomment -%}
+        {%- comment -%} Alumni leads have no person card; link to #alumni. {%- endcomment -%}
         {%- assign lead_anchor = p.lead | slugify -%}
         {%- assign alum_names = site.data.people.alumni.members | map: "name" -%}
         {%- if alum_names contains p.lead %}{% assign lead_anchor = "alumni" %}{% endif -%}

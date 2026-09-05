@@ -1,27 +1,13 @@
-# ─────────────────────────────────────────────────────────────
-#  OPENINGS: drives the Undergrad, Graduate & Postdoc cards on the Join page,
-#  plus the one featured posting that sits above them.
-#
-#  TO OPEN OR CLOSE A POSITION, change one line:
-#     open: true    → green "Now recruiting" pill  + the `open_note`
-#     open: false   → amber "Open via fellowship" pill + the `closed_note`
-#  (Undergrad is simpler: the pill text IS the note. open: true shows the
-#   green `open_note` pill, open: false the amber `closed_note` pill.)
-#
-#  TO TAKE A POSTING DOWN, change one line:
-#     featured: enabled: false      (same for `second:`, the smaller one below it)
-#  Then set `enabled: false` in _data/announcement.yml to retire the
-#  site-wide banner too. Nothing in join.md needs editing either way.
-#
-#  Nothing else needs editing. The pill text is also readable on its own
-#  (never colour-only), so the status stays clear for screen-reader and
-#  colour-blind visitors; please keep it that way when editing.
-#
-#  `email_body` is a short draft that pre-fills the email when someone
-#  clicks "Email me", so reaching out is one click and a few edits.
-# ─────────────────────────────────────────────────────────────
+# Join page: the Undergrad, Graduate and Postdoc cards plus the postings above
+# them.
+#   open: true    green "Now recruiting" pill + `open_note`
+#   open: false   amber "Open via fellowship" pill + `closed_note`
+#   (for undergrad the note text is the pill itself)
+# To take a posting down set `enabled: false` under `featured:` or `second:`,
+# then `enabled: false` in announcement.yml for the banner. join.md needs no
+# edit. Keep pill text readable on its own, never colour-only.
 
-# Shared draft that pre-fills the "Email me" button (kept short on purpose).
+# Pre-fills the "Email me" button.
 email_body: |
   Hi Dr. Harvey,
 
@@ -30,12 +16,8 @@ email_body: |
   What I'd like to build or learn here: [...].
   Timing: [when I'd start]. My CV and unofficial transcript are attached.
 
-# ── The one featured posting on the Join page ────────────────
-#  `body` paragraphs render in order; Markdown-style **bold** is not
-#  processed here, so use <strong> if you want emphasis.
-#  `deadline` also hides the block automatically once it has passed, so
-#  a closed search can't linger if the switch above is forgotten.
-#  `flyer` is optional: if the file isn't there, no image is shown.
+# Featured posting. `body` paragraphs render in order (HTML, not Markdown, so
+# use <strong>). The block hides itself after `deadline`. `flyer` is optional.
 featured:
   enabled: true
   id: postdoctoral-scholar
@@ -67,8 +49,7 @@ featured:
   flyer_alt: >-
     Postdoctoral Scholar recruitment flyer. All details are in the text on this page.
 
-# ── A second posting, shown under the featured one. Same fields.
-#  `apply_url` (a form link) replaces the email button when present.
+# Second posting, same fields. `apply_url` replaces the email button.
 second:
   enabled: true
   id: social-media-coordinator

@@ -1,35 +1,15 @@
 #!/usr/bin/env bash
-# ─────────────────────────────────────────────────────────────────────────
-#  BIRD Lab image asset generator (run on a Mac; uses built-in `sips`)
-#
-#  Generates optimized site images from originals you have locally:
-#    • assets/img/lab-photo.jpg   : lab group photo (People page)
-#    • assets/img/og-image.jpg    : 1200×630 social-share image
-#    • assets/img/people/*.jpg    : square, optimized headshots
-#
-#  WHY a script you run (not generated for you): the high-res originals and the
-#  Notion export live on your Mac, not in this repo. `sips` ships with macOS, so
-#  no installs are needed.
-#
-#  USAGE
-#    1) Group photo:
-#         bash scripts/apply-images.sh "/path/to/group-photo.jpg"
-#       …or let it auto-search the export folder:
-#         bash scripts/apply-images.sh
-#    2) Headshots: drop originals into  assets/img/people/_raw/  (any name;
-#       use the person's name, e.g. "Christina Harvey.jpg") then run this script.
-#       Each becomes  assets/img/people/firstname-lastname.jpg.
-#
-#  AFTER RUNNING
-#    • Set  lab_photo: /assets/img/lab-photo.jpg  under  assets:  in _config.yml
-#    • For each headshot, add  photo: /assets/img/people/<name>.jpg  in _data/people.yml
-#  (og-image.jpg is already wired via `image:` in _config.yml.)
-# ─────────────────────────────────────────────────────────────────────────
-# Website tooling, largely written by AI (Claude) and checked for behaviour
-# rather than wording. It describes how the site is built, not how the lab works;
-# lab policy lives in _guide/. See accessibility.md, "How this site is made".
+# Build site images from local originals with macOS `sips` (originals are not in the repo).
+#   lab-photo.jpg (1600px) and og-image.jpg (1200x630) from the group photo;
+#   people/<first-last>.jpg (600px square) from assets/img/people/_raw/<Name>.jpg;
+#   lab/<name>.jpg (1600px) from assets/img/lab/_raw/.
+# Usage: bash scripts/apply-images.sh ["/path/to/group-photo.jpg"]
+#   (no path: searches $BIRD_SRC, default the Notion export in ~/Downloads)
+# Then set lab_photo: in _config.yml, photo: in people.yml, ready: true in gallery.yml.
+# Site tooling, largely AI-written (Claude), checked for behaviour not wording.
+# Lab policy lives in _guide/. See accessibility.md, "How this site is made".
 set -euo pipefail
-cd "$(dirname "$0")/.."          # repo root
+cd "$(dirname "$0")/.."
 
 SRC_DEFAULT="$HOME/Downloads/Private & Shared 5/BIRD Lab"
 SRC="${BIRD_SRC:-$SRC_DEFAULT}"
@@ -44,7 +24,7 @@ command -v sips >/dev/null 2>&1 || { echo "ERROR: this script needs macOS 'sips'
 echo "── BIRD Lab image generator ──"
 echo "Source export: $SRC"
 
-# ── 1. Lab group photo + OG image ────────────────────────────────────────
+# 1. Group photo and OG image
 GROUP_PHOTO="${1:-}"
 if [ -z "$GROUP_PHOTO" ] && [ -d "$SRC" ]; then
   GROUP_PHOTO="$(find "$SRC" -type f \
@@ -58,7 +38,7 @@ if [ -n "$GROUP_PHOTO" ] && [ -f "$GROUP_PHOTO" ]; then
   sips -s format jpeg -s formatOptions 82 "$GROUP_PHOTO" \
        --resampleWidth 1600 --out "$IMG_DIR/lab-photo.jpg" >/dev/null
   echo "  → $IMG_DIR/lab-photo.jpg"
-  # OG: center-crop to 1200×630 (sips -c is height width)
+  # sips -c takes height then width
   cp "$IMG_DIR/lab-photo.jpg" /tmp/bird-og-src.jpg
   sips -s format jpeg -s formatOptions 82 -c 630 1200 /tmp/bird-og-src.jpg \
        --out "$IMG_DIR/og-image.jpg" >/dev/null
@@ -74,7 +54,7 @@ else
   fi
 fi
 
-# ── 2. Headshots ─────────────────────────────────────────────────────────
+# 2. Headshots
 if [ -d "$RAW_HEADSHOTS" ] && [ -n "$(ls -A "$RAW_HEADSHOTS" 2>/dev/null || true)" ]; then
   echo "Processing headshots in $RAW_HEADSHOTS ..."
   for f in "$RAW_HEADSHOTS"/*; do
@@ -89,10 +69,7 @@ else
   echo "No headshots to process (drop originals in $RAW_HEADSHOTS/ and re-run)."
 fi
 
-# ── 3. "Scenes from the lab" storytelling photos ─────────────────────────
-#   Drop originals in assets/img/lab/_raw/ named raptor-hall.* / outreach.* /
-#   wind-tunnel.* (any extension). They are resized to ~1600px wide, then flip
-#   ready: true for each in _data/gallery.yml to show it on the site.
+# 3. Lab scenes (originals named as in _data/gallery.yml: raptor-hall.*, outreach.*, wind-tunnel.*)
 LAB_DIR="$IMG_DIR/lab"
 RAW_LAB="$LAB_DIR/_raw"
 mkdir -p "$LAB_DIR"
