@@ -318,10 +318,13 @@ The required-training list on the Lab safety page: `name`, `who`, optional
 date; update both when Costing Policy & Analysis re-approves), `cali_gallery.yml`,
 `cali_milestones.yml`. Headers explain fields.
 
-### Peer mentoring: `_data/cali_mentoring.yml`
+### Peer mentoring: `cali.html`
 
-Switch (`signups: open:`), form link and dates; words are in `cali.html`. Each
-fall: set dates, check the link, flip the switch.
+Everything is in `cali.html`. The sign-up switch (`mentoring: signups_open:`),
+form link and open/close dates are in the front matter at the top of the file;
+the program dates and wording are plain text in the "Peer mentoring" section.
+Each fall: set dates, check the link, flip the switch. The address to put on
+flyers is `/cali/#mentoring`.
 
 ---
 

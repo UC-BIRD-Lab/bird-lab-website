@@ -7,12 +7,27 @@ image:
   path: /assets/img/cali/og-cali.png
   width: 1200
   height: 630
+
+# PEER MENTORING SIGN-UPS. Everything else about the program (dates, wording)
+# is plain text in the "Peer mentoring" section further down this file.
+#   signups_open: true   Sign-up button shows between `opens` and `closes`
+#                        (before `opens` the page says when sign-ups start).
+#   signups_open: false  "We run this every year. Email us."
+# Changes take effect on the next push. Each fall: set the dates, confirm the
+# form link opens the live survey, flip the switch; set it back to false after
+# the close date.
+mentoring:
+  signups_open: true
+  form_url: https://ucdavis.co1.qualtrics.com/jfe/form/SV_br5wSmULKjGnZBQ   # confirm before launch
+  opens: 2026-09-28
+  closes: 2026-10-28
 ---
 
 {%- comment -%}
   HOW TO EDIT THIS PAGE
   Words  Plain HTML below, in page order.
   Lists  People, equipment, partners, photos, contact: _data/cali.yml. Rates: _data/cali_rates.yml. Milestones: _data/cali_milestones.yml.
+  Peer mentoring  Sign-up switch, form link and window: front matter at the top of this file. Program dates and wording: the "Peer mentoring" section below.
   Look   The <style> block at the bottom of this file.
 {%- endcomment -%}
 {%- assign cali = site.data.cali -%}
@@ -299,13 +314,13 @@ image:
   </div>
 </section>
 
-<!-- 7. Peer mentoring: the student route in. Switch and dates in _data/cali_mentoring.yml. -->
-{%- assign m = site.data.cali_mentoring.signups -%}
+<!-- 7. Peer mentoring: the student route in. Sign-up switch and window: front matter at the top of this file. -->
+{%- assign m = page.mentoring -%}
 {%- assign now_ts = site.time | date: "%s" | plus: 0 -%}
 {%- assign start_ts = m.opens | date: "%s" | plus: 0 -%}
 {%- assign end_ts = m.closes | date: "%s" | plus: 86400 -%}
 {%- assign state = "closed" -%}
-{%- if m.open and now_ts < end_ts -%}
+{%- if m.signups_open and now_ts < end_ts -%}
   {%- if now_ts >= start_ts -%}{%- assign state = "open" -%}{%- else -%}{%- assign state = "soon" -%}{%- endif -%}
 {%- endif -%}
 <section class="section section--tint" id="mentoring" aria-labelledby="mentoring-h">
@@ -317,24 +332,29 @@ image:
     <div class="grid grid-3 cali-ways u-mt-16">
       <div class="card">
         <h3>Who</h3>
-        <p>Undergraduate, graduate and professional students from any discipline at UC&nbsp;Davis, as a
-        mentor or a mentee.</p>
+        <p>Undergraduate, graduate, and professional students from any discipline at UC&nbsp;Davis, either
+        as a mentor or a mentee.</p>
       </div>
       <div class="card">
         <h3>What</h3>
-        <p>A year of conversations about how things move: animals, humans, robots, cells. No data or results
-        needed, and nothing is graded.</p>
+        <p>A year of conversations, collaboration, and brainstorming about how things move. Focus on what
+        interests you and what you can learn from each other; animals, humans, robots, and cells are all
+        possible topics.</p>
       </div>
       <div class="card">
         <h3>When</h3>
-        <p>Kickoff {{ site.data.cali_mentoring.kickoff }}. Pairs matched in November. The Innovation Fair in
-        {{ site.data.cali_mentoring.fair }}.</p>
+        {%- comment -%} Program dates: edit the text here. {%- endcomment -%}
+        <ul class="cali-dates">
+          <li><span>Welcome Session</span> October 7, 2026</li>
+          <li><span>Pair matching</span> November 2026</li>
+          <li><span>Innovation Fair</span> May 2027</li>
+        </ul>
       </div>
     </div>
     {%- if state == "open" %}
-    <p class="u-mt-16"><a class="btn btn--primary" href="{{ m.form_url }}">Sign up by {{ m.closes | date: "%-d %B" }} &rarr;</a></p>
+    <p class="u-mt-16"><a class="btn btn--primary" href="{{ m.form_url }}">Sign up by {{ m.closes | date: "%B %-d" }} &rarr;</a></p>
     {%- elsif state == "soon" %}
-    <p class="u-mt-16"><strong>Sign-ups open {{ m.opens | date: "%-d %B %Y" }}.</strong></p>
+    <p class="u-mt-16"><strong>Sign-ups open {{ m.opens | date: "%B %-d, %Y" }}.</strong></p>
     {%- else %}
     <p class="u-mt-16">We run this every year. <a href="mailto:{{ cali.contact_email }}?subject={{ 'CALI peer mentoring' | uri_escape }}">Email us</a> to hear when the next round opens.</p>
     {%- endif %}
@@ -536,4 +556,9 @@ image:
   .page--cali .cali-ways .card { display: flex; flex-direction: column; }
   .page--cali .cali-ways .card > p:last-child { margin-top: auto; }
   .page--cali #mentoring .card > p:last-child { margin-top: 0; }   /* no button to pin */
+  /* Peer mentoring "When" card: label + date per line. */
+  .page--cali .cali-dates { list-style: none; margin: 0; padding: 0; text-align: left; }
+  .page--cali .cali-dates li { padding: .35rem 0; border-top: 1px solid var(--c-line); }
+  .page--cali .cali-dates li:first-child { border-top: 0; padding-top: 0; }
+  .page--cali .cali-dates li span { display: block; font-weight: 700; color: var(--c-navy); font-size: var(--step--1); }
 </style>

@@ -29,13 +29,14 @@ items:
       drifts and fellowships close.
 
   - what: Peer mentoring sign-up switch, form link and the year's dates
-    file: _data/cali_mentoring.yml
+    file: cali.html
     owner: "@christinaharvey"
     every_months: 12
-    last_reviewed: 2026-09-04
+    last_reviewed: 2026-09-08
     note: >-
+      Settings are in the front matter at the top of cali.html (mentoring:).
       Each fall set the dates, confirm the Qualtrics link opens the live form,
-      then set open: true. Set it back to false after the close date.
+      then set signups_open: true. Set it back to false after the close date.
 
   - what: Safety training requirements, links and named contacts
     file: _data/safety.yml
