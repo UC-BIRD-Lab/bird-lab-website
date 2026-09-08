@@ -102,6 +102,12 @@ team:
     discipline: Biology
     photo: /assets/img/cali/combes.jpg
     website: https://combeslab.faculty.ucdavis.edu
+  - name: Dr. Michael Neff
+    group: Advisors
+    institution: UC Davis
+    discipline: Computer Science
+    photo: /assets/img/cali/neff.jpg
+    website: https://www.cs.ucdavis.edu/~neff/
   - name: Dr. Sergey Stavisky
     group: Advisors
     institution: UC Davis
