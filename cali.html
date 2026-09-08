@@ -329,6 +329,8 @@ mentoring:
     <p class="lead prose u-mt-10 u-mi-auto"><strong>Anything that moves.</strong> Spend a year paired with a
     student from a different field, and bring the Innovation Fair one idea that only exists where your two
     fields meet.</p>
+    {%- comment -%} The flyer's four icons on the gold path. Decorative (alt=""): the cards below carry the same content. {%- endcomment -%}
+    <img class="cali-path u-mt-16" src="{{ '/assets/img/cali/peer-mentoring-path.svg' | relative_url }}" alt="" width="1160" height="236" loading="lazy">
     <div class="grid grid-3 cali-ways u-mt-16">
       <div class="card">
         <h3>Who</h3>
@@ -337,9 +339,8 @@ mentoring:
       </div>
       <div class="card">
         <h3>What</h3>
-        <p>A year of conversations, collaboration, and brainstorming about how things move. Focus on what
-        interests you and what you can learn from each other; animals, humans, robots, and cells are all
-        possible topics.</p>
+        <p>Conversations and brainstorming about how things move, on whatever interests you both: animals,
+        humans, robots, cells.</p>
       </div>
       <div class="card">
         <h3>When</h3>
@@ -556,6 +557,8 @@ mentoring:
   .page--cali .cali-ways .card { display: flex; flex-direction: column; }
   .page--cali .cali-ways .card > p:last-child { margin-top: auto; }
   .page--cali #mentoring .card > p:last-child { margin-top: 0; }   /* no button to pin */
+  /* Peer mentoring: the icon strip from the flyer. Width/height attributes keep the layout from jumping while it loads. */
+  .page--cali .cali-path { display: block; width: 100%; max-width: 760px; height: auto; margin-inline: auto; }
   /* Peer mentoring "When" card: label + date per line. */
   .page--cali .cali-dates { list-style: none; margin: 0; padding: 0; text-align: left; }
   .page--cali .cali-dates li { padding: .35rem 0; border-top: 1px solid var(--c-line); }
