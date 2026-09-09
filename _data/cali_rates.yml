@@ -23,10 +23,10 @@ tiers:
 services:
   - name: CALI-Basic
     desc: Non-animal studies
-    rates: { internal: "909", academic: "1,377", industry: "1,513" }
+    rates: { internal: "909", academic: "1,378", industry: "1,514" }
   - name: CALI-Animal
     desc: Live-animal, trainer-supported
-    rates: { internal: "2,620", academic: "3,969", industry: "4,362" }
+    rates: { internal: "2,621", academic: "3,970", industry: "4,363" }
   - name: CALI-Owner
     desc: Owner-provided animals (MOU)
     rates: { internal: "925", academic: "1,401", industry: "1,540" }
