@@ -90,18 +90,24 @@ team:
     discipline: Veterinary Medicine
     photo: /assets/img/cali/beaufrere.jpg
     website: https://www.vetmed.ucdavis.edu/faculty/hugues-h-beaufrere
-  - name: Andrew Engilis Jr.
-    group: Advisors
-    institution: UC Davis
-    discipline: Ecology
-    photo: /assets/img/cali/engilis.jpg
-    website: https://mwfb.ucdavis.edu/staff/andrew-engilisjr
   - name: Dr. Stacey Combes
     group: Advisors
     institution: UC Davis
     discipline: Biology
     photo: /assets/img/cali/combes.jpg
     website: https://combeslab.faculty.ucdavis.edu
+  - name: Andrew Engilis Jr.
+    group: Advisors
+    institution: UC Davis
+    discipline: Ecology
+    photo: /assets/img/cali/engilis.jpg
+    website: https://mwfb.ucdavis.edu/staff/andrew-engilisjr
+  - name: Dr. Stephen Robinson
+    group: Advisors
+    institution: UC Davis
+    discipline: Engineering
+    photo: /assets/img/cali/robinson.jpg
+    website: https://hrvip.ucdavis.edu
   - name: Dr. Michael Neff
     group: Advisors
     institution: UC Davis
