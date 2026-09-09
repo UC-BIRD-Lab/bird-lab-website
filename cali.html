@@ -212,7 +212,7 @@ mentoring:
     {%- when "Affiliates" -%}
     <p class="center muted u-fs-sm cali-group-blurb">Research partners who've used the space, or will be working with us.</p>
     {%- endcase -%}
-    <ul class="cali-people{% if forloop.first %} cali-people--lead{% endif %} u-mt-11">
+    <ul class="cali-people{% if forloop.first %} cali-people--lead{% endif %}{% if g == "Affiliates" %} cali-people--wide{% endif %} u-mt-11">
       {%- for p in members -%}
       {%- assign nm = p.name | remove: "Dr. " | split: " " -%}
       {%- capture initials -%}{{ nm.first | slice: 0 }}{{ nm.last | slice: 0 }}{%- endcapture -%}
@@ -440,6 +440,7 @@ mentoring:
   /* First group (Directors): larger card + gold accent. */
   .page--cali .cali-people--lead .cali-person { width: 244px; border-top: 3px solid var(--cali-accent); padding-top: 1.5rem; }
   .page--cali .cali-people--lead .cali-person__photo { width: 120px; height: 120px; }
+  .page--cali .cali-people--wide { max-width: 1080px; }
 
   /* Using CALI */
   .page--cali .cali-access { display: grid; grid-template-columns: minmax(230px, 300px) 1fr; gap: clamp(1.5rem, 4vw, 3rem); align-items: start; }
