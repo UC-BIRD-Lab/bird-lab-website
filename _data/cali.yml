@@ -84,6 +84,12 @@ team:
     discipline: Veterinary Medicine
     photo: /assets/img/people/michelle-hawkins.jpg
     website: https://ohi.vetmed.ucdavis.edu/people/michelle-hawkins
+  - name: Dr. Camli Badrya
+    group: Advisors
+    institution: UC Davis
+    discipline: Engineering
+    photo: /assets/img/cali/badrya.jpg
+    website: https://daal.ucdavis.edu
   - name: Dr. Hugues Beaufrère
     group: Advisors
     institution: UC Davis
