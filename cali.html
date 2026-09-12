@@ -81,7 +81,7 @@ mentoring:
          ffmpeg -i clip.gif -movflags faststart -pix_fmt yuv420p -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" clip.mp4
          ffmpeg -i clip.gif -vframes 1 clip-poster.jpg {%- endcomment -%}
     <div class="grid grid-3 u-mt-16">
-      <div class="card cali-focus">
+      <div class="card cali-focus cali-focus--video">
         {%- comment -%} tabindex="-1": no controls, so not a keyboard stop. The still below is the reduced-motion fallback. {%- endcomment -%}
         <video class="cali-focus__img cali-focus__video" autoplay muted loop playsinline tabindex="-1"
                poster="{{ '/assets/img/cali/differenced_image-poster.jpg' | relative_url }}"
@@ -90,6 +90,11 @@ mentoring:
         </video>
         <img class="cali-focus__img cali-focus__still" src="{{ '/assets/img/cali/differenced_image-poster.jpg' | relative_url }}"
              alt="A high-speed difference image tracing a bird's motion in the flight hall." loading="lazy">
+        {%- comment -%} Pause control for the loop (WCAG 2.2.2). main.js wires any .video-toggle next to a <video>; hidden under reduced motion. {%- endcomment -%}
+        <button type="button" class="video-toggle" aria-pressed="false" aria-label="Pause video">
+          <img class="icon-pause" src="{{ '/assets/img/icons/video-pause.svg' | relative_url }}" alt="" aria-hidden="true">
+          <img class="icon-play" src="{{ '/assets/img/icons/video-play.svg' | relative_url }}" alt="" aria-hidden="true">
+        </button>
         <div class="cali-focus__body">
           <h3>Measure &amp; Model Locomotion</h3>
           <p>Track and simulate locomotion to reveal how animals generate forces and moments to control movement.</p>
@@ -212,7 +217,7 @@ mentoring:
     {%- when "Affiliates" -%}
     <p class="center muted u-fs-sm cali-group-blurb">Research partners who've used the space, or will be working with us.</p>
     {%- endcase -%}
-    <ul class="cali-people{% if forloop.first %} cali-people--lead{% endif %}{% if g == "Affiliates" %} cali-people--wide{% endif %} u-mt-11">
+    <ul class="cali-people{% if forloop.first %} cali-people--lead{% endif %}">
       {%- for p in members -%}
       {%- assign nm = p.name | remove: "Dr. " | split: " " -%}
       {%- capture initials -%}{{ nm.first | slice: 0 }}{{ nm.last | slice: 0 }}{%- endcapture -%}
@@ -225,6 +230,7 @@ mentoring:
           <span class="cali-person__photo cali-person__photo--initials" aria-hidden="true">{{ initials }}</span>
           {%- endif -%}
           <span class="cali-person__name">{{ p.name }}</span>
+          {%- if p.focus and p.focus != "" -%}<span class="cali-person__focus">{{ p.focus }}</span>{%- endif -%}
           {%- if p.discipline and p.discipline != "" -%}<span class="disc disc--{{ p.discipline | slugify }}">{{ p.discipline }}</span>{%- endif -%}
           {%- if p.institution and p.institution != "" -%}<span class="cali-person__meta">{{ p.institution }}</span>{%- endif -%}
         {%- if p.website -%}</a>{%- else -%}</div>{%- endif -%}
@@ -293,19 +299,19 @@ mentoring:
 <section class="section" id="get-involved" aria-labelledby="getinv-h">
   <div class="container center">
     <h2 id="getinv-h" class="eyebrow center">Get involved</h2>
-    <p class="lead prose u-mt-10 u-mi-auto">Work with CALI's flight hall and team. Three ways in:</p>
+    <p class="lead prose u-mt-10 u-mi-auto">Work with CALI's flight hall and team: use the space, join a study, or help shape what the consortium becomes.</p>
     <div class="grid grid-3 cali-ways u-mt-16">
-      <div class="card">
+      <div class="cali-way">
         <h3>Use the facility</h3>
         <p>Book the flight hall and imaging systems as a recharge user.</p>
         <p class="u-mt-11 u-mb0"><a class="btn btn--ghost btn--sm" href="#access">See rates &rarr;</a></p>
       </div>
-      <div class="card">
+      <div class="cali-way">
         <h3>Collaborate</h3>
         <p>Co-develop a study, start a working group, or bring CALI into a grant proposal.</p>
         <p class="u-mt-11 u-mb0"><a class="btn btn--ghost btn--sm" href="mailto:{{ cali.contact_email }}?subject={{ 'CALI research collaboration' | uri_escape }}">Start a conversation &rarr;</a></p>
       </div>
-      <div class="card">
+      <div class="cali-way">
         <h3>Become a founding affiliate</h3>
         <p>We're still working out how the consortium runs. Founding affiliates help decide.</p>
         <p class="u-mt-11 u-mb0"><a class="btn btn--ghost btn--sm" href="mailto:{{ cali.contact_email }}?subject={{ 'Becoming a CALI founding affiliate' | uri_escape }}">Get in touch &rarr;</a></p>
@@ -331,27 +337,24 @@ mentoring:
     fields meet.</p>
     {%- comment -%} The flyer's four icons on the gold path. Decorative (alt=""): the cards below carry the same content. {%- endcomment -%}
     <img class="cali-path u-mt-16" src="{{ '/assets/img/cali/peer-mentoring-path.svg' | relative_url }}" alt="" width="1160" height="236" loading="lazy">
-    <div class="grid grid-3 cali-ways u-mt-16">
-      <div class="card">
+    <div class="grid grid-2 cali-ways cali-ways--2 u-mt-16">
+      <div class="cali-way">
         <h3>Who</h3>
         <p>Undergraduate, graduate, and professional students from any discipline at UC&nbsp;Davis, either
         as a mentor or a mentee.</p>
       </div>
-      <div class="card">
+      <div class="cali-way">
         <h3>What</h3>
         <p>Conversations and brainstorming about how things move, on whatever interests you both: animals,
         humans, robots, cells.</p>
       </div>
-      <div class="card">
-        <h3>When</h3>
-        {%- comment -%} Program dates: edit the text here. {%- endcomment -%}
-        <ul class="cali-dates">
-          <li><span>Welcome Session</span> October 7, 2026</li>
-          <li><span>Pair matching</span> November 2026</li>
-          <li><span>Innovation Fair</span> May 2027</li>
-        </ul>
-      </div>
     </div>
+    {%- comment -%} Program dates: edit the text here. Three steps read left to right; they stack on phones. {%- endcomment -%}
+    <ol class="cali-steps u-mt-16" aria-label="Program timeline">
+      <li><span class="cali-steps__label">Welcome Session</span><span class="cali-steps__date">October 7, 2026</span></li>
+      <li><span class="cali-steps__label">Pair matching</span><span class="cali-steps__date">November 2026</span></li>
+      <li><span class="cali-steps__label">Innovation Fair</span><span class="cali-steps__date">May 2027</span></li>
+    </ol>
     {%- if state == "open" %}
     <p class="u-mt-16"><a class="btn btn--primary" href="{{ m.form_url }}">Sign up by {{ m.closes | date: "%B %-d" }} &rarr;</a></p>
     {%- elsif state == "soon" %}
@@ -414,9 +417,23 @@ mentoring:
   .page--cali .cali-focus__still { display: none; }
   .page--cali .cali-focus__body { padding: 1.1rem 1.2rem 1.3rem; }
   .page--cali .cali-focus__body h3 { margin: 0 0 .35rem; font-size: var(--step-1); }
-  /* Reduced motion: poster frame instead of the loop (WCAG 2.2.2). */
+  /* Pause/play button on the loop card; reuses the hero toggle's look from style.css. */
+  .page--cali .cali-focus--video { position: relative; }
+  .page--cali .cali-focus--video .video-toggle {
+    position: absolute; z-index: 2; right: .7rem; top: calc(66.667% - .7rem); transform: translateY(-100%);
+    width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center;
+    padding: 0; border-radius: 50%; cursor: pointer;
+    background: rgba(11,22,45,.62); border: 1.5px solid rgba(255,255,255,.7); color: #fff;
+  }
+  .page--cali .cali-focus--video .video-toggle:hover { background: rgba(11,22,45,.85); }
+  .page--cali .cali-focus--video .video-toggle:focus-visible { outline: 3px solid var(--c-blue-500); outline-offset: 2px; }
+  .page--cali .cali-focus--video .video-toggle img { width: 18px; height: 18px; }
+  .page--cali .cali-focus--video .video-toggle .icon-play { display: none; }
+  .page--cali .cali-focus--video .video-toggle.is-paused .icon-pause { display: none; }
+  .page--cali .cali-focus--video .video-toggle.is-paused .icon-play { display: block; }
+  /* Reduced motion: poster frame instead of the loop (WCAG 2.2.2); main.js also hides the button. */
   @media (prefers-reduced-motion: reduce) {
-    .page--cali .cali-focus__video { display: none; }
+    .page--cali .cali-focus__video, .page--cali .cali-focus--video .video-toggle { display: none; }
     .page--cali .cali-focus__still { display: block; }
   }
 
@@ -426,21 +443,24 @@ mentoring:
   /* Team */
   .page--cali .cali-group-h { font-size: var(--step-0); font-weight: 700; }
   .page--cali .cali-group-blurb { max-width: 46ch; margin-inline: auto; }
-  .page--cali .cali-people { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin: 0 auto; padding: 0; list-style: none; max-width: 980px; }
+  /* margin-top lives here: this selector outranks the .u-mt-* utilities, so a utility class on the <ul> is silently ignored. */
+  .page--cali .cali-people { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin: 1.1rem auto 0; padding: 0; list-style: none; max-width: 1080px; }
   .page--cali .cali-people > li { display: flex; }
-  .page--cali .cali-person { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; text-align: center; width: 200px; background: #fff; border: 1px solid var(--c-line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.4rem 1rem 1.2rem; transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease; }
+  .page--cali .cali-person { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; text-align: center; width: 244px; background: #fff; border: 1px solid var(--c-line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.4rem 1rem 1.2rem; transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease; }
   .page--cali .cali-person__photo { width: 92px; height: 92px; border-radius: 50%; object-fit: cover; margin-bottom: .7rem; background: var(--c-sky-2); }
   .page--cali .cali-person__photo--initials { display: flex; align-items: center; justify-content: center; background: var(--c-sky); color: var(--c-blue-700); font-weight: 700; font-size: var(--step-1); }
-  .page--cali .cali-person__name { font-weight: 700; line-height: 1.2; }
+  /* Two-line minimum keeps focus/pill rows level across a row when one name wraps. */
+  .page--cali .cali-person__name { font-weight: 700; line-height: 1.2; min-height: 2.4em; display: flex; align-items: center; }
+  /* Focus: 2-4 words, from _data/cali.yml. Serif italic so it reads as a subtitle, not a second tag. One line, clipped. */
+  .page--cali .cali-person__focus { font-family: var(--font-display); font-style: italic; font-size: var(--step--1); color: var(--c-muted); line-height: 1.3; margin: .15rem 0 .4rem; max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   /* margin-top:auto keeps affiliations aligned across cards when a name wraps. */
   .page--cali .cali-person__meta { color: var(--c-muted); font-size: var(--step--1); margin-top: auto; padding-top: .3rem; }
   .page--cali a.cali-person--link { text-decoration: none; color: inherit; }
   .page--cali a.cali-person--link:hover, .page--cali a.cali-person--link:focus-visible { transform: translateY(-3px); box-shadow: var(--shadow-lg); border-color: var(--c-blue-500); }
   .page--cali a.cali-person--link:hover .cali-person__name { text-decoration: underline; }
-  /* First group (Directors): larger card + gold accent. */
-  .page--cali .cali-people--lead .cali-person { width: 244px; border-top: 3px solid var(--cali-accent); padding-top: 1.5rem; }
+  /* First group (Directors): larger portrait + gold accent. */
+  .page--cali .cali-people--lead .cali-person { border-top: 3px solid var(--cali-accent); padding-top: 1.5rem; }
   .page--cali .cali-people--lead .cali-person__photo { width: 120px; height: 120px; }
-  .page--cali .cali-people--wide { max-width: 1080px; }
 
   /* Using CALI */
   .page--cali .cali-access { display: grid; grid-template-columns: minmax(230px, 300px) 1fr; gap: clamp(1.5rem, 4vw, 3rem); align-items: start; }
@@ -484,6 +504,8 @@ mentoring:
     .page--cali .rate-table th[scope="row"] { display: block; width: auto; padding: 0 0 .5rem; border: 0; background: none; color: var(--c-navy); text-align: left; }
     .page--cali .rate-table tbody tr:hover td { background: none; }
     .page--cali .rate-table td { display: flex; justify-content: space-between; gap: 1rem; width: auto; text-align: right; padding: .35rem 0; border: 0; border-top: 1px solid var(--c-line); white-space: normal; }
+    /* The desktop td:last-child padding-right otherwise nudges the Industry amount left of the other two. */
+    .page--cali .rate-table td:last-child { padding-right: 0; }
     .page--cali .rate-tier { display: block; font-weight: 600; color: var(--c-ink-soft); text-align: left; }
   }
 
@@ -501,7 +523,7 @@ mentoring:
   }
 
   /* Discipline tags */
-  .page--cali .disc { display: inline-block; margin: .1rem 0 .35rem; padding: .2rem .66rem; border-radius: 999px; font-size: .74rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; background: var(--c-sky); color: var(--c-blue-700); }
+  .page--cali .disc { display: inline-block; white-space: nowrap; margin: .1rem 0 .35rem; padding: .2rem .66rem; border-radius: 999px; font-size: .74rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; background: var(--c-sky); color: var(--c-blue-700); }
   .page--cali .disc--engineering { background: #e4ecfb; color: #22406b; }
   .page--cali .disc--veterinary-medicine { background: #e2f1e8; color: #1c5f34; }
   .page--cali .disc--biology { background: #dcefee; color: #0f5a63; }
@@ -551,18 +573,27 @@ mentoring:
 
   .page--cali .cali-join { text-align: center; }
   .page--cali .cali-join .lead { max-width: 46ch; margin-inline: auto; }
-  .page--cali .cali-ways { max-width: 920px; margin-inline: auto; grid-template-columns: repeat(3, 1fr); }
-  @media (max-width: 680px) { .page--cali .cali-ways { grid-template-columns: 1fr; } }
-  .page--cali .cali-ways .card h3 { margin: 0 0 .3rem; font-size: var(--step-1); }
-  .page--cali .cali-ways .card a:not(.btn) { text-decoration: underline; }
-  .page--cali .cali-ways .card { display: flex; flex-direction: column; }
-  .page--cali .cali-ways .card > p:last-child { margin-top: auto; }
-  .page--cali #mentoring .card > p:last-child { margin-top: 0; }   /* no button to pin */
+  /* Get involved / mentoring: three (or two) plain columns, a gold rule on top of each. No card chrome: the page already has enough cards. */
+  .page--cali .cali-ways { max-width: 920px; margin-inline: auto; grid-template-columns: repeat(3, 1fr); gap: clamp(1.2rem, 3vw, 2.4rem); text-align: left; }
+  .page--cali .cali-ways--2 { max-width: 720px; grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 680px) { .page--cali .cali-ways, .page--cali .cali-ways--2 { grid-template-columns: 1fr; } }
+  .page--cali .cali-way { display: flex; flex-direction: column; border-top: 3px solid var(--cali-accent); padding-top: .9rem; }
+  .page--cali .cali-way h3 { margin: 0 0 .3rem; font-size: var(--step-1); }
+  .page--cali .cali-way p { margin: 0; }
+  .page--cali .cali-way > p:last-child { margin-top: auto; padding-top: .9rem; }
   /* Peer mentoring: the icon strip from the flyer. Width/height attributes keep the layout from jumping while it loads. */
   .page--cali .cali-path { display: block; width: 100%; max-width: 760px; height: auto; margin-inline: auto; }
-  /* Peer mentoring "When" card: label + date per line. */
-  .page--cali .cali-dates { list-style: none; margin: 0; padding: 0; text-align: left; }
-  .page--cali .cali-dates li { padding: .35rem 0; border-top: 1px solid var(--c-line); }
-  .page--cali .cali-dates li:first-child { border-top: 0; padding-top: 0; }
-  .page--cali .cali-dates li span { display: block; font-weight: 700; color: var(--c-navy); font-size: var(--step--1); }
+  /* Peer mentoring dates: three steps on one line, joined by a rule; stacked with a left rule on phones. */
+  .page--cali .cali-steps { list-style: none; margin: 2.2rem auto 0; padding: 0; max-width: 720px; display: grid; grid-template-columns: repeat(3, 1fr); position: relative; counter-reset: step; }
+  .page--cali .cali-steps::before { content: ""; position: absolute; left: 16.667%; right: 16.667%; top: 7px; border-top: 2px solid var(--c-line); }
+  .page--cali .cali-steps li { position: relative; padding-top: 1.3rem; text-align: center; }
+  .page--cali .cali-steps li::before { content: ""; position: absolute; left: 50%; top: 0; width: 16px; height: 16px; margin-left: -8px; border-radius: 50%; background: var(--cali-accent); border: 3px solid #fff; box-shadow: 0 0 0 1px var(--c-line); }
+  .page--cali .cali-steps__label { display: block; font-weight: 700; color: var(--c-navy); }
+  .page--cali .cali-steps__date { display: block; color: var(--c-muted); font-size: var(--step--1); }
+  @media (max-width: 620px) {
+    .page--cali .cali-steps { grid-template-columns: 1fr; gap: 1rem; padding-left: 1.6rem; border-left: 2px solid var(--c-line); text-align: left; }
+    .page--cali .cali-steps::before { display: none; }
+    .page--cali .cali-steps li { padding-top: 0; text-align: left; }
+    .page--cali .cali-steps li::before { left: calc(-1.6rem - 8px); top: .15rem; margin-left: 0; }
+  }
 </style>

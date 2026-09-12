@@ -173,6 +173,24 @@ class ValidatorTestCase(unittest.TestCase):
         self.write("facilities.yml", facilities)
         self.assertFlags(vc.check_facilities, "photo_alt")
 
+    def test_cali_unknown_group_is_caught(self):
+        cali = self.read("cali.yml")
+        cali["team"][0]["group"] = "Directorz"
+        self.write("cali.yml", cali)
+        self.assertFlags(vc.check_cali_team, "Directorz")
+
+    def test_cali_long_focus_is_caught(self):
+        cali = self.read("cali.yml")
+        cali["team"][0]["focus"] = "a focus line that is far too long for the card"
+        self.write("cali.yml", cali)
+        self.assertFlags(vc.check_cali_team, "cut off")
+
+    def test_cali_missing_photo_is_caught(self):
+        cali = self.read("cali.yml")
+        cali["team"][0]["photo"] = "/assets/img/cali/nobody.jpg"
+        self.write("cali.yml", cali)
+        self.assertFlags(vc.check_cali_team, "nobody.jpg")
+
     def test_unknown_news_type_is_caught(self):
         updates = self.read("updates.yml")
         updates[0]["events"][0]["type"] = "gossip"

@@ -374,6 +374,44 @@ def check_facilities():
                             "it, and WCAG AA requires it.")
 
 
+# Keep in step with the .disc--* colours in cali.html; anything else renders grey without warning.
+CALI_DISCIPLINES = ("Engineering", "Veterinary Medicine", "Biology", "Zoology",
+                    "Neuroscience", "Animation", "Ecology", "Computer Science")
+CALI_FOCUS_MAX = 32   # longer is clipped with an ellipsis on the card
+
+
+def check_cali_team():
+    cali = load("cali.yml")
+    if not isinstance(cali, dict):
+        return
+    groups = cali.get("team_groups") or []
+    for person in cali.get("team") or []:
+        if not isinstance(person, dict):
+            continue
+        name = person.get("name", "(unnamed)")
+        group = person.get("group")
+        if group not in groups:
+            yield error("_data/cali.yml",
+                        f"'{name}' has group `{group}`, which isn't in `team_groups`; the card won't show.",
+                        "Use one of: " + ", ".join(groups) + ".")
+        disc = person.get("discipline")
+        if disc and disc not in CALI_DISCIPLINES:
+            yield warn("_data/cali.yml",
+                       f"'{name}' has discipline `{disc}`, which has no colour in cali.html (shows grey).",
+                       "Use one of: " + ", ".join(CALI_DISCIPLINES)
+                       + ", or add a `.disc--" + re.sub(r"[^a-z0-9]+", "-", str(disc).lower()).strip("-")
+                       + "` rule in cali.html.")
+        focus = person.get("focus")
+        if focus and len(str(focus)) > CALI_FOCUS_MAX:
+            yield error("_data/cali.yml",
+                        f"'{name}' has a focus of {len(str(focus))} characters; it will be cut off on the card.",
+                        f"Keep `focus:` to {CALI_FOCUS_MAX} characters or fewer.")
+        photo = person.get("photo")
+        if photo and not asset_exists(photo):
+            yield error("_data/cali.yml", f"'{name}' has photo `{photo}`, which isn't in the repo.",
+                        "Upload it to assets/img/cali/, or remove the `photo:` line for an initials circle.")
+
+
 def check_updates():
     """News types must agree across updates.yml, the issue form and issue_to_change.py."""
     updates = load("updates.yml")
@@ -564,6 +602,7 @@ CHECKS = [
     check_pub_links,
     check_press,
     check_facilities,
+    check_cali_team,
     check_updates,
     check_person_roles_match_form,
     check_openings,

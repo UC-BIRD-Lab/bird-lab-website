@@ -62,8 +62,11 @@ equipment:
 # Team. Per person: name (required); group (must match team_groups);
 # institution (shown under the name); discipline (colored tag; colors exist in
 # cali.html for Engineering, Veterinary Medicine, Biology, Zoology,
-# Neuroscience, Animation, others show neutral); photo (optional square JPG,
-# else an initials circle); website (optional, links the whole card).
+# Neuroscience, Animation, others show neutral); focus (optional, 2-4 words,
+# lowercase, about 28 characters max: what they actually work on, shown in
+# italics under the name; longer text is clipped with an ellipsis); photo
+# (optional square JPG, else an initials circle); website (optional, links the
+# whole card).
 # team_groups sets heading order; each heading's one-line description is in
 # cali.html (a group without one renders with no description).
 team_groups:
@@ -76,84 +79,98 @@ team:
     group: Directors
     institution: UC Davis
     discipline: Engineering
+    focus: avian flight & morphing UAVs
     photo: /assets/img/people/christina-harvey.jpg
     website: https://mae.ucdavis.edu/people/christina-harvey
   - name: Dr. Michelle Hawkins
     group: Directors
     institution: UC Davis
     discipline: Veterinary Medicine
+    focus: raptor medicine & analgesia
     photo: /assets/img/people/michelle-hawkins.jpg
     website: https://ohi.vetmed.ucdavis.edu/people/michelle-hawkins
   - name: Dr. Camli Badrya
     group: Advisors
     institution: UC Davis
     discipline: Engineering
+    focus: unsteady aerodynamics & CFD
     photo: /assets/img/cali/badrya.jpg
     website: https://daal.ucdavis.edu
   - name: Dr. Hugues Beaufrère
     group: Advisors
     institution: UC Davis
     discipline: Veterinary Medicine
+    focus: avian lipids & pharmacology
     photo: /assets/img/cali/beaufrere.jpg
     website: https://www.vetmed.ucdavis.edu/faculty/hugues-h-beaufrere
   - name: Dr. Stacey Combes
     group: Advisors
     institution: UC Davis
     discipline: Biology
+    focus: insect flight biomechanics
     photo: /assets/img/cali/combes.jpg
     website: https://combeslab.faculty.ucdavis.edu
   - name: Andrew Engilis Jr.
     group: Advisors
     institution: UC Davis
     discipline: Ecology
+    focus: avian diversity & biogeography
     photo: /assets/img/cali/engilis.jpg
     website: https://mwfb.ucdavis.edu/staff/andrew-engilisjr
   - name: Dr. Stephen Robinson
     group: Advisors
     institution: UC Davis
     discipline: Engineering
+    focus: human-automation teaming & UAVs
     photo: /assets/img/cali/robinson.jpg
     website: https://hrvip.ucdavis.edu
   - name: Dr. Michael Neff
     group: Advisors
     institution: UC Davis
     discipline: Computer Science
+    focus: computation & human movement
     photo: /assets/img/cali/neff.jpg
     website: https://www.cs.ucdavis.edu/~neff/
   - name: Dr. Sergey Stavisky
     group: Advisors
     institution: UC Davis
     discipline: Neuroscience
+    focus: speech & motor neuroprosthetics
     photo: /assets/img/cali/stavisky.jpg
     website: https://neuroprosthetics.science
   - name: Dr. Wenzhong Yan
     group: Advisors
     institution: UC Davis
     discipline: Engineering
+    focus: origami & soft robotics
     photo: /assets/img/cali/yan.jpg
     website: https://wzyan24.wixsite.com/wenzhong-yan
   - name: Dr. Kevin Haughn
     group: Affiliates
     institution: Rose-Hulman Institute of Technology
     discipline: Engineering
+    focus: bio-inspired & morphing flight
     photo: /assets/img/people/kevin-haughn.jpg
     website: https://haughn-morph-lab.github.io/morph-lab.github.io/
   - name: Dr. Lydia France
     group: Affiliates
     institution: University of Oxford
-    discipline: Zoology
+    discipline: Biology
+    focus: animal movement dynamics
     photo: /assets/img/people/lydia-france.jpg
     website: https://lydiafrance.github.io/LydiaFrance/
   - name: Juan Sebastian Niño Florez
     group: Affiliates
     institution: "Freelance"
     discipline: Animation
+    focus: character & creature animation
     photo: /assets/img/people/seb-nino-florez.jpg
     website: https://www.imdb.com/name/nm6695637/
   - name: Dr. Chris Clark
     group: Affiliates
     institution: UC Riverside
     discipline: Biology
+    focus: sounds of animal flight
     photo: /assets/img/cali/clark.jpeg
     website: https://animalaeroacoustics.ucr.edu/
 
