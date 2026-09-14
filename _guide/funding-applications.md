@@ -6,7 +6,7 @@ summary: How to approach fellowships and grants, what reviewers may look for and
 description: "Fellowships worth applying for, and what reviewers tend to reward when they read a proposal."
 keywords: [funding, fellowships, grants, scholarships, proposals, stipend]
 icon: "💰"
-reviewed: 2026-07-05
+reviewed: 2026-09-14
 ---
 
 
@@ -74,3 +74,12 @@ Never use AI for first drafts, it'll add em dashes everywhere and the risk that 
 - **Get multiple reviewers.** Review panels are made of many people usually. You can't make everyone happy, but you can try! Have several people read and edit your application, and give them a specific list of what the granting agency is looking for.
 - **Use AI appropriately.** Rather than having AI draft prose, Christina prefers to use AI tools as "pre-reviewers". She uses prompts to request checks for typos and grammar, and ensure that the logical flow is sound and paragraphs are clear and understandable. See [Using AI]({{ '/lab-guide/using-ai/' | relative_url }}) for the lab's full policy.
 
+## Report what you apply for and what you win
+
+<div class="callout callout--stop" markdown="1">
+**Email Christina every time you apply for, or receive, a fellowship, award, or funded contract.** Federal grant applications require Christina to certify the lab's current and pending support, including outside funding for people in the lab, so she needs these on file.
+</div>
+
+- **When you apply:** what you applied for, the amount requested, and the proposed start and end dates.
+- **When you hear back:** the outcome, either way. If funded, forward the award letter and note whether it covers your full stipend or salary.
+- **If anything changes:** renewals, supplements, or withdrawals.

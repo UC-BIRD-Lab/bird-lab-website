@@ -149,7 +149,7 @@ team:
     group: Affiliates
     institution: Rose-Hulman Institute of Technology
     discipline: Engineering
-    focus: bio-inspired & morphing flight
+    focus: smart materials & morphing flight
     photo: /assets/img/people/kevin-haughn.jpg
     website: https://haughn-morph-lab.github.io/morph-lab.github.io/
   - name: Dr. Lydia France
@@ -170,7 +170,7 @@ team:
     group: Affiliates
     institution: UC Riverside
     discipline: Biology
-    focus: sounds of animal flight
+    focus: animal aeroacoustics
     photo: /assets/img/cali/clark.jpeg
     website: https://animalaeroacoustics.ucr.edu/
 
