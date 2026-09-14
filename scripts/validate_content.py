@@ -377,7 +377,7 @@ def check_facilities():
 # Keep in step with the .disc--* colours in cali.html; anything else renders grey without warning.
 CALI_DISCIPLINES = ("Engineering", "Veterinary Medicine", "Biology", "Zoology",
                     "Neuroscience", "Animation", "Ecology", "Computer Science")
-CALI_FOCUS_MAX = 32   # longer is clipped with an ellipsis on the card
+CALI_FOCUS_MAX = 64   # the card shows two lines of focus text; longer is clipped
 
 
 def check_cali_team():
@@ -403,9 +403,9 @@ def check_cali_team():
                        + "` rule in cali.html.")
         focus = person.get("focus")
         if focus and len(str(focus)) > CALI_FOCUS_MAX:
-            yield error("_data/cali.yml",
-                        f"'{name}' has a focus of {len(str(focus))} characters; it will be cut off on the card.",
-                        f"Keep `focus:` to {CALI_FOCUS_MAX} characters or fewer.")
+            yield warn("_data/cali.yml",
+                       f"'{name}' has a focus of {len(str(focus))} characters; it may be cut off on the card.",
+                       f"Keep `focus:` to about {CALI_FOCUS_MAX} characters or fewer.")
         photo = person.get("photo")
         if photo and not asset_exists(photo):
             yield error("_data/cali.yml", f"'{name}' has photo `{photo}`, which isn't in the repo.",

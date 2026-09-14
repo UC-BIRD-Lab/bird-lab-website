@@ -181,7 +181,7 @@ class ValidatorTestCase(unittest.TestCase):
 
     def test_cali_long_focus_is_caught(self):
         cali = self.read("cali.yml")
-        cali["team"][0]["focus"] = "a focus line that is far too long for the card"
+        cali["team"][0]["focus"] = "a focus line that is far, far too long for even two lines of the card"
         self.write("cali.yml", cali)
         self.assertFlags(vc.check_cali_team, "cut off")
 
