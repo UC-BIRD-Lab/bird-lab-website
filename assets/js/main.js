@@ -100,55 +100,58 @@
     btn.addEventListener("click", function () { collapsed = !collapsed; apply(); });
   });
 
-  // ---- Hero video pause/play (WCAG 2.2.2) ----
+  // ---- Video pause/play (WCAG 2.2.2) ----
+  // Any .video-toggle whose parent also holds a <video> (the home hero, the CALI loop card).
   // Under prefers-reduced-motion the CSS hides the video, so pause it and hide the button.
-  var heroVideo = document.querySelector(".hero .section-bg");
-  var heroToggle = document.querySelector(".video-toggle");
-  if (heroVideo && heroToggle) {
-    var reduceMotion = window.matchMedia
-      && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var reduceMotion = window.matchMedia
+    && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function wireVideoToggle(toggle) {
+    var video = toggle.parentElement && toggle.parentElement.querySelector("video");
+    if (!video) return;
+    var what = toggle.getAttribute("data-video-name") || "video";
 
     function setToggleState(playing) {
-      heroToggle.setAttribute("aria-pressed", playing ? "false" : "true");
-      heroToggle.setAttribute(
-        "aria-label", playing ? "Pause background video" : "Play background video");
-      heroToggle.classList.toggle("is-paused", !playing);
+      toggle.setAttribute("aria-pressed", playing ? "false" : "true");
+      toggle.setAttribute("aria-label", (playing ? "Pause " : "Play ") + what);
+      toggle.classList.toggle("is-paused", !playing);
     }
 
     if (reduceMotion) {
-      try { heroVideo.pause(); } catch (e) {}
-      heroToggle.hidden = true;
-    } else {
-      setToggleState(!heroVideo.paused);
-      var userPaused = false;   // set only by the visitor's toggle click
-      heroToggle.addEventListener("click", function () {
-        if (heroVideo.paused) {
-          userPaused = false;
-          heroVideo.play();
-          setToggleState(true);
-        } else {
-          userPaused = true;
-          heroVideo.pause();
-          setToggleState(false);
-        }
-      });
-      heroVideo.addEventListener("play", function () { setToggleState(true); });
-      heroVideo.addEventListener("pause", function () { setToggleState(false); });
-
-      // Mobile browsers may ignore autoplay (Low Power Mode, data saver): nudge once now
-      // and once on first touch. Never overrides the visitor's own pause.
-      function nudgePlay() {
-        if (!heroVideo.paused || userPaused) return;
-        var p = heroVideo.play();
-        if (p && p.catch) p.catch(function () {});
-      }
-      nudgePlay();
-      document.addEventListener("touchstart", function onFirstTouch() {
-        document.removeEventListener("touchstart", onFirstTouch);
-        nudgePlay();
-      }, { passive: true });
+      try { video.pause(); } catch (e) {}
+      toggle.hidden = true;
+      return;
     }
+    setToggleState(!video.paused);
+    var userPaused = false;   // set only by the visitor's toggle click
+    toggle.addEventListener("click", function () {
+      if (video.paused) {
+        userPaused = false;
+        video.play();
+        setToggleState(true);
+      } else {
+        userPaused = true;
+        video.pause();
+        setToggleState(false);
+      }
+    });
+    video.addEventListener("play", function () { setToggleState(true); });
+    video.addEventListener("pause", function () { setToggleState(false); });
+
+    // Mobile browsers may ignore autoplay (Low Power Mode, data saver): nudge once now
+    // and once on first touch. Never overrides the visitor's own pause.
+    function nudgePlay() {
+      if (!video.paused || userPaused) return;
+      var p = video.play();
+      if (p && p.catch) p.catch(function () {});
+    }
+    nudgePlay();
+    document.addEventListener("touchstart", function onFirstTouch() {
+      document.removeEventListener("touchstart", onFirstTouch);
+      nudgePlay();
+    }, { passive: true });
   }
+  document.querySelectorAll(".video-toggle").forEach(wireVideoToggle);
 
   // ---- Wiki sidebar fold ----
   // The <details> ships open (no-JS fallback); closed below 820px, reopened if the window widens.
