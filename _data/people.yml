@@ -111,8 +111,9 @@ groups:
         pronouns: he/him
         field: "Mech + Aero Engineering"
         start: 2024
-        photo: /assets/img/people/joshua-booth.jpg
+        photo: /assets/img/people/Joshua-Booth_NASA.jpg
         email: jmbooth@ucdavis.edu
+        linkedin: https://www.linkedin.com/in/joshua-booth
         note: Maneuverability & agility in morphing-wing dynamics.
   # Kept while empty so a submitted "MSc Student" auto-files here; hidden on the
   # site until it has members. `members: []` must stay for the build.
