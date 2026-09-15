@@ -37,6 +37,17 @@ groups:
   - id: phd
     title: PhD Researchers
     members:
+      - name: Huanglun Adam Zhu
+        role: PhD Researcher
+        start: 2023
+        pronouns: he/him
+        field: "Mech + Aero Engineering"
+        email: lszhu@ucdavis.edu
+        linkedin: https://www.linkedin.com/in/adam-zhu-huanglun/
+        website: https://scholar.google.com/citations?user=vT-NdKsAAAAJ&hl=en
+        orcid: 0009-0003-8318-3657
+        note: "Bird-inspired sensory system for aerodynamic state perception"
+        # photo: /assets/img/people/huanglun-adam-zhu.jpg   # add after uploading a headshot
       - name: Kaleb Bordner
         role: PhD Candidate
         pronouns: he/him
