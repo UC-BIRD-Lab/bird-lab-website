@@ -202,10 +202,14 @@ the news entry and social captions (`--append` inserts the entry).
   [guide-link-check](.github/workflows/guide-link-check.yml) and
   [link-rot-check](.github/workflows/link-rot-check.yml) (quarterly, one issue
   each; locally `python scripts/check_links.py`).
-- Images: a PR touching `assets/` fails over budget (numbers at the top of
-  `scripts/optimize_images.py`); after merge
-  [optimize-images](.github/workflows/optimize-images.yml) compresses and opens
-  a PR. Locally `python scripts/optimize_images.py` (`--check` to list only).
+- Images: on a PR touching `assets/`,
+  [optimize-images](.github/workflows/optimize-images.yml) compresses any
+  oversized image, pushes it onto the PR branch and re-runs the checks there
+  (numbers at the top of `scripts/optimize_images.py`); the check fails only
+  on video, GIFs, SVGs or an image it couldn't shrink enough. A fork's branch
+  can't be pushed to, so a fork PR just fails with the list. After a direct
+  push to `main` it compresses and opens a PR. Locally
+  `python scripts/optimize_images.py` (`--check` to list only).
 - Merge Dependabot PRs one at a time.
 
 ---
