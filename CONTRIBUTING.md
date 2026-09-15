@@ -73,8 +73,10 @@ the worst case is an unmerged pull request.
 ## Checks on every pull request
 
 Content validation (names, DOIs, image paths resolve), links and images,
-WCAG 2.1 AA scan, media budget. The PI's direct pushes are checked after the
-fact (MAINTENANCE.md). Monthly publications PR, quarterly staleness sweep and
+WCAG 2.1 AA scan, media budget. An oversized photo doesn't fail you: the bot
+compresses it and pushes the smaller file onto your branch (pull before
+editing again). The PI's direct pushes are checked after the fact
+(MAINTENANCE.md). Monthly publications PR, quarterly staleness sweep and
 Dependabot run on top.
 
 ## YAML

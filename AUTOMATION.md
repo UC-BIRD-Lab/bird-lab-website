@@ -8,7 +8,7 @@ work and can be run by hand.
 | Workflow | Runs | Does | Result |
 |---|---|---|---|
 | `site-checks.yml` | every PR | content validation, links and images, WCAG 2.1 AA scan | blocks merge on failure |
-| `optimize-images.yml` | PRs touching `assets/`; merges to `main` | PR: fails over budget. Merge: compresses | blocks merge, or PR with smaller files |
+| `optimize-images.yml` | PRs touching `assets/`; merges to `main` | PR: compresses oversized images and pushes them onto the branch; fails only on what it can't fix (video, GIF, SVG). Merge: compresses | commit on the PR, or PR with smaller files |
 | `deploy.yml` | merge to `main` | build and publish | live site updates |
 | `update-publications.yml` | 1st of the month | new OpenAlex papers by ORCID, with open-access links | PR editing `_data/publications.yml` |
 | `issue-to-pr.yml` | issue form submitted | form → `_data` entry | PR; issue closes on merge |

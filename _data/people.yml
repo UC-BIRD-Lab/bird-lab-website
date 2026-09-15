@@ -37,6 +37,19 @@ groups:
   - id: phd
     title: PhD Researchers
     members:
+      - name: Huanglun Adam Zhu
+        aliases: ["Adam Zhu", "Huanglun (Adam) Zhu", "Huanglun Zhu"]
+        role: PhD Researcher
+        start: 2023
+        pronouns: he/him
+        field: "Mech + Aero Engineering"
+        email: lszhu@ucdavis.edu
+        linkedin: https://www.linkedin.com/in/adam-zhu-huanglun/
+        website: https://scholar.google.com/citations?user=vT-NdKsAAAAJ&hl=en
+        orcid: 0009-0003-8318-3657
+        note: "Bird-inspired sensory system for aerodynamic state perception"
+        photo: /assets/img/people/huanglun-zhu.jpg  
+
       - name: Kaleb Bordner
         role: PhD Candidate
         pronouns: he/him
@@ -62,17 +75,6 @@ groups:
         note: Aerodynamics of bird perching.
         awards:
           - "ORAU Fellowship"
-      - name: Huanglun (Adam) Zhu
-        aliases: ["Adam Zhu"]
-        role: PhD Researcher
-        pronouns: he/him
-        field: "Mech + Aero Engineering"
-        start: 2023
-        photo: /assets/img/people/huanglun-zhu.jpg
-        email: lszhu@ucdavis.edu
-        orcid: 0009-0003-8318-3657
-        linkedin: https://www.linkedin.com/in/adam-zhu-huanglun/
-        note: Nares-inspired pressure sensing for formation flight.
       - name: Alex Fillman
         role: PhD Researcher
         pronouns: she/her
@@ -111,8 +113,9 @@ groups:
         pronouns: he/him
         field: "Mech + Aero Engineering"
         start: 2024
-        photo: /assets/img/people/joshua-booth.jpg
+        photo: /assets/img/people/Joshua-Booth_NASA.jpg
         email: jmbooth@ucdavis.edu
+        linkedin: https://www.linkedin.com/in/joshua-booth
         note: Maneuverability & agility in morphing-wing dynamics.
   # Kept while empty so a submitted "MSc Student" auto-files here; hidden on the
   # site until it has members. `members: []` must stay for the build.
