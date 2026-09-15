@@ -3,13 +3,19 @@ name: Optimize images
 # rather than wording. It describes how the site is built, not how the lab works;
 # lab policy lives in _guide/. See accessibility.md, "How this site is made".
 
-# When images land in assets/img/ (a push to main that touches them, or a manual
-# run), compress any that are oversized and, if anything shrank, open a pull request
-# with the smaller files. A human reviews and merges; nothing is republished
-# without that review, same as the publications bot.
+# Two jobs, one script (scripts/optimize_images.py):
 #
-# Why a PR and not an auto-commit: it keeps the "bot proposes, human approves" flow,
-# and lets you eyeball that a compressed photo still looks right before it ships.
+# * Pull request touching assets/ ("Media budget"): compress any oversized
+#   image on the PR branch and push the smaller file back onto that branch, so
+#   a contributor who drops in a full-size phone photo isn't blocked. Then
+#   check what's left and fail only on what the compressor never touches
+#   (video, GIFs, SVGs) or couldn't get under budget.
+#
+# * Push to main touching assets/img/, or a manual run on main ("compress"):
+#   compress and open a PR with the smaller files, for images that reached
+#   main without a PR (the PI's direct pushes).
+#
+# Nothing goes live without a human merge in either case.
 on:
   pull_request:
     paths:
@@ -23,36 +29,110 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  actions: write   # to re-run the checks on the commit this workflow pushes
 
 jobs:
-  # Blocks on pull requests. Compression used to run only after images reached
-  # main, by which point deployment had already shipped them. This checks before
-  # the merge, and changes nothing.
-  #
-  # Also covers video, GIFs and SVGs, which the compressor never rewrites.
   budget:
     name: Media budget
-    if: github.event_name == 'pull_request'
+    if: >-
+      github.event_name == 'pull_request' ||
+      (github.event_name == 'workflow_dispatch' && github.ref_name != 'main')
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
+    env:
+      # The workflow token can only push to branches in this repo, not to a
+      # fork, and only a PR event tells us which branch to push to.
+      CAN_PUSH: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository }}
+      BRANCH: ${{ github.head_ref || github.ref_name }}
     steps:
       - uses: actions/checkout@v7
+        with:
+          # The PR branch itself (not GitHub's merge preview) so a commit can go
+          # back onto it. Empty means the default: the merge preview for a fork
+          # PR, the chosen branch for a manual run.
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.head_ref || '' }}
+
       - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
       - name: Install Pillow
         run: pip install Pillow
-      - name: Check images, video and SVGs against the budget
+
+      - name: Compress oversized images on the PR branch
+        if: env.CAN_PUSH == 'true'
+        run: |
+          set -o pipefail
+          python scripts/optimize_images.py | tee compress.log
+
+      - name: Push the compressed images back onto the branch
+        id: push
+        if: env.CAN_PUSH == 'true'
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- assets/img; then
+            echo "Nothing was compressed; nothing to push."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- assets/img
+          {
+            echo "Compress images to fit the media budget"
+            echo
+            grep '✓' compress.log || true
+          } > commit-message.txt
+          git commit -F commit-message.txt
+          git push origin "HEAD:$BRANCH"
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Tell the contributor what happened
+        if: steps.push.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          {
+            echo "🪶 One or more images here were over the site's media budget, so I"
+            echo "compressed them and pushed the smaller versions onto this branch:"
+            echo
+            echo '```'
+            grep '✓' compress.log || true
+            echo '```'
+            echo
+            echo "Please glance at the compressed version to check it still looks right."
+            echo "If you edit this branch again on your computer, \`git pull\` first so"
+            echo "you pick up that commit. The checks are re-running on it now."
+          } > comment.md
+          gh pr comment "${{ github.event.pull_request.number }}" --body-file comment.md
+
+      - name: Re-run the checks on the commit just pushed
+        # A push made with the workflow token doesn't trigger workflows on its
+        # own, so the PR would otherwise sit at "waiting for status". A manual
+        # dispatch does run, and its check runs land on the new commit.
+        if: steps.push.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh workflow run site-checks.yml --ref "$BRANCH"
+          gh workflow run optimize-images.yml --ref "$BRANCH"
+
+      - name: Check what's left against the budget
+        # Video, GIFs and SVGs are never rewritten; an image can also be too big
+        # for the compressor to fix. Those still need a human.
         run: python scripts/optimize_images.py --check
 
   compress:
-    if: github.event_name != 'pull_request'
+    if: >-
+      github.event_name == 'push' ||
+      (github.event_name == 'workflow_dispatch' && github.ref_name == 'main')
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Set up Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v7
         with:
           python-version: "3.12"
 
