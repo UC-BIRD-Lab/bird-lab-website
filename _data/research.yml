@@ -98,6 +98,7 @@ projects:
     lead: Joshua Booth
     contact: jmbooth@ucdavis.edu
     theme: mechanics-dynamics
+    image: /assets/img/research/morphingwing.jpg
     blurb: >-
       Connecting morphing-wing dynamics to the maneuverability and agility
       metrics that matter for real flight.

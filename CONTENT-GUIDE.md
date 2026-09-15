@@ -432,8 +432,9 @@ recognition, featured in, latest news. Logos in `assets/img/partners/`.
 | Background video | 1080p, short loop | 2.5 MB |
 | Animated GIF | prefer MP4 | 700 KB |
 
-Over the limit fails the **Media budget** check. Images are compressed after
-merge; video and GIFs are not. Mac one-liner:
+Over the limit on a pull request, the **Media budget** check compresses the
+image and pushes it back onto your branch; only video, GIFs and an image it
+can't shrink enough fail. To do it yourself first, Mac one-liner:
 ```bash
 sips -s format jpeg -s formatOptions 82 input.jpg --resampleWidth 1280 --out output.jpg
 ```
