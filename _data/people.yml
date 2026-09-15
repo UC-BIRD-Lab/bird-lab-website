@@ -74,14 +74,14 @@ groups:
         linkedin: https://www.linkedin.com/in/adam-zhu-huanglun/
         note: Nares-inspired pressure sensing for formation flight.
       - name: Alex Fillman
-        role: PhD Researcher
+        role: Postdoctoral Scholar
         pronouns: she/her
-        field: "Mech + Aero Engineering"
+        field: "Mechanical and Aerospace Engineering"
         start: 2024
         photo: /assets/img/people/alex-fillman.jpg
         email: alfillman@ucdavis.edu
-        linkedin: http://linkedin.com/in/alex-fillman
-        note: Range-of-motion quantification.
+        linkedin: https://www.linkedin.com/in/alex-fillman/
+        note: "Avian tail range of motion and coupling"
         awards:
           - "Maury Hull Fellowship"
           - "N&M Sarigul-Klijn Award"
