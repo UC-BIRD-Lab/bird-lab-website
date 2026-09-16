@@ -37,6 +37,19 @@ groups:
   - id: phd
     title: PhD Researchers
     members:
+      - name: Huanglun Adam Zhu
+        aliases: ["Adam Zhu", "Huanglun (Adam) Zhu", "Huanglun Zhu"]
+        role: PhD Researcher
+        start: 2023
+        pronouns: he/him
+        field: "Mech + Aero Engineering"
+        email: lszhu@ucdavis.edu
+        linkedin: https://www.linkedin.com/in/adam-zhu-huanglun/
+        website: https://scholar.google.com/citations?user=vT-NdKsAAAAJ&hl=en
+        orcid: 0009-0003-8318-3657
+        note: "Bird-inspired sensory system for aerodynamic state perception"
+        photo: /assets/img/people/huanglun-zhu.jpg  
+
       - name: Kaleb Bordner
         role: PhD Candidate
         pronouns: he/him
@@ -53,26 +66,15 @@ groups:
           - "ORAU Fellowship"
       - name: Francisco Jackson
         role: PhD Candidate
-        pronouns: he/him
-        field: "Physics"
+        pronouns: he/him/they
+        field: "Mechanical and Aerospace Engineering (formerly Physics)"
         start: 2023
         photo: /assets/img/people/francisco-jackson.jpg
         email: fajackson@ucdavis.edu
         linkedin: http://www.linkedin.com/in/francisco-agustus-jackson-ucd-undergrad-b90ba7194
-        note: Aerodynamics of bird perching.
+        note: Aerodynamic study of bird perching through dynamic stall.
         awards:
           - "ORAU Fellowship"
-      - name: Huanglun (Adam) Zhu
-        aliases: ["Adam Zhu"]
-        role: PhD Researcher
-        pronouns: he/him
-        field: "Mech + Aero Engineering"
-        start: 2023
-        photo: /assets/img/people/huanglun-zhu.jpg
-        email: lszhu@ucdavis.edu
-        orcid: 0009-0003-8318-3657
-        linkedin: https://www.linkedin.com/in/adam-zhu-huanglun/
-        note: Nares-inspired pressure sensing for formation flight.
       - name: Alex Fillman
         role: PhD Researcher
         pronouns: she/her
