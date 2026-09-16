@@ -218,24 +218,28 @@ alumni:
         pronouns: he/him
         field: "Mechanical Engineering"
         photo: /assets/img/people/emiliano-godinez.jpg
+        now: Folsom Lake College
       - name: Adam Halford
         role: Visiting Undergraduate Researcher · West Point Academy
         start: 2026
         pronouns: he/him
         field: "Mechanical Engineering"
         photo: /assets/img/people/adam-halford.jpg
+        now:  West Point Academy
       - name: Haotian Zhang
         role: Undergraduate Researcher
         start: 2026
         pronouns: he/him
         field: "Computer Science"
         photo: /assets/img/people/haotian-zhang.jpg
+        now: UCLA
       - name: Elliot Crowder
         role: Visiting Undergraduate Researcher · Sacramento City College
         start: 2026
         pronouns: he/him
         field: "Computer Science"
         photo: /assets/img/people/elliot-crowder.jpg
+        now: Sacramento City College
       - name: Dr. Alfonso Martínez-Carmena
         aliases: ["Dr. Alfonso Martínez"]
         role: Postdoctoral Scholar
