@@ -66,13 +66,13 @@ groups:
           - "ORAU Fellowship"
       - name: Francisco Jackson
         role: PhD Candidate
-        pronouns: he/him
-        field: "Physics"
+        pronouns: he/him/they
+        field: "Mechanical and Aerospace Engineering (formerly Physics)"
         start: 2023
         photo: /assets/img/people/francisco-jackson.jpg
         email: fajackson@ucdavis.edu
         linkedin: http://www.linkedin.com/in/francisco-agustus-jackson-ucd-undergrad-b90ba7194
-        note: Aerodynamics of bird perching.
+        note: Aerodynamic study of bird perching through dynamic stall.
         awards:
           - "ORAU Fellowship"
       - name: Alex Fillman
