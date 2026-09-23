@@ -107,7 +107,8 @@ groups:
         photo: /assets/img/people/cooper-cook.jpg
         email: ctcook@ucdavis.edu
         orcid: 0009-0000-5656-4620
-        note: Morphing aerodynamics · Photogrammetry.
+        linkedin: https://www.linkedin.com/in/coopertcook/
+        note: Morphing aerodynamics · Photogrammetry
       - name: Joshua Booth
         role: PhD Researcher
         pronouns: he/him
