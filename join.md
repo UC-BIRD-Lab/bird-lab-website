@@ -97,6 +97,8 @@ glance before you reach out.
 
 <p class="muted u-fs-sm"><strong>Funding your own spot?</strong> Browse our <a href="{{ '/lab-guide/funding-applications/' | relative_url }}">curated list of fellowships &amp; scholarships</a>, with options for undergraduates, graduate students, and postdocs.</p>
 
+<p class="muted u-fs-sm"><strong>High school students:</strong> we don't offer high school internships. If this work excites you, apply to UC&nbsp;Davis; most of our undergraduate researchers join once they're here.</p>
+
 ## Applying for a graduate spot
 
 Two things happen in parallel, and the timing matters:
