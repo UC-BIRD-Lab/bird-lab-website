@@ -126,14 +126,7 @@ groups:
   - id: undergrad
     title: Undergraduate Researchers
     members:
-      - name: Ava Lewis
-        role: Undergraduate Researcher
-        start: 2023
-        pronouns: she/her
-        field: "Mech + Aero Engineering"
-        photo: /assets/img/people/ava-lewis.jpg
-        awards:
-          - "AIAA Rising Star in Aerospace"
+
       - name: Narihide Fujita
         role: Undergraduate Researcher
         start: 2025
@@ -254,3 +247,11 @@ alumni:
         website: https://www.ardmoth.org/
         linkedin: https://uk.linkedin.com/in/amartinezc
         note: Photogrammetry · Raptor perching behavior
+        - name: Ava Lewis
+        role: Undergraduate Researcher
+        start: 2023
+        pronouns: she/her
+        field: "Mech + Aero Engineering"
+        photo: /assets/img/people/ava-lewis.jpg
+        awards:
+          - "AIAA Rising Star in Aerospace"
