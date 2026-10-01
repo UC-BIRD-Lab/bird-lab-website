@@ -1,10 +1,26 @@
-# Journal articles and DOI-bearing conference papers. Auto-managed by
-# scripts/update_publications.py (the "Update publications" action opens a PR
-# from OpenAlex); hand edits survive, existing DOIs are never rewritten.
-# Works without a DOI go in publications_manual.yml.
-# Fields: title, authors, venue, year, date (sort key within a year), type,
-# doi (URL), oa_url (auto-filled open-access copy; `preprint:`/`pdf:` in
-# pub_links.yml override it). Sorted newest first.
+# ────────────────────────────────────────────────────────────
+#  PUBLICATIONS: journal articles and DOI-bearing conference papers
+#
+#  AUTO-MANAGED by scripts/update_publications.py. The "Update publications"
+#  Action opens a pull request when OpenAlex has new works for the lab's ORCID;
+#  review and merge it. Hand-edits to existing entries are preserved.
+#  Talks and posters without a DOI go in publications_manual.yml.
+#
+#  Fields: title, authors, venue, year, date (YYYY-MM-DD), type, doi (URL),
+#          oa_url (a free copy, when OpenAlex knows one)
+#  `date` sorts within a year; the page groups by `year`. Written newest first.
+#  To override `oa_url` for one paper, set `preprint:` or `pdf:` for its DOI in
+#  _data/pub_links.yml; those win.
+# ────────────────────────────────────────────────────────────
+
+- title: "Nares-inspired pressure sensing enhances aerodynamic state perception for formation flight"
+  authors: "H. A. Zhu, R. J. Bomphrey, J. R. Usherwood, K. P. T. Haughn, C. Harvey"
+  venue: "Communications Engineering"
+  year: 2026
+  date: "2026-09-29"
+  type: journal
+  doi: "https://doi.org/10.1038/s44172-026-00790-6"
+  oa_url: "https://doi.org/10.1038/s44172-026-00790-6"
 
 - title: "Comparative Biologists and Aerospace Engineers: Important allies to explore the secrets of natural flight"
   authors: "J. Wong, V. B. Baliga, C. Harvey"
@@ -151,6 +167,7 @@
   date: "2022-04-21"
   type: journal
   doi: "https://doi.org/10.1016/j.paerosci.2022.100825"
+  oa_url: "https://doi.org/10.1016/j.paerosci.2022.100825"
 
 - title: "Birds can transition between stable and unstable states via wing morphing"
   authors: "C. Harvey, V. B. Baliga, J. C. M. Wong, D. L. Altshuler, D. J. Inman"
@@ -209,3 +226,4 @@
   date: "2019-01-01"
   type: journal
   doi: "https://doi.org/10.1098/rsif.2018.0641"
+  oa_url: "https://www.ncbi.nlm.nih.gov/pmc/articles/6364660"
