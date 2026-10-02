@@ -4,7 +4,7 @@
 # has not been rebuilt. Visitor dismissals last the browser session, keyed by
 # deadline. `url` is site-relative (baseurl added automatically).
 
-enabled: true
+enabled: false
 label: "Now hiring"
 text: "We're recruiting a postdoctoral scholar to help lead research at CALI, our new animal-locomotion facility."
 cta: "Learn more & apply"

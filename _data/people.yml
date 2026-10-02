@@ -118,6 +118,18 @@ groups:
         email: jmbooth@ucdavis.edu
         linkedin: https://www.linkedin.com/in/joshua-booth
         note: Maneuverability & agility in morphing-wing dynamics.
+      - name: Amanda de Barros Piffer
+        role: Visiting PhD Researcher
+        pronouns: she/her
+        field: "Veterinary Medicine"
+        start: 2026
+        photo: /assets/img/people/amanda-piffer.jpg
+        email: abpiffer@ucdavis.edu
+        orcid: 0000-0002-2639-4154
+        note: Range of motion & and wing morphology.
+        awards: 
+          - "CAPES (Coordination for the Improvement of Higher Education Personnel)"
+
   # Kept while empty so a submitted "MSc Student" auto-files here; hidden on the
   # site until it has members. `members: []` must stay for the build.
   - id: msc
