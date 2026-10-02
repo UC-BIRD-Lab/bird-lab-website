@@ -66,13 +66,13 @@ groups:
           - "ORAU Fellowship"
       - name: Francisco Jackson
         role: PhD Candidate
-        pronouns: he/him
-        field: "Physics"
+        pronouns: he/him/they
+        field: "Mechanical and Aerospace Engineering (formerly Physics)"
         start: 2023
         photo: /assets/img/people/francisco-jackson.jpg
         email: fajackson@ucdavis.edu
         linkedin: http://www.linkedin.com/in/francisco-agustus-jackson-ucd-undergrad-b90ba7194
-        note: Aerodynamics of bird perching.
+        note: Aerodynamic study of bird perching through dynamic stall.
         awards:
           - "ORAU Fellowship"
       - name: Alex Fillman
@@ -107,7 +107,8 @@ groups:
         photo: /assets/img/people/cooper-cook.jpg
         email: ctcook@ucdavis.edu
         orcid: 0009-0000-5656-4620
-        note: Morphing aerodynamics · Photogrammetry.
+        linkedin: https://www.linkedin.com/in/coopertcook/
+        note: Morphing aerodynamics · Photogrammetry
       - name: Joshua Booth
         role: PhD Researcher
         pronouns: he/him
@@ -126,14 +127,7 @@ groups:
   - id: undergrad
     title: Undergraduate Researchers
     members:
-      - name: Ava Lewis
-        role: Undergraduate Researcher
-        start: 2023
-        pronouns: she/her
-        field: "Mech + Aero Engineering"
-        photo: /assets/img/people/ava-lewis.jpg
-        awards:
-          - "AIAA Rising Star in Aerospace"
+
       - name: Narihide Fujita
         role: Undergraduate Researcher
         start: 2025
@@ -220,24 +214,28 @@ alumni:
         pronouns: he/him
         field: "Mechanical Engineering"
         photo: /assets/img/people/emiliano-godinez.jpg
+        now: Folsom Lake College
       - name: Adam Halford
         role: Visiting Undergraduate Researcher · West Point Academy
         start: 2026
         pronouns: he/him
         field: "Mechanical Engineering"
         photo: /assets/img/people/adam-halford.jpg
+        now:  West Point Academy
       - name: Haotian Zhang
         role: Undergraduate Researcher
         start: 2026
         pronouns: he/him
         field: "Computer Science"
         photo: /assets/img/people/haotian-zhang.jpg
+        now: UCLA
       - name: Elliot Crowder
         role: Visiting Undergraduate Researcher · Sacramento City College
         start: 2026
         pronouns: he/him
         field: "Computer Science"
         photo: /assets/img/people/elliot-crowder.jpg
+        now: Sacramento City College
       - name: Dr. Alfonso Martínez-Carmena
         aliases: ["Dr. Alfonso Martínez"]
         role: Postdoctoral Scholar
@@ -250,3 +248,11 @@ alumni:
         website: https://www.ardmoth.org/
         linkedin: https://uk.linkedin.com/in/amartinezc
         note: Photogrammetry · Raptor perching behavior
+      - name: Ava Lewis
+        role: Undergraduate Researcher
+        start: 2023
+        pronouns: she/her
+        field: "Mech + Aero Engineering"
+        photo: /assets/img/people/ava-lewis.jpg
+        awards:
+          - "AIAA Rising Star in Aerospace"
