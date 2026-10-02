@@ -9,6 +9,7 @@
 
 - year: 2026
   events:
+    - { date: "September 2026", type: paper, text: "Paper led by Adam Zhu in Communications Engineering on nares-inspired sensing for formation flight." }
     - { date: "September 2026", type: people, text: "We're hiring! Applications for a postdoctoral scholar are open until September 30 — details on the Join page." }
     - { date: "August 2026", type: people, text: "This month we said goodbye to Dr. Alfonso Martínez-Carmena, the first BIRD Lab post-doc. He will be missed, but we wish him all the best on his next adventures. We also thank the wonderful summer undergraduates Elliot Crowder, Emiliano Godinez, and Adam Halford for their time this summer!" }
     - { date: "July 2026", type: people, text: "We're hiring! Applications for our paid, part-time Social Media Coordinator position are open until September 30 — details on the Join page." }
@@ -29,7 +30,7 @@
     - { date: "March 2026", type: paper, text: "Paper by Kiran Weston and Adam Zhu, in collaboration with Dr. Graham Taylor (University of Oxford), was published in the Journal of the Royal Society Interface." }
     - { date: "February 2026", type: talk, text: "Dr. Harvey gave an invited seminar at Stanford University." }
     - { date: "January 2026", type: award, text: "Alex Fillman passed the FE exam." }
-    - { date: "January 2026", type: people, text: "Narihide Fujita, Meghna Tirumalai, and Wyatt Liu joined the lab as undergraduate researchers." }
+    - { date: "January 2026", type: people, text: "Narihide Fujita and Wyatt Liu joined the lab as undergraduate researchers." }
     - { date: "January 2026", type: award, text: "Ava Lewis was selected as an AIAA Rising Star in Aerospace and attended the AIAA SciTech Forum (Orlando, FL)." }
     - { date: "January 2026", type: talk, text: "Faiza Alvi and Alex Fillman presented research on avian airfoil aerodynamics and tail range of motion at the SICB Annual Meeting (Portland, OR)." }
     - { date: "January 2026", type: talk, text: "Dr. Harvey and Dr. Jasmin Wong organized the SICB symposium 'Dinosaurs to Drones: Comparative Approaches to Flight'." }
