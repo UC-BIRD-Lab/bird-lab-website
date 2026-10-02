@@ -82,8 +82,8 @@ groups:
         start: 2024
         photo: /assets/img/people/alex-fillman.jpg
         email: alfillman@ucdavis.edu
-        linkedin: http://linkedin.com/in/alex-fillman
-        note: Range-of-motion quantification.
+        linkedin: https://www.linkedin.com/in/alex-fillman/
+        note: "Avian tail range of motion and coupling"
         awards:
           - "Maury Hull Fellowship"
           - "N&M Sarigul-Klijn Award"
@@ -107,7 +107,8 @@ groups:
         photo: /assets/img/people/cooper-cook.jpg
         email: ctcook@ucdavis.edu
         orcid: 0009-0000-5656-4620
-        note: Morphing aerodynamics · Photogrammetry.
+        linkedin: https://www.linkedin.com/in/coopertcook/
+        note: Morphing aerodynamics · Photogrammetry
       - name: Joshua Booth
         role: PhD Researcher
         pronouns: he/him
