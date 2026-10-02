@@ -53,7 +53,7 @@ groups:
       - name: Kaleb Bordner
         role: PhD Candidate
         pronouns: he/him
-        field: "Aerospace Engineering"
+        field: "Mech + Aero Engineering"
         start: 2023
         photo: /assets/img/people/kaleb-bordner.jpg
         email: kkbordner@ucdavis.edu
@@ -67,7 +67,7 @@ groups:
       - name: Francisco Jackson
         role: PhD Candidate
         pronouns: he/him/they
-        field: "Mechanical and Aerospace Engineering (formerly Physics)"
+        field: "Mech + Aero Engineering"
         start: 2023
         photo: /assets/img/people/francisco-jackson.jpg
         email: fajackson@ucdavis.edu

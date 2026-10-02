@@ -15,6 +15,12 @@
 # Nothing shows until the paper is on the Publications page. Press coverage
 # goes in press.yml with the paper's `doi:`, not here.
 
+# 2026 · Communications Engineering, nares-inspired (Zhu et al)
+- doi: "10.1038/s44172-026-00790-6"
+  #image: /assets/img/pubs/zhu-nares.jpg
+  code: "https://github.com/UC-BIRD-Lab/form-flight-daq"
+  data: "https://doi.org/10.6084/m9.figshare.c.8065798"
+
 # 2026 · Communications Engineering, COMMENTARY how bio-inspired (Harvey)
 - doi: "10.1038/s44172-026-00641-4"
   kind: commentary
@@ -22,7 +28,7 @@
 # 2026 · J. R. Soc. Interface, moulting perching (Martinez, Hawkins, Harvey)
 - doi: "10.1098/rsif.2025.1082"
   image: /assets/img/pubs/martinez-moultingperch.jpg
-  code: "https://github.com/a-mtnz/Moult-effect-on-perching-hawk"
+  code: "https://github.com/UC-BIRD-Lab/Moult-effect-on-perching-hawk"
   data: "https://doi.org/10.6084/m9.figshare.c.8092138"
 
 # 2026 · J. R. Soc. Interface, hawks morph through a gap (Weston, Zhu, Taylor, Harvey)
