@@ -50,16 +50,15 @@ projects:
       Experimental study of the unsteady aerodynamics and dynamic stall a wing
       experiences during a perching maneuver.
   - title: Nares-inspired pressure sensing for formation flight
-    lead: Huanglun (Adam) Zhu
+    lead: Huanglun Adam Zhu
     papers:
+      - "10.1038/s44172-026-00790-6"
       - "10.2514/6.2025-1460"
     contact: lszhu@ucdavis.edu
     theme: sensing-control
     image: /assets/img/research/formation.jpg
     blurb: >-
-      Distributed pressure sensing that lets an aircraft perceive the
-      aerodynamic benefit of flying in another's wake, the way birds do in a
-      formation.
+      Bio-inspired pressure sensing that enhances an aircraft's ability to perceive the aerodynamic benefits of flying in another aircraft's wake, drawing inspiration from how birds navigate formation flight.
   - title: Raptor perching behavior
     lead: Dr. Alfonso Martínez-Carmena
     papers:

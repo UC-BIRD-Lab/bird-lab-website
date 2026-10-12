@@ -17,7 +17,7 @@
 
 # 2026 · Communications Engineering, nares-inspired (Zhu et al)
 - doi: "10.1038/s44172-026-00790-6"
-  #image: /assets/img/pubs/zhu-nares.jpg
+  image: /assets/img/pubs/zhu-nares.jpg
   code: "https://github.com/UC-BIRD-Lab/form-flight-daq"
   data: "https://doi.org/10.6084/m9.figshare.c.8065798"
 
