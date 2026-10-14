@@ -6,6 +6,14 @@
 #   tag       Center · Award · Funding · Profile · Feature; one chip per entry,
 #             `doi` wins
 
+- title: "BIRD Lab and California Raptor Center - Success Story"
+  kind: video
+  source: "OptiTrack"
+  year: 2026
+  url: "https://www.youtube.com/watch?v=w4cFWEUsZfI"
+  featured: true
+  tag: "Feature"
+
 - title: "How the way red-tailed hawks adapt could change rehab efforts and aircraft design"
   kind: radio
   source: "NPR · Ari Daniel"
