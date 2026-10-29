@@ -2,11 +2,11 @@
 title: Statistical analysis
 category: Research Workflow
 order: 6
-summary: "What every analysis in the lab must do, how to choose and report a statistical model, and where to learn each method."
+summary: "What every analysis in the lab needs, how to choose and report a statistical model, and where to learn more."
 description: "How the lab plans, fits, checks and reports statistical models: the fixed requirements first, the method choices second."
-keywords: [analysis, data analysis, statistics, R, model, lmer, mixed model, AIC, effect size, p-value, replicate, pseudoreplication, phylogenetic, emmeans, DHARMa, Schluter, PCA, principal component, Procrustes, geomorph]
+keywords: [analysis, data analysis, statistics, R, model, lmer, mixed model, AIC, effect size, p-value, replicate, pseudoreplication, degrees of freedom, phylogenetic, emmeans, DHARMa, Schluter, PCA, principal component, Procrustes, geomorph]
 icon: "📈"
-reviewed: 2026-10-28
+reviewed: 2026-10-29
 math: true
 ---
 
@@ -14,7 +14,8 @@ math: true
 <div><span class="k">Jump to</span><a href="#requirements">Requirements</a> · <a href="#plan">Plan</a> · <a href="#explore">Explore</a> · <a href="#choosing-a-model">Choose</a> · <a href="#check">Check</a> · <a href="#what-to-report">Report</a> · <a href="#situation-dependent-checks">Situation-dependent checks</a></div>
 </div>
 
-Choose the simplest analysis that answers your scientific question. Then:
+Choose the simplest analysis that answers your scientific question. It usually doesn't need to be
+complicated. Then:
 
 - Justify the choices that affect the result.
 - Quantify its uncertainty, and check it against independent evidence where you can.
@@ -27,8 +28,9 @@ results need both, because neither stands in for the other:
 - A tight confidence interval won't reveal a calibration offset shared by every point.
 - Small error bars don't make a difference significant.
 
-Methods change quickly and every project differs, so treat the methods here as starting points. If a
-newer one suits your question better, use it and share what you learn. The requirements stay fixed.
+Methods in the field change quickly and every project is different, so treat the methods here as
+starting points. If a newer method is more appropriate for your question, use it and share what you
+learn. The requirements stay fixed.
 
 <aside class="marginnote" markdown="1">
 **Start with Dolph Schluter's [R tips pages](https://www.zoology.ubc.ca/~schluter/R/index.html).**
@@ -46,26 +48,26 @@ changes how you would analyse something, suggest an edit to this page.
 ## The requirements {#requirements}
 
 <div class="callout callout--stop" markdown="1">
-**Every analysis meets each of these that applies to it.**
+**Every analysis meets the ones that apply to it.**
 
-1. The analysis plan is written before the data are collected, so the test answers your hypothesis
-   rather than a pattern you happened to see. ([Plan](#plan))
-2. The replicate unit is stated in words and matches the model's degrees of freedom, so the interval
-   reflects the experiment you ran. ([Plan](#plan))
-3. Repeated measures and shared ancestry are in the model, because ignoring them makes results look
-   more certain than they are. ([Plan](#plan))
-4. Residuals are checked and the check is committed, so anyone can confirm the fit and rerun it.
+1. Write down your analysis plan before you collect data, so your test answers your question rather
+   than a pattern you happened to spot. ([Plan](#plan))
+2. The model counts independent repeats (trials, birds, specimens), not data points, so results
+   don't look more certain than they are. ([Plan](#plan))
+3. The model accounts for linked measurements, such as repeated trials on one bird or related
+   species, because they tend to resemble each other. ([Plan](#plan))
+4. Check how well the model fits, and save that check with your code so anyone can rerun it.
    ([Check](#check))
-5. Every test, significant or not, is reported with its estimate and 95% interval, because
-   the size of an effect is usually the question and null results count. ([Report](#what-to-report))
-6. The report contains enough to refit the model, and the data and code are shared on publication,
-   so others can reproduce it. ([Report](#what-to-report))
-7. Measurement uncertainty is reported separately from model inference, because they answer
+5. Report every test, significant or not, with its estimate and 95% interval. The size of an effect
+   usually matters most, and null results count. ([Report](#what-to-report))
+6. Report enough for someone to rerun the analysis, and share the data and code when the paper is
+   published. ([Report](#what-to-report))
+7. Report measurement uncertainty separately from the statistical results, because they answer
    different questions. ([Report](#what-to-report))
 </div>
 
 Some situations add to this list: many comparisons, large measurement uncertainty, or very few
-animals. See [Situation-dependent checks](#situation-dependent-checks).
+samples. See [Situation-dependent checks](#situation-dependent-checks).
 
 ## Plan before you collect {#plan}
 
@@ -74,6 +76,8 @@ animals. See [Situation-dependent checks](#situation-dependent-checks).
 ten common statistical mistakes, a page each.
 </aside>
 
+None of this needs to be elaborate. A few clear, thoughtful sentences now will save weeks later.
+
 1. **Decide what to quantify.** Turn each prediction from your
    [hypothesis]({{ '/lab-guide/research-hypotheses/' | relative_url }}) into a quantity you can
    measure and compare.
@@ -81,28 +85,31 @@ ten common statistical mistakes, a page each.
       will compare it with, and how large a difference would matter physically.
     - If you expect no difference, decide how similar counts as the same.
     - Settle this before choosing a model. A correct model cannot rescue a vague comparison.
-2. **Write a short plan** and commit it to the project repository before the first trial or
-   simulation run.
-    - Include the response, the predictors, the random effects, and what result would support or count
+2. **Write a short plan** and save it in the project repository before the first trial or simulation
+   run.
+    - Say what you will measure, what you will compare, and what result would support or count
       against each hypothesis.
-    - One rough paragraph is enough. If the plan changes once data arrive, note what changed and why.
-    - It protects against fitting until something is significant
+    - One rough paragraph is enough. Plans often change once data arrive; just note what changed and
+      why.
+    - Writing it first protects you from trying analyses until something looks significant
       ([p-hacking](https://pmc.ncbi.nlm.nih.gov/articles/PMC4359000/)).
-3. **Name the replicate unit.** Write it out: *"n = 1 hawk, 5 trials per condition, ~4000 samples
-   per trial; inference is about this individual."*
-    - Check that the model's degrees of freedom agree with it.
-    - Counting correlated measurements as independent replicates is **pseudoreplication**
+3. **Name what counts as one repeat** in your plan, and what the results apply to.
+    - One hawk with ten trials sampled 4000 times each is ten repeats, and the results apply to that
+      hawk.
+    - Check: the model's reported degrees of freedom should be near your number of repeats, not your
+      number of data points.
+    - Treating data points as repeats is **pseudoreplication**
       ([Hurlbert 1984](https://doi.org/10.2307/1942661); [Lazic 2010](https://doi.org/10.1186/1471-2202-11-5)).
-4. **Put the non-independence in the model.** Common starting structures:
-    - Repeated trials on one animal: a random intercept for trial.
-    - Repeated configurations of one specimen: a random intercept for the specimen.
-    - Several species: include the phylogeny.
-    - Then check the residuals for dependence that remains, such as correlation in time.
+4. **Account for linked measurements.** Common starting points:
+    - Repeated trials on one bird: give each trial its own baseline (a random intercept for trial).
+    - Repeated configurations of one specimen: the same, for the specimen.
+    - Several species: include their family tree (the phylogeny).
+    - Then check for links the model missed, such as samples close in time that resemble each other.
 
 <aside class="marginnote marginnote--stop" markdown="1">
 **Ten thousand frames from one bird are still measurements of one bird.** Treating them as
-independent inflates the degrees of freedom, narrows the interval, and gives a $$p$$-value for an
-experiment nobody ran.
+independent inflates the degrees of freedom (how many independent pieces of information the model
+thinks it has), narrows the interval, and gives a $$p$$-value for an experiment nobody ran.
 </aside>
 
 <aside class="marginnote" markdown="1">
@@ -113,8 +120,8 @@ morphed configurations of the same specimen
 linear mixed model across 22 species ([Harvey et al. 2022](https://doi.org/10.1038/s41586-022-04477-8)).
 </aside>
 
-For specifying these models, use [Harrison et al. (2018)](https://doi.org/10.7717/peerj.4794). When
-one misbehaves, see
+For help setting up these models, see [Harrison et al. (2018)](https://doi.org/10.7717/peerj.4794).
+If one won't fit or gives warnings, see
 [Bolker's FAQ on generalised linear mixed models (GLMMs)](https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html).
 
 ## Explore before you fit {#explore}
@@ -122,9 +129,9 @@ one misbehaves, see
 
 - Clean the data with code and leave the raw files untouched
   ([Data management]({{ '/lab-guide/data-management/' | relative_url }})).
-- Make many quick, unstyled plots, working through the eight checks of
+- Make lots of quick, rough plots, working through the eight checks of
   [Zuur, Ieno & Elphick (2010)](https://doi.org/10.1111/j.2041-210X.2009.00001.x).
-- Use plots for these checks. With thousands of samples, a formal test rejects almost any assumption.
+- Use plots for these checks. With thousands of samples, a formal test flags almost everything.
 
 <details class="guide-details" markdown="1">
 <summary>The eight exploration checks</summary>
@@ -162,24 +169,25 @@ one misbehaves, see
 </div>
 <figcaption>The data exploration protocol, after
 <a href="https://doi.org/10.1111/j.2041-210X.2009.00001.x">Zuur, Ieno &amp; Elphick (2010)</a>, fig. 1.
-VIF is the variance inflation factor; ACF, the autocorrelation function. Check 8 tells you what
-non-independence to model. Check 5 is a common reason to reach for
+VIF is the variance inflation factor; ACF, the autocorrelation function. Check 8 tells you which
+measurements are linked. Check 5 is a common reason to reach for
 <a href="#principal-component-analysis">principal component analysis (PCA)</a>.</figcaption>
 </figure>
 </details>
 
 <div class="callout callout--warn" markdown="1">
-**Let exploration set the model's structure, and your plan set what you test.**
+**Exploring can shape how you model the data, but your plan sets what you test.**
 
-- Exploration can set the distribution, the transformation and the random-effect structure.
+- What you see can guide choices such as a transformation, or which measurements are linked.
 - It can also raise new questions worth following.
-- Report any test chosen after seeing the data as exploratory. Presenting it as planned is p-hacking.
+- If you test something you only noticed after seeing the data, call it exploratory. Presenting it
+  as planned (called HARKing, Hypothesizing After the Results are Known) overstates the evidence.
 </div>
 
 ## Choose a model {#choosing-a-model}
 
-Start from the row closest to your data. Your plan should still say why the model answers your
-question.
+Start simple. The simplest model that fits your design is usually enough, and you can add to it if
+the checks show you need to. Your plan should say why the model answers your question.
 
 <details class="guide-details" markdown="1">
 <summary>Starting models for common kinds of data</summary>
@@ -197,92 +205,94 @@ question.
 | Many correlated shape or morphology variables, no single response | [PCA](#principal-component-analysis) | [Schluter, *Multivariate methods*](https://www.zoology.ubc.ca/~schluter/R/Multivariate.html) |
 
 If you compare models, keep the set small, with each model answering a hypothesis you can state.
-Fifty combinations ranked by AIC will find structure in noise.
+Fifty combinations ranked by AIC will find patterns in noise.
 </details>
 
 ## Check the fit {#check}
 
-- Run a residual diagnostic and look at it.
+- Plot the residuals (what is left after the model's prediction) and look for patterns.
   [`DHARMa`](https://cran.r-project.org/web/packages/DHARMa/vignettes/DHARMa.html) works for most
-  model types.
-- Commit the diagnostic code and plots, so the check can be repeated when the data change.
-- Check that the conclusion holds under other reasonable choices, such as how outliers are handled
-  or how the model is structured, and report how sensitive it is
+  models.
+- Save the code and plots with your analysis, so anyone can rerun the check when the data change.
+- Check that the conclusion still holds under other reasonable choices, such as how you handle
+  outliers or set up the model, and report how much it changes
   ([Writing papers]({{ '/lab-guide/writing-papers/' | relative_url }}#methods)).
 
 ## Report {#what-to-report}
 
-- **Lead with the estimate and its interval.** A $$p$$-value measures how surprising your data would
-  be if there were no effect. It doesn't say how large the effect is
+- **Lead with the size of the effect and its 95% interval.** A $$p$$-value only tells you how
+  surprising your data would be if there were no effect, not how big the effect is
   ([Wasserstein, Schirm & Lazar 2019](https://doi.org/10.1080/00031305.2019.1583913);
   [Amrhein, Greenland & McShane 2019](https://doi.org/10.1038/d41586-019-00857-9)).
-- **Report every planned test,** whatever its $$p$$-value. The lab default is $$\alpha = 0.05$$,
+- **Report every planned test,** whatever its $$p$$-value. Our field's default is $$\alpha = 0.05$$,
   two-sided.
-- **Treat null results as results.** A non-significant result with a narrow interval makes
-  effects outside the interval unlikely, and deserves the same care as a positive one. A wide interval
-  means the data can't tell; say that rather than "no effect".
-- **Discuss results by their size and uncertainty,** and what they mean for your question.
+- **Treat null results as results.** If the interval is narrow, a non-significant result shows any
+  effect is small, and that deserves the same care as a positive result. If it is wide, say the data
+  can't tell yet rather than "no effect".
+- **Discuss results by how big and how certain they are,** and what they mean for your question.
 - **Say what the result means physically** and how it compares with independent evidence.
   [Writing papers]({{ '/lab-guide/writing-papers/' | relative_url }}#quantify) covers the wording.
 - **Keep measurement uncertainty separate.** It goes in the error bars and text, following
-  [Error and uncertainty analysis]({{ '/lab-guide/uncertainty-analysis/' | relative_url }}). Model
-  uncertainty goes in the confidence intervals.
+  [Error and uncertainty analysis]({{ '/lab-guide/uncertainty-analysis/' | relative_url }}).
+  Statistical uncertainty goes in the confidence intervals.
   [Figures]({{ '/lab-guide/figures/' | relative_url }}) covers labelling which is which.
 - **Share the data and analysis code** when the paper is published, following
   [Data management]({{ '/lab-guide/data-management/' | relative_url }}#share-and-archive-on-publication).
 
-Include enough for a reader to refit the model:
+Include enough for someone to rerun the analysis:
 
 | Item | Example |
 |---|---|
 | Model formula, random terms included | `lift ~ condition + (1 \| trial)` |
-| Replicate structure, in words | "1 individual, 5 trials per condition, ~4000 samples per trial" |
+| What counts as one repeat, in words | "1 hawk, 5 trials per condition, ~4000 samples per trial" |
 | Software and package versions | R 4.4.1; `lmerTest` 3.1-3 |
 | Estimation and degrees-of-freedom method | Restricted maximum likelihood (REML), Kenward–Roger |
-| Test statistic, df and exact $$p$$ | $$F_{1,17.06} = 13.28$$, $$p = 0.002$$ ("$$p < 0.001$$" only below that) |
+| Test statistic, degrees of freedom and exact $$p$$ | $$F_{1,17.06} = 13.28$$, $$p = 0.002$$ ("$$p < 0.001$$" only below that) |
 | Estimate with a 95% interval | $$-0.14$$ [$$-0.21$$, $$-0.07$$] |
 | Effect size and model fit, where meaningful | partial $$\eta^2 = 0.51$$; marginal and conditional $$R^2$$ |
 | Seed, for anything resampled | `set.seed(42)` |
 {: .table-budget}
 
 <aside class="marginnote" markdown="1">
-**Marginal vs conditional $$R^2$$** ([Nakagawa & Schielzeth 2013](https://doi.org/10.1111/j.2041-210x.2012.00261.x)):
-the gap between them shows how much the grouping explains, as opposed to your predictors.
-`performance::r2()` gives both.
+**Two kinds of $$R^2$$** ([Nakagawa & Schielzeth 2013](https://doi.org/10.1111/j.2041-210x.2012.00261.x)):
+marginal $$R^2$$ is what your predictors explain; conditional $$R^2$$ adds what the grouping (trials,
+birds) explains. `performance::r2()` gives both.
 </aside>
 
 ## Situation-dependent checks {#situation-dependent-checks}
 <span id="when-you-need-more"></span><span id="going-further"></span><span id="sharpening-the-analysis"></span>
 
-Not every project needs these. When one fits your situation, treat it as part of the analysis. Some
-are harder than others, so look for them while you plan and talk them through with Christina. Open the ones
-that apply to you.
+Not every project needs these. If one fits your situation, it becomes part of your analysis. Some
+are harder than others, so look for them while you plan and talk them through with Christina. Open
+the ones that apply to you.
 
 <details class="guide-details" markdown="1">
 <summary>When you fit many models or test many responses</summary>
 
-- Some will clear $$\alpha = 0.05$$ by chance.
-- Pre-specify a primary response, adjust for multiple comparisons, or label the rest exploratory.
-- Say which you chose.
+- Some will look significant by chance.
+- Choose one main measurement in advance, correct for multiple comparisons, or label the rest
+  exploratory.
+- Say which you did.
 </details>
 
 <details class="guide-details" markdown="1">
 <summary>When measurement uncertainty is large relative to the effect</summary>
 
-- Resample each point within its uncertainty, refit, and check the conclusion holds (method in
+- Rerun the analysis many times with each point shifted at random within its uncertainty, and check
+  the conclusion holds (method in
   [Error and uncertainty analysis]({{ '/lab-guide/uncertainty-analysis/' | relative_url }})).
-- [Harvey et al. (2022)](https://doi.org/10.1038/s41586-022-04477-8) used 5,000 draws across the
+- [Harvey et al. (2022)](https://doi.org/10.1038/s41586-022-04477-8) used 5,000 reruns across the
   centre-of-gravity error range.
 </details>
 
 <details class="guide-details" markdown="1">
 <summary>When you have one or two animals or specimens</summary>
 
-- Expect significant results to overestimate the effect. Small samples only reach significance when
-  the estimate happens to be large.
-- Report the smallest effect the design could detect. Simulate it with
-  [`simr`](https://cran.r-project.org/package=simr), taking variability from a pilot fit but setting
-  the effect to the smallest one that matters physically.
+- Significant results from small samples tend to overstate the effect, because only large estimates
+  reach significance.
+- Report the smallest effect your design could have detected. You can simulate this with
+  [`simr`](https://cran.r-project.org/package=simr), using the variability from pilot data and the
+  smallest effect that would matter physically.
 - Schluter's [Planning tools](https://www.zoology.ubc.ca/~schluter/R/Plan.html) page covers simpler
   cases.
 </details>
@@ -290,18 +300,18 @@ that apply to you.
 <details class="guide-details" markdown="1">
 <summary>When your question compares conditions</summary>
 
-- Report the contrast itself, on the response scale with its interval.
+- Report the difference itself, in the original units, with its interval.
 - [`emmeans`](https://cran.r-project.org/web/packages/emmeans/vignettes/basics.html) and
-  [`marginaleffects`](https://cran.r-project.org/package=marginaleffects) do this, including
-  adjustment for multiple comparisons.
+  [`marginaleffects`](https://cran.r-project.org/package=marginaleffects) do this, and correct for
+  multiple comparisons.
 </details>
 
 <details class="guide-details" markdown="1">
 <summary>When the model has several predictors</summary>
 
-- Plot the fitted model as well as the data.
-- [`visreg`](https://pbreheny.github.io/visreg/) shows partial residuals against one predictor with
-  the others accounted for, and works with `lmer` fits.
+- Plot what the model predicts as well as the raw data.
+- [`visreg`](https://pbreheny.github.io/visreg/) shows the effect of one predictor with the others
+  held fixed, and works with `lmer` fits.
 </details>
 
 <details class="guide-details" id="principal-component-analysis" markdown="1">
@@ -312,34 +322,35 @@ Principal component analysis (PCA) suits data such as a wing outline described b
 coordinates. Schluter's [Multivariate methods](https://www.zoology.ubc.ca/~schluter/R/Multivariate.html)
 page covers the mechanics.
 
-- **Scale first.** Use the correlation matrix (`scale. = TRUE`) when units differ. Procrustes-align
-  landmark coordinates ([`geomorph::gpagen()`](https://doi.org/10.1111/2041-210X.12035)) so position
-  and size do not become the first components.
-- **Set the retention rule in advance.**
-- **Interpret by drawing** the shape at each end of an axis. Two outlines show what a component means
-  more clearly than a table of loadings.
-- **Treat the axes as specific to your sample.** They shift when specimens are added. Scores carried
-  into later models are estimates, so say so in the methods.
+- **Scale first.** If variables have different units, use `scale. = TRUE` so no single variable
+  dominates. Align landmark coordinates first with
+  [`geomorph::gpagen()`](https://doi.org/10.1111/2041-210X.12035), so position and size don't
+  become the first components.
+- **Decide in advance how many components to keep.**
+- **Interpret by drawing** the shape at each end of a component. Two outlines show what it means
+  more clearly than a table of numbers.
+- **Treat components as specific to your sample.** They shift when specimens are added. Scores used
+  in later models are estimates, so say so in the methods.
 - **A small percentage can still matter.** In
   [Gamble et al. (2020)](https://doi.org/10.1088/1748-3190/ab9b6f), PC2 explained only 0.3% of
   trailing-edge shape change, yet captured a real angle-of-attack effect.
-- **Component signs are arbitrary.** State which shape each positive direction represents, and keep
-  it the same across every figure.
+- **Signs are arbitrary.** State which shape each positive direction represents, and keep it the
+  same across every figure.
 - **Report** the number of variables and specimens, the scaling and alignment, the variance
-  explained by each retained component, the retention rule, and the sign convention.
-- **For motion over time,** note that PCA ignores time. Dynamic mode decomposition (DMD) finds modes
-  that each carry a frequency and growth rate; Lydia France's
-  [BirdDMD](https://lydiafrance.github.io/BirdDMD/) is the place to start. If you use it, report
-  reconstruction error on data the fit didn't see.
+  explained by each component you kept, how you chose how many to keep, and the sign convention.
+- **For motion over time,** note that PCA ignores time. Dynamic mode decomposition (DMD) finds
+  patterns that each carry a frequency and growth rate; Lydia France's
+  [BirdDMD](https://lydiafrance.github.io/BirdDMD/) is the place to start. If you use it, check how
+  well it reproduces data it wasn't fitted to.
 </details>
 
 <details class="guide-details" markdown="1">
 <summary>When you have only two or three replicates</summary>
 
-- A Bayesian fit is an option: `brms` ([tutorial](https://ourcodingclub.github.io/tutorials/brms/))
-  or `MCMCglmm` ([tutorial](https://ourcodingclub.github.io/tutorials/mcmcglmm/)).
-- With so little data the prior strongly shapes the result. Choose it before you see the data, and
-  report how sensitive the conclusion is to it.
+- A Bayesian fit is an option: see the [`brms` tutorial](https://ourcodingclub.github.io/tutorials/brms/)
+  or the [`MCMCglmm` tutorial](https://ourcodingclub.github.io/tutorials/mcmcglmm/).
+- With so little data, your prior assumptions strongly shape the result. Choose them before you see
+  the data, and report how much the conclusion depends on them.
 </details>
 
 ## Where to learn more {#where-to-learn}
