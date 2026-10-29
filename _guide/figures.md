@@ -132,7 +132,7 @@ Use one clean sans-serif font; consistent hierarchy; clean axes. Whitespace is s
 
 - There is one takeaway in the figure and the caption's first sentence states it.
 - The figure can be understood without the main text.
-- The figure is referenced in the main text beside the claim it supports. It is not narrated (see [how to write about figures]({{ '/lab-guide/writing-papers/' | relative_url }}#core-principles)).
+- The figure is referenced in the main text beside the claim it supports. It is not narrated (see [how to write about figures]({{ '/lab-guide/writing-papers/' | relative_url }}#what-it-means)).
 - All axes are labeled with quantity and units; ticks are readable at print size.
 - Shared axes use the same range and ticks; the axis label and numbers are not repeated unnecessarily.
 - No axis is truncated or stretched in a way that changes how the trend reads.

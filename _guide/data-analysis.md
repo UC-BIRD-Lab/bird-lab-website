@@ -243,7 +243,7 @@ much better, not just which.
 
 Every fitted model in a paper, thesis chapter or committee meeting reports all of
 these. For how to word the result once you have the numbers, see
-[Writing papers]({{ '/lab-guide/writing-papers/' | relative_url }}#core-principles).
+[Writing papers]({{ '/lab-guide/writing-papers/' | relative_url }}#quantify).
 
 | Item | Example |
 |---|---|

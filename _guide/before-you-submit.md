@@ -6,7 +6,7 @@ summary: "One pre-flight checklist to run before anything leaves the lab: papers
 description: "A final check to run before a paper, abstract, poster, talk, or grant leaves the lab."
 keywords: [checklist, submit, submission, deadline, approval, pre-flight, before submitting, review]
 icon: "🚀"
-reviewed: 2026-07-06
+reviewed: 2026-10-28
 ---
 
 <aside class="marginnote" markdown="1">
@@ -26,13 +26,15 @@ the rush before a deadline.
 - At least two labmate pre-reviews first (post in **#phone-a-friend** on the lab Slack).
 - Disclose honestly: funding, conflicts, data and image permissions, [AI use]({{ '/lab-guide/using-ai/' | relative_url }}), and ethics approvals.
 - Every number traces to its source in an annotated script.
+- Venue requirements are met: template, length, citation and figure style.
+- Funding language comes from Christina, and non-author helpers are acknowledged.
 {: .checklist}
 
 These come from the [lab non-negotiables]({{ '/lab-guide/writing-papers/' | relative_url }}#non-negotiables).
 
 ## Journal paper or preprint
 
-- Run the [pre-send checklist]({{ '/lab-guide/writing-papers/' | relative_url }}#before-you-send-a-draft-checklist).
+- The [pre-send checklist]({{ '/lab-guide/writing-papers/' | relative_url }}#before-you-send-a-draft-checklist) was cleared before Christina's review, and her comments are resolved.
 - Run the [figure checklist]({{ '/lab-guide/figures/' | relative_url }}#figure-checklist) on every figure.
 - Authorship agreed and written down; see [Authorship policy]({{ '/lab-guide/authorship-policy/' | relative_url }}).
 - Data and code ready to go public on publication; see [Data management]({{ '/lab-guide/data-management/' | relative_url }}).
@@ -42,7 +44,7 @@ These come from the [lab non-negotiables]({{ '/lab-guide/writing-papers/' | rela
 ## Conference abstract, paper, poster, or talk
 
 - Get written approval before submitting or booking; see [Conferences]({{ '/lab-guide/conferences/' | relative_url }}).
-- Lead with results you can defend; hold exciting findings for the journal version.
+- Lead with results you can defend; hold exciting findings for the journal version. Papers also clear the [pre-send checklist]({{ '/lab-guide/writing-papers/' | relative_url }}#before-you-send-a-draft-checklist).
 - Practice to the lab at least two weeks before you travel; see [Presentations]({{ '/lab-guide/presentations/' | relative_url }}#practice-a-lot).
 - For a poster, run the [poster]({{ '/lab-guide/posters/' | relative_url }}) and [figure]({{ '/lab-guide/figures/' | relative_url }}#figure-checklist) checks.
 {: .checklist}

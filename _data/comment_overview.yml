@@ -1,0 +1,27 @@
+note: Counts of Christina Harvey's review comments on lab paper drafts (2022–2026)
+  under each of the six ideas, from two independent codings of the same comments (count
+  = primary coding; second_coding = independent check). No comment text, paper names,
+  or per-draft counts are stored here. Regenerate the chart with scripts/comment_overview.py.
+updated: '2026-10-29'
+n_comments: 836
+n_drafts: 16
+years: 2022–2026
+categories:
+- label: Claim only what you can defend
+  count: 173
+  second_coding: 182
+- label: Make it easy to follow
+  count: 150
+  second_coding: 168
+- label: Tell one story
+  count: 125
+  second_coding: 124
+- label: Quantify it or cut it
+  count: 49
+  second_coding: 71
+- label: Lead with the question and gap
+  count: 44
+  second_coding: 33
+- label: Say what it means
+  count: 41
+  second_coding: 43

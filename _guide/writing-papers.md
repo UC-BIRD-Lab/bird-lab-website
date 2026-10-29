@@ -2,331 +2,269 @@
 title: Writing papers
 category: Writing & Dissemination
 order: 1
-summary: Core principles, the drafting cycle, and a pre-send checklist for manuscripts, preprints, and conference papers.
-description: "How to write a paper whose argument stands on its own, and what has to be true before you circulate a draft."
-keywords: [writing, manuscript, paper, draft, authorship, preprint, publishing]
+summary: Six things every reader needs, getting feedback, the drafting cycle, and a pre-send checklist.
+description: "How to write a paper whose argument stands on its own, what to expect from review, and what has to be true before you circulate a draft."
+keywords: [writing, manuscript, paper, draft, feedback, authorship, preprint, publishing]
 icon: "✍️"
-reviewed: 2026-08-13
+reviewed: 2026-10-28
 math: true
 ---
 
 <aside class="marginnote" markdown="1">
-This is the writing-side companion to
-[Figures]({{ '/lab-guide/figures/' | relative_url }}).
-This page is continually evolving; please suggest new resources or tips.
+Companion to [Figures]({{ '/lab-guide/figures/' | relative_url }}).
+Suggest edits anytime.
 </aside>
 
-<div class="guide-glance">
-<div><span class="k">Jump to</span><a href="#non-negotiables">The non-negotiables</a> · <a href="#the-drafting-cycle">The drafting cycle</a> · <a href="#core-principles">Core principles</a> · <a href="#before-you-send-a-draft-checklist">Pre-send checklist</a> · <a href="#tools">Tools</a> · <a href="#resources">Resources</a></div>
-</div>
+Strong scientific writing makes your reasoning visible, your data clear, and your science
+understandable. Readers and reviewers in our fields look for the six things below, and
+they're what most of our review comments come back to.
 
-Strong scientific writing makes your reasoning visible, your data clear, and your science understandable.
+<span id="core-principles"></span>
 
-The lab's [communication framework]({{ '/lab-guide/presentations/' | relative_url }}#core-principles)
-applies to prose as much as to a talk or a figure. Every reader asks *so what?* and
-*who cares?* Your job is to raise the signal and cut the noise.
+## What every reader needs {#what-readers-need}
 
-<aside class="marginnote" markdown="1">
-**Why "#phone-a-friend"?** It's the lab's private Slack channel where we post work-in-progress to request peer review. 
-Routing drafts through peers helps catch errors early,  trains you to read critically, and creates a low-stakes setting to receive feedback. 
-</aside>
+1. <span id="question-and-gap"></span>**Lead with the question and the gap.** Say what we don't know and what your paper adds. Readers decide in the first paragraphs whether your work matters to them.
+2. <span id="one-story"></span>**Tell one story.** Your one or two main takeaways should come back in the abstract, introduction, results, captions, and conclusion. They don't need the same words, but they do need the same ideas. Say supporting details once. Readers remember the point you return to, and side points compete with it.
+3. <span id="quantify"></span>**Quantify it or cut it.** Give every comparison a size and a baseline, and show the evidence: data, a calculation, a citation, or clear reasoning ([what to report]({{ '/lab-guide/data-analysis/' | relative_url }}#what-to-report)). Check it against outside data where it exists.
+4. <span id="what-it-means"></span>**Say what it means.** Lead with the finding, cite the figure, explain why, and say whether the difference matters. Give major findings more space than minor trends. Readers look at figures first; the text is where you interpret them.
+5. <span id="defend"></span>**Claim only what you can defend.** Make the strongest important claim your evidence supports. Keep what the data show, what you infer, and what's still uncertain separate. Cite what you've read, including who did it first, and state your limitations. One overclaim makes a reviewer doubt the rest of the paper.
+6. <span id="clarity"></span>**Make it easy to follow.** Give each sentence one main point, use plain words, and don't skip steps in the logic. Many of our readers are outside your subfield or read in a second language.
+
+For any paragraph, ask: What is my claim? What evidence supports it? Why does a reader care?
+
+## Getting feedback {#feedback}
+
+- **Christina's goal isn't to make you sound like her.** It's to help you build your own judgment as a writer and scientist.
+- **Expect a lot of comments.** Good papers go through many versions; Christina's own often reach ~20. That's normal and healthy, and it's her job to help you get there. Early rounds focus on the argument and later rounds on details, so don't be surprised when new comments come up each round.
+- **Not every comment is the same.** Some are lab requirements, some are about writing
+  craft, and some are about the science. The science is a discussion, and you know your work best: if you disagree,
+  make your case with evidence.
+- **Respond to every comment,** by addressing the concern or replying. Suggested wording is a suggestion; you can fix the problem your own way.
+- **Fix patterns everywhere.** If a comment points out a pattern, fix it throughout the draft, not just where it was flagged.
+- **Tags.** Comments without a tag need to be addressed. *Q:* means an open question to discuss. *pref:* means Christina's preference, and it's your call.
+- **You're the first author.** Review every edit, accept the ones you agree with and reply to the rest, and get co-author input before the next round.
+- **Over time, you'll catch these issues yourself,** first in your own drafts, then in labmates'.
+
+{% include comment-overview.html %}
 
 <div class="callout callout--stop" markdown="1" id="non-negotiables">
 **Lab policy: the non-negotiables**
 
-- Christina must be sent the draft ≥2 weeks before any external deadline (drafts that arrive too late for co-author review may be deferred to a later submission window).
-- No submission without explicit approval from Christina *and* all co-authors.
-- ≥2 labmate pre-reviews before the draft reaches Christina (post in **#phone-a-friend** on the lab Slack; see [giving and receiving feedback]({{ '/lab-guide/communication/' | relative_url }}#giving-and-receiving-feedback)).
-- Reference managers required (BibTeX / Zotero / EndNote); no manually typed references.
-- Maintain an annotated script for where each number in the draft is sourced from in the data.
-- Data and code are made public on publication, except where privacy, ethics, legal, proprietary, or collaborator constraints require otherwise; raise those constraints early.
-- Disclose funding, conflicts, data and image permissions, [AI use]({{ '/lab-guide/using-ai/' | relative_url }}), and ethics approvals.
-
-The rules protect the work and everyone whose name is on it. 
-</div>
-
-## Tools {#tools}
-
-Draft in Overleaf or Word. Christina prefers Word, but either is fine.
-
-Start the Overleaf project yourself. When you're ready for review, transfer
-ownership to Christina. No need to purchase your own license.
-
-Use a reference manager from the first citation: Zotero, BibTeX, EndNote, whichever
-you prefer. Pick one and stay on it for the whole paper. See
-[Literature reviews]({{ '/lab-guide/literature-reviews/' | relative_url }}#the-one-non-negotiable)
-for how to set one up.
-
-<div class="callout" markdown="1">
-**Keep your journal draft unformatted.** Turn on line numbers in the left margin so reviewers
-can point at a line. The journal typesets the accepted manuscript, so any styling you add gets thrown away.
-
-Some conferences expect you to format the paper yourself. SciTech, for example,
-publishes [LaTeX and Word templates](https://aiaa.org/events-learning/events/technical-presenter-resources/). Download the one you want and draft inside it from the start.
+- Christina gets the draft ≥2 weeks before any external deadline.
+- Christina *and* all co-authors approve before submission.
+- ≥2 labmate pre-reviews first, in **#phone-a-friend**.
+- A reference manager from the first citation; no typed references.
+- An annotated script traces every number to its source.
+- Data and code go public on publication, unless constraints apply; raise them early.
+- Disclose funding, conflicts, permissions, [AI use]({{ '/lab-guide/using-ai/' | relative_url }}), and ethics approvals.
 </div>
 
 ## The drafting cycle
 
-0. **Figures and captions first.** Build every figure and draft its caption before you begin writing, then run them by all co-authors. See [Figures]({{ '/lab-guide/figures/' | relative_url }}).
-1. **Outline:** one topic sentence per major paragraph, before any prose.
-2. **Rough draft:** get the whole argument down; ugly is fine, gaps are fine.
-3. **Refine structure:** fix what each paragraph is doing, and in what order.
-4. **Refine sentences:** terminology, statistics, notation, citations.
-5. **Review and revise:** ≥2 labmate pre-reviews in **#phone-a-friend**, then Christina.
+0. Choose the target venue and read its author guidelines. Build figures and captions ([Figures]({{ '/lab-guide/figures/' | relative_url }})) and review them with co-authors before writing prose.
+1. Outline: question or objective, proposed contribution, key figures, open questions. Then a short check-in with Christina.
+2. Rough draft. Gaps are fine; mark them.
+3. Structure, then sentences.
+4. Two labmate reviews, then Christina. Bring a complete argument and supported results; polish can wait.
+5. With each new draft, a short note: what you changed, what you didn't, and why.
+6. Final round: formatting, consistency, references, and approvals ([Before you submit]({{ '/lab-guide/before-you-submit/' | relative_url }})).
 
-Christina's own papers routinely reach ~version 20 before submission. 
-That's normal and healthy, and it's her job to help you get there.
+## Before you send a draft (checklist) {#before-you-send-a-draft-checklist}
 
-### How expectations ramp
+- The question or objective, the gap, and (where it applies) the hypothesis are clear in two paragraphs.
+- The main takeaway is the same in the abstract, results, captions, and conclusion.
+- Every comparison has a size, a baseline, and evidence.
+- Results paragraphs open on findings, not figures.
+- Every claim matches my data or a citation, and limitations are in the main text.
+- A labmate can read each paragraph once and follow it.
+- The [figure checklist]({{ '/lab-guide/figures/' | relative_url }}#figure-checklist) is done.
+{: .checklist}
 
-Christina's feedback will track the cycle. Early on it will focus on structure and message; once the
-sentences and paragraph structure is decided, it moves to terminology, statistics, and notation. Big-picture
-comments early and details later. Don't be surprised if each round new comments are brought up.
+When it's ready to leave the lab, run [Before you submit]({{ '/lab-guide/before-you-submit/' | relative_url }}).
 
-Standards also scale with the venue: the more public and peer-reviewed, the more detail review is needed for every sentence.
+## Go deeper {#reference}
 
-## Core principles {#core-principles}
+<details class="guide-details" markdown="1" id="getting-better">
+<summary>Getting better at writing</summary>
 
-The principles apply to everything the lab publishes.
+- **Study a model paper.** Pick two recent papers from your target venue and mark where each states the gap, where the results start, and what each caption claims. Use them as a model for structure.
+- **Reverse-outline.** List only your topic sentences. If they don't tell the story on their own, fix the structure before editing sentences.
+- **Revise in passes.** Work on the argument first, then paragraphs, then sentences, then polish, so you don't spend time polishing text you later cut.
+- **Review labmates' drafts.** Reviewing someone else's draft is one of the best ways to improve your own writing.
+- **Keep a personal style sheet.** After each paper, list the two or three issues that came up most in feedback. Check for them before the next draft.
+- **Talk it through.** If you're stuck on a paragraph, try explaining the result to a labmate first. Saying it out loud often makes the point clear.
+- **Use AI as a pre-reviewer.** Give it this guide and your draft, and ask where the draft falls short of the six ideas or what it thinks each paragraph's main point is. Decide what to change and do the rewriting yourself. Get co-author permission first; see [Using AI]({{ '/lab-guide/using-ai/' | relative_url }}).
+- **Write regularly.** Short, regular writing sessions usually work better than writing everything right before a deadline.
 
-### 1 · Lead with the question
+</details>
 
-State the problem and its impact/consequences early. A strong introduction is well cited, but synthesized: each citation
-builds the case for *your* question rather than showing how much you've read. Avoid listing author names and results without tying the story together.
+<details class="guide-details" markdown="1">
+<summary>Writing reference: paragraphs, words, voice, methods</summary>
 
-### 2 · Major takeaways are consistent and visible everywhere
+### Paragraphs and sentences {#paragraphs-and-sentences}
 
-Your paper will have one or two core takeaways. The *same* takeaways must appear in the
-abstract, introduction, results, discussion, conclusion, and figure captions. The
-conclusion lands what you found and why it matters; it doesn't restate the
-introduction or add anything new.
+| Level | Shape |
+| --- | --- |
+| **Paper** | Hourglass: broad context → specific question, methods, results → broad implications |
+| **Paragraph** | Topic sentence → evidence → interpretation → mini-takeaway |
+| **Sentence** | Open on the idea you're discussing; end on the point to carry forward |
 
-### 3 · Make prose do one job, in a logical order
-
-At the document level, use the hourglass layout: broad reasoning → specific question, methods, results → broad implications. 
-
-At the paragraph level: topic sentence → evidence → interpretation → mini-takeaway. 
-
-At the sentence level: open on the idea you're discussing and end on the point you want carried forward.
-Keep to one idea per sentence. Use plain signposts ("To test this, we…", "This result suggests…").
+- Give each sentence one main point; split it when several ideas compete for attention.
+- Parallel ideas get parallel wording, so the comparison is obvious.
+- An idea that comes out of nowhere needs a bridge sentence before it.
 
 <div class="callout" markdown="1">
-**Tip.** Once Christina is "in the weeds" of writing, she edits by reading out loud
-and fixes any sentence she stumbles on or is too long for one breath. A stumble means it wasn't clear.
-
-For more on topic and stress positions, read [Gopen & Swan, *The Science of Scientific Writing*](https://www.usenix.org/sites/default/files/gopen_and_swan_science_of_scientific_writing.pdf). [Nature Masterclasses](https://www.nature.com/masterclasses/writing-for-greater-impact/50732650) covers writing for greater impact.
+**Tip.** Once in the details, Christina edits by reading aloud. If she stumbles or runs
+out of breath, the sentence gets rewritten. For topic and stress positions, read
+[Gopen & Swan](https://www.usenix.org/sites/default/files/gopen_and_swan_science_of_scientific_writing.pdf).
 </div>
 
-### 4 · Keep claims proportional to evidence
+### Precise words {#precise-words}
 
-Keep three things separate and visible: what the data directly show, what you infer, and what remains uncertain.
-Watch empty intensifiers (*drastically, very, greatly*). 
-Don't just delete the word; scope the claim to what you measured. *e.g.*
-❌ "Our design dramatically improves flight efficiency." →
-✅ "Our design reduced power consumption by 12% in level flight (wind tunnel,
-*n* = 8 trials); we did not test maneuvering or gust conditions."
+| If you write… | Make sure… |
+| --- | --- |
+| *significant* | it's statistical, and you name the test |
+| *robust* | you say robust to what |
+| *converged* | you say what, to what value, under what condition |
+| *improved* | you say vs. what, by how much, on what metric |
+| *this* | a noun follows it, so the reader knows what it refers to |
+| an acronym | it's defined at first use, or spelled out if used only once or twice; each one is something else the reader has to remember |
 
-<div class="callout callout--warn" markdown="1">
-This principle directly affects your (and our) scientific reputation. 
-A reviewer who catches one overclaim starts doubting *everything*, and the doubt attaches to every name on the paper. 
-Naming your results specifically and their limits is what makes your research have long term impact.
-</div>
+- Use your field's standard term.
+- Use one name per concept; readers will assume a new name means a new thing.
+- Cut *very, obviously, actually*; they add emphasis without adding evidence.
+- Prefer *use* to *utilize*, and the verb to its noun (*we assessed*, not "we performed an assessment").
 
-### 5 · Quantify your results, reported trends, and associated error
+### Voice and tense {#voice-and-tense}
 
-Always report sample size ($$n$$), the test, the test statistic, and the exact $$p$$-value. Be precise about which kind of uncertainty your error bars carry: biological variation, measurement noise, or numerical/model error. 
-Add effect size, confidence intervals, randomization or blinding, replicate count, and inclusion/exclusion criteria where they apply.
-Reproducibility is a writing requirement too: equipment, software versions, mesh and calibration details, environmental conditions. 
+- Use first person and active voice: "We found…", not "It was observed that…".
+- Passive voice is fine in methods where the actor doesn't matter, in correlations
+  where naming a cause would overclaim, and when a sentence needs to open on the idea
+  the last one ended with.
+- Use past tense for what you did and found, and present tense for established
+  knowledge and what figures show.
+- Keep the tone formal, especially in methods.
 
-See [Data analysis]({{ '/lab-guide/data-analysis/' | relative_url }}#what-to-report) for
-what every fitted model must report, [Error and uncertainty]({{ '/lab-guide/uncertainty-analysis/' | relative_url }})
-for how we quantify it, and the [honest data checks]({{ '/lab-guide/figures/' | relative_url }}#figure-checklist)
-for what the figure must show.
+### Methods {#methods}
 
-<div class="callout callout--warn" markdown="1">
-**Lab requirement:** maintain an annotated script that traces every number in the
-draft back to its source. That script is how we catch errors before reviewers do.
-</div>
+- Describe each step so someone could repeat it.
+- Say why you chose each threshold, time step, and model.
+- Show how sensitive your results are to the choices that matter.
+- Describe in detail only what is new, unusual, or critical for your reader; a paper
+  isn't a thesis.
+- Report equipment, software versions, mesh and calibration details, and environmental
+  conditions. See
+  [Data analysis]({{ '/lab-guide/data-analysis/' | relative_url }}#what-to-report) and
+  [Error and uncertainty]({{ '/lab-guide/uncertainty-analysis/' | relative_url }}).
 
-### 6 · Use words precisely
+### Writing for two fields {#two-fields}
 
-Load-bearing words must carry their exact meaning, consistently across sections: *significant* (only statistical, name
-the test), *robust* (to what?), *converged* (what, to what value, under what
-condition?), *improved* (vs. what, by how much, on what metric?). Cut *very,
-obviously, extremely, actually*; prefer *use* over *utilize*; and the verb over the noun built from it 
-(*we assessed*, not "we performed an assessment").
+Our work sits between aerospace and biology, and your reader rarely lives in both.
 
-Every "this" needs a following noun. Define acronyms at first use, and don't introduce one the
-reader will meet only once or twice; spell it out instead.
+- Decide your primary audience.
+- Give half a sentence of grounding the first time a term means something different in
+  the other field.
+- Choose the plain word over the impressive one; many readers work in English as a
+  second language.
 
-### 7 · Write engagingly and directly
+### Bio-inspiration {#bio-inspiration}
 
-Use active voice for what you did and what you found: "We found…", "We showed…", not "It was observed that…".
-Passive voice is helpful in three spots: Methods, where the actor doesn't matter; correlations, where naming a cause would overclaim; and sentences that need to open on the idea the last one ended with.
+Report three things together: the **source organism**, the **level of mimicry**, and
+the **strength of biological evidence**.
 
-Use past tense for what you did and found. Present tense for general facts and figure descriptions. 
+| Term | Use it for |
+| --- | --- |
+| *biomimetic* | near-mimicry of the biological system |
+| *bio-informed* | a design built on a principle with at least single-species primary evidence |
 
-### 8 · Cite figures, do not narrate
+Separate what the bird did, what it might be for, and what you showed. Scope claims to what you studied: one wingbeat, one individual, one species.
 
-A reader looks at your figures first. How you write about them decides whether that look helps or confuses.
-In the main text, lead with the finding and cite the figure in support, never the reverse:
-❌ "Figure 1 shows the lift coefficient across sweep angles." →
-✅ "Lift coefficient peaked near 20° of sweep and dropped sharply beyond it (Fig. 1)."
-Don't narrate the plot. Say what the result means and how it changes what we knew.
+See [Harvey (2026), *How bio-inspired is your design?*](https://doi.org/10.1038/s44172-026-00641-4)
 
-See [Figures]({{ '/lab-guide/figures/' | relative_url }}) for figure design and captions.
+### Polish
 
-### 9 · Write so everyone can follow you
+- Past tense for what you did and found; present for established knowledge.
+- Every equation is part of a sentence and numbered as the venue expects; variables are in math font.
+- Nomenclature is complete and alphabetical (Roman, then Greek).
+- Numbers, units, significant figures, and spelling are consistent; numbers under ten are spelled out unless paired with a unit.
+- No footnotes, and no appendix in a conference paper (lab rule). If it matters, it goes in the text.
+- The bibliography has no "??", duplicates, or missing dates.
+- Language is gender-neutral (e.g., uncrewed aerial vehicles).
 
-Our work sits at the aerospace-biology interface, and your reader rarely lives in both fields.
-Decide your primary audience, then write so the secondary field can still follow.
-Give half a sentence of grounding the first time a term has implied or assumed meaning in one field but not the other.
-Scope every claim to what you actually studied: one wingbeat, one individual, one species. Don't quietly generalize to "birds."
+</details>
 
-Choose the plain word over the impressive one. Complex ideas do not need complex vocabulary, and many of your readers work in English as a second language.
+<details class="guide-details" markdown="1">
+<summary>One paragraph, before and after</summary>
 
-### 10 · Name the limitations and uncertainty before a reviewer does
+An invented example.
 
-Research always contains some limitations or assumptions. You need to state your work's directly so that readers can know when your results are relevant and when they are not.
+**Before.** Figure 3 shows the lift and drag for the extended and folded wings. It can be seen that the folded wing has much less drag, which is very interesting. This is because birds fold their wings to save energy.
 
-### 11 · Label bio-inspiration by its evidence
+**After.** Folding the wing reduced drag by 12 ± 2% relative to the extended wing, but it also reduced lift by 20 ± 4% (Fig. 3; *n* = 5 runs each). This trade-off suggests that folding could help a gliding bird descend quickly without flapping; we did not test whether birds use it this way. (± is one standard deviation across runs.)
 
-*Bio-inspired*, *biomimetic*, and *bio-informed* hold implied meaning that varies across the fields. F
-or clarity, always report the organism that is the source of inspiration, the level of design mimicry, and the strength of biological
-evidence together. 
-Reserve *biomimetic* for near-mimicry and *bio-informed* for designs built on a principle with at least single-species primary
-evidence. 
-See[Harvey (2026), *How bio-inspired is your design?*](https://doi.org/10.1038/s44172-026-00641-4)
+| Change | Idea |
+| --- | --- |
+| Opens on the finding, then cites the figure | 4 · Say what it means |
+| "Much less" becomes 12 ± 2%, relative to the extended wing, with *n* | 3 · Quantify it or cut it |
+| Also reports the drop in lift | 5 · Claim only what you can defend |
+| "Very interesting" is cut; the implication says why it matters | 4 · Say what it means |
+| "Birds fold their wings to save energy" is replaced by a possibility we state but didn't test | 5 · Claim only what you can defend |
+| "This" gets a noun; "it can be seen that" is cut | 6 · Make it easy to follow |
 
-## Journal article vs. conference paper
+</details>
 
-<aside class="marginnote" markdown="1">
-**Why hold exciting results back at a conference?** A conference is a fast, lightly
-reviewed checkpoint. It's the wrong venue for a major claim, and publishing early
-can weaken the journal paper's novelty. Conference papers should be simple, well supported results that you would defend in
-your sleep. Unknowns that benefit from conferring with the field should be presented as such in oral presentations.
-</aside>
-
-The core principles hold for both; what changes is strategy. Some conference venues do suit major results. Talk to Christina if it is unclear.
+<details class="guide-details" markdown="1">
+<summary>Journal article vs. conference paper</summary>
 
 | Aspect | Journal article | Conference paper |
 | --- | --- | --- |
 | **Goal** | The complete, definitive account | A solid, citable checkpoint |
+| **Framing** | Broad context for the research program | Only what this paper's question needs |
 | **What to include** | Strongest, fully validated results | Boring-but-bulletproof results; hold exciting findings back |
 | **Risk posture** | Claims fully defended; limits stated | Even more conservative |
 | **Scope** | Broad enough to support the full argument | Narrow, self-contained, finishable |
 | **Reuse** | Stands alone | Shouldn't "spend" results you need for the journal version |
 
-**Null and negative results count.** A clean negative result, honestly
-reported is valid for both conference and journal papers. Negative results matter just as much as the splashy ones.
+Some conference venues do suit major results; talk to Christina if the venue is unclear. **Null and negative results count** in either venue when honestly reported.
 
-## When you revise your own draft
+</details>
 
-Revision is where the writing actually happens. Read the whole draft top to bottom,
-repeatedly; it's the only way to see whether the *argument* holds.
+<details class="guide-details" markdown="1">
+<summary>Revising your own draft</summary>
 
-Then go paragraph by paragraph. What is the main point here, and did I say it*directly*? 
-Did I explain why it matters and support it with evidence? 
-Could an informed reader understand it on the first pass? 
-Is this paragraph doing too much?
+Read the whole draft top to bottom, repeatedly; it's the only way to see whether the
+argument holds. Then go paragraph by paragraph: What is the main point, and did I say
+it directly? Did I support it and say why it matters? Could an informed reader follow
+it on the first pass?
 
-Apply the fix:
-
-- Feels like a literature review: tighten it to only the most relevant sections.
-- Feels like a string of facts: add synthesis and interpretation.
-- Feels vague: make the claim more specific and quantified.
+- Feels like a literature review: keep only what builds your question.
+- Feels like a string of facts: add interpretation.
+- Feels vague: make the claim specific and quantified.
 - Could be removed without changing the argument: remove it.
 
-## Before you send a draft (checklist)
+</details>
 
-<aside class="marginnote" markdown="1">
-**The comments Christina leaves most often:** Where are the stats? Percent relative
-to what? What in the data shows this? Is this significant, or within your error
-bars? Are you using this term the way the field does?
-</aside>
+<details class="guide-details" markdown="1">
+<summary>Tools and templates</summary>
 
-<aside class="marginnote" markdown="1">
-**Major vs. minor.** Not every item matters equally. Issues that affect whether
-your *argument holds* are major; style and consistency are real but fixable. 
-</aside>
+Draft in Overleaf or Word (Christina prefers Word). Start the Overleaf project yourself and
+transfer ownership to Christina for review; no license needed. Keep journal drafts unformatted with line
+numbers on. For conferences like SciTech, draft in the
+[venue template](https://aiaa.org/events-learning/events/technical-presenter-resources/)
+from the start.
 
-Run this checklist yourself first. Most revision requests come straight off this list, so
-clearing it yourself saves a full review cycle.
+</details>
 
-**Start here.** Figures stand on their own and are each cited by the claim they
-support ("(Fig. 1)"), not narrated ("Figure 1 shows…"). Run the
-[figure checklist]({{ '/lab-guide/figures/' | relative_url }}#figure-checklist)
-before you go any further.
+<details class="guide-details" markdown="1">
+<summary>Resources</summary>
 
-### Start with judgment calls
-
-- If a reader stopped after my first two paragraphs, would they know what I'm studying and why it matters, and does every citation earn its place?
-- Can I state my main point in one sentence, and does every section add support for that same point?
-- What is each paragraph's one job, and does its opening sentence say so?
-- Can a reader tell which statements are observations, which are inferences, and which are open questions?
-- For each number I report, could a reader find where it came from and how it was tested?
-- Have I used a strong-sounding word without saying exactly what I mean by it?
-- Does this sentence engage directly with the science, or describe it from a distance?
-- Could each figure be understood on its own, and does my text say what to look at?
-- Could a reviewer from the field I am less trained in follow this, and would they feel respected?
-- Where does my model or experiment stop representing real conditions, have I named that limit before a reviewer does, and have I said which kind of uncertainty my numbers carry?
-- Have I named the source organism, the level of mimicry, and the strength of evidence behind every bio-inspired claim?
-- When did I last read this draft all the way through, and what changed because I did?
-
-### Tier 1 · The argument
-
-- The main takeaway can be summarized in one to two sentences, and the same takeaway appears in the abstract, results, and conclusion. It does not drift between sections.
-- The introduction makes the question and stakes clear within two paragraphs, without a jargon-heavy or review-style opening.
-- All claims are proportional to the evidence; observation, inference, and uncertainty are distinguishable.
-- All results are quantified: the sample size, *n*, the test, and the statistic (including the associated $$F$$-statistic where relevant) with the exact $$p$$. Error bars are named by statistic in the caption. For fitted models, also clear [Before you write it up]({{ '/lab-guide/data-analysis/' | relative_url }}#before-you-write-it-up).
-- Every number is internally consistent and can be traced back to its source; see [Code]({{ '/lab-guide/code/' | relative_url }}).
-- Each bio-inspired claim reports the source organism, the level of mimicry, and the strength of evidence.
-- The limitations are described either in a specific section or in at least one to two paragraphs.
-- The conclusion lands the existing argument and adds no new idea.
-{: .checklist}
-
-### Tier 2 · Structure and clarity
-
-- Every paragraph has one job, its topic sentence captures that job, and it runs about four or five sentences.
-- Every sentence can be read out loud in one breath.
-- There are no repeated ideas that fail to advance the argument.
-- Any use of the word *significant* is supported by statistics. Vague quantifiers (*some, few, many*) are replaced with numbers where you have them.
-- Strong verbs are used in place of nominalizations (*we analyzed*, not *we performed an analysis of*).
-- All empty intensifiers are removed.
-- Every "this" has a following noun.
-- Every term, especially a measurement term, means the same thing in every section.
-{: .checklist}
-
-### Tier 3 · Polish and consistency
-
-- Verb tense matches the job of the sentence: past for what you did and found, present for established knowledge, for what the paper and figures show, and for what the results mean.
-- Every equation is part of a sentence, properly punctuated, and referenced as needed. LaTeX formatting is used where appropriate, and every variable introduced in the text is in mathematical font (or italics).
-- Units, spelling (US *or* UK, not a mix), hyphenation, and notation are consistent.
-- Gender-neutral language is used throughout (e.g., uncrewed aerial vehicles).
-{: .checklist}
-
-### Before it leaves your hands
-
-- All venue requirements (template, length, formatting) and disclosures are met. Ask Christina for the proper funding language.
-- *Conference paper?* The headline result is one you would defend anywhere. It does not need to be life-changing.
-- At least two labmate pre-reviews are done via **#phone-a-friend** on the lab Slack, Christina has the draft at least two weeks before the deadline, and all co-authors have approved.
-{: .checklist}
-
-## What happens next
-
-Settle authorship early and write it down; see
-[Authorship policy]({{ '/lab-guide/authorship-policy/' | relative_url }}).
-Once the draft clears the checklist, the submission steps, reviewer responses, and
-what to do on publication live in
-[Submitting & publishing]({{ '/lab-guide/submitting-publishing/' | relative_url }}).
-
-## Resources
-
-- [Gopen & Swan, *The Science of Scientific Writing*](https://www.usenix.org/sites/default/files/gopen_and_swan_science_of_scientific_writing.pdf): topic and stress positions; still the best single read on sentence-level clarity.
-- [Doumont, *Effective Writing*](https://www.nature.com/scitable/topicpage/effective-writing-13815989/): a compact reference on verb tense, subject–verb proximity, and word-level precision.
+- [Gopen & Swan, *The Science of Scientific Writing*](https://www.usenix.org/sites/default/files/gopen_and_swan_science_of_scientific_writing.pdf): topic and stress positions; the best single read on sentence-level clarity.
+- [Mensh & Kording, *Ten simple rules for structuring papers*](https://doi.org/10.1371/journal.pcbi.1005619): one central contribution, context-content-conclusion, and parallel structure.
+- [Doumont, *Effective Writing*](https://www.nature.com/scitable/topicpage/effective-writing-13815989/): verb tense, subject–verb proximity, and word-level precision.
 - [Nature Masterclasses, *Writing for greater impact*](https://www.nature.com/masterclasses/writing-for-greater-impact/50732650): active voice, strong verbs, conciseness, signposting.
 - [Nature's summary-paragraph format](https://www.nature.com/documents/nature-summary-paragraph.pdf): the model we use for abstracts.
 - [Harvey (2026), *How bio-inspired is your design?*](https://doi.org/10.1038/s44172-026-00641-4): how we label bio-inspiration claims.
-- [Never on a Sunday](https://blogs.lse.ac.uk/impactofsocialsciences/2019/01/29/never-on-a-sunday-is-there-a-best-day-for-submitting-an-article-for-publication/): is there a best day to submit?
 
+</details>
 
+Authorship: see [Authorship policy]({{ '/lab-guide/authorship-policy/' | relative_url }}). Submission and reviewer responses: see [Submitting & publishing]({{ '/lab-guide/submitting-publishing/' | relative_url }}).
