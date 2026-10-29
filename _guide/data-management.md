@@ -23,7 +23,7 @@ adjustments as separate *derived* files so the raw data stays untouched.
 - Read up on [tidy data](https://r4ds.had.co.nz/tidy-data.html).
 - Write a script that outputs every number you report in a paper.
 
-Once your data is clean and backed up, see [Data analysis]({{ '/lab-guide/data-analysis/' | relative_url }}) for how we explore, quantify, and report it with uncertainty.
+Once your data is clean and backed up, see [Statistical analysis]({{ '/lab-guide/statistical-analysis/' | relative_url }}) for how we explore, quantify, and report it with uncertainty.
 
 ## Back up your files
 

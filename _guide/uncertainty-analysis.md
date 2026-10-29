@@ -10,6 +10,10 @@ reviewed: 2026-08-12
 math: true
 ---
 
+This page covers how well you know each measured value. Whether a pattern across values is
+distinguishable from noise, and how large it is, is covered in
+[Statistical analysis]({{ '/lab-guide/statistical-analysis/' | relative_url }}).
+
 <div class="callout" markdown="1">
 **At a glance:** Work down this list. Each number is a step below that provides more detail. Throughout, we follow the [GUM](https://www.bipm.org/documents/20126/2071204/JCGM_100_2008_E.pdf).
 

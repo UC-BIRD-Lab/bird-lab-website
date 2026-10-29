@@ -81,7 +81,7 @@ wrong? If not, it's probably not a hypothesis yet.
    mechanisms or relationships.
 5. **Derive discriminating predictions.** For each, "if this is true, we should
    see ___," focusing on predictions that *differ* across hypotheses.
-6. **Check feasibility.** Can you measure what you need with available tools and time? Plan how you'll test each prediction; see [Data analysis]({{ '/lab-guide/data-analysis/' | relative_url }}).
+6. **Check feasibility.** Can you measure what you need with available tools and time? Plan how you'll test each prediction; see [Statistical analysis]({{ '/lab-guide/statistical-analysis/' | relative_url }}).
 
 ## Hypothesis checklist
 

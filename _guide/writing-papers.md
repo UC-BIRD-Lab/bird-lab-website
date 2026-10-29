@@ -25,7 +25,7 @@ they're what most of our review comments come back to.
 
 1. <span id="question-and-gap"></span>**Lead with the question and the gap.** Say what we don't know and what your paper adds. Readers decide in the first paragraphs whether your work matters to them.
 2. <span id="one-story"></span>**Tell one story.** Your one or two main takeaways should come back in the abstract, introduction, results, captions, and conclusion. They don't need the same words, but they do need the same ideas. Say supporting details once. Readers remember the point you return to, and side points compete with it.
-3. <span id="quantify"></span>**Quantify it or cut it.** Give every comparison a size and a baseline, and show the evidence: data, a calculation, a citation, or clear reasoning ([what to report]({{ '/lab-guide/data-analysis/' | relative_url }}#what-to-report)). Check it against outside data where it exists.
+3. <span id="quantify"></span>**Quantify it or cut it.** Give every comparison a size and a baseline, and show the evidence: data, a calculation, a citation, or clear reasoning ([what to report]({{ '/lab-guide/statistical-analysis/' | relative_url }}#what-to-report)). Check it against outside data where it exists.
 4. <span id="what-it-means"></span>**Say what it means.** Lead with the finding, cite the figure, explain why, and say whether the difference matters. Give major findings more space than minor trends. Readers look at figures first; the text is where you interpret them.
 5. <span id="defend"></span>**Claim only what you can defend.** Make the strongest important claim your evidence supports. Keep what the data show, what you infer, and what's still uncertain separate. Cite what you've read, including who did it first, and state your limitations. One overclaim makes a reviewer doubt the rest of the paper.
 6. <span id="clarity"></span>**Make it easy to follow.** Give each sentence one main point, use plain words, and don't skip steps in the logic. Many of our readers are outside your subfield or read in a second language.
@@ -154,7 +154,7 @@ out of breath, the sentence gets rewritten. For topic and stress positions, read
   isn't a thesis.
 - Report equipment, software versions, mesh and calibration details, and environmental
   conditions. See
-  [Data analysis]({{ '/lab-guide/data-analysis/' | relative_url }}#what-to-report) and
+  [Statistical analysis]({{ '/lab-guide/statistical-analysis/' | relative_url }}#what-to-report) and
   [Error and uncertainty]({{ '/lab-guide/uncertainty-analysis/' | relative_url }}).
 
 ### Writing for two fields {#two-fields}
