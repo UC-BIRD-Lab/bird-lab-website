@@ -41,7 +41,12 @@ For any paragraph, ask: What is my claim? What evidence supports it? Why does a 
   make your case with evidence.
 - **Respond to every comment,** by addressing the concern or replying. Suggested wording is a suggestion; you can fix the problem your own way.
 - **Fix patterns everywhere.** If a comment points out a pattern, fix it throughout the draft, not just where it was flagged.
-- **Tags.** Comments without a tag need to be addressed. *Q:* means an open question to discuss. *pref:* means Christina's preference, and it's your call.
+- **Comment tags.**
+  - *PREF:* a stylistic preference of the commenter's; it isn't strictly necessary.
+  - *Q:* a genuine question, not an opinion in disguise.
+  - *??:* the reader got lost. Something is unclear, and they aren't sure how to fix it.
+  - *Op:* an opinion; take it or leave it.
+  - No tag: address the comment, or make a clear argument for why not.
 - **You're the first author.** Review every edit, accept the ones you agree with and reply to the rest, and get co-author input before the next round.
 - **Over time, you'll catch these issues yourself,** first in your own drafts, then in labmates'.
 
