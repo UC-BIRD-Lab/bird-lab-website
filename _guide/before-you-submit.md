@@ -51,9 +51,9 @@ These come from the [lab non-negotiables]({{ '/lab-guide/writing-papers/' | rela
 
 ## Grant or fellowship
 
-- Give reviewers time, and get several people to read it; see [Funding applications]({{ '/lab-guide/funding-applications/' | relative_url }}).
+- Check your final draft against [what reviewers look for]({{ '/lab-guide/funding-applications/' | relative_url }}#what-reviewers-look-for).
 - Request [recommendation letters]({{ '/lab-guide/recommendation-letters/' | relative_url }}) one to two months ahead.
-- Don't use AI to draft scientific text; see [Using AI]({{ '/lab-guide/using-ai/' | relative_url }}).
+- Email Christina what you applied for, the amount requested, and the proposed dates; see [Report what you apply for]({{ '/lab-guide/funding-applications/' | relative_url }}#report-what-you-apply-for-and-what-you-win).
 {: .checklist}
 
 ## Booking travel or taking time off

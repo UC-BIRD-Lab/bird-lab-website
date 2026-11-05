@@ -12,6 +12,7 @@ math: true
 
 <aside class="marginnote" markdown="1">
 Companion to [Figures]({{ '/lab-guide/figures/' | relative_url }}).
+Writing a proposal? See [Funding applications]({{ '/lab-guide/funding-applications/' | relative_url }}).
 Suggest edits anytime.
 </aside>
 
