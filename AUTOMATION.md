@@ -7,9 +7,9 @@ work and can be run by hand.
 
 | Workflow | Runs | Does | Result |
 |---|---|---|---|
-| `site-checks.yml` | every PR | content validation, links and images, WCAG 2.1 AA scan | blocks merge on failure |
+| `site-checks.yml` | every PR | content validation, links and images, link-preview cards, WCAG 2.1 AA scan | blocks merge on failure |
 | `optimize-images.yml` | PRs touching `assets/`; merges to `main` | PR: compresses oversized images and pushes them onto the branch; fails only on what it can't fix (video, GIF, SVG). Merge: compresses | commit on the PR, or PR with smaller files |
-| `deploy.yml` | merge to `main` | build and publish | live site updates |
+| `deploy.yml` | merge to `main` | build, draw each page's link-preview card, publish | live site updates |
 | `update-publications.yml` | 1st of the month | new OpenAlex papers by ORCID, with open-access links | PR editing `_data/publications.yml` |
 | `issue-to-pr.yml` | issue form submitted | form → `_data` entry | PR; issue closes on merge |
 | `review-sweep.yml` | 5 Jan/Apr/Jul/Oct | overdue guide pages, `_data/review.yml`, expired banner | rewrites one issue |
@@ -22,6 +22,7 @@ Run any by hand: **Actions → workflow → Run workflow**. Locally:
 python3 scripts/validate_content.py
 python3 scripts/review_sweep.py
 python3 scripts/optimize_images.py      # --check to report only
+python3 scripts/share_cards.py          # after `jekyll build`; needs Pillow
 python3 scripts/check_links.py
 python3 scripts/add_press.py …
 ```

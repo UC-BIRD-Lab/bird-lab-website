@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Member Portal
+icon: "🔑"          # link-preview card (see CONTENT-GUIDE.md)
 eyebrow: For lab members
 prose: true
 description: "The BIRD Lab member portal: our private workspace for lab members, with public lab policies available in the Lab Guide."

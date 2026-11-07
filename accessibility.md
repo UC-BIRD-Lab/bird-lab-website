@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Accessibility
+icon: "⌨️"          # link-preview card (see CONTENT-GUIDE.md)
 eyebrow: About this site
 prose: true
 description: "The BIRD Lab website aims for WCAG 2.1 AA accessibility. What we do, known limitations, and how to tell us about a barrier."

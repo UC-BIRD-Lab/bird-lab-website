@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Join the Lab
+icon: "🐦"          # link-preview card (see CONTENT-GUIDE.md)
 eyebrow: Get involved
 prose: true
 description: "How to join the BIRD Lab at UC Davis: current openings for undergraduates, graduate students, and postdocs, and what to put in a first email."
@@ -95,7 +96,7 @@ glance before you reach out.
 
 <p class="muted u-fs-sm"><strong>Undergraduates take part as volunteers or for EME/EAE 199 credit.</strong> Participation is voluntary and flexible; many find around 8 hours a week works well, but you set what fits alongside your coursework. Coursework always comes first: research should add to your progress, not substitute for it. You may take EME or EAE 199 with written permission. The number of 199 credits is set by the hours committed. 199 students must give a short presentation at the end of the quarter. 199 students are usually previous lab volunteers, so volunteering is the normal first step.</p>
 
-<p class="muted u-fs-sm"><strong>Funding your own spot?</strong> Browse our <a href="{{ '/lab-guide/funding-applications/' | relative_url }}">curated list of fellowships &amp; scholarships</a>, with options for undergraduates, graduate students, and postdocs.</p>
+<p class="muted u-fs-sm"><strong>Funding your own spot?</strong> Browse our <a href="{{ '/lab-guide/funding-applications/' | relative_url }}#fellowships--scholarships-to-explore">curated list of fellowships &amp; scholarships</a>, with options for undergraduates, graduate students, and postdocs.</p>
 
 <p class="muted u-fs-sm"><strong>High school students:</strong> we don't offer high school internships. If this work excites you, apply to UC&nbsp;Davis; most of our undergraduate researchers join once they're here.</p>
 

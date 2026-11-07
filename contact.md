@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Contact
+icon: "📍"          # link-preview card (see CONTENT-GUIDE.md)
 eyebrow: Get in touch
 prose: true
 description: "Contact the BIRD Lab at UC Davis: email Dr. Christina Harvey about research collaboration, press enquiries, or joining the lab."

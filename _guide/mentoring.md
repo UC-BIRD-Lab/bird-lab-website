@@ -5,7 +5,7 @@ order: 5
 summary: "How we mentor in this lab: shared expectations, honest feedback, and supporting the whole person."
 description: "What mentoring expectations look like in this lab and how to grow as a mentor/mentee."
 keywords: [mentoring, mentor, mentee, supervision, advising, feedback, growth, undergraduate mentoring]
-icon: "🧑‍🏫"
+icon: "🤝"
 reviewed: 2026-07-06
 ---
 

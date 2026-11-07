@@ -36,12 +36,15 @@ lab:
   # Data repository for published data/code.
   figshare_url: "https://figshare.com/authors/Christina_Harvey/4766004"
 
-# Default social-share image (jekyll-seo-tag). Opaque 1200x630 card; the
-# dimensions let previews reserve the right space.
+# Link-preview image for the home page and any page without an `icon:`. Pages
+# with an `icon:` get their own card, drawn at build time
+# (_plugins/share_cards.rb, scripts/share_cards.py); a page's own `image:`
+# overrides both. Opaque 1200x630; the dimensions let previews reserve space.
 image:
   path: /assets/img/og-image.png
   width: 1200
   height: 630
+  alt: "The BIRD Lab logo: a bird in flight above the words BIRD Lab"
 
 # Large summary card on X/Twitter.
 twitter:

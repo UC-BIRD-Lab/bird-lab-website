@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Privacy
+icon: "🔒"          # link-preview card (see CONTENT-GUIDE.md)
 eyebrow: About this site
 prose: true
 description: "How the BIRD Lab website approaches privacy."

@@ -5,7 +5,7 @@ order: 3
 summary: One-on-ones, lab meetings, and journal club.
 description: "What to expect from one-on-ones, lab meetings, and journal club, and what they expect from you."
 keywords: [meetings, one-on-one, lab meeting, weekly check-in, journal club]
-icon: "📅"
+icon: "🗓️"
 reviewed: 2026-07-05
 ---
 

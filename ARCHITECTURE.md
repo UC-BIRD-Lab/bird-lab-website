@@ -42,7 +42,9 @@ member making a safe edit matters more.
 Jekyll plus `jekyll-feed`, `jekyll-seo-tag`, `jekyll-sitemap`,
 `jekyll-last-modified-at`, pinned in `Gemfile.lock`. One web font (Spectral)
 with system fallback. Vanilla JS only (mobile menu, search, video pause), all
-optional. Scripts: Python standard library plus PyYAML.
+optional. Scripts: Python standard library plus PyYAML, and Pillow for images.
+One small local plugin, `_plugins/share_cards.rb`, gives each page a
+link-preview image; `scripts/share_cards.py` draws them during the build.
 
 ## Public vs. internal
 

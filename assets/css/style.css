@@ -729,7 +729,8 @@ blockquote { border-left: 4px solid var(--c-blue-500); padding-left: 1rem; color
 
 /* Margin notes: <aside class="marginnote" markdown="1"> placed right after the paragraph it relates to
    (screen readers meet it in context). Inline by default; floats into the right margin on wide screens.
-   Inside <article>, <aside> is not a landmark. */
+   Inside <article>, <aside> is not a landmark. Floats only from 1600px: below that the
+   -18rem right margin runs past the viewport edge and the note is clipped. */
 .marginnote {
   background: var(--c-sky-2);
   border-left: 3px solid var(--c-blue-500);
@@ -743,7 +744,7 @@ blockquote { border-left: 4px solid var(--c-blue-500); padding-left: 1rem; color
 .marginnote > * + * { margin-top: .5rem; }
 .marginnote--warn { background: #fdf8ec; border-left-color: var(--c-gold); }
 .marginnote--stop { background: #fdeeec; border-left-color: #c0392b; }
-@media (min-width: 1200px) {
+@media (min-width: 1600px) {
   .marginnote {
     float: right;
     clear: right;

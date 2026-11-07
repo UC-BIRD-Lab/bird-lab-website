@@ -337,6 +337,7 @@ title: My new page
 category: Working in the Lab   # must be in guide_order: in _config.yml
 order: 4                       # position within the category
 summary: One sentence shown on the Lab Guide hub.
+icon: "🗄️"                     # hub, menu and link-preview card
 description: One sentence for link previews (Slack, email, search); ~100-160 characters, about the lab not a person.
 reviewed: 2026-07-03
 ---
@@ -377,6 +378,27 @@ the Member Portal are in the footer (`_includes/footer.html`).
 Title, tagline, portal URL, contact email, ORCID, interest-form link, LinkedIn,
 GitHub org, FigShare URL, social-share image. Analytics: cookieless GoatCounter
 via `analytics: { goatcounter: }`; blank it to collect nothing.
+
+## Link previews (Slack, email, LinkedIn)
+
+A page with an `icon:` gets its own preview card: that emoji, drawn as a white
+line icon in a ring over the faded BIRD logo. The card has no words; Slack and
+other apps print the title and `description:` beside it. Every Lab Guide page
+already has an icon. Pages without one, and the home page, use the logo card
+(`image:` in `_config.yml`).
+
+Pick an emoji that is a picture, not text: 📅 draws a date inside the
+calendar, so Meetings uses 🗓️. To check how one looks, search it on
+[Noto Emoji](https://fonts.google.com/noto/specimen/Noto+Emoji).
+
+To use a photo or figure instead, add to the page's front matter:
+```yaml
+image:
+  path: /assets/img/research/wind-tunnel.jpg   # 1200 × 630 px
+  alt: What the picture shows
+```
+`share_card: false` uses the logo card. Slack remembers a preview for a while,
+so a link posted before a change can keep its old card.
 
 ---
 
