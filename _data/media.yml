@@ -5,6 +5,13 @@
 #   doi       bare DOI; adds a "Paper" link
 #   tag       Center · Award · Funding · Profile · Feature; one chip per entry,
 #             `doi` wins
+- title: "UC Davis researchers study raptors to advance drone technology and bird rehabilitation"
+  kind: video
+  source: "KCRA · California Tonight"
+  year: 2026
+  url: "https://www.kcra.com/article/uc-davis-raptor-flight-study-drone-technology/74485232"
+  featured: true
+  tag: "Feature"
 
 - title: "BIRD Lab and California Raptor Center - Success Story"
   kind: video
@@ -26,7 +33,6 @@
   source: "FOX40 News"
   year: 2026
   url: "https://www.youtube.com/watch?v=fz4SfRr6xvA"
-  featured: true
   tag: "Feature"
 
 - title: "The Condor Chat, October 2024"
@@ -34,7 +40,6 @@
   source: "Ventana Wildlife Society"
   year: 2024
   url: "https://www.youtube.com/watch?v=TUVUjut9Z-A"
-  featured: true
   tag: "Profile"
 
 - title: "Bio-informed flight with Christina Harvey and Michelle Hawkins"
@@ -43,6 +48,8 @@
   year: 2024
   url: "https://www.comstocksmag.com/podcast/bio-informed-flight-christina-harvey-and-michelle-hawkins"
   tag: "Feature"
+  featured: true
+
 
 - title: "Try the hard things and see what happens"
   kind: podcast
@@ -57,7 +64,6 @@
   year: 2022
   url: "https://www.youtube.com/watch?v=gKnuEEUKAFg"
   doi: "10.1038/s41586-022-04477-8"
-  featured: true
 
 - title: "Bird-inspired drone wings, digital twins & tracking microplastics from space"
   kind: podcast
